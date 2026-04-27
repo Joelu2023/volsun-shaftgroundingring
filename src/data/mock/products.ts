@@ -34,7 +34,7 @@ export const products: ProductDetail[] = [
       "Split shaft grounding ring for VFD motors: retrofit without full disassembly, reliable shaft grounding path for bearing protection.",
     overview:
       "A field-installable split ring that provides a shaft grounding path on VFD-driven motors without full shaft pull or extended downtime. Suited to MRO, HVAC upgrades, and pump skids where access is limited and bearing protection must be added after the motor is in service.",
-    primaryImagePublicPath: "/images/products/product-split-main-shared-v1.jpg",
+    primaryImagePublicPath: "/images/products/home-product-solid-v1.webp",
     secondaryImagePublicPath: "/images/products/product-split-install-shared-v1.png",
     specFields: [
       { label: "Typical shaft diameter range (catalog series)", value: "Reviewed against customer shaft size and available catalog coverage." },
@@ -122,7 +122,7 @@ export const products: ProductDetail[] = [
       "Solid shaft grounding ring for OEM motor builds: stable mounting, repeatable assembly, and reliable bearing protection on VFD systems.",
     overview:
       "An OEM-style solid ring for new motor builds and batch assembly where shaft access is predictable. The design emphasizes repeatable mounting, stable geometry, and a reliable shaft-to-frame grounding path for continuous-duty, VFD-driven motors.",
-    primaryImagePublicPath: "/images/products/solid-shaft-grounding-ring-main-01.webp.JPG",
+    primaryImagePublicPath: "/images/products/home-product-solid-fan-v2.png",
     secondaryImagePublicPath: "/images/products/product-solid-install-shared-v1.png",
     specFields: [
       { label: "Typical shaft diameter range (catalog series)", value: "Confirmed against supported series during application review." },
@@ -204,7 +204,7 @@ export const products: ProductDetail[] = [
       "Custom shaft grounding rings engineered from your drawing: prototypes, validation, and export-ready documentation.",
     overview:
       "Drawing-led shaft grounding rings for non-catalog envelopes, special shaft diameters, or harsh environments where standard series are not a fit. Scope includes engineering review, prototype samples for fit and validation, and documentation aligned to export and customer quality requirements.",
-    primaryImagePublicPath: "/images/products/custom-shaft-grounding-ring-main-01.webp.png",
+    primaryImagePublicPath: "/images/products/home-product-custom-v1.png",
     secondaryImagePublicPath: "/images/products/product-custom-install-shared-v1.png",
     specFields: [
       { label: "Drawing inputs required", value: "PDF or STEP drawings with key dimensions and tolerances are recommended for technical review." },

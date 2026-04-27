@@ -93,8 +93,8 @@ export const navigationEn: NavItem[] = [
   { label: "Contact", href: "/contact", type: "link", highlight: true, children: null },
 ];
 
-/** 英文站头部 Logo：素材到位后放到 public 下此路径 */
-export const enHeaderLogoSrc = "/images/brand/volsun-logo-en.png";
+/** 英文站头部 Logo（home 目录统一命名） */
+export const enHeaderLogoSrc = "/images/home/home-logo-v1.webp";
 
 export const publicContact = {
   email: process.env.NEXT_PUBLIC_SITE_EMAIL?.trim() || "info@szvolsun.com",

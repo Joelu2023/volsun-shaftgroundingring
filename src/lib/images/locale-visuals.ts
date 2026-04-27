@@ -21,7 +21,7 @@ export function resolveHeroImageSrc(_locale: AppLocale): string {
   const env = process.env.NEXT_PUBLIC_HERO_IMAGE?.trim();
   const cleaned = env ? sanitizeLargeSlotImageSrc(env) : null;
   if (cleaned) return cleaned;
-  return "/images/home/application-hvac-motors-hero-shared-v1.webp";
+  return "/images/home/home-hero-vfd-motor-v1.webp";
 }
 
 /** 首页「轴电压机理」：按 locale 使用对应中英文机理图。 */

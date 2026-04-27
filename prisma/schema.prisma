@@ -1,0 +1,189 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RcUserStatus {
+  active
+  disabled
+
+  @@map("rc_user_status")
+}
+
+enum RcResourceStatus {
+  draft
+  published
+  archived
+
+  @@map("rc_resource_status")
+}
+
+enum RcResourceCategory {
+  catalog
+  datasheet
+  installation
+  case_study @map("case-study")
+  faq
+
+  @@map("rc_resource_category")
+}
+
+enum RcAdminRoleCode {
+  admin
+  editor
+
+  @@map("rc_admin_role_code")
+}
+
+model RcUser {
+  id          String       @id @default(uuid()) @db.Uuid
+  username    String       @unique @db.VarChar(64)
+  email       String?      @unique @db.VarChar(255)
+  passwordHash String      @map("password_hash") @db.VarChar(255)
+  displayName String       @map("display_name") @db.VarChar(120)
+  status      RcUserStatus @default(active)
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+  lastLoginAt DateTime?    @map("last_login_at") @db.Timestamptz(6)
+
+  userRoles         RcUserRole[]
+  createdResources  RcResource[]     @relation("ResourceCreatedBy")
+  updatedResources  RcResource[]     @relation("ResourceUpdatedBy")
+  uploadedFiles     RcResourceFile[] @relation("ResourceFileUploadedBy")
+  auditLogs         RcAuditLog[]     @relation("AuditActor")
+
+  @@map("rc_users")
+}
+
+model RcRole {
+  id          String          @id @default(uuid()) @db.Uuid
+  code        RcAdminRoleCode @unique
+  name        String          @db.VarChar(64)
+  description String?         @db.Text
+  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  userRoles RcUserRole[]
+
+  @@map("rc_roles")
+}
+
+model RcUserRole {
+  userId    String   @map("user_id") @db.Uuid
+  roleId    String   @map("role_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user RcUser @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  role RcRole @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([userId, roleId])
+  @@map("rc_user_roles")
+}
+
+model RcResource {
+  id                 String            @id @default(uuid()) @db.Uuid
+  resourceKey        String            @map("resource_key") @db.VarChar(120)
+  locale             String            @db.VarChar(10)
+  slug               String            @unique @db.VarChar(160)
+  title              String            @db.VarChar(255)
+  category           RcResourceCategory
+  summary            String            @db.Text
+  versionLabel       String            @map("version_label") @db.VarChar(64)
+  relatedProductSlug String?           @map("related_product_slug") @db.VarChar(160)
+  status             RcResourceStatus  @default(draft)
+  sortOrder          Int               @default(100) @map("sort_order")
+  publishedAt        DateTime?         @map("published_at") @db.Timestamptz(6)
+  // Primary truth for the active file pointer. rc_resource_files.is_current is only a secondary marker.
+  currentFileId      String?           @unique @map("current_file_id") @db.Uuid
+  createdAt          DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  createdBy          String?           @map("created_by") @db.Uuid
+  updatedBy          String?           @map("updated_by") @db.Uuid
+
+  currentFile RcResourceFile? @relation("CurrentResourceFile", fields: [currentFileId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  files       RcResourceFile[] @relation("ResourceFiles")
+  downloadLeads RcResourceDownloadLead[]
+  downloadVisits RcResourceDownloadVisit[]
+  creator     RcUser?          @relation("ResourceCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  updater     RcUser?          @relation("ResourceUpdatedBy", fields: [updatedBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@unique([resourceKey, locale])
+  @@map("rc_resources")
+}
+
+model RcResourceFile {
+  id                 String   @id @default(uuid()) @db.Uuid
+  resourceId         String   @map("resource_id") @db.Uuid
+  versionNo          Int      @map("version_no")
+  storageProvider    String   @map("storage_provider") @db.VarChar(40)
+  storageBucket      String?  @map("storage_bucket") @db.VarChar(255)
+  storageKey         String   @map("storage_key") @db.VarChar(500)
+  publicUrlCache     String?  @map("public_url_cache") @db.Text
+  originalFilename   String   @map("original_filename") @db.VarChar(255)
+  normalizedFilename String   @map("normalized_filename") @db.VarChar(255)
+  mimeType           String   @map("mime_type") @db.VarChar(120)
+  fileSizeBytes      BigInt   @map("file_size_bytes")
+  checksumSha256     String?  @map("checksum_sha256") @db.VarChar(128)
+  // Secondary marker only. current_file_id on rc_resources remains the primary truth.
+  isCurrent          Boolean  @default(false) @map("is_current")
+  uploadedAt         DateTime @default(now()) @map("uploaded_at") @db.Timestamptz(6)
+  uploadedBy         String?  @map("uploaded_by") @db.Uuid
+
+  resource           RcResource  @relation("ResourceFiles", fields: [resourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  currentForResource RcResource? @relation("CurrentResourceFile")
+  uploader           RcUser?     @relation("ResourceFileUploadedBy", fields: [uploadedBy], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@unique([resourceId, versionNo])
+  @@index([resourceId, isCurrent])
+  @@map("rc_resource_files")
+}
+
+model RcAuditLog {
+  id          String   @id @default(uuid()) @db.Uuid
+  actorUserId String?  @map("actor_user_id") @db.Uuid
+  action      String   @db.VarChar(64)
+  targetType  String   @map("target_type") @db.VarChar(40)
+  targetId    String?  @map("target_id") @db.VarChar(120)
+  summary     String   @db.VarChar(255)
+  beforeJson  Json?    @map("before_json")
+  afterJson   Json?    @map("after_json")
+  ip          String?  @db.VarChar(64)
+  userAgent   String?  @map("user_agent") @db.Text
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  actor RcUser? @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  @@index([actorUserId])
+  @@index([targetType, targetId])
+  @@index([createdAt])
+  @@map("rc_audit_logs")
+}
+
+model RcResourceDownloadLead {
+  id         String   @id @default(uuid()) @db.Uuid
+  resourceId String   @map("resource_id") @db.Uuid
+  email      String   @db.VarChar(255)
+  company    String?  @db.VarChar(255)
+  name       String?  @db.VarChar(120)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  resource RcResource @relation(fields: [resourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([resourceId])
+  @@index([createdAt])
+  @@map("rc_resource_download_leads")
+}
+
+model RcResourceDownloadVisit {
+  id         String   @id @default(uuid()) @db.Uuid
+  resourceId String   @map("resource_id") @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  resource RcResource @relation(fields: [resourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([resourceId])
+  @@index([createdAt])
+  @@map("rc_resource_download_visits")
+}

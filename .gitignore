@@ -1,0 +1,28 @@
+﻿# dependencies
+node_modules/
+
+# next build output
+.next/
+out/
+
+# env files
+.env
+.env.local
+.env.*.local
+
+# local data / temp
+.data/
+.codex-temp/
+.codex-dev-server*.log
+*.err.log
+tmp-*.html
+tsconfig.tsbuildinfo
+
+# system / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# logs
+*.log

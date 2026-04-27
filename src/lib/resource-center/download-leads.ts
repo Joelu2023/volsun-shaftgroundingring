@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { getResourceCenterDbClient } from "@/lib/resource-center/db/client";
+import { getResourceCenterLeadSigningSecret } from "@/lib/resource-center/secrets";
 import { getPublishedResourceBySlug as getPublishedResourceBySlugFromDb } from "@/lib/resource-center/services/read-resources";
 import { getResourceBySlug } from "@/lib/resource-center/store";
 import type { AppLocale } from "@/lib/i18n/locales";
@@ -51,12 +52,11 @@ type RcResourceDownloadVisitDelegate = {
   }): Promise<Array<{ resourceId: string }>>;
 };
 
-const DEFAULT_SECRET = "resource-center-dev-secret";
 const LEAD_TOKEN_TTL_SECONDS = 60 * 60 * 24 * 7;
 const FILE_URL_TTL_SECONDS = 60 * 10;
 
 function getLeadTokenSecret() {
-  return process.env.RESOURCE_CENTER_SESSION_SECRET?.trim() || DEFAULT_SECRET;
+  return getResourceCenterLeadSigningSecret();
 }
 
 function signLeadPayload(payload: string) {

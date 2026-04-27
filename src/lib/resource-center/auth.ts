@@ -2,16 +2,12 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";
+import { getResourceCenterSessionSecret } from "@/lib/resource-center/secrets";
 import { getDbResourceUserSessionById } from "@/lib/resource-center/services/auth-users";
 import type { ResourceAdminRole, ResourceAdminUser, ResourceSession } from "@/types/resource-center";
 
 const SESSION_COOKIE = "resource_center_session";
-const DEFAULT_SECRET = "resource-center-dev-secret";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 12;
-
-function getSessionSecret() {
-  return process.env.RESOURCE_CENTER_SESSION_SECRET?.trim() || DEFAULT_SECRET;
-}
 
 export function isResourceCenterDbAuthEnabled() {
   return process.env.RC_AUTH_DB_ENABLED?.trim().toLowerCase() === "true";
@@ -41,7 +37,7 @@ export function getResourceCenterUsers(): ResourceAdminUser[] {
 }
 
 function sign(value: string) {
-  return createHmac("sha256", getSessionSecret()).update(value).digest("hex");
+  return createHmac("sha256", getResourceCenterSessionSecret()).update(value).digest("hex");
 }
 
 function encodeSession(session: ResourceSession) {

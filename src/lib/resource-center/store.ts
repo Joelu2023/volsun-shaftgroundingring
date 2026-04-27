@@ -110,7 +110,22 @@ async function ensureStoreFile() {
 async function readStore(): Promise<ResourceStoreFile> {
   await ensureStoreFile();
   const raw = await fs.readFile(STORE_PATH, "utf8");
-  const parsed = JSON.parse(raw) as ResourceStoreFile;
+  let parsed: ResourceStoreFile;
+  try {
+    parsed = JSON.parse(raw) as ResourceStoreFile;
+  } catch (error) {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const corruptPath = `${STORE_PATH}.corrupt.${timestamp}`;
+    console.error("[resource-center] Failed to parse resources JSON. Isolating corrupt file before reseed.", {
+      storePath: STORE_PATH,
+      corruptPath,
+      error,
+    });
+    await fs.rename(STORE_PATH, corruptPath);
+    const seeded = { resources: seedResources() };
+    await writeStore(seeded);
+    return seeded;
+  }
   const resources = Array.isArray(parsed.resources) ? parsed.resources : [];
   if (resources.length === 0) {
     const seeded = { resources: seedResources() };
@@ -122,7 +137,16 @@ async function readStore(): Promise<ResourceStoreFile> {
 
 async function writeStore(store: ResourceStoreFile) {
   await ensureStoreFile();
-  await fs.writeFile(STORE_PATH, JSON.stringify(store, null, 2), "utf8");
+  const serialized = JSON.stringify(store, null, 2);
+  const tempPath = `${STORE_PATH}.tmp.${process.pid}.${Date.now()}`;
+  const handle = await fs.open(tempPath, "w");
+  try {
+    await handle.writeFile(serialized, "utf8");
+    await handle.sync();
+  } finally {
+    await handle.close();
+  }
+  await fs.rename(tempPath, STORE_PATH);
 }
 
 function sortResources(resources: ResourceRecord[]) {

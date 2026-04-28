@@ -2,39 +2,39 @@ import type { AppLocale } from "@/lib/i18n/locales";
 
 type Bilingual = { en: string; zh: string };
 
-/** 鍒楄〃椤典笌闈欐€侀〉鐨?SEO 鏂囨锛堜笌 buildPageMetadata 閰嶅悎锛?*/
+/** 列表页与静态页的 SEO 文案（与 buildPageMetadata 配合） */
 export const staticPageMeta = {
   home: {
     path: "/",
     title: {
       en: "Shaft Grounding Rings for VFD Motors",
-      zh: "鍙橀鐢垫満杞存帴鍦扮幆 | Volsun",
+      zh: "变频电机轴接地环 | Volsun",
     },
     description: {
       en: "Volsun shaft grounding rings protect motor bearings from shaft voltage and bearing currents. Split, solid, and custom solutions - factory-backed with fast sampling.",
-      zh: "娌冨皵鍏磋酱鎺ュ湴鐜姂鍒惰酱鐢靛帇涓庤酱鎵跨數娴侊紝淇濇姢鍙橀鐢垫満杞存壙銆傚垎浣撳紡銆佹暣浣撳紡涓庡畾鍒舵柟妗堬紝宸ュ巶璐ㄦ帶涓庡揩閫熸墦鏍锋敮鎸併€?",
+      zh: "沃尔森轴接地环可抑制轴电压与轴承电流，保护变频电机轴承。提供分体式、整体式与定制方案，支持工厂质控与快速打样。",
     },
   },
   products: {
     path: "/products",
     title: {
       en: "Shaft Grounding Ring Products",
-      zh: "杞存帴鍦扮幆浜у搧",
+      zh: "轴接地环产品",
     },
     description: {
       en: "Browse split, solid, and custom shaft grounding rings for inverter-duty and VFD-driven motors. Technical specs, applications, and RFQ.",
-      zh: "娴忚閫傜敤浜庡彉棰戣礋杞界殑鍒嗕綋寮忋€佹暣浣撳紡鍙婂畾鍒惰酱鎺ュ湴鐜紝鍚妧鏈鏍笺€佸簲鐢ㄥ満鏅笌璇㈢洏鍏ュ彛銆?",
+      zh: "浏览适用于变频工况的分体式、整体式及定制轴接地环，包含技术规格、应用场景与询盘入口。",
     },
   },
   applications: {
     path: "/applications",
     title: {
       en: "Motor Applications",
-      zh: "鐢垫満搴旂敤鍦烘櫙",
+      zh: "电机应用场景",
     },
     description: {
-      en: "Shaft grounding solutions for HVAC, pumps, and industrial VFD motor applications. Reduce bearing fluting and unplanned downtime.",
-      zh: "闈㈠悜鏆栭€氥€佹按娉靛強宸ヤ笟鍙橀鐢垫満鐨勮酱鎺ュ湴鏂规锛岄檷浣庤酱鎵跨數铓€涓庨潪璁″垝鍋滄満椋庨櫓銆?",
+      en: "Application pages for electric vehicles, industrial motors, wind power, transportation, pump systems, and other inverter-duty motor scenarios.",
+      zh: "覆盖电动车、工业电机、风电、交通运输、泵系统等变频电机场景的应用页。",
     },
   },
   caseStudies: {
@@ -52,70 +52,70 @@ export const staticPageMeta = {
     path: "/knowledge-center",
     title: {
       en: "Knowledge Center",
-      zh: "鐭ヨ瘑涓績",
+      zh: "知识中心",
     },
     description: {
       en: "Technical articles on shaft voltage, split vs solid grounding rings, and installation guidance for maintenance teams.",
-      zh: "杞寸數鍘嬫満鐞嗐€佸垎浣?鏁翠綋鎺ュ湴鐜€夊瀷涓庡畨瑁呰鐐圭殑鎶€鏈枃绔狅紝渚涚淮鎶や笌宸ョ▼鍥㈤槦鍙傝€冦€?",
+      zh: "提供轴电压机理、分体/整体接地环选型与安装要点等技术文章，供维护与工程团队参考。",
     },
     listIntro: {
       en: "Technical articles on shaft voltage, product selection, and installation - written for engineers and maintenance teams.",
-      zh: "鍥寸粫杞寸數鍘嬨€佷骇鍝侀€夊瀷涓庡畨瑁呭疄璺电殑鎶€鏈枃绔狅紝闈㈠悜宸ョ▼甯堜笌璁惧缁存姢鍥㈤槦銆?",
+      zh: "围绕轴电压、产品选型与安装实践的技术内容，面向工程师与设备维护团队。",
     },
   },
   faq: {
     path: "/faq",
     title: {
       en: "FAQ",
-      zh: "甯歌闂",
+      zh: "常见问题",
     },
     description: {
       en: "Answers to common questions about shaft voltage, bearing currents, and selecting a shaft grounding ring for VFD motors.",
-      zh: "鍏充簬杞寸數鍘嬨€佽酱鎵跨數娴佸強鍙橀鐢垫満杞存帴鍦扮幆閫夊瀷鐨勫父瑙侀棶棰樿В绛斻€?",
+      zh: "解答轴电压、轴承电流与变频电机轴接地环选型的常见问题。",
     },
   },
   resources: {
     path: "/resources",
     title: {
       en: "Downloads & Resources",
-      zh: "涓嬭浇涓庤祫鏂?",
+      zh: "下载与资料",
     },
     description: {
       en: "Product catalogs, datasheets, installation guides, and templates for specifying Volsun shaft grounding rings.",
-      zh: "浜у搧鍨嬪綍銆佹暟鎹墜鍐屻€佸畨瑁呮寚鍗椾笌閫夊瀷妯℃澘锛岀敤浜庢矁灏斿叴杞存帴鍦扮幆瑙勬牸涔︿笌閲囪喘娌熼€氥€?",
+      zh: "包含产品目录、数据手册、安装指南与选型模板，用于沃尔森轴接地环规格确认与采购沟通。",
     },
   },
   aboutUs: {
     path: "/about-us",
     title: {
       en: "About Volsun",
-      zh: "鍏充簬娌冨皵鍏?",
+      zh: "关于沃尔森",
     },
     description: {
       en: "Manufacturing capability, quality control, and export experience behind Volsun shaft grounding rings - a Volsun Group brand.",
-      zh: "娌冨皵鍏磋酱鎺ュ湴鐜儗鍚庣殑鍒堕€犺兘鍔涖€佽川閲忕鎺т笌鍑哄彛缁忛獙鈥斺€旀矁灏斿叴闆嗗洟鏃椾笅鍝佺墝銆?",
+      zh: "介绍沃尔森轴接地环背后的制造能力、质量控制与出口经验（沃尔森集团旗下品牌）。",
     },
   },
   contact: {
     path: "/contact",
     title: {
       en: "Contact & RFQ",
-      zh: "鑱旂郴涓庤鐩?",
+      zh: "联系与询盘",
     },
     description: {
       en: "Submit an RFQ, request a sample, share drawing details, or ask an engineer. We respond within 24 hours.",
-      zh: "鎻愪氦璇㈢洏銆佺敵璇锋牱鍝併€佸彂閫佸浘绾告垨鍜ㄨ宸ョ▼甯堬紝鎴戜滑閫氬父鍦?24 灏忔椂鍐呭洖澶嶃€?",
+      zh: "提交询盘、申请样品、发送图纸或咨询工程师，我们通常在 24 小时内回复。",
     },
   },
   privacyPolicy: {
     path: "/privacy-policy",
     title: {
       en: "Privacy Policy",
-      zh: "闅愮鏀跨瓥",
+      zh: "隐私政策",
     },
     description: {
       en: "How Volsun collects, uses, and retains personal data submitted through this website, including inquiry forms and email delivery.",
-      zh: "璇存槑娌冨皵鍏撮€氳繃鏈珯锛堝惈璇㈢洏琛ㄥ崟涓庨偖浠讹級鏀堕泦銆佷娇鐢ㄤ笌鐣欏瓨涓汉淇℃伅鐨勬柟寮忋€?",
+      zh: "说明沃尔森通过本站（含询盘表单与邮件）收集、使用与留存个人信息的方式。",
     },
   },
 } as const;

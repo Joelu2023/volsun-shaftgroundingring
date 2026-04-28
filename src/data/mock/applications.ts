@@ -5,18 +5,30 @@ export type ApplicationDetail = {
   id: string;
   slug: string;
   name: string;
+  /** Detail-page hero title (optional); defaults to name. */
+  heroTitle?: string;
   summary: string;
   /** Optional preview cover image under /public */
   coverImagePublicPath?: string | null;
   /** Optional detail-page hero image under /public */
   heroImagePublicPath?: string | null;
   phase: "p0" | "p1";
+  /** Detail-page SEO title (optional); defaults to name. */
+  seoTitle?: string;
+  /** Whether this page should be included in sitemap/indexing. */
+  isIndexable?: boolean;
   metaDescription: string;
   problem: string;
   whyItMatters: string;
   typicalRisks: string[];
   recommendedProducts: string[];
   checklist: string[];
+  primaryCtaLabel?: string;
+  primaryCtaHref?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+  tertiaryCtaLabel?: string;
+  tertiaryCtaHref?: string;
 };
 
 export const applications: ApplicationDetail[] = [
@@ -27,7 +39,7 @@ export const applications: ApplicationDetail[] = [
     summary: "Shaft voltage control for fans, compressors, and air handlers driven by VFDs.",
     coverImagePublicPath: "/images/applications/applications-1-v1.webp",
     heroImagePublicPath: "/images/applications/applications-1-v1.webp",
-    phase: "p0",
+    phase: "p1",
     metaDescription:
       "HVAC motor bearing protection: why VFD-driven fans develop shaft voltage, and how shaft grounding rings reduce fluting and downtime.",
     problem:
@@ -69,42 +81,180 @@ export const applications: ApplicationDetail[] = [
     id: "a-industrial",
     slug: "industrial-motors",
     name: "Industrial Motors & Machinery",
+    heroTitle: "Industrial Motor Shaft Grounding Rings for VFD Bearing Protection",
     summary:
-      "Broad industrial traffic landing page for VFD-induced shaft current education and conversion across pumps, fans, compressors, and general machinery.",
+      "For inverter-duty industrial motors in fans, pumps, compressors, conveyors, and automation machinery where shaft voltage and bearing current can drive repeated failures.",
     coverImagePublicPath: "/images/applications/industrial/industrial-motors-hero-v1.png",
     heroImagePublicPath: "/images/applications/industrial/industrial-motors-hero-v1.png",
     phase: "p0",
+    seoTitle: "Industrial Motor Shaft Grounding Rings | VFD Bearing Current Protection",
     metaDescription:
-      "Industrial motors and machinery application: explain shaft current risks under VFD operation and guide teams to practical bearing protection actions.",
+      "Protect inverter-duty industrial motors from shaft current-related bearing damage. Practical grounding solutions for retrofit and OEM deployment.",
     problem:
-      "Industrial inverter-duty motors often carry hidden shaft current risk that is misdiagnosed as purely mechanical wear until failures repeat.",
+      "In inverter-duty operation, shaft voltage can build and discharge as bearing current. Teams often see bearing fluting and repeated replacement before the electrical root cause is confirmed.",
     whyItMatters:
-      "A practical grounding strategy helps reliability teams reduce unplanned downtime, improve maintenance predictability, and align retrofit plus OEM rollout.",
-    typicalRisks: ["Unexplained repeat bearing replacements", "Escalating vibration/noise over time", "Downtime and maintenance cost uncertainty"],
+      "A controlled shaft current discharge path helps reduce risk of electrical erosion, improve maintenance predictability, and support both retrofit and OEM programs. Teams can start from standard split/solid options and evaluate VS-RD series suitability during engineering review.",
+    typicalRisks: [
+      "VFD bearing protection gaps in inverter-duty motor fleets",
+      "Shaft voltage and bearing current causing hidden wear accumulation",
+      "Bearing fluting and vibration escalation over time",
+      "Inverter-duty motor bearing failure repeating across similar assets",
+      "Uncontrolled shaft current discharge path under variable duty",
+    ],
     recommendedProducts: ["split-shaft-grounding-ring", "solid-shaft-grounding-ring", "custom-shaft-grounding-ring"],
     checklist: [
-      "Map high-risk VFD motor assets by criticality",
-      "Capture shaft size and installation constraints",
-      "Align engineering and procurement on pilot-to-rollout plan",
+      "Identify high-risk VFD motor assets (fans, pumps, compressors, conveyors, automation machinery)",
+      "Provide shaft diameter, speed range, and installation envelope constraints",
+      "Share VFD model, duty cycle, and current maintenance failure pattern",
+      "Define pilot validation scope before wider rollout",
     ],
+    primaryCtaLabel: "Select Product by Shaft Size",
+    primaryCtaHref: "/products",
+    secondaryCtaLabel: "Request Engineering Support",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=industrial-motors",
+    tertiaryCtaLabel: "Request a Quote",
+    tertiaryCtaHref: "/contact?cta_key=quote&application_interest=industrial-motors",
   },
   {
     id: "a-pumps",
-    slug: "pumps",
-    name: "Pumps",
-    summary: "Protect pump motors on VFD-controlled water and process pump skids.",
+    slug: "pump-systems",
+    name: "Pump Systems",
+    heroTitle: "Shaft Grounding Rings for VFD-Driven Pump Motors",
+    summary:
+      "For VFD-driven pump motors where shaft voltage and bearing current can trigger repeated bearing failure, fluting, and downtime in continuous-duty service.",
     coverImagePublicPath: "/images/applications/application-pump-systems-cover-en-v1.webp",
     heroImagePublicPath: "/images/applications/application-pump-systems-cover-en-v1.webp",
     phase: "p0",
+    seoTitle: "Pump Motor Shaft Grounding Rings | VFD Bearing Current Protection",
     metaDescription:
-      "Pump motor applications: shaft grounding rings for VFD-driven pumps to mitigate bearing currents and extend service intervals.",
+      "Shaft grounding solutions for VFD-driven pump motors. Reduce bearing current damage risk and improve uptime in continuous-duty pump systems.",
     problem:
-      "Pump motors on VFDs experience similar capacitive coupling effects as other inverter-duty loads. Bearing currents can accelerate pitting and reduce mean time between failures.",
+      "VFD-driven pump motors can accumulate shaft voltage and discharge through bearings, leading to repeated bearing damage and service interruption.",
     whyItMatters:
-      "Pumps often run unattended; electrical bearing damage can be mistaken for mechanical issues. A grounding ring provides a clear mitigation layer alongside good mechanical alignment.",
-    typicalRisks: ["Misdiagnosis as coupling or impeller issues", "Repeat bearing replacements", "Higher maintenance cost"],
-    recommendedProducts: ["split-shaft-grounding-ring", "solid-shaft-grounding-ring"],
-    checklist: ["Capture baseline vibration data", "Document bearing insulation if present", "Share nameplate and VFD model"],
+      "Pump stations are often unattended and run continuously. A practical grounding path helps reduce risk of electrical erosion and supports uptime-focused maintenance planning. VS-RD series options can be reviewed alongside split, solid, and custom configurations.",
+    typicalRisks: [
+      "Repeated bearing failure under continuous-duty operation",
+      "Bearing fluting and vibration increase after inverter retrofit",
+      "VFD-related shaft voltage left unmanaged",
+      "Unattended pump station risk and delayed fault response",
+      "Downtime escalation in critical water/process pump service",
+    ],
+    recommendedProducts: ["split-shaft-grounding-ring", "solid-shaft-grounding-ring", "custom-shaft-grounding-ring"],
+    checklist: [
+      "Provide motor power and rated speed",
+      "Provide shaft diameter and available installation space",
+      "Share VFD model and switching/drive context",
+      "Estimate running hours and duty profile",
+      "Describe pump type and site environment",
+    ],
+    primaryCtaLabel: "Request Pump Motor Grounding Review",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=pump-systems",
+    secondaryCtaLabel: "Get RFQ",
+    secondaryCtaHref: "/contact?cta_key=quote&application_interest=pump-systems",
+    tertiaryCtaLabel: "Contact Engineer",
+    tertiaryCtaHref: "/contact?cta_key=engineer&application_interest=pump-systems",
+  },
+  {
+    id: "a-wind",
+    slug: "wind-power",
+    name: "Wind Power",
+    heroTitle: "Shaft Grounding Solutions for Wind Power Generators",
+    summary:
+      "Focused page for wind power generator and drivetrain motor scenarios with long operating cycles, harsh environment constraints, and maintenance predictability requirements.",
+    coverImagePublicPath: "/images/applications/applications-2-v1.webp",
+    heroImagePublicPath: "/images/applications/applications-2-v1.webp",
+    phase: "p0",
+    seoTitle: "Wind Power Generator Shaft Grounding | Bearing Current Mitigation",
+    metaDescription:
+      "Shaft grounding approach for wind power generator and drivetrain motor scenarios to reduce electrical bearing damage risk and improve maintenance predictability.",
+    problem:
+      "Wind power generator and drivetrain-related motors can experience shaft voltage and bearing-current behavior during long-cycle operation in harsh field conditions.",
+    whyItMatters:
+      "A practical grounding strategy can help reduce risk of repeat interventions and support more predictable maintenance windows across remote assets.",
+    typicalRisks: [
+      "Bearing-current risk accumulation over long operating cycles",
+      "Electrical and mechanical root causes difficult to isolate",
+      "Maintenance planning uncertainty in harsh environments",
+    ],
+    recommendedProducts: ["solid-shaft-grounding-ring", "custom-shaft-grounding-ring"],
+    checklist: [
+      "Clarify generator/drivetrain motor duty profile",
+      "Provide shaft dimensions and installation envelope",
+      "Describe environment constraints (humidity, dust, corrosion exposure)",
+      "Align technical review before broader deployment",
+    ],
+    primaryCtaLabel: "Discuss Wind Application",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=wind-power",
+    secondaryCtaLabel: "Request Technical Review",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=wind-power",
+  },
+  {
+    id: "a-transport",
+    slug: "transportation",
+    name: "Transportation",
+    heroTitle: "Shaft Grounding Solutions for Transportation Motor Systems",
+    summary:
+      "Application page for rail transportation, port machinery, and special-vehicle inverter-duty traction or auxiliary motor scenarios.",
+    coverImagePublicPath: "/images/applications/applications-4-v1.webp",
+    heroImagePublicPath: "/images/applications/applications-4-v1.webp",
+    phase: "p0",
+    seoTitle: "Transportation Motor Shaft Grounding Solutions | Bearing Protection",
+    metaDescription:
+      "Application page for transportation inverter-duty motors. Manage shaft current risk and improve service interval stability with practical grounding paths.",
+    problem:
+      "Transportation motor systems often run in complex operating conditions with vibration and limited maintenance windows, where unmanaged shaft current can accelerate bearing wear.",
+    whyItMatters:
+      "Early, customized installation review helps reduce risk of repeated field replacement and supports more stable service intervals.",
+    typicalRisks: [
+      "Bearing wear acceleration under inverter-duty operation",
+      "Service intervals becoming difficult to predict",
+      "Maintenance windows constrained by operating schedules",
+    ],
+    recommendedProducts: ["split-shaft-grounding-ring", "custom-shaft-grounding-ring"],
+    checklist: [
+      "Clarify transportation segment (rail, port machinery, special vehicles)",
+      "Provide shaft diameter, speed envelope, and vibration constraints",
+      "Describe installation access and available maintenance window",
+      "Submit customization constraints for technical review",
+    ],
+    primaryCtaLabel: "Submit Transportation Motor Details",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=transportation",
+    secondaryCtaLabel: "Request Technical Review",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=transportation",
+  },
+  {
+    id: "a-others",
+    slug: "others",
+    name: "Others",
+    heroTitle: "Not Sure Which Shaft Grounding Ring Fits Your Motor?",
+    summary:
+      "Fallback intake page for uncategorized scenarios (for example HVAC, home appliance, and general equipment) before routing to a dedicated application path.",
+    coverImagePublicPath: null,
+    heroImagePublicPath: null,
+    phase: "p0",
+    seoTitle: "Other Motor Applications | Shaft Grounding Inquiry Intake",
+    metaDescription:
+      "For applications not yet covered by dedicated pages. Submit your motor scenario and get a suitable shaft grounding recommendation.",
+    problem:
+      "Some inquiries do not match current top-level categories, but still need fast technical triage for shaft current discharge and bearing protection scope.",
+    whyItMatters:
+      "A lightweight intake path helps teams submit usable technical context without forcing an incorrect industry category.",
+    typicalRisks: [
+      "Delayed technical scoping from unclear category fit",
+      "Misrouted inquiry due to forced category selection",
+      "Lost early-stage leads when entry points are ambiguous",
+    ],
+    recommendedProducts: ["split-shaft-grounding-ring", "solid-shaft-grounding-ring", "custom-shaft-grounding-ring"],
+    checklist: [
+      "Provide motor type and shaft diameter",
+      "Provide speed range and VFD condition",
+      "Describe operating environment and installation space",
+      "Share duty profile and project timeline",
+    ],
+    primaryCtaLabel: "Describe Your Application",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=others",
+    secondaryCtaLabel: "Contact Engineering",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=others",
   },
   {
     id: "a-case-il-pump",
@@ -114,9 +264,9 @@ export const applications: ApplicationDetail[] = [
       "Industry: Pumps · Aquaculture · Israel. Real customer case: recurring bearing corrosion on VFD-driven pump motors solved with Volsun VS-RDW shaft grounding rings—strong reliability with better cost efficiency vs imported alternatives.",
     coverImagePublicPath: "/images/applications/case-study-pump-motor-shaft-grounding.jpg",
     heroImagePublicPath: "/images/applications/case-study-pump-systems-aeration.jpg",
-    phase: "p0",
+    phase: "p1",
     metaDescription:
-      "Case study: Israeli pump OEM (aquaculture / water systems) eliminated bearing corrosion on 75 kW VFD pump motors using Volsun VS-RDW 3rd generation shaft grounding rings.",
+      "Case study: Israeli pump OEM (aquaculture / water systems) addressed recurring bearing corrosion on 75 kW VFD pump motors using Volsun VS-RDW 3rd generation shaft grounding rings.",
     problem:
       "The customer—a major Israeli water pump supplier serving aquaculture and industrial water systems—saw recurring motor bearing corrosion that drove premature failures and higher maintenance frequency. Technical review pointed to shaft voltage and stray currents, a common pattern on VFD-driven motors. They initially evaluated well-known imported grounding rings, but unit cost blocked large-scale rollout across many pump systems.",
     whyItMatters:
@@ -138,6 +288,7 @@ export const applications: ApplicationDetail[] = [
     id: "a-wt",
     slug: "water-treatment",
     name: "Water Treatment",
+    isIndexable: false,
     summary: "Coming soon: extended guidance for treatment plant motor trains.",
     coverImagePublicPath: null,
     phase: "p1",

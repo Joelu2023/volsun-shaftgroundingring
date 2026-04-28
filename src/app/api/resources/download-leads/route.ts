@@ -7,6 +7,7 @@ import {
   resolveSignedDownloadUrl,
   resolvePublishedDownloadResource,
 } from "@/lib/resource-center/download-leads";
+import { consumeRateLimit, getClientIpFromHeaders } from "@/lib/security/rate-limit";
 import { sendResourceDownloadEmail } from "@/lib/resource-center/send-download-email";
 
 function asTrimmedString(value: FormDataEntryValue | null) {
@@ -14,6 +15,26 @@ function asTrimmedString(value: FormDataEntryValue | null) {
 }
 
 export async function POST(request: Request) {
+  const ip = getClientIpFromHeaders(request.headers);
+  const limiter = consumeRateLimit({
+    key: `download-leads:${ip}`,
+    limit: 10,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (!limiter.allowed) {
+    return NextResponse.json(
+      {
+        ok: false as const,
+        error: "rate_limited",
+        message: "Too many download requests. Please retry later.",
+      },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limiter.retryAfterSec) },
+      },
+    );
+  }
+
   const formData = await request.formData();
   const localeRaw = asTrimmedString(formData.get("locale"));
   const slug = asTrimmedString(formData.get("slug"));

@@ -3,11 +3,33 @@ import { randomUUID } from "crypto";
 import { parseInquirySubmission } from "@/lib/inquiries/validate";
 import { getMissingSmtpEnv, sendInquiryEmail } from "@/lib/inquiries/send-email";
 import { appendInquiryRecord, getInquiryLogFilePath, isDevInquiryLogOnlyEnabled, sanitizeSmtpError } from "@/lib/inquiries/dev-persist";
+import { consumeRateLimit, getClientIpFromHeaders } from "@/lib/security/rate-limit";
 import type { InquiryDeliveryStatus } from "@/types/inquiry";
 
 /** POST /api/inquiries — 校验 InquirySubmission；生产走 SMTP，开发可显式落盘 */
 export async function POST(req: Request) {
   const requestId = randomUUID();
+  const ip = getClientIpFromHeaders(req.headers);
+  const limiter = consumeRateLimit({
+    key: `inquiries:${ip}`,
+    limit: 5,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (!limiter.allowed) {
+    return NextResponse.json(
+      {
+        ok: false as const,
+        error: "rate_limited",
+        request_id: requestId,
+        message: "Too many inquiry submissions. Please retry later.",
+      },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limiter.retryAfterSec) },
+      },
+    );
+  }
+
   let raw: unknown;
   try {
     raw = await req.json();

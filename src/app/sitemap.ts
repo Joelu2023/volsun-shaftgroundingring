@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   if (!base) {
     return [];
   }
+  const indexableApplications = applications.filter((application) => application.isIndexable !== false);
 
   return [
     { url: `${base}/en` },
@@ -27,7 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: `${base}/en/case-studies/${c.slug}` },
       { url: `${base}/zh/case-studies/${c.slug}` },
     ]),
-    ...applications.flatMap((application) => [
+    ...indexableApplications.flatMap((application) => [
       { url: `${base}/en/applications/${application.slug}` },
       { url: `${base}/zh/applications/${application.slug}` },
     ]),

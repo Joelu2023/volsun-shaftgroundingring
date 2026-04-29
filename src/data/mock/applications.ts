@@ -56,7 +56,7 @@ export const applications: ApplicationDetail[] = [
     name: "Electric Vehicles",
     summary:
       "Core EV industry page for oil-cooled traction motor bearing protection, validation evidence alignment, and program conversion.",
-    coverImagePublicPath: "/images/applications/ev/shaft-grounding-ev-oil-cooled-motor-hero-v1.webp",
+    coverImagePublicPath: "/images/home/home-electric-vehicles-cover-en-v1.webp",
     heroImagePublicPath: "/images/applications/ev/shaft-grounding-ev-oil-cooled-motor-hero-v1.webp",
     phase: "p0",
     metaDescription:
@@ -84,7 +84,7 @@ export const applications: ApplicationDetail[] = [
     heroTitle: "Industrial Motor Shaft Grounding Rings for VFD Bearing Protection",
     summary:
       "For inverter-duty industrial motors in fans, pumps, compressors, conveyors, and automation machinery where shaft voltage and bearing current can drive repeated failures.",
-    coverImagePublicPath: "/images/applications/industrial/industrial-app-machinery-v1.png",
+    coverImagePublicPath: "/images/home/home-industrial-motors-cover-en-v1.webp",
     heroImagePublicPath: "/images/applications/industrial/industrial-app-machinery-v1.png",
     phase: "p0",
     seoTitle: "Industrial Motor Shaft Grounding Rings | VFD Bearing Current Protection",
@@ -122,7 +122,7 @@ export const applications: ApplicationDetail[] = [
     heroTitle: "Shaft Grounding Rings for VFD-Driven Pump Motors",
     summary:
       "For VFD-driven pump motors where shaft voltage and bearing current can trigger repeated bearing failure, fluting, and downtime in continuous-duty service.",
-    coverImagePublicPath: "/images/applications/case-study-pump-motor-shaft-grounding.jpg",
+    coverImagePublicPath: "/images/home/home-pump-systems-cover-en-v1.webp",
     heroImagePublicPath: "/images/applications/case-study-pump-motor-shaft-grounding.jpg",
     phase: "p0",
     seoTitle: "Pump Motor Shaft Grounding Rings | VFD Bearing Current Protection",
@@ -161,7 +161,7 @@ export const applications: ApplicationDetail[] = [
     heroTitle: "Shaft Grounding Solutions for Wind Power Generators",
     summary:
       "Focused page for wind power generator and drivetrain motor scenarios with long operating cycles, harsh environment constraints, and maintenance predictability requirements.",
-    coverImagePublicPath: "/images/applications/applications-4-v1.webp",
+    coverImagePublicPath: "/images/home/home-wind-power-cover-en-v1.webp",
     heroImagePublicPath: "/images/applications/applications-2-v1.webp",
     phase: "p0",
     seoTitle: "Wind Power Generator Shaft Grounding | Bearing Current Mitigation",
@@ -229,7 +229,7 @@ export const applications: ApplicationDetail[] = [
     heroTitle: "Not Sure Which Shaft Grounding Ring Fits Your Motor?",
     summary:
       "Fallback intake page for uncategorized scenarios (for example HVAC, home appliance, and general equipment) before routing to a dedicated application path.",
-    coverImagePublicPath: null,
+    coverImagePublicPath: "/images/applications/others-home-v1.webp",
     heroImagePublicPath: null,
     phase: "p0",
     seoTitle: "Other Motor Applications | Shaft Grounding Inquiry Intake",

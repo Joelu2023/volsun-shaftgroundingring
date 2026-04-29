@@ -215,7 +215,7 @@ export function EvApplicationPageClient({ locale, data }: Props) {
               fallbackLabel={t.whyFailTitle}
               className="aspect-[16/9] max-w-3xl"
               sizes={EV_IMG_SIZES.max3xl}
-              imageFit="contain"
+              imageFit="coverTop"
             />
           </div>
         ) : null}
@@ -510,8 +510,8 @@ function MediaSlot({
   className?: string;
   sizes?: string;
   priority?: boolean;
-  /** `contain` keeps charts/diagrams readable; `cover` suits photos and product shots. */
-  imageFit?: "cover" | "contain";
+  /** `contain` keeps charts/diagrams readable; `cover` suits photos; `coverTop` keeps top text visible. */
+  imageFit?: "cover" | "contain" | "coverTop";
 }) {
   if (!imagePath) {
     return (
@@ -527,7 +527,11 @@ function MediaSlot({
         src={imagePath}
         alt={alt}
         fill
-        className={cn(imageFit === "contain" ? "object-contain bg-slate-50 p-2 sm:p-3" : "object-cover")}
+        className={cn(
+          imageFit === "contain" && "object-contain bg-slate-50 p-2 sm:p-3",
+          imageFit === "cover" && "object-cover",
+          imageFit === "coverTop" && "object-cover object-top",
+        )}
         sizes={sizes}
         priority={priority}
       />

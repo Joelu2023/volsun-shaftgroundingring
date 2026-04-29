@@ -8,6 +8,9 @@ import { organizationJsonLd } from "@/lib/seo/jsonld-builders";
 import { getMetadataBase } from "@/config/site";
 import "./globals.css";
 
+/** Root reads `x-pathname` from middleware; must be dynamic so this coexists with App Router static pages. */
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   metadataBase: getMetadataBase(),
   title: {
@@ -28,7 +31,7 @@ export default async function RootLayout({
   const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
 
   return (
-    <html lang={lang}>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>

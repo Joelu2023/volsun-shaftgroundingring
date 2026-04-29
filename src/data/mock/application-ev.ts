@@ -108,7 +108,7 @@ export type EvApplicationPageData = {
 export const electricVehiclesApplicationPage: EvApplicationPageData = {
   slug: "electric-vehicles",
   path: "/applications/electric-vehicles",
-  heroImagePath: `${EV_IMG}/shaft-grounding-ev-oil-cooled-motor-hero-v1.webp`,
+  heroImagePath: "/images/applications/application-shaft-grounding-ev-oil-cooled-motor-v1.webp",
   heroImageAlt: {
     en: "Oil-cooled EV traction motor with shaft grounding for bearing protection in e-axle applications",
     zh: "Oil-cooled EV traction motor with shaft grounding for bearing protection in e-axle applications",

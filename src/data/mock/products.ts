@@ -28,13 +28,13 @@ export const products: ProductDetail[] = [
     slug: "split-shaft-grounding-ring",
     name: "VS-RD/RDW shaft grounding ring",
     shortDescription:
-      "Fan-shaped, formerly known as Split—field-installable for retrofit bearing protection without full shaft pull.",
+      "RD/RDW, formerly known as Solid—OEM-style for new motor builds and repeatable assembly.",
     badge: "Retrofit",
     phase: "p0",
     metaDescription:
-      "Split shaft grounding ring for VFD motors. Fan-shaped, formerly known as Split. Retrofit without full disassembly; reliable bearing protection.",
+      "Solid shaft grounding ring for OEM motor builds. RD/RDW, formerly known as Solid. Stable mounting; VFD bearing protection.",
     overview:
-      "Fan-shaped, formerly known as Split, is field-installable: it gives VFD-driven motors a shaft grounding path without full shaft pull or long downtime—ideal for MRO, HVAC upgrades, and pump skids with limited access.",
+      "RD/RDW, formerly known as Solid, is OEM-style for new builds and batch assembly with predictable shaft access—repeatable mounting and a reliable shaft-to-frame path for continuous-duty VFD motors.",
     primaryImagePublicPath: "/images/products/home-product-solid-v1.webp",
     secondaryImagePublicPath: "/images/products/product-split-install-shared-v1.png",
     specFields: [
@@ -117,13 +117,13 @@ export const products: ProductDetail[] = [
     slug: "solid-shaft-grounding-ring",
     name: "VS-ST/STW shaft grounding ring",
     shortDescription:
-      "RD/RDW, formerly known as Solid—OEM-style for new motor builds and repeatable assembly.",
+      "Fan-shaped, formerly known as Split—field-installable for retrofit bearing protection without full shaft pull.",
     badge: "OEM",
     phase: "p0",
     metaDescription:
-      "Solid shaft grounding ring for OEM motor builds. RD/RDW, formerly known as Solid. Stable mounting; VFD bearing protection.",
+      "Split shaft grounding ring for VFD motors. Fan-shaped, formerly known as Split. Retrofit without full disassembly; reliable bearing protection.",
     overview:
-      "RD/RDW, formerly known as Solid, is OEM-style for new builds and batch assembly with predictable shaft access—repeatable mounting and a reliable shaft-to-frame path for continuous-duty VFD motors.",
+      "Fan-shaped, formerly known as Split, is field-installable: it gives VFD-driven motors a shaft grounding path without full shaft pull or long downtime—ideal for MRO, HVAC upgrades, and pump skids with limited access.",
     primaryImagePublicPath: "/images/products/home-product-solid-fan-v2.png",
     secondaryImagePublicPath: "/images/products/product-solid-install-shared-v1.png",
     specFields: [

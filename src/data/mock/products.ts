@@ -24,8 +24,8 @@ export type ProductDetail = {
 
 export const products: ProductDetail[] = [
   {
-    id: "p-split",
-    slug: "split-shaft-grounding-ring",
+    id: "p-solid",
+    slug: "solid-shaft-grounding-ring",
     name: "VS-RD/RDW shaft grounding ring",
     shortDescription:
       "RD/RDW, formerly known as Solid—OEM-style for new motor builds and repeatable assembly.",
@@ -113,8 +113,8 @@ export const products: ProductDetail[] = [
     ],
   },
   {
-    id: "p-solid",
-    slug: "solid-shaft-grounding-ring",
+    id: "p-split",
+    slug: "split-shaft-grounding-ring",
     name: "VS-ST/STW shaft grounding ring",
     shortDescription:
       "Fan-shaped, formerly known as Split—field-installable for retrofit bearing protection without full shaft pull.",

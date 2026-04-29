@@ -48,8 +48,8 @@ export const navigationEn: NavItem[] = [
     type: "dropdown",
     highlight: false,
     children: [
-      { label: "VS-RD/RDW shaft grounding ring", href: "/products/split-shaft-grounding-ring" },
-      { label: "VS-ST/STW shaft grounding ring", href: "/products/solid-shaft-grounding-ring" },
+      { label: "VS-RD/RDW shaft grounding ring", href: "/products/solid-shaft-grounding-ring" },
+      { label: "VS-ST/STW shaft grounding ring", href: "/products/split-shaft-grounding-ring" },
       { label: "OEM shaft grounding ring", href: "/products/custom-shaft-grounding-ring" },
     ],
   },

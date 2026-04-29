@@ -167,19 +167,19 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
     en: [
       {
         id: "rec-split",
-        title: "Split shaft grounding ring",
-        body: "Retrofit-friendly installation when the motor is already in service or access to the shaft end is limited.",
+        title: "Split vs Fan-shaped (retrofit)",
+        body: "Retrofit-friendly when the motor is in service or shaft-end access is limited.",
         productSlug: "split-shaft-grounding-ring",
         imagePath: "/images/placeholders/product-shaft-ring-split.svg",
-        imageAlt: "Split-type shaft grounding ring for retrofit on industrial VFD motor shaft",
+        imageAlt: "Fan-shaped split-type shaft grounding ring on industrial VFD motor shaft",
       },
       {
         id: "rec-solid",
-        title: "Solid shaft grounding ring",
-        body: "Compact option when assembly sequence allows a one-piece ring and you want a straightforward grounding path.",
+        title: "Solid vs RD/RDW (OEM)",
+        body: "Compact when assembly allows a one-piece ring and you want a straightforward grounding path.",
         productSlug: "solid-shaft-grounding-ring",
         imagePath: "/images/placeholders/product-shaft-ring-solid.svg",
-        imageAlt: "Solid one-piece shaft grounding ring for industrial motor bearing protection",
+        imageAlt: "RD/RDW solid one-piece shaft grounding ring for industrial motor bearing protection",
       },
       {
         id: "rec-custom",
@@ -193,19 +193,19 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
     zh: [
       {
         id: "rec-split",
-        title: "剖分式轴接地环",
-        body: "适合在役电机或轴端空间受限时的改造导入，安装可达性更好。",
+        title: "扇形（原分体式）轴接地环",
+        body: "在役电机或轴端受限时改造导入；Split 关键词保留。",
         productSlug: "split-shaft-grounding-ring",
         imagePath: "/images/placeholders/product-shaft-ring-split.svg",
-        imageAlt: "Split-type shaft grounding ring for retrofit on industrial VFD motor shaft",
+        imageAlt: "扇形轴接地环用于工业变频电机轴改造场景",
       },
       {
         id: "rec-solid",
-        title: "整体式轴接地环",
-        body: "装配顺序允许一体环时结构紧凑，接地路径直观。",
+        title: "RD/RDW（原整体式）轴接地环",
+        body: "一体环紧凑、接地路径直观；Solid 关键词保留。",
         productSlug: "solid-shaft-grounding-ring",
         imagePath: "/images/placeholders/product-shaft-ring-solid.svg",
-        imageAlt: "Solid one-piece shaft grounding ring for industrial motor bearing protection",
+        imageAlt: "RD/RDW 整体式轴接地环用于工业电机轴承保护",
       },
       {
         id: "rec-custom",

@@ -64,27 +64,28 @@ export const articles: ArticleRecord[] = [
     dateModified: "2026-03-15T10:00:00.000Z",
     locales: {
       en: {
-        title: "Split vs Solid Shaft Grounding Rings: Which One Should You Choose?",
-        excerpt: "Selection guide comparing split retrofit rings and solid OEM-style rings.",
+        title: "Split vs Solid (Fan-shaped vs RD/RDW): Which Shaft Grounding Ring?",
+        excerpt:
+          "Split vs solid retrofit and OEM rings—Fan-shaped and RD/RDW product naming; Split/Solid keywords unchanged.",
         metaDescription:
-          "Compare split vs solid shaft grounding rings: retrofit access, OEM assembly, maintenance windows, and how to choose for HVAC, pumps, and MRO.",
+          "Compare Split vs Solid (Fan-shaped vs RD/RDW): retrofit, OEM assembly, HVAC, pumps, MRO.",
         paragraphs: [
-          "Split rings are designed for scenarios where the motor remains installed and access is limited. They can often be installed without full disassembly, which matters for uptime-focused facilities.",
-          "Solid rings are commonly used in OEM builds where the motor is fully accessible during assembly. They can offer straightforward mounting when the production process is stable and repeatable.",
-          "If your priority is field retrofit and fast intervention, start with split. If you control the full assembly line and can mount during build, solid may be simpler and cost-effective at volume.",
-          "When shaft geometry or envelope constraints are unusual, a drawing-based custom solution may be required regardless of split vs solid.",
+          "Fan-shaped, formerly known as Split, suits motors that stay installed with limited access—often installable without full disassembly.",
+          "RD/RDW, formerly known as Solid, suits OEM builds where the motor is fully accessible during assembly.",
+          "Field retrofit: prefer Fan-shaped. Controlled assembly line: RD/RDW is often simpler at volume.",
+          "Unusual geometry may need custom work—whether you started from Split/Solid (Fan-shaped/RD/RDW) or not.",
         ],
       },
       zh: {
-        title: "分体式与整体式轴接地环：如何选型？",
-        excerpt: "对比现场改造用分体环与产线装配用整体环的适用场景。",
+        title: "分体式与整体式如何选型？（Split vs Solid｜扇形 vs RD/RDW）",
+        excerpt: "改造现场 vs OEM 产线；扇形与 RD/RDW 命名并列，Split/Solid 检索保留。",
         metaDescription:
-          "比较分体式与整体式轴接地环：改造可达性、OEM 装配、检修窗口，以及在暖通、水泵与 MRO 中的选型要点。",
+          "分体 vs 整体（Split/Solid，扇形 / RD/RDW）轴接地环：改造可达、OEM 装配、暖通/水泵/MRO。",
         paragraphs: [
-          "分体式环适用于电机已就位、拆装空间受限的场景，往往可在不完全拆解的情况下安装，对强调稼动率的现场更友好。",
-          "整体式环常见于 OEM 总装阶段，轴端可充分暴露时装配路径更直接，在工艺稳定、批量重复时更具成本优势。",
-          "若以现场改造、快速干预为主，优先考虑分体式；若整条产线可控、可在装配期安装，则整体式在大批量时可能更简捷。",
-          "当轴伸几何或安装包络特殊时，无论分体或整体都可能需要图纸驱动的定制方案。",
+          "扇形（原分体式）适合电机已就位、空间有限—常可不完全拆解安装。",
+          "RD/RDW（原整体式）适合 OEM 总装、轴端可充分暴露的批量场景。",
+          "现场改造优先扇形；产线可控、装配期可装环则 RD/RDW 往往更省事。",
+          "包络特殊时可能需定制—与是否从 Split/Solid 起步无关。",
         ],
       },
     },
@@ -96,25 +97,25 @@ export const articles: ArticleRecord[] = [
     dateModified: "2026-03-18T10:00:00.000Z",
     locales: {
       en: {
-        title: "How to Install a Split Shaft Grounding Ring Without Full Motor Disassembly",
-        excerpt: "Practical installation orientation for maintenance teams performing retrofits.",
+        title: "Install a Split / Fan-shaped Ring Without Full Motor Disassembly",
+        excerpt: "Retrofit checklist for Fan-shaped rings—split-type keywords unchanged for SEO.",
         metaDescription:
-          "Installation guidance for split shaft grounding rings: preparation, fit checks, and common pitfalls for field teams working without full motor tear-down.",
+          "Split shaft grounding rings: Fan-shaped install guide—prep, clearance, torque—without full tear-down.",
         paragraphs: [
           "Start with a clean shaft surface in the intended mounting zone. Burrs and contamination can affect seating and electrical contact behavior.",
-          "Confirm clearance for the split housing and torque tooling. If access is tight, plan the sequence before loosening existing components.",
+          "Confirm clearance for the Fan-shaped housing and torque tooling. If access is tight, plan the sequence before loosening existing components.",
           "Tighten fasteners gradually and evenly to avoid pinching or distorting the housing. Follow the recommended torque range for your series.",
           "After installation, record the motor tag, shaft diameter, and ring position for future maintenance. If you need validation support, contact Volsun with photos and nameplate data.",
         ],
       },
       zh: {
-        title: "如何在不完全拆解电机的情况下安装分体式轴接地环",
-        excerpt: "面向现场改造团队的安装要点与常见误区。",
+        title: "不完全拆解电机时如何安装扇形（原分体式）轴接地环？",
+        excerpt: "现场改造安装要点；Split/分体式仍为检索词。",
         metaDescription:
-          "分体式轴接地环安装指导：表面处理、工具空间、紧固顺序，以及在不完全拆解电机时的注意事项。",
+          "扇形（原分体式）轴接地环安装：表面处理、工具空间、紧固顺序（不完全拆解场景）。",
         paragraphs: [
           "先在计划安装区域清洁轴表面，去除毛刺与污染物，以免影响贴合与导电稳定性。",
-          "确认分体外壳与力矩工具的操作空间；若空间局促，应在松动既有部件前规划好拆装顺序。",
+          "确认扇形外壳与力矩工具的操作空间；若空间局促，应在松动既有部件前规划好拆装顺序。",
           "螺钉应对角、分步拧紧，避免壳体偏斜或变形，并遵循该系列的推荐力矩范围。",
           "安装后记录电机铭牌、轴径及环的安装位置，便于后续维护。如需复核，可向沃尔兴提供照片与铭牌信息。",
         ],

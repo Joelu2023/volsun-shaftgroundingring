@@ -17,25 +17,25 @@ export const HOME_EN_APPLICATION_SLOTS: HomeEnApplicationSlot[] = [
     id: "electric-vehicles",
     label: "Electric Vehicles",
     href: "/applications/electric-vehicles",
-    coverImagePublicPath: "/images/applications/ev/shaft-grounding-ev-oil-cooled-motor-hero-v1.webp",
+    coverImagePublicPath: "/images/home/home-electric-vehicles-cover-en-v1.webp",
   },
   {
     id: "industrial-motors",
     label: "Industrial Motors & Machinery",
     href: "/applications/industrial-motors",
-    coverImagePublicPath: "/images/applications/industrial/industrial-app-machinery-v1.png",
+    coverImagePublicPath: "/images/home/home-industrial-motors-cover-en-v1.webp",
   },
   {
     id: "pump-systems",
     label: "Pump Systems",
     href: "/applications/pump-systems",
-    coverImagePublicPath: "/images/applications/case-study-pump-motor-shaft-grounding.jpg",
+    coverImagePublicPath: "/images/home/home-pump-systems-cover-en-v1.webp",
   },
   {
     id: "wind-power",
     label: "Wind Power",
     href: "/applications/wind-power",
-    coverImagePublicPath: "/images/applications/applications-4-v1.webp",
+    coverImagePublicPath: "/images/home/home-wind-power-cover-en-v1.webp",
   },
 ];
 

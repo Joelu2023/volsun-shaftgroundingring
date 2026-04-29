@@ -189,13 +189,33 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
   },
   productSelection: {
     en: [
-      { id: "sel-1", title: "Retrofit-first scenario", body: "Use split architecture where access and downtime constraints dominate.", productSlug: "split-shaft-grounding-ring" },
-      { id: "sel-2", title: "New assembly scenario", body: "Use integrated structure for OEM assembly with stable process windows.", productSlug: "solid-shaft-grounding-ring" },
+      {
+        id: "sel-1",
+        title: "Retrofit-first scenario",
+        body: "Prefer Fan-shaped where access and downtime dominate—Split/Solid naming unchanged.",
+        productSlug: "split-shaft-grounding-ring",
+      },
+      {
+        id: "sel-2",
+        title: "New assembly scenario",
+        body: "Prefer RD/RDW for OEM assembly with stable windows.",
+        productSlug: "solid-shaft-grounding-ring",
+      },
       { id: "sel-3", title: "Special envelope or shaft geometry", body: "Use custom package for non-standard dimensions and validation requirements.", productSlug: "custom-shaft-grounding-ring" },
     ],
     zh: [
-      { id: "sel-1", title: "改造优先场景", body: "当安装空间与停机窗口受限时，优先分体结构。", productSlug: "split-shaft-grounding-ring" },
-      { id: "sel-2", title: "新机装配场景", body: "总装过程更适配整体结构，工艺窗口更稳定。", productSlug: "solid-shaft-grounding-ring" },
+      {
+        id: "sel-1",
+        title: "改造优先场景",
+        body: "空间或停机受限时优先扇形（原分体式）；Split 检索保留。",
+        productSlug: "split-shaft-grounding-ring",
+      },
+      {
+        id: "sel-2",
+        title: "新机装配场景",
+        body: "总装更适合 RD/RDW（原整体式）。",
+        productSlug: "solid-shaft-grounding-ring",
+      },
       { id: "sel-3", title: "特殊包络或轴几何", body: "非标尺寸与验证要求建议采用定制方案。", productSlug: "custom-shaft-grounding-ring" },
     ],
   },
@@ -229,25 +249,28 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
   },
   ctas: {
     en: [
-      { id: "cta-sample", label: "Request a Sample", href: "/contact?cta_key=sample&application_interest=industrial-motors", style: "primary" },
-      { id: "cta-engineer", label: "Talk to an Engineer", href: "/contact?cta_key=engineer&application_interest=industrial-motors", style: "ghost" },
+      { id: "cta-size", label: "Select Product by Shaft Size", href: "/products", style: "primary" },
+      { id: "cta-engineer", label: "Request Engineering Support", href: "/contact?cta_key=engineer&application_interest=industrial-motors", style: "ghost" },
+      { id: "cta-quote", label: "Request a Quote", href: "/contact?cta_key=quote&application_interest=industrial-motors", style: "ghost" },
     ],
     zh: [
-      { id: "cta-sample", label: "申请样品", href: "/contact?cta_key=sample&application_interest=industrial-motors", style: "primary" },
-      { id: "cta-engineer", label: "联系工程师", href: "/contact?cta_key=engineer&application_interest=industrial-motors", style: "ghost" },
+      { id: "cta-size", label: "按轴径选型", href: "/products", style: "primary" },
+      { id: "cta-engineer", label: "申请工程支持", href: "/contact?cta_key=engineer&application_interest=industrial-motors", style: "ghost" },
+      { id: "cta-quote", label: "申请报价", href: "/contact?cta_key=quote&application_interest=industrial-motors", style: "ghost" },
     ],
   },
   locales: {
     en: {
-      seoTitle: "Stop VFD Bearing Failures | Industrial Motors & Machinery",
+      seoTitle: "Industrial Motor Shaft Grounding Rings | VFD Bearing Current Protection",
       seoDescription:
-        "Stop bearing failures in VFD-driven industrial motors: reduce downtime, extend motor life, and convert traffic with a practical shaft grounding path for pumps, fans, compressors, and machinery.",
+        "Protect inverter-duty industrial motors from shaft current-related bearing damage. Practical grounding solutions for retrofit and OEM deployment.",
       heroKicker: "Industrial Motors & Machinery",
-      heroTitle: "Stop Bearing Failures in VFD-Driven Industrial Motors",
-      heroSubtitle: "Reduce downtime and extend motor life with reliable shaft grounding.",
+      heroTitle: "Industrial Motor Shaft Grounding Rings for VFD Bearing Protection",
+      heroSubtitle: "Help reduce shaft voltage and bearing current risk in fans, pumps, compressors, conveyors, and automation machinery.",
       heroImageAlt: "Industrial electric motor with variable frequency drive equipment for VFD-duty bearing protection context",
       whyTitle: "Why Industrial Motors Fail Under VFD Operation",
-      whyBody: "VFD operation changes electrical stress patterns. Without controlled shaft current discharge, bearings can degrade earlier than expected.",
+      whyBody:
+        "VFD operation changes electrical stress patterns. Without a controlled shaft current discharge path, bearing current can accumulate risk of fluting and inverter-duty motor bearing failure.",
       whyBullets: [
         "High-frequency voltage pulses elevate shaft potential.",
         "Current seeks the lowest impedance path, often through bearings.",
@@ -259,11 +282,11 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       whyVolsunTitle: "Why Industrial Customers Choose Volsun",
       whyVolsunBody:
         "Industrial buyers need fast alignment between site reality and engineering evidence. Volsun focuses on repeatable integration, clear documentation support, and a pragmatic rollout path from pilot assets to fleet-scale programs.",
-      provenTitle: "Proven Across Industrial Applications",
+      provenTitle: "Industrial Validation Focus",
       provenBody:
         "Lightweight proof signals you can strengthen with customer-approved metrics. Use this block to anchor confidence before the comparison table.",
       provenBullets: [
-        "Validated approach for inverter-duty bearing current mitigation across common industrial motor classes.",
+        "Designed to support VFD bearing protection and shaft current discharge control across common industrial motor classes.",
         "Designed for both OEM new builds and retrofit access constraints.",
         "Engineering-led response to accelerate RFQ, sampling, and field validation alignment.",
       ],
@@ -278,20 +301,21 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       comparisonHeadConventional: "Traditional approach",
       comparisonHeadVolsun: "Volsun approach",
       faqTitle: "FAQ",
-      midCtaTitle: "Need support for your industrial motor program?",
-      midCtaBody: "Send two motor nameplates and your worst downtime story—we will recommend the fastest validation path (sample or engineer review).",
+      midCtaTitle: "Need support for your industrial VFD motor program?",
+      midCtaBody:
+        "Share motor nameplate data, shaft size, and duty profile. We can help outline a practical validation path for bearing current risk mitigation.",
       bottomCtaTitle: "Start with a practical next step",
       bottomCtaBody: "Choose sample validation or direct engineering discussion to align your VFD motor protection plan.",
       bottomCtaGuide: "Prefer a written RFQ? Use the form below—include VFD model, duty cycle, and shaft diameter for a faster first response.",
       viewProductLabel: "View product option",
     },
     zh: {
-      seoTitle: "阻止变频轴承失效 | 工业电机与机械",
+      seoTitle: "工业电机轴接地环 | 变频轴承电流防护",
       seoDescription:
-        "阻止工业变频电机轴承失效：降低停机、延长寿命，用可落地的轴接地路径承接泵、风机、压缩机与通用机械流量并促进询盘转化。",
+        "保护逆变驱动工业电机，降低轴电流相关轴承损伤风险，支持改造与 OEM 导入。",
       heroKicker: "工业电机与机械",
-      heroTitle: "阻止变频工业电机中的轴承失效",
-      heroSubtitle: "通过可靠轴接地降低停机并延长电机寿命。",
+      heroTitle: "用于变频轴承防护的工业电机轴接地环方案",
+      heroSubtitle: "面向风机、水泵、压缩机、输送线与自动化设备的轴电压与轴承电流风险治理。",
       heroImageAlt: "工业电机与变频驱动设备场景，用于说明变频工况下的轴承与轴电流风险语境",
       whyTitle: "变频工况下，工业电机轴承为何更容易失效",
       whyBody: "变频运行改变了电机电气应力模式。若无可控泄放路径，轴承可能提前出现电蚀损伤。",

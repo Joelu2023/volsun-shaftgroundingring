@@ -2,23 +2,45 @@
 
 export type ApplicationZhBody = {
   name: string;
+  heroTitle?: string;
+  seoTitle?: string;
   summary: string;
   metaDescription: string;
   problem: string;
   whyItMatters: string;
   typicalRisks: string[];
   checklist: string[];
+  primaryCtaLabel?: string;
+  primaryCtaHref?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+  tertiaryCtaLabel?: string;
+  tertiaryCtaHref?: string;
 };
 
 export const applicationZhBySlug: Record<string, ApplicationZhBody> = {
   "industrial-motors": {
     name: "工业电机与机械",
-    summary: "广谱工业获客页：解释 VFD 轴电流问题并引导样品与工程沟通转化。",
-    metaDescription: "工业电机应用：说明 VFD 运行下轴电流风险，并给出可落地的轴承防护导入路径。",
-    problem: "工业变频电机中轴电流风险常被误判为纯机械磨损，导致重复故障。",
-    whyItMatters: "可控接地策略有助于降低非计划停机并提升维护可预测性，同时支持 OEM 与改造并行导入。",
-    typicalRisks: ["轴承重复更换", "振动与噪声逐步上升", "停机与维护成本不可控"],
-    checklist: ["识别高风险资产", "记录轴径与安装约束", "制定试点到推广计划"],
+    heroTitle: "用于变频轴承防护的工业电机轴接地环方案",
+    seoTitle: "工业电机轴接地环 | 变频轴承电流防护",
+    summary: "面向风机、水泵、压缩机、输送线与自动化设备的变频工况轴电流风险防护页面。",
+    metaDescription: "保护逆变驱动工业电机，降低轴电流相关轴承损伤风险，支持改造与 OEM 导入。",
+    problem: "在变频运行中，轴电压可能累积并通过轴承泄放，形成轴承电流，长期会导致轴承损伤被反复误判。",
+    whyItMatters:
+      "建立可控的轴电流泄放路径有助于降低电蚀风险，提升维护可预测性，并支持 OEM 与改造并行导入。可先评估扇形（原分体式）或 RD/RDW（原整体式），Split/Solid 关键词保留检索；再由工程评审确认 VS-RD 系列适配性。",
+    typicalRisks: ["变频工况下轴承保护不足", "轴电压与轴承电流导致磨损累积", "轴承搓板纹与振动逐步上升", "逆变驱动电机轴承故障重复出现"],
+    checklist: [
+      "识别高风险资产（风机/水泵/压缩机/输送线/自动化设备）",
+      "提供轴径、转速范围和安装约束",
+      "补充变频器型号、负载工况与故障模式",
+      "先确定试点验证范围再推广",
+    ],
+    primaryCtaLabel: "按轴径选型",
+    primaryCtaHref: "/products",
+    secondaryCtaLabel: "申请工程支持",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=industrial-motors",
+    tertiaryCtaLabel: "申请报价",
+    tertiaryCtaHref: "/contact?cta_key=quote&application_interest=industrial-motors",
   },
   "electric-vehicles": {
     name: "电动汽车（EV）电机",
@@ -43,16 +65,69 @@ export const applicationZhBySlug: Record<string, ApplicationZhBody> = {
     typicalRisks: ["长期运行后出现轴承搓板纹", "噪声与振动逐步增大", "轴承更换周期缩短"],
     checklist: ["记录变频器载波频率范围", "记录轴径与机座号", "注明维护空间限制"],
   },
-  pumps: {
-    name: "水泵",
-    summary: "保护变频水泵电机，抑制轴承电流并延长检修间隔。",
-    metaDescription: "泵类应用：为变频水泵配置轴接地环，缓解轴承电流并延长平均无故障间隔。",
+  "pump-systems": {
+    name: "泵系统",
+    heroTitle: "面向变频驱动泵电机的轴接地环方案",
+    seoTitle: "泵电机轴接地环 | 变频轴承电流防护",
+    summary: "面向变频泵电机的轴电压与轴承电流风险防护，重点承接连续工况与无人值守站点场景。",
+    metaDescription: "面向变频驱动泵电机的轴接地方案，降低轴承电流损伤风险并支持连续工况稳定运行。",
     problem:
-      "变频泵电机与其它逆变负载类似，存在容性耦合带来的轴电压；轴承电流会加速点蚀并缩短平均寿命。",
+      "变频驱动泵电机可能出现轴电压累积并经轴承泄放，导致轴承损伤与重复故障。",
     whyItMatters:
-      "泵组常无人值守，电气性轴承损伤易被误判为机械问题；接地环与良好对中等措施共同构成防护层。",
-    typicalRisks: ["误判为联轴器或叶轮问题", "重复更换轴承", "维护成本上升"],
-    checklist: ["采集基线振动数据", "记录是否已有绝缘轴承", "提供铭牌与变频器型号"],
+      "泵系统常为连续工况且部分站点无人值守，建立可控泄放路径有助于降低电蚀风险并支持稳定运维。扇形 / RD/RDW 与定制可并行评估；Split/Solid 仍为常用检索词。",
+    typicalRisks: ["轴承重复失效", "轴承搓板纹与振动上升", "变频相关轴电压未受控", "无人值守站点停机风险放大", "维护成本持续上升"],
+    checklist: ["提供电机功率与额定转速", "提供轴径与安装空间", "补充变频器型号与运行工况", "说明运行小时数与泵型", "说明环境条件"],
+    primaryCtaLabel: "申请泵电机接地评估",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=pump-systems",
+    secondaryCtaLabel: "获取报价",
+    secondaryCtaHref: "/contact?cta_key=quote&application_interest=pump-systems",
+    tertiaryCtaLabel: "联系工程师",
+    tertiaryCtaHref: "/contact?cta_key=engineer&application_interest=pump-systems",
+  },
+  "wind-power": {
+    name: "风电",
+    heroTitle: "面向风力发电机的轴接地解决方案",
+    seoTitle: "风电发电机轴接地 | 轴承电流风险缓解",
+    summary: "面向风电发电机与传动系统电机的长周期工况防护，强调环境约束与维护可预测性。",
+    metaDescription: "风电发电机与传动系统场景的轴接地导入建议，用于降低电气性轴承损伤风险并提升维护可预测性。",
+    problem: "风电发电机与传动系统电机在长周期、复杂环境下，也可能出现轴电压与轴承电流相关风险。",
+    whyItMatters: "先做可控接地规划有助于减少重复干预风险，并提升远端站点维护节奏可预测性。",
+    typicalRisks: ["轴承维护窗口不稳定", "电气与机械根因界定困难", "生命周期成本波动"],
+    checklist: ["明确发电机/传动系统工况", "提供轴径与安装包络", "说明湿度/粉尘/腐蚀等环境约束", "先做技术评估再推广"],
+    primaryCtaLabel: "讨论风电应用",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=wind-power",
+    secondaryCtaLabel: "申请技术评估",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=wind-power",
+  },
+  transportation: {
+    name: "交通运输",
+    heroTitle: "面向交通运输电机系统的轴接地方案",
+    seoTitle: "交通运输电机轴接地方案 | 轴承防护",
+    summary: "聚焦轨道交通、港机与特种车辆的逆变驱动牵引或辅机电机场景，不做泛化覆盖承诺。",
+    metaDescription: "用于交通运输逆变驱动电机的应用页，帮助管理轴电流风险并提升检修周期稳定性。",
+    problem: "交通运输电机系统常处于复杂工况与振动环境，维护窗口有限，未受控轴电流可能加速轴承磨损。",
+    whyItMatters: "提前进行定制化安装评估有助于降低重复更换风险，并提升服务周期可预测性。",
+    typicalRisks: ["逆变工况下轴承磨损加快", "检修周期稳定性不足", "维护窗口受运营节奏限制"],
+    checklist: ["明确细分场景（轨交/港机/特种车辆）", "提供轴径、转速与振动约束", "说明安装可达性与维护窗口", "提供定制化约束与项目节点"],
+    primaryCtaLabel: "提交交通电机工况",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=transportation",
+    secondaryCtaLabel: "申请技术评估",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=transportation",
+  },
+  others: {
+    name: "其他",
+    heroTitle: "不确定哪种轴接地环适合你的电机？",
+    seoTitle: "其他电机场景 | 轴接地询盘入口",
+    summary: "轻量兜底页：用于承接尚未细分场景（如 HVAC、家电、通用设备），并分诊到合适应用路径。",
+    metaDescription: "用于尚未被专用页面覆盖的电机场景。提交工况信息后获取适配的轴接地建议。",
+    problem: "部分询盘不匹配现有主分类，但仍需尽快评估轴电流泄放与轴承防护范围。",
+    whyItMatters: "通过轻量分诊入口先收集关键参数，可减少误分类带来的沟通延迟与线索流失。",
+    typicalRisks: ["技术范围界定延迟", "场景分类偏差", "入口不清晰导致流失"],
+    checklist: ["提供电机类型与轴径", "提供转速范围与变频条件", "说明运行环境与安装空间", "提供工况与项目时间节点"],
+    primaryCtaLabel: "描述你的应用场景",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=others",
+    secondaryCtaLabel: "联系工程团队",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=others",
   },
   "israel-aquaculture-pump-motor-75kw": {
     name: "75 kW 水泵电机 — 以色列（水产养殖）",

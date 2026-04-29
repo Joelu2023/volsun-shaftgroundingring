@@ -93,7 +93,7 @@ export const applications: ApplicationDetail[] = [
     problem:
       "In inverter-duty operation, shaft voltage can build and discharge as bearing current. Teams often see bearing fluting and repeated replacement before the electrical root cause is confirmed.",
     whyItMatters:
-      "A controlled shaft current discharge path helps reduce risk of electrical erosion, improve maintenance predictability, and support both retrofit and OEM programs. Teams can start from standard split/solid options and evaluate VS-RD series suitability during engineering review.",
+      "A controlled shaft current discharge path helps reduce risk of electrical erosion, improve maintenance predictability, and support both retrofit and OEM programs. Start from Fan-shaped or RD/RDW (Split/Solid families)—evaluate VS-RD series fit during engineering review.",
     typicalRisks: [
       "VFD bearing protection gaps in inverter-duty motor fleets",
       "Shaft voltage and bearing current causing hidden wear accumulation",
@@ -131,7 +131,7 @@ export const applications: ApplicationDetail[] = [
     problem:
       "VFD-driven pump motors can accumulate shaft voltage and discharge through bearings, leading to repeated bearing damage and service interruption.",
     whyItMatters:
-      "Pump stations are often unattended and run continuously. A practical grounding path helps reduce risk of electrical erosion and supports uptime-focused maintenance planning. VS-RD series options can be reviewed alongside split, solid, and custom configurations.",
+      "Pump stations are often unattended and run continuously. A practical grounding path helps reduce risk of electrical erosion and supports uptime-focused maintenance planning. VS-RD series works alongside Fan-shaped, RD/RDW, or custom—Split/Solid naming unchanged for search.",
     typicalRisks: [
       "Repeated bearing failure under continuous-duty operation",
       "Bearing fluting and vibration increase after inverter retrofit",
@@ -161,7 +161,7 @@ export const applications: ApplicationDetail[] = [
     heroTitle: "Shaft Grounding Solutions for Wind Power Generators",
     summary:
       "Focused page for wind power generator and drivetrain motor scenarios with long operating cycles, harsh environment constraints, and maintenance predictability requirements.",
-    coverImagePublicPath: "/images/applications/applications-2-v1.webp",
+    coverImagePublicPath: "/images/applications/wind-power-home-v3.png",
     heroImagePublicPath: "/images/applications/applications-2-v1.webp",
     phase: "p0",
     seoTitle: "Wind Power Generator Shaft Grounding | Bearing Current Mitigation",

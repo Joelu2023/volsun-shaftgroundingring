@@ -27,13 +27,14 @@ export const products: ProductDetail[] = [
     id: "p-split",
     slug: "split-shaft-grounding-ring",
     name: "VS-RD/RDW shaft grounding ring",
-    shortDescription: "Field-installable split ring for retrofit bearing protection without full shaft pull.",
+    shortDescription:
+      "Fan-shaped, formerly known as Split—field-installable for retrofit bearing protection without full shaft pull.",
     badge: "Retrofit",
     phase: "p0",
     metaDescription:
-      "Split shaft grounding ring for VFD motors: retrofit without full disassembly, reliable shaft grounding path for bearing protection.",
+      "Split shaft grounding ring for VFD motors. Fan-shaped, formerly known as Split. Retrofit without full disassembly; reliable bearing protection.",
     overview:
-      "A field-installable split ring that provides a shaft grounding path on VFD-driven motors without full shaft pull or extended downtime. Suited to MRO, HVAC upgrades, and pump skids where access is limited and bearing protection must be added after the motor is in service.",
+      "Fan-shaped, formerly known as Split, is field-installable: it gives VFD-driven motors a shaft grounding path without full shaft pull or long downtime—ideal for MRO, HVAC upgrades, and pump skids with limited access.",
     primaryImagePublicPath: "/images/products/home-product-solid-v1.webp",
     secondaryImagePublicPath: "/images/products/product-split-install-shared-v1.png",
     specFields: [
@@ -48,7 +49,7 @@ export const products: ProductDetail[] = [
     features: [
       {
         title: "Retrofit-oriented layout",
-        description: "Split construction allows installation around the shaft when full disassembly is impractical.",
+        description: "Fan-shaped construction installs around the shaft when full disassembly is impractical.",
       },
       {
         title: "Continuous grounding contact",
@@ -71,7 +72,7 @@ export const products: ProductDetail[] = [
       "HVAC fan and compressor motors on VFDs",
       "Water and process pump motors on drives",
       "Aftermarket replacement and facility upgrade programs",
-      "Applications where solid rings are difficult to install without major teardown",
+      "Applications where RD/RDW rings are difficult to install without major teardown",
     ],
     installationNotes: [
       "Confirm shaft diameter, available axial space, and shoulder clearance before finalizing a series.",
@@ -80,9 +81,9 @@ export const products: ProductDetail[] = [
     ],
     faq: [
       {
-        question: "When should I choose a split ring instead of a solid ring?",
+        question: "Split vs Solid (Fan-shaped vs RD/RDW): when to choose which?",
         answer:
-          "Split is preferred when the motor is already installed and you need to limit downtime or avoid pulling the shaft. Solid is often simpler when the motor is disassembled on a production line.",
+          "Fan-shaped when the motor stays installed and downtime must stay low. RD/RDW when you control assembly on the line. Split/Solid remain common search terms.",
       },
       {
         question: "What shaft information do you need for a quote?",
@@ -115,13 +116,14 @@ export const products: ProductDetail[] = [
     id: "p-solid",
     slug: "solid-shaft-grounding-ring",
     name: "VS-ST/STW shaft grounding ring",
-    shortDescription: "OEM-style solid ring for new motor builds and repeatable assembly.",
+    shortDescription:
+      "RD/RDW, formerly known as Solid—OEM-style for new motor builds and repeatable assembly.",
     badge: "OEM",
     phase: "p0",
     metaDescription:
-      "Solid shaft grounding ring for OEM motor builds: stable mounting, repeatable assembly, and reliable bearing protection on VFD systems.",
+      "Solid shaft grounding ring for OEM motor builds. RD/RDW, formerly known as Solid. Stable mounting; VFD bearing protection.",
     overview:
-      "An OEM-style solid ring for new motor builds and batch assembly where shaft access is predictable. The design emphasizes repeatable mounting, stable geometry, and a reliable shaft-to-frame grounding path for continuous-duty, VFD-driven motors.",
+      "RD/RDW, formerly known as Solid, is OEM-style for new builds and batch assembly with predictable shaft access—repeatable mounting and a reliable shaft-to-frame path for continuous-duty VFD motors.",
     primaryImagePublicPath: "/images/products/home-product-solid-fan-v2.png",
     secondaryImagePublicPath: "/images/products/product-solid-install-shared-v1.png",
     specFields: [
@@ -155,7 +157,7 @@ export const products: ProductDetail[] = [
       "OEM motor production and assembly lines",
       "Fan and pump packages shipped as complete skids",
       "Industrial equipment with controlled factory installation",
-      "Situations where a split ring is unnecessary because the shaft is accessible during build",
+      "Situations where Fan-shaped is unnecessary because the shaft is accessible during build",
     ],
     installationNotes: [
       "Verify axial position relative to any insulated bearing strategy if one is used.",
@@ -164,14 +166,14 @@ export const products: ProductDetail[] = [
     ],
     faq: [
       {
-        question: "Can I use a solid ring on a retrofit?",
+        question: "Can I use RD/RDW on a retrofit?",
         answer:
-          "Yes, when there is adequate access and the shaft matches a supported series. If access is tight or the motor is already in place, a split ring is often lower risk.",
+          "Yes when access is adequate and the shaft matches a catalog series. If access is tight or the motor is in place, Fan-shaped is often lower risk.",
       },
       {
-        question: "How does a solid ring differ electrically from a split ring?",
+        question: "How does RD/RDW differ electrically from Fan-shaped?",
         answer:
-          "Both provide a grounding path; the difference is mainly mechanical and assembly related. Selection is driven by installation access and production flow rather than a separate electrical tier.",
+          "Both ground the shaft; differences are mainly mechanical and assembly. Split/Solid search terms map to these families.",
       },
       {
         question: "What shaft and housing data do you need for a first quote?",
@@ -240,7 +242,7 @@ export const products: ProductDetail[] = [
       "Special motor frames or large shaft diameters",
       "Harsh environments requiring material or coating review",
       "OEM programs requiring a dedicated part number and revision control",
-      "Projects where a catalog split or solid ring cannot meet envelope or clearance",
+      "Projects where catalog Fan-shaped or RD/RDW series (Split/Solid lines) cannot meet envelope or clearance",
     ],
     installationNotes: [
       "Provide the latest PDF or STEP revision with shaft details, plus key tolerances where applicable.",

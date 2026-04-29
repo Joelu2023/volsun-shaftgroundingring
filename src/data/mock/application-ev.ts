@@ -269,7 +269,8 @@ export const electricVehiclesApplicationPage: EvApplicationPageData = {
       summary: "Recommended for oil-cooled traction motors requiring robust grounding continuity under long-life EV duty.",
       productSlug: "split-shaft-grounding-ring",
       imagePath: `${EV_IMG}/shaft-grounding-ev-rdw-series-product-v1.webp`,
-      imageAlt: "VS-RDW split shaft grounding ring series for oil-compatible EV traction motor programs",
+      imageAlt:
+        "VS-RDW Fan-shaped shaft grounding ring series for oil-compatible EV traction motor programs",
     },
     {
       id: "ev-sol-2",

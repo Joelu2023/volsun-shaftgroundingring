@@ -15,27 +15,27 @@ export type HomeEnApplicationSlot = {
 export const HOME_EN_APPLICATION_SLOTS: HomeEnApplicationSlot[] = [
   {
     id: "electric-vehicles",
-    label: "Electric Vehicles Industry",
+    label: "Electric Vehicles",
     href: "/applications/electric-vehicles",
     coverImagePublicPath: "/images/applications/applications-1-v1.webp",
   },
   {
-    id: "renewable-energy",
-    label: "Renewable Energy Industry",
-    href: "/applications?segment=renewable-energy",
-    coverImagePublicPath: "/images/applications/applications-2-v1.webp",
+    id: "industrial-motors",
+    label: "Industrial Motors & Machinery",
+    href: "/applications/industrial-motors",
+    coverImagePublicPath: "/images/home/home-hero-industrial-motors-machinery.webp",
   },
   {
     id: "pump-systems",
     label: "Pump Systems",
-    href: "/applications/pumps",
+    href: "/applications/pump-systems",
     coverImagePublicPath: "/images/applications/application-pump-systems-cover-en-v1.webp",
   },
   {
-    id: "transportation",
-    label: "Transportation Industry",
-    href: "/applications?segment=transportation",
-    coverImagePublicPath: "/images/applications/applications-4-v1.webp",
+    id: "wind-power",
+    label: "Wind Power",
+    href: "/applications/wind-power",
+    coverImagePublicPath: "/images/applications/wind-power-home-v3.png",
   },
 ];
 
@@ -77,7 +77,8 @@ const homeLocales = {
       },
       {
         title: "Fit for retrofit and OEM",
-        description: "Split designs reduce teardown time; solid designs suit controlled assembly lines.",
+        description:
+          "Fan-shaped designs reduce teardown time; RD/RDW suits controlled assembly lines. Split/Solid remain common search terms.",
       },
       {
         title: "Specification coverage",
@@ -102,7 +103,10 @@ const homeLocales = {
     },
     advantages: [
       { title: "工程化接触路径", description: "面向工业负载的接地环方案，而非消费级五金件思路。" },
-      { title: "兼顾改造与 OEM", description: "分体式减少拆解时间；整体式适配可控总装线。" },
+      {
+        title: "兼顾改造与 OEM",
+        description: "扇形减少拆解时间；RD/RDW 适配可控总装线（分体式 / 整体式与 Split/Solid 仍为常用检索词）。",
+      },
       { title: "规格覆盖", description: "标准系列加上针对包络或轴伸非标场景的定制方案。" },
       {
         title: "快速打样",

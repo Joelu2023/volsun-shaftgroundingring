@@ -19,11 +19,11 @@ export const productZhBySlug: Record<string, ProductZhBody> = {
     shortDescription: "面向现场改造：在无需完全抽出轴的情况下，为轴承提供可靠的轴接地通道。",
     badge: "改造",
     metaDescription:
-      "分体式轴接地环适用于变频电机：减少全拆解停机，提供稳定轴接地路径以保护轴承。",
+      "扇形（原分体式）轴接地环：变频电机少拆解停机，稳定轴接地保护轴承。Split 关键词保留。",
     overview:
-      "可在电机已安装、拆装空间受限的场景下提供轴接地方案，适合 MRO、暖通改造及泵组等需控制停机时间的应用。通过导电纤维与轴周接触，将轴电流导向机座接地，降低轴承放电风险。",
+      "扇形（原分体式）适用于电机已就位、空间有限场景；Split 仍为常用检索词。导电纤维周向接触，轴电流导向机座。适合 MRO、暖通与泵组。",
     features: [
-      { title: "面向改造的结构", description: "分体结构便于在无法完全拆解轴系时完成安装。" },
+      { title: "面向改造的结构", description: "扇形结构可在不完全拆解轴系时完成安装。" },
       { title: "连续接地接触", description: "导电纤维在轴周维持接触，形成可控的泄放路径。" },
       { title: "工业级设计取向", description: "面向变频器工况下常见的暖通、泵类与过程电机负载。" },
       { title: "尺寸与配合复核", description: "下单前复核轴径与挡肩空间。[待工程确认：标准轴径范围，mm]" },
@@ -42,7 +42,7 @@ export const productZhBySlug: Record<string, ProductZhBody> = {
       "暖通风机与压缩机变频电机",
       "变频驱动的水泵与工艺泵电机",
       "售后替换与厂房节能改造项目",
-      "整体式环难以在不大幅拆解情况下安装的场景",
+      "RD/RDW 环难以在不大幅拆解情况下安装的场景",
     ],
     installationNotes: [
       "确认轴径、可用轴向空间及挡肩间隙后再定型系列。",
@@ -51,9 +51,9 @@ export const productZhBySlug: Record<string, ProductZhBody> = {
     ],
     faq: [
       {
-        question: "何时优先选分体式而非整体式？",
+        question: "何时优先扇形而非 RD/RDW？",
         answer:
-          "电机已就位、需限制停机或不便抽轴时，分体式更合适；产线总装、轴端可充分操作时，整体式往往更简捷。",
+          "电机已就位、停机要短时优先扇形；产线总装、轴端可操作则 RD/RDW 往往更简捷。Split/Solid 说法仍常用。",
       },
       {
         question: "报价需要哪些轴系信息？",
@@ -82,9 +82,10 @@ export const productZhBySlug: Record<string, ProductZhBody> = {
     name: "VS-ST/STW 轴接地环",
     shortDescription: "面向 OEM 与新机装配：可重复安装、几何稳定，适合批量产线。",
     badge: "OEM",
-    metaDescription: "整体式轴接地环：适用于新机装配与批量产线，在变频系统中提供可靠轴承保护。",
+    metaDescription:
+      "RD/RDW（原整体式）轴接地环：新机装配与批量产线；变频轴承保护。Solid 关键词保留。",
     overview:
-      "在装配期轴端可及、工艺路径稳定的前提下，整体式环强调可重复的紧固与定位，为连续运行的变频电机提供可靠的轴—机座接地通道。",
+      "RD/RDW（原整体式）面向装配期轴端可及、工艺稳定的场景；可重复紧固定位，连续工况变频电机可靠接地。",
     features: [
       { title: "利于产线装配", description: "步骤清晰，适合 OEM 批量与体积化装配。[待工程确认：自动化兼容性]" },
       { title: "接地性能稳定", description: "针对长周期工业电机设计的接触路径。" },
@@ -104,7 +105,7 @@ export const productZhBySlug: Record<string, ProductZhBody> = {
       "电机 OEM 总装与批量线",
       "成套风机、泵组出厂配置",
       "工厂内可控安装条件的工业设备",
-      "装配期轴端可及、无需分体结构的场景",
+      "装配期轴端可及、无需扇形结构的场景",
     ],
     installationNotes: [
       "若采用绝缘轴承等策略，需核对环的轴向位置与其它接地器件关系。",
@@ -113,14 +114,14 @@ export const productZhBySlug: Record<string, ProductZhBody> = {
     ],
     faq: [
       {
-        question: "整体式能否用于改造？",
+        question: "RD/RDW 能否用于改造？",
         answer:
-          "在操作空间充足且轴系匹配型录时可以；若电机已就位、空间局促，分体式往往风险更低。",
+          "空间充足且匹配型录时可以；电机已就位、空间局促时扇形往往风险更低。",
       },
       {
-        question: "整体式与分体式电气层级是否不同？",
+        question: "RD/RDW 与扇形电气层级是否不同？",
         answer:
-          "二者均提供接地泄放路径，差异主要在机械装配与产线节奏，而非「电气等级」。[待产品确认]",
+          "二者均提供接地泄放路径，差异主要在机械装配与产线节奏。[待产品确认]",
       },
       {
         question: "首次报价需要哪些数据？",
@@ -175,7 +176,7 @@ export const productZhBySlug: Record<string, ProductZhBody> = {
       "特殊机座或大轴径",
       "需材料或涂层调整的高要求环境。[待工程确认：可选材料]",
       "需要专用零件号与改版控制的 OEM 项目",
-      "型录分体/整体无法满足包络或间隙时",
+      "型录扇形或 RD/RDW 无法满足包络或间隙时",
     ],
     installationNotes: [
       "提供最新版 PDF/STEP 及关键公差。",

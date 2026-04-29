@@ -118,21 +118,21 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
       <SectionWrapper id="applications" variant="bordered">
         <h2 className="text-2xl font-semibold text-brand-blue">{t.homeApplicationsTitle}</h2>
         {locale === "en" ? (
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="mt-6 grid auto-rows-min gap-4 md:grid-cols-2 md:items-start">
             {HOME_EN_APPLICATION_SLOTS.map((slot) => (
               <Link
                 key={slot.id}
                 href={localizeNavHref(slot.href, locale)}
-                className="group overflow-hidden rounded border border-slate-200 hover:border-brand-orange"
+                className="group flex min-h-0 flex-col overflow-hidden rounded border border-slate-200 bg-white shadow-sm transition hover:border-brand-orange"
               >
                 {sanitizeLargeSlotImageSrc(slot.coverImagePublicPath) ? (
-                  <div className="relative aspect-[16/9] w-full bg-slate-100">
+                  <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-slate-100">
                     <Image
                       src={sanitizeLargeSlotImageSrc(slot.coverImagePublicPath)!}
                       alt={slot.label}
                       fill
                       className="object-cover transition group-hover:opacity-95"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 560px"
                     />
                   </div>
                 ) : (
@@ -147,7 +147,7 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
             ))}
           </div>
         ) : (
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="mt-6 grid auto-rows-min gap-4 md:grid-cols-2 md:items-start">
             {applications
               .filter((a) => a.phase === "p0")
               .map((a) => {
@@ -156,16 +156,16 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
                   <Link
                     key={a.slug}
                     href={`/${locale}/applications/${a.slug}`}
-                    className="group overflow-hidden rounded border border-slate-200 hover:border-brand-orange"
+                    className="group flex min-h-0 flex-col overflow-hidden rounded border border-slate-200 bg-white shadow-sm transition hover:border-brand-orange"
                   >
                     {sanitizeLargeSlotImageSrc(a.coverImagePublicPath) ? (
-                      <div className="relative aspect-[16/9] w-full bg-slate-100">
+                      <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-slate-100">
                         <Image
                           src={sanitizeLargeSlotImageSrc(a.coverImagePublicPath)!}
                           alt={la.name}
                           fill
                           className="object-cover transition group-hover:opacity-95"
-                          sizes="(max-width: 768px) 100vw, 50vw"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 560px"
                         />
                       </div>
                     ) : (

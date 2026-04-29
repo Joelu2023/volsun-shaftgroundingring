@@ -37,8 +37,8 @@ export const applications: ApplicationDetail[] = [
     slug: "hvac-motors",
     name: "HVAC Motors",
     summary: "Shaft voltage control for fans, compressors, and air handlers driven by VFDs.",
-    coverImagePublicPath: "/images/applications/applications-1-v1.webp",
-    heroImagePublicPath: "/images/applications/applications-1-v1.webp",
+    coverImagePublicPath: "/images/applications/industrial/industrial-app-fans-v1.png",
+    heroImagePublicPath: "/images/applications/industrial/industrial-app-fans-v1.png",
     phase: "p1",
     metaDescription:
       "HVAC motor bearing protection: why VFD-driven fans develop shaft voltage, and how shaft grounding rings reduce fluting and downtime.",
@@ -84,8 +84,8 @@ export const applications: ApplicationDetail[] = [
     heroTitle: "Industrial Motor Shaft Grounding Rings for VFD Bearing Protection",
     summary:
       "For inverter-duty industrial motors in fans, pumps, compressors, conveyors, and automation machinery where shaft voltage and bearing current can drive repeated failures.",
-    coverImagePublicPath: "/images/applications/industrial/industrial-motors-hero-v1.png",
-    heroImagePublicPath: "/images/applications/industrial/industrial-motors-hero-v1.png",
+    coverImagePublicPath: "/images/applications/industrial/industrial-app-machinery-v1.png",
+    heroImagePublicPath: "/images/applications/industrial/industrial-app-machinery-v1.png",
     phase: "p0",
     seoTitle: "Industrial Motor Shaft Grounding Rings | VFD Bearing Current Protection",
     metaDescription:
@@ -122,8 +122,8 @@ export const applications: ApplicationDetail[] = [
     heroTitle: "Shaft Grounding Rings for VFD-Driven Pump Motors",
     summary:
       "For VFD-driven pump motors where shaft voltage and bearing current can trigger repeated bearing failure, fluting, and downtime in continuous-duty service.",
-    coverImagePublicPath: "/images/applications/application-pump-systems-cover-en-v1.webp",
-    heroImagePublicPath: "/images/applications/application-pump-systems-cover-en-v1.webp",
+    coverImagePublicPath: "/images/applications/case-study-pump-motor-shaft-grounding.jpg",
+    heroImagePublicPath: "/images/applications/case-study-pump-motor-shaft-grounding.jpg",
     phase: "p0",
     seoTitle: "Pump Motor Shaft Grounding Rings | VFD Bearing Current Protection",
     metaDescription:
@@ -161,7 +161,7 @@ export const applications: ApplicationDetail[] = [
     heroTitle: "Shaft Grounding Solutions for Wind Power Generators",
     summary:
       "Focused page for wind power generator and drivetrain motor scenarios with long operating cycles, harsh environment constraints, and maintenance predictability requirements.",
-    coverImagePublicPath: "/images/applications/wind-power-home-v3.png",
+    coverImagePublicPath: "/images/applications/applications-4-v1.webp",
     heroImagePublicPath: "/images/applications/applications-2-v1.webp",
     phase: "p0",
     seoTitle: "Wind Power Generator Shaft Grounding | Bearing Current Mitigation",

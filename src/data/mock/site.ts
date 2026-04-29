@@ -59,12 +59,12 @@ export const navigationEn: NavItem[] = [
     type: "dropdown",
     highlight: false,
     children: [
-      { label: "Electric Vehicles Industry", href: "/applications/electric-vehicles" },
-      { label: "Renewable Energy Industry", href: "/applications?segment=renewable-energy" },
-      { label: "Pump Systems", href: "/applications/pumps" },
-      { label: "Transportation Industry", href: "/applications?segment=transportation" },
-      { label: "Home Appliance", href: "/applications?segment=home-appliance" },
-      { label: "Other Industries", href: "/applications?segment=other-industries" },
+      { label: "Electric Vehicles", href: "/applications/electric-vehicles" },
+      { label: "Industrial Motors & Machinery", href: "/applications/industrial-motors" },
+      { label: "Wind Power", href: "/applications/wind-power" },
+      { label: "Transportation", href: "/applications/transportation" },
+      { label: "Pump Systems", href: "/applications/pump-systems" },
+      { label: "Others", href: "/applications/others" },
     ],
   },
   {

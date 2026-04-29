@@ -45,19 +45,21 @@ export function HeroSection({ locale }: { locale: AppLocale }) {
           </div>
         </div>
 
-        <div className="mt-2 lg:mt-0">
-          <div className="relative mx-auto aspect-[16/10] w-full max-w-3xl overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-sm lg:mx-0 lg:max-w-none">
+        <div className="mt-2 flex w-full flex-col items-center lg:mt-0 lg:items-end">
+          <div className="relative aspect-[16/10] w-full max-w-md overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-sm sm:max-w-lg">
             <Image
               src={heroImageSrc}
               alt={t.heroImageAlt}
               fill
               className="object-cover"
               priority
-              sizes="(max-width: 1023px) min(100vw, 48rem), 576px"
+              sizes="(max-width: 1023px) min(100vw, 32rem), 512px"
             />
           </div>
           {locale === "zh" ? (
-            <p className="mt-2 text-xs text-slate-500">中文站使用无标题中性主图，请勿在此位置使用带英文标题的横幅。</p>
+            <p className="mt-2 w-full max-w-md text-xs text-slate-500 sm:max-w-lg">
+              中文站使用无标题中性主图，请勿在此位置使用带英文标题的横幅。
+            </p>
           ) : null}
         </div>
       </div>

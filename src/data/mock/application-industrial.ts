@@ -64,7 +64,7 @@ export type IndustrialApplicationPageData = {
 export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
   slug: "industrial-motors",
   path: "/applications/industrial-motors",
-  heroImagePath: `${INDUSTRIAL_APP_IMG}/industrial-motors-hero-v1.png`,
+  heroImagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-machinery-v1.png`,
   values: {
     en: [
       {

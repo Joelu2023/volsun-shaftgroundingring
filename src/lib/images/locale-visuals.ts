@@ -15,12 +15,9 @@ export const PLACEHOLDER_IMAGES = {
 } as const;
 
 /**
- * Hero：中英文共用一张首页主图；仍保留 env 覆盖能力。
+ * Hero：固定使用首页主图，避免被环境变量误覆盖到业务卡片图（例如 wind-power 封面）。
  */
 export function resolveHeroImageSrc(_locale: AppLocale): string {
-  const env = process.env.NEXT_PUBLIC_HERO_IMAGE?.trim();
-  const cleaned = env ? sanitizeLargeSlotImageSrc(env) : null;
-  if (cleaned) return cleaned;
   return "/images/home/home-hero-vfd-motor-v1.webp";
 }
 

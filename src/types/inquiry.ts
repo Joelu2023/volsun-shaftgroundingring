@@ -35,6 +35,10 @@ export type InquirySubmission = {
   drawing_file_name: string | null;
   message: string | null;
   inquiry_type: InquiryType;
+  /** 来源渠道标识，如 "website_jsvolsun" */
+  source_channel_standard?: string;
+  /** 线索内容描述，如 "download: Volsun Product Catalog" */
+  inquiry_content?: string;
   page_source: string;
   cta_source: string;
   cta_key: CtaKey | null;

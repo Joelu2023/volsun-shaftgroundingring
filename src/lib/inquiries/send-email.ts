@@ -41,6 +41,8 @@ function buildSummary(data: InquirySubmission): string {
     `CTA source: ${data.cta_source}`,
     `Drawing file name: ${data.drawing_file_name ?? "—"}`,
     `Drawing file URL: ${data.drawing_file_url ?? "—"}`,
+    `Source channel: ${data.source_channel_standard ?? "—"}`,
+    `Inquiry content: ${data.inquiry_content ?? "—"}`,
     `Submitted at: ${data.submitted_at}`,
     "",
     "Message:",

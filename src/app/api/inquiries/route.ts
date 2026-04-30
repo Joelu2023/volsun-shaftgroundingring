@@ -67,15 +67,6 @@ export async function POST(req: Request) {
     });
   } catch (e) {
     console.error("[inquiry] pending append failed", { requestId, error: e });
-    return NextResponse.json(
-      {
-        ok: false as const,
-        error: "inquiry_persist_failed",
-        request_id: requestId,
-        detail: `Writing inquiry JSONL failed: ${logPath}`,
-      },
-      { status: 500 },
-    );
   }
 
   /** 非生产且显式开启时，保留询盘但跳过 SMTP */

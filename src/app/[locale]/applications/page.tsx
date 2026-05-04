@@ -103,7 +103,6 @@ export default async function LocalizedApplicationsPage({ params }: Props) {
               <Link href={`/${locale}/applications/${a.slug}`} className="text-brand-orange hover:underline">
                 {la.name}
               </Link>
-              <span className="ml-2 text-xs text-slate-400">P1</span>
             </li>
           );
         })}

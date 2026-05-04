@@ -284,7 +284,7 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
         "Industrial buyers need fast alignment between site reality and engineering evidence. Volsun focuses on repeatable integration, clear documentation support, and a pragmatic rollout path from pilot assets to fleet-scale programs.",
       provenTitle: "Industrial Validation Focus",
       provenBody:
-        "Lightweight proof signals you can strengthen with customer-approved metrics. Use this block to anchor confidence before the comparison table.",
+        "Engineering-led reviews connect shaft geometry, mounting envelope, and duty profile to a controlled grounding strategy—so teams can align confidence before the comparison table.",
       provenBullets: [
         "Designed to support VFD bearing protection and shaft current discharge control across common industrial motor classes.",
         "Solid, arc-shaped, and custom structures are reviewed according to shaft and installation constraints.",
@@ -331,7 +331,7 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       whyVolsunBody:
         "工业采购与工程团队需要把现场条件与证据链快速对齐。沃尔兴强调可复现的集成方式、文档化协同，以及从试点资产到批量推广的务实路径。",
       provenTitle: "工业应用场景中的可验证结果",
-      provenBody: "轻证据模块：可用客户授权数据替换以下要点，用于在对比表之前建立信任锚点。",
+      provenBody: "通过轴几何、安装包络与工况对齐，建立可控轴接地路径，支撑变频轴承电流防护与现场验证的一致性评审。",
       provenBullets: [
         "面向常见工业电机族的变频轴承电流抑制路径。",
         "按轴和安装约束评审整环、弧形和定制结构。",

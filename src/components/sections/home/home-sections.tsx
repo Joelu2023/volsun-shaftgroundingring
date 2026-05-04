@@ -19,7 +19,7 @@ import { HeroSection } from "./hero-section";
 import { InquiryForm } from "@/components/forms/inquiry-form";
 import { sanitizeLargeSlotImageSrc } from "@/lib/utils/image-slot-guards";
 import { localizeNavHref, type AppLocale } from "@/lib/i18n/locales";
-import { resolveFactoryImageSrc, resolveHomeProblemDiagramSrc } from "@/lib/images/locale-visuals";
+import { resolveFactoryImageSrc } from "@/lib/images/locale-visuals";
 import { ui } from "@/lib/i18n/ui-messages";
 
 export function HomeSections({ locale }: { locale: AppLocale }) {
@@ -35,32 +35,6 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
       <div className="bg-slate-50">
         <HeroSection locale={locale} />
       </div>
-
-      {locale !== "en" ? (
-        <SectionWrapper id="problem" variant="bordered">
-          <h2 className="text-2xl font-semibold text-brand-blue">{t.homeProblemTitle}</h2>
-          <div className="mt-4 relative aspect-[16/9] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
-            <Image
-              src={resolveHomeProblemDiagramSrc(locale)}
-              alt={t.homeProblemDiagramAlt}
-              fill
-              className="object-contain"
-              sizes="100vw"
-            />
-          </div>
-          <ol className="mt-6 space-y-3">
-            {home.problemSteps.map((s, i) => (
-              <li key={s.title} className="flex gap-3">
-                <span className="font-mono text-brand-orange">{i + 1}</span>
-                <div>
-                  <p className="font-medium text-slate-900">{s.title}</p>
-                  <p className="text-sm text-slate-600">{s.description}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </SectionWrapper>
-      ) : null}
 
       {locale !== "en" ? (
         <SectionWrapper id="solution" variant="muted">

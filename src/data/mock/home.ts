@@ -68,25 +68,33 @@ const homeLocales = {
     ],
     solution: {
       title: "Ground the shaft, protect the bearings",
-      body: "A shaft grounding ring provides a controlled path for shaft and bearing currents, reducing the likelihood that damaging current passes through motor bearings. Volsun rings are built for industrial duty and supported by factory QC and sampling.",
+      body: "Volsun shaft grounding rings use metallized carbon fiber technology to provide a low-resistance path for shaft currents. By effectively diverting shaft currents away from bearings, they help reduce electrical pitting, fluting, and premature bearing failure, supporting long-term motor reliability.",
     },
     advantages: [
       {
-        title: "Engineered contact path",
-        description: "Grounding rings designed for industrial duty - not consumer-grade hardware.",
+        title: "Metallized carbon fiber contact",
+        description: "Core contact material is designed to provide a stable low-resistance path for shaft currents.",
       },
       {
-        title: "Fit for retrofit and OEM",
+        title: "Oil-cooled EV motor compatibility",
         description:
-          "Fan-shaped designs reduce teardown time; RD/RDW suits controlled assembly lines. Split/Solid remain common search terms.",
+          "Suitable for oil-cooled EV motors and compatible with common transmission oil environments. The fiber structure maintains stable shaft contact under high-speed operation.",
       },
       {
-        title: "Specification coverage",
-        description: "Standard series plus custom rings when envelope or shaft geometry is non-standard.",
+        title: "Design and customization support",
+        description: "Solid, arc-shaped, and custom structures can be reviewed according to shaft geometry and installation constraints.",
       },
       {
-        title: "Fast sampling",
-        description: "Prototype and validation support to de-risk fit before scale-up.",
+        title: "Automated production and delivery support",
+        description: "Production capability and process control support repeatable delivery for application programs.",
+      },
+      {
+        title: "Testing and application review",
+        description: "Engineering review helps confirm fit, contact position, and documentation needs before quotation.",
+      },
+      {
+        title: "Proven application coverage",
+        description: "Proven applications across EV motors, industrial motors, pump systems, and wind power.",
       },
     ],
   },
@@ -99,18 +107,26 @@ const homeLocales = {
     ],
     solution: {
       title: "轴端接地，保护轴承",
-      body: "轴接地环为轴电流与轴承电流提供可控泄放通道，降低有害电流穿过轴承的概率。沃尔兴产品面向工业工况，配套工厂质控与打样支持。",
+      body: "沃尔兴轴接地环采用金属化碳纤维技术，为轴电流提供低阻通路。通过将轴电流有效分流并远离轴承，有助于降低电蚀点蚀、搓板纹和轴承过早失效风险，支持电机长期可靠运行。",
     },
     advantages: [
-      { title: "工程化接触路径", description: "面向工业负载的接地环方案，而非消费级五金件思路。" },
+      { title: "金属化碳纤维接触", description: "核心接触材料用于为轴电流建立稳定的低阻通路。" },
       {
-        title: "兼顾改造与 OEM",
-        description: "扇形减少拆解时间；RD/RDW 适配可控总装线（分体式 / 整体式与 Split/Solid 仍为常用检索词）。",
+        title: "适用于油冷 EV 电机",
+        description: "适用于油冷 EV 电机，并兼容常见变速箱油环境；纤维结构在高速运行下保持稳定轴接触。",
       },
-      { title: "规格覆盖", description: "标准系列加上针对包络或轴伸非标场景的定制方案。" },
+      { title: "设计与定制能力", description: "整环、弧形和定制结构可根据轴几何与安装约束进行评审。" },
       {
-        title: "快速打样",
-        description: "样品与验证支持，在上量前降低配合风险。[待确认：各区域典型响应 SLA]",
+        title: "自动化产线与交付能力",
+        description: "生产能力与过程控制支持应用项目的稳定交付。",
+      },
+      {
+        title: "测试与应用评审能力",
+        description: "工程评审帮助在报价前确认适配、接触位置和文件需求。",
+      },
+      {
+        title: "已覆盖多类应用",
+        description: "已应用于 EV 电机、工业电机、泵系统和风电等场景。",
       },
     ],
   },

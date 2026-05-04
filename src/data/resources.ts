@@ -6,11 +6,11 @@ export const resourceCenterResources: ResourceRecord[] = [
   {
     id: "a1111111-1111-1111-1111-111111111101",
     slug: "volsun-shaft-grounding-conductive-ring-catalog",
-    title: "Volsun Shaft Grounding Conductive Ring (Brush) — Product Catalog",
+    title: "Volsun Shaft Grounding Ring (Carbon Fiber Brush) - Product Catalog",
     locale: "en",
     category: "catalog",
     summary:
-      "Product family overview, typical size ranges, and ordering guidance for Volsun shaft grounding conductive rings.",
+      "Product family overview, typical size ranges, and ordering guidance for Volsun shaft grounding rings.",
     file_url: "/files/catalogs/volsun-shaft-grounding-conductive-ring-catalog.pdf",
     cover_image_url: null,
     file_type: "application/pdf",

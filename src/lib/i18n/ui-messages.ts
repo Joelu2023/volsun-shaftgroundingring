@@ -42,7 +42,7 @@ export const uiMessages = {
     heroKicker: "VFD-driven motors | Bearing protection",
     heroTitle: "Shaft Grounding Rings for VFD-Driven Motors",
     heroSubtitle:
-      "Route shaft and bearing currents away from motor bearings. Fan-shaped for retrofit, RD/RDW for OEM, custom designs—Split/Solid remain standard search keywords.",
+      "Volsun shaft grounding rings use metallized carbon fiber technology to provide a low-resistance path for shaft currents. By effectively diverting shaft currents away from bearings, they help reduce electrical pitting, fluting, and premature bearing failure, supporting long-term motor reliability.",
     heroImageAlt: "Motor application - shaft grounding context",
     homeProblemTitle: "Why VFD motors fail bearings",
     homeProblemDiagramAlt: "Shaft voltage mechanism diagram",
@@ -72,7 +72,7 @@ export const uiMessages = {
     coverPending: "cover image pending (manual asset required)",
     productListBreadcrumb: "Shaft Grounding Ring Products",
     productsListLead:
-      "Choose Fan-shaped (retrofit), RD/RDW (OEM-style), or custom—from split/solid families—each engineered for reliable shaft grounding on VFD motors.",
+      "Choose solid RD/RDW, arc-shaped ST/STW, or custom shaft grounding rings, each reviewed for shaft geometry, mounting space, and reliable current diversion.",
     viewDetails: "View details",
     applicationListBreadcrumb: "Motor Applications",
     applicationsListLead:
@@ -148,7 +148,7 @@ export const uiMessages = {
     contactNext2: "Engineering may ask follow-up questions (shaft dimensions, photos, VFD settings).",
     contactNext3: "We respond with next steps: quotation, sample plan, or a clarification request.",
     contactFasterTitle: "Faster quotes - include",
-    contactFaster1: "Target product family (Fan-shaped / RD/RDW / custom; Split/Solid OK) and annual quantity band",
+    contactFaster1: "Target product family (solid RD/RDW / arc-shaped ST/STW / custom) and annual quantity band",
     contactFaster2: "Shaft diameter and available axial space for the ring",
     contactFaster3: "Motor frame size and a photo of the shaft end (if retrofit)",
     contactFaster4: "VFD brand/model and carrier frequency range (if known)",
@@ -192,7 +192,7 @@ export const uiMessages = {
     heroKicker: "变频电机 | 轴承保护",
     heroTitle: "面向变频电机的轴接地环",
     heroSubtitle:
-      "将轴电流与轴承电流从轴承旁路分流。扇形（原分体式）服务改造，RD/RDW（原整体式）适配 OEM；定制亦可。Split/Solid 检索词保留。",
+      "沃尔兴轴接地环采用金属化碳纤维技术，为轴电流提供低阻通路。通过将轴电流有效分流并远离轴承，有助于降低电蚀点蚀、搓板纹和轴承过早失效风险，支持电机长期可靠运行。",
     heroImageAlt: "电机应用 - 轴接地场景",
     homeProblemTitle: "变频电机轴承为何失效",
     homeProblemDiagramAlt: "轴电压机理示意图",
@@ -221,7 +221,7 @@ export const uiMessages = {
     coverPending: "封面图待上传（需人工素材）",
     productListBreadcrumb: "轴接地环产品",
     productsListLead:
-      "可选扇形改造环、RD/RDW OEM 环或定制—对应 Split/Solid 产品线，变频电机可靠接地。",
+      "可选 RD/RDW 整环、ST/STW 弧形环或定制轴接地环，并按轴几何、安装空间和分流路径进行评审。",
     viewDetails: "查看详情",
     applicationListBreadcrumb: "电机应用",
     applicationsListLead:
@@ -294,7 +294,7 @@ export const uiMessages = {
     contactNext2: "工程端可能追问轴系尺寸、照片或变频器参数。",
     contactNext3: "随后给出下一步：报价、样品计划或补充信息请求。",
     contactFasterTitle: "加快报价 - 请尽量包含",
-    contactFaster1: "目标系列（扇形 / RD/RDW / 定制；Split/Solid 说法仍常用）与年用量区间",
+    contactFaster1: "目标系列（RD/RDW 整环 / ST/STW 弧形环 / 定制）与年用量区间",
     contactFaster2: "轴径及环可用轴向空间",
     contactFaster3: "机座号及轴伸端照片（改造场景）",
     contactFaster4: "变频器品牌/型号与载波频率范围（如已知）",

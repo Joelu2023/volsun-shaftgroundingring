@@ -11,8 +11,8 @@ export const staticPageMeta = {
       zh: "变频电机轴接地环 | Volsun",
     },
     description: {
-      en: "Volsun shaft grounding rings protect motor bearings from shaft voltage and bearing currents. Split, solid, Fan-shaped, RD/RDW—custom solutions too. Factory-backed with fast sampling.",
-      zh: "沃尔森轴接地环抑制轴电压与轴承电流。Split/Solid 关键词保留；扇形（原分体式）、RD/RDW（原整体式）新命名；含定制。工厂质控与快速打样。",
+      en: "Volsun shaft grounding rings use metallized carbon fiber technology to divert shaft currents away from motor bearings. Solid RD/RDW, arc-shaped ST/STW, and custom options.",
+      zh: "沃尔兴轴接地环采用金属化碳纤维技术，将轴电流从轴承旁路分流。提供 RD/RDW 整环、ST/STW 弧形环与定制方案。",
     },
   },
   products: {
@@ -22,8 +22,8 @@ export const staticPageMeta = {
       zh: "轴接地环产品",
     },
     description: {
-      en: "Browse split, solid, and custom shaft grounding rings for inverter-duty motors—Split vs Solid (Fan-shaped vs RD/RDW). Specs, applications, RFQ.",
-      zh: "浏览变频用工况轴接地环：Split/Solid（扇形 vs RD/RDW）及定制。技术规格、场景与询盘。",
+      en: "Browse solid RD/RDW, arc-shaped ST/STW, and custom shaft grounding rings for inverter-duty motors. Review structure, applications, and RFQ inputs.",
+      zh: "浏览变频电机用 RD/RDW 整环、ST/STW 弧形环与定制轴接地环，查看结构、场景与询盘信息。",
     },
   },
   applications: {
@@ -55,8 +55,8 @@ export const staticPageMeta = {
       zh: "知识中心",
     },
     description: {
-      en: "Technical articles: shaft voltage, Split vs Solid (Fan-shaped vs RD/RDW) grounding rings, installation guidance.",
-      zh: "轴电压、Split/Solid（扇形 vs RD/RDW）选型与安装等技术文章，供维护与工程团队参考。",
+      en: "Technical articles: shaft voltage, solid vs arc-shaped shaft grounding rings, and installation guidance.",
+      zh: "轴电压、整环与弧形轴接地环选型、安装等技术文章，供维护与工程团队参考。",
     },
     listIntro: {
       en: "Technical articles on shaft voltage, product selection, and installation - written for engineers and maintenance teams.",

@@ -64,28 +64,28 @@ export const articles: ArticleRecord[] = [
     dateModified: "2026-03-15T10:00:00.000Z",
     locales: {
       en: {
-        title: "Split vs Solid (Fan-shaped vs RD/RDW): Which Shaft Grounding Ring?",
+        title: "ST/STW vs RD/RDW: Which Shaft Grounding Ring Structure?",
         excerpt:
-          "Split vs solid retrofit and OEM rings—Fan-shaped and RD/RDW product naming; Split/Solid keywords unchanged.",
+          "Compare arc-shaped ST/STW and solid RD/RDW shaft grounding rings by structure, mounting, and application fit.",
         metaDescription:
-          "Compare Split vs Solid (Fan-shaped vs RD/RDW): retrofit, OEM assembly, HVAC, pumps, MRO.",
+          "Compare ST/STW arc-shaped and RD/RDW solid shaft grounding rings by structure, mounting, and fit review inputs.",
         paragraphs: [
-          "Fan-shaped, formerly known as Split, suits motors that stay installed with limited access—often installable without full disassembly.",
-          "RD/RDW, formerly known as Solid, suits OEM builds where the motor is fully accessible during assembly.",
-          "Field retrofit: prefer Fan-shaped. Controlled assembly line: RD/RDW is often simpler at volume.",
-          "Unusual geometry may need custom work—whether you started from Split/Solid (Fan-shaped/RD/RDW) or not.",
+          "ST/STW is Volsun's arc-shaped shaft grounding ring family. It is reviewed where the shaft diameter, mounting envelope, or access conditions are better suited to an arc-shaped structure.",
+          "RD/RDW is Volsun's solid shaft grounding ring family. It is reviewed where the shaft and mounting envelope support a solid ring structure.",
+          "Both families serve the same core purpose: divert shaft current away from bearings through a controlled low-resistance path.",
+          "Selection should be based on shaft diameter, available space, contact position, and mounting method. Non-catalog geometry may require a custom review.",
         ],
       },
       zh: {
-        title: "分体式与整体式如何选型？（Split vs Solid｜扇形 vs RD/RDW）",
-        excerpt: "改造现场 vs OEM 产线；扇形与 RD/RDW 命名并列，Split/Solid 检索保留。",
+        title: "ST/STW 与 RD/RDW 如何选型？",
+        excerpt: "按结构、安装方式和适配条件比较弧形 ST/STW 与整环 RD/RDW 轴接地环。",
         metaDescription:
-          "分体 vs 整体（Split/Solid，扇形 / RD/RDW）轴接地环：改造可达、OEM 装配、暖通/水泵/MRO。",
+          "比较 ST/STW 弧形轴接地环与 RD/RDW 整环轴接地环的结构、安装方式和适配输入。",
         paragraphs: [
-          "扇形（原分体式）适合电机已就位、空间有限—常可不完全拆解安装。",
-          "RD/RDW（原整体式）适合 OEM 总装、轴端可充分暴露的批量场景。",
-          "现场改造优先扇形；产线可控、装配期可装环则 RD/RDW 往往更省事。",
-          "包络特殊时可能需定制—与是否从 Split/Solid 起步无关。",
+          "ST/STW 是沃尔兴的弧形轴接地环系列，适用于轴径、安装包络或可达性更适合弧形结构的场景。",
+          "RD/RDW 是沃尔兴的整环轴接地环系列，适用于轴和安装包络支持整环结构的场景。",
+          "两类产品的核心目的相同：通过可控低阻路径将轴电流从轴承旁路分流。",
+          "选型应基于轴径、可用空间、接触位置和安装方式。非标几何通常需要进入定制评审。",
         ],
       },
     },
@@ -97,26 +97,26 @@ export const articles: ArticleRecord[] = [
     dateModified: "2026-03-18T10:00:00.000Z",
     locales: {
       en: {
-        title: "Install a Split / Fan-shaped Ring Without Full Motor Disassembly",
-        excerpt: "Retrofit checklist for Fan-shaped rings—split-type keywords unchanged for SEO.",
+        title: "Install an Arc-Shaped Shaft Grounding Ring",
+        excerpt: "Installation checklist for arc-shaped shaft grounding rings where access and mounting envelope need review.",
         metaDescription:
-          "Split shaft grounding rings: Fan-shaped install guide—prep, clearance, torque—without full tear-down.",
+          "Arc-shaped shaft grounding ring installation guide: shaft preparation, access review, contact position, and fastening checks.",
         paragraphs: [
           "Start with a clean shaft surface in the intended mounting zone. Burrs and contamination can affect seating and electrical contact behavior.",
-          "Confirm clearance for the Fan-shaped housing and torque tooling. If access is tight, plan the sequence before loosening existing components.",
-          "Tighten fasteners gradually and evenly to avoid pinching or distorting the housing. Follow the recommended torque range for your series.",
+          "Confirm clearance for the arc-shaped housing and fastening tools. If access is tight, plan the sequence before loosening existing components.",
+          "Tighten fasteners gradually and evenly to avoid pinching or distorting the housing. Follow the approved installation guidance for your series.",
           "After installation, record the motor tag, shaft diameter, and ring position for future maintenance. If you need validation support, contact Volsun with photos and nameplate data.",
         ],
       },
       zh: {
-        title: "不完全拆解电机时如何安装扇形（原分体式）轴接地环？",
-        excerpt: "现场改造安装要点；Split/分体式仍为检索词。",
+        title: "弧形轴接地环安装要点",
+        excerpt: "面向弧形轴接地环的安装检查：轴表面、安装空间、接触位置和紧固条件。",
         metaDescription:
-          "扇形（原分体式）轴接地环安装：表面处理、工具空间、紧固顺序（不完全拆解场景）。",
+          "弧形轴接地环安装：轴表面处理、工具空间、接触位置和紧固检查。",
         paragraphs: [
           "先在计划安装区域清洁轴表面，去除毛刺与污染物，以免影响贴合与导电稳定性。",
-          "确认扇形外壳与力矩工具的操作空间；若空间局促，应在松动既有部件前规划好拆装顺序。",
-          "螺钉应对角、分步拧紧，避免壳体偏斜或变形，并遵循该系列的推荐力矩范围。",
+          "确认弧形外壳与紧固工具的操作空间；若空间局促，应在松动既有部件前规划好拆装顺序。",
+          "螺钉应对角、分步拧紧，避免壳体偏斜或变形，并遵循该系列已确认的安装指导。",
           "安装后记录电机铭牌、轴径及环的安装位置，便于后续维护。如需复核，可向沃尔兴提供照片与铭牌信息。",
         ],
       },

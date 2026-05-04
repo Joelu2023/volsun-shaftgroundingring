@@ -64,7 +64,7 @@ export type IndustrialApplicationPageData = {
 export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
   slug: "industrial-motors",
   path: "/applications/industrial-motors",
-  heroImagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-machinery-v1.png`,
+  heroImagePath: "/images/applications/application-industrial-motors-cover-v1.webp",
   values: {
     en: [
       {
@@ -177,28 +177,28 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
   },
   oemRetrofitPoints: {
     en: [
-      "Compact envelope options for both new machine design and retrofit constraints.",
-      "Supports shaft size adaptation for mixed equipment portfolios.",
-      "Process-oriented implementation from pilot validation to repeatable rollout.",
+      "Structure review across solid RD/RDW, arc-shaped ST/STW, and custom options.",
+      "Shaft size adaptation for mixed equipment portfolios.",
+      "Process-oriented implementation from sample fit review to repeatable rollout.",
     ],
     zh: [
-      "支持新机设计与存量改造的安装包络约束。",
+      "按 RD/RDW 整环、ST/STW 弧形环与定制方案进行结构评审。",
       "可按轴径与设备族进行适配扩展。",
-      "从试点验证到批量导入具备流程化支持。",
+      "从样品适配评审到批量导入具备流程化支持。",
     ],
   },
   productSelection: {
     en: [
       {
         id: "sel-1",
-        title: "Retrofit-first scenario",
-        body: "Prefer Fan-shaped where access and downtime dominate—Split/Solid naming unchanged.",
+        title: "Arc-shaped ST/STW review",
+        body: "Review ST/STW where shaft size, access, or mounting envelope is better suited to an arc-shaped structure.",
         productSlug: "split-shaft-grounding-ring",
       },
       {
         id: "sel-2",
-        title: "New assembly scenario",
-        body: "Prefer RD/RDW for OEM assembly with stable windows.",
+        title: "Solid RD/RDW review",
+        body: "Review RD/RDW where the shaft and installation envelope support a solid ring structure.",
         productSlug: "solid-shaft-grounding-ring",
       },
       { id: "sel-3", title: "Special envelope or shaft geometry", body: "Use custom package for non-standard dimensions and validation requirements.", productSlug: "custom-shaft-grounding-ring" },
@@ -206,14 +206,14 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
     zh: [
       {
         id: "sel-1",
-        title: "改造优先场景",
-        body: "空间或停机受限时优先扇形（原分体式）；Split 检索保留。",
+        title: "ST/STW 弧形环评审",
+        body: "当轴径、可达性或安装包络更适合弧形结构时，评审 ST/STW。",
         productSlug: "split-shaft-grounding-ring",
       },
       {
         id: "sel-2",
-        title: "新机装配场景",
-        body: "总装更适合 RD/RDW（原整体式）。",
+        title: "RD/RDW 整环评审",
+        body: "当轴和安装包络支持整环结构时，评审 RD/RDW。",
         productSlug: "solid-shaft-grounding-ring",
       },
       { id: "sel-3", title: "特殊包络或轴几何", body: "非标尺寸与验证要求建议采用定制方案。", productSlug: "custom-shaft-grounding-ring" },
@@ -223,26 +223,26 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
     en: [
       { id: "cmp-1", metric: "VFD-driven bearing current control", conventional: "Often reactive and inconsistent", volsun: "Designed for controlled current discharge path" },
       { id: "cmp-2", metric: "Maintenance burden", conventional: "Repeat troubleshooting cycles", volsun: "More predictable inspection and replacement interval" },
-      { id: "cmp-3", metric: "Integration flexibility", conventional: "Limited adaptation for mixed fleets", volsun: "OEM + retrofit integration support" },
+      { id: "cmp-3", metric: "Integration flexibility", conventional: "Limited adaptation for mixed fleets", volsun: "Solid, arc-shaped, and custom structure review" },
       { id: "cmp-4", metric: "Lifecycle cost confidence", conventional: "Hidden electrical failure costs", volsun: "Risk-aware protection strategy with program visibility" },
     ],
     zh: [
       { id: "cmp-1", metric: "变频轴承电流控制", conventional: "多为被动应对且一致性不足", volsun: "可控泄放路径设计" },
       { id: "cmp-2", metric: "维护负担", conventional: "重复排故循环", volsun: "检修与更换周期更可预测" },
-      { id: "cmp-3", metric: "集成灵活性", conventional: "对混合设备适配有限", volsun: "支持 OEM 与改造并行导入" },
+      { id: "cmp-3", metric: "集成灵活性", conventional: "对混合设备适配有限", volsun: "按整环、弧形和定制结构评审" },
       { id: "cmp-4", metric: "生命周期成本可控性", conventional: "隐性电气故障成本高", volsun: "风险可视化的防护策略" },
     ],
   },
   faq: {
     en: [
       { id: "ind-faq-1", question: "Do all industrial VFD motors need shaft grounding?", answer: "Risk level differs by topology and duty, but many inverter-duty motors benefit from controlled shaft current discharge to protect bearings." },
-      { id: "ind-faq-2", question: "How do I start with mixed old and new equipment?", answer: "Begin with highest-risk assets and define retrofit/OEM paths in parallel using shaft and envelope data." },
+      { id: "ind-faq-2", question: "How do I start with mixed equipment?", answer: "Begin with highest-risk assets and review solid, arc-shaped, or custom paths using shaft and envelope data." },
       { id: "ind-faq-3", question: "Can this help reduce unexplained vibration events?", answer: "Yes, reducing electrical bearing damage can remove one hidden contributor to rising vibration and noise over time." },
       { id: "ind-faq-4", question: "What data should we provide for engineering review?", answer: "Provide motor nameplate, shaft size, VFD details, environment notes, and access constraints for faster recommendations." },
     ],
     zh: [
       { id: "ind-faq-1", question: "所有工业变频电机都需要轴接地吗？", answer: "风险程度取决于工况和结构，但多数变频场景都建议建立可控泄放路径以保护轴承。" },
-      { id: "ind-faq-2", question: "老旧设备和新设备混合场景如何推进？", answer: "建议先从高风险资产试点，同时规划改造与 OEM 双路径导入。" },
+      { id: "ind-faq-2", question: "混合设备场景如何推进？", answer: "建议先从高风险资产试点，再按轴和包络数据评审整环、弧形或定制路径。" },
       { id: "ind-faq-3", question: "能否帮助降低难以解释的振动问题？", answer: "可降低电气性轴承损伤这一隐性因素，有助于减少振动/噪声上升风险。" },
       { id: "ind-faq-4", question: "工程评审需要提供哪些信息？", answer: "建议提供铭牌、轴径、VFD 信息、环境条件和安装限制。" },
     ],
@@ -263,7 +263,7 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
     en: {
       seoTitle: "Industrial Motor Shaft Grounding Rings | VFD Bearing Current Protection",
       seoDescription:
-        "Protect inverter-duty industrial motors from shaft current-related bearing damage. Practical grounding solutions for retrofit and OEM deployment.",
+        "Protect inverter-duty industrial motors from shaft current-related bearing damage. Practical grounding solutions reviewed by structure and fit.",
       heroKicker: "Industrial Motors & Machinery",
       heroTitle: "Industrial Motor Shaft Grounding Rings for VFD Bearing Protection",
       heroSubtitle: "Help reduce shaft voltage and bearing current risk in fans, pumps, compressors, conveyors, and automation machinery.",
@@ -287,11 +287,11 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
         "Lightweight proof signals you can strengthen with customer-approved metrics. Use this block to anchor confidence before the comparison table.",
       provenBullets: [
         "Designed to support VFD bearing protection and shaft current discharge control across common industrial motor classes.",
-        "Designed for both OEM new builds and retrofit access constraints.",
+        "Solid, arc-shaped, and custom structures are reviewed according to shaft and installation constraints.",
         "Engineering-led response to accelerate RFQ, sampling, and field validation alignment.",
       ],
-      oemRetrofitTitle: "Designed for OEM and Retrofit Integration",
-      oemRetrofitBody: "One framework for new builds and installed base upgrades.",
+      oemRetrofitTitle: "Structured Product Fit Review",
+      oemRetrofitBody: "One review path for shaft geometry, mounting envelope, and contact position.",
       selectionTitle: "Product Selection",
       comparisonTitle: "Comparison",
       comparisonLead:
@@ -312,7 +312,7 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
     zh: {
       seoTitle: "工业电机轴接地环 | 变频轴承电流防护",
       seoDescription:
-        "保护逆变驱动工业电机，降低轴电流相关轴承损伤风险，支持改造与 OEM 导入。",
+        "保护逆变驱动工业电机，降低轴电流相关轴承损伤风险，并按结构与适配条件评审接地方案。",
       heroKicker: "工业电机与机械",
       heroTitle: "用于变频轴承防护的工业电机轴接地环方案",
       heroSubtitle: "面向风机、水泵、压缩机、输送线与自动化设备的轴电压与轴承电流风险治理。",
@@ -334,11 +334,11 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       provenBody: "轻证据模块：可用客户授权数据替换以下要点，用于在对比表之前建立信任锚点。",
       provenBullets: [
         "面向常见工业电机族的变频轴承电流抑制路径。",
-        "同时适配 OEM 新机与改造场景的安装约束。",
+        "按轴和安装约束评审整环、弧形和定制结构。",
         "工程主导响应，加速样品、评审与现场验证对齐。",
       ],
-      oemRetrofitTitle: "面向 OEM 与改造的一体化导入",
-      oemRetrofitBody: "同一思路覆盖新机导入与存量改造。",
+      oemRetrofitTitle: "结构化产品适配评审",
+      oemRetrofitBody: "围绕轴几何、安装包络和接触位置进行同一套评审。",
       selectionTitle: "产品选型建议",
       comparisonTitle: "方案对比",
       comparisonLead: "若你在对比 capex 与可靠性，从这里开始：可控轴接地针对的是导致重复轴承成本的电气根因。",

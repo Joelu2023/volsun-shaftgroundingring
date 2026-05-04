@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Volsun Shaft Grounding Rings",
   },
   description:
-    "Shaft grounding rings for VFD motor bearing protection—factory-backed. Split/Solid (Fan-shaped vs RD/RDW) families plus custom options.",
+    "Shaft grounding rings for VFD motor bearing protection. Solid RD/RDW, arc-shaped ST/STW, and custom options.",
 };
 
 export default async function RootLayout({

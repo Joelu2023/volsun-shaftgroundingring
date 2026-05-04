@@ -57,24 +57,24 @@ export const applications: ApplicationDetail[] = [
     summary:
       "Core EV industry page for oil-cooled traction motor bearing protection, validation evidence alignment, and program conversion.",
     coverImagePublicPath: "/images/home/home-electric-vehicles-cover-en-v1.webp",
-    heroImagePublicPath: "/images/applications/ev/shaft-grounding-ev-oil-cooled-motor-hero-v1.webp",
+    heroImagePublicPath: "/images/applications/application-shaft-grounding-ev-oil-cooled-motor-v1.webp",
     phase: "p0",
     metaDescription:
-      "Electric vehicle motor application: shaft grounding strategy for oil-cooled EV traction motors with durability, efficiency, and program-scale readiness.",
+      "Electric vehicle motor application: shaft grounding strategy for oil-cooled EV traction motors and program-scale readiness.",
     problem:
-      "Oil-cooled EV traction motors face inverter-induced shaft voltage while operating across high-speed, high-load duty cycles. Conventional grounding designs can lose consistency when exposed to heavy oil environments.",
+      "Oil-cooled EV traction motors can face inverter-induced shaft voltage during demanding duty cycles. Shaft grounding needs stable contact in common transmission oil environments.",
     whyItMatters:
-      "Bearing protection failure in EV programs impacts warranty, NVH, and long-term efficiency confidence. Teams need grounding solutions that satisfy both engineering evidence and SOP scalability.",
+      "Bearing protection failure in EV programs impacts warranty, NVH, and long-term reliability confidence. Teams need grounding solutions that can be reviewed for both application fit and scalable production.",
     typicalRisks: [
       "Electrical pitting or fluting risk in long-duty EV operation",
-      "Validation mismatch between prototype and SOP production",
-      "Cost-pressure tradeoffs between protection and efficiency targets",
+      "Fit mismatch between prototype and production installation",
+      "Application review gaps before scalable production",
     ],
     recommendedProducts: ["split-shaft-grounding-ring", "custom-shaft-grounding-ring"],
     checklist: [
       "Provide shaft geometry and oil environment constraints",
-      "Share inverter switching profile and target drive cycle",
-      "Define DVP evidence expectations and SOP timing",
+      "Share inverter and operating context where available",
+      "Define sample review and production timing",
     ],
   },
   {
@@ -85,15 +85,15 @@ export const applications: ApplicationDetail[] = [
     summary:
       "For inverter-duty industrial motors in fans, pumps, compressors, conveyors, and automation machinery where shaft voltage and bearing current can drive repeated failures.",
     coverImagePublicPath: "/images/home/home-industrial-motors-cover-en-v1.webp",
-    heroImagePublicPath: "/images/applications/industrial/industrial-app-machinery-v1.png",
+    heroImagePublicPath: "/images/applications/application-industrial-motors-cover-v1.webp",
     phase: "p0",
     seoTitle: "Industrial Motor Shaft Grounding Rings | VFD Bearing Current Protection",
     metaDescription:
-      "Protect inverter-duty industrial motors from shaft current-related bearing damage. Practical grounding solutions for retrofit and OEM deployment.",
+      "Protect inverter-duty industrial motors from shaft current-related bearing damage. Practical grounding solutions reviewed by structure and fit.",
     problem:
       "In inverter-duty operation, shaft voltage can build and discharge as bearing current. Teams often see bearing fluting and repeated replacement before the electrical root cause is confirmed.",
     whyItMatters:
-      "A controlled shaft current discharge path helps reduce risk of electrical erosion, improve maintenance predictability, and support both retrofit and OEM programs. Start from Fan-shaped or RD/RDW (Split/Solid families)—evaluate VS-RD series fit during engineering review.",
+      "A controlled shaft current discharge path helps reduce risk of electrical erosion and improve maintenance predictability. Start from solid RD/RDW, arc-shaped ST/STW, or custom options according to shaft geometry and installation constraints.",
     typicalRisks: [
       "VFD bearing protection gaps in inverter-duty motor fleets",
       "Shaft voltage and bearing current causing hidden wear accumulation",
@@ -131,7 +131,7 @@ export const applications: ApplicationDetail[] = [
     problem:
       "VFD-driven pump motors can accumulate shaft voltage and discharge through bearings, leading to repeated bearing damage and service interruption.",
     whyItMatters:
-      "Pump stations are often unattended and run continuously. A practical grounding path helps reduce risk of electrical erosion and supports uptime-focused maintenance planning. VS-RD series works alongside Fan-shaped, RD/RDW, or custom—Split/Solid naming unchanged for search.",
+      "Pump stations are often unattended and run continuously. A practical grounding path helps reduce risk of electrical erosion and supports uptime-focused maintenance planning. Review solid RD/RDW, arc-shaped ST/STW, or custom options according to shaft geometry and installation constraints.",
     typicalRisks: [
       "Repeated bearing failure under continuous-duty operation",
       "Bearing fluting and vibration increase after inverter retrofit",

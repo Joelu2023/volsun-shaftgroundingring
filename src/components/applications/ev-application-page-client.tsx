@@ -37,16 +37,8 @@ export function EvApplicationPageClient({ locale, data }: Props) {
   const comparisonSectionRef = useRef<HTMLElement | null>(null);
   const faqItems = data.faq[locale];
   const chartItems = data.proofCharts[locale];
-  const baseCtas = data.ctas[locale];
-  const hasDvpFile = Boolean(data.dvpCta.downloadFilePath?.trim());
-  const ctas = baseCtas.map((cta) => {
-    if (cta.id !== "cta-dvp") return cta;
-    return {
-      ...cta,
-      label: hasDvpFile ? data.dvpCta.downloadLabel[locale] : data.dvpCta.requestLabel[locale],
-      href: hasDvpFile ? data.dvpCta.downloadFilePath! : data.dvpCta.requestHref,
-    };
-  });
+  const ctas = data.ctas[locale];
+  const trustedStats = data.trustedStats[locale];
   const hasLogoAssets = data.trustedBrands.some((brand) => Boolean(brand.logoPath));
   const showLogoWall = data.trustedDisplayMode === "logo_wall" || (data.trustedDisplayMode === "auto" && hasLogoAssets);
 
@@ -131,22 +123,6 @@ export function EvApplicationPageClient({ locale, data }: Props) {
       trackEvent("bottom_cta_click", { page_source: "applications_ev", locale, cta_id: cta.id, cta_label: cta.label });
     }
 
-    if (cta.id === "cta-dvp" && hasDvpFile) {
-      trackEvent("resource_download_click", {
-        page_source: "applications_ev",
-        locale,
-        resource: "dvp-test-report",
-        mode: "direct_download",
-      });
-    }
-    if (cta.id === "cta-dvp" && !hasDvpFile) {
-      trackEvent("resource_download_click", {
-        page_source: "applications_ev",
-        locale,
-        resource: "dvp-test-report",
-        mode: "request_form",
-      });
-    }
   };
 
   return (
@@ -163,7 +139,6 @@ export function EvApplicationPageClient({ locale, data }: Props) {
                 key={cta.id}
                 href={ctaHref(cta.href)}
                 className={ctaClass(cta.style)}
-                download={cta.id === "cta-dvp" && hasDvpFile ? "" : undefined}
                 onClick={() => onCtaClick("hero", cta)}
               >
                 {cta.label}
@@ -181,23 +156,25 @@ export function EvApplicationPageClient({ locale, data }: Props) {
         />
       </section>
 
-      <section>
-        <h2 className="text-2xl font-semibold text-brand-blue">{t.mediaSlotsTitle}</h2>
-        <p className="mt-3 text-slate-600">{t.mediaSlotsBody}</p>
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
-          {data.mediaSlots.map((slot) => (
-            <MediaSlot
-              key={slot.id}
-              imagePath={slot.imagePath}
-              alt={slot.alt}
-              fallbackLabel={slot.label}
-              className="aspect-[16/9]"
-              sizes={EV_IMG_SIZES.twoCol}
-              imageFit="contain"
-            />
-          ))}
-        </div>
-      </section>
+      {data.mediaSlots.length > 0 ? (
+        <section>
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.mediaSlotsTitle}</h2>
+          <p className="mt-3 text-slate-600">{t.mediaSlotsBody}</p>
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            {data.mediaSlots.map((slot) => (
+              <MediaSlot
+                key={slot.id}
+                imagePath={slot.imagePath}
+                alt={slot.alt}
+                fallbackLabel={slot.label}
+                className="aspect-[16/9]"
+                sizes={EV_IMG_SIZES.twoCol}
+                imageFit="contain"
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.whyFailTitle}</h2>
@@ -246,28 +223,30 @@ export function EvApplicationPageClient({ locale, data }: Props) {
         </div>
       </section>
 
-      <section>
-        <h2 className="text-2xl font-semibold text-brand-blue">{t.proofChartsTitle}</h2>
-        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-slate-500">{t.validationFootnote}</p>
-        <div className="mt-5 grid gap-5 md:grid-cols-2">
-          {chartItems.map((chart) => (
-            <article key={chart.id} className="rounded-lg border border-slate-200 bg-white p-4">
-              <div data-proof-chart="true" data-chart-id={chart.id}>
-                <MediaSlot
-                  imagePath={chart.imagePath}
-                  alt={chart.alt}
-                  fallbackLabel={chart.title}
-                  className="aspect-[16/10]"
-                  sizes={EV_IMG_SIZES.twoCol}
-                  imageFit="contain"
-                />
-              </div>
-              <h3 className="mt-3 font-semibold text-slate-900">{chart.title}</h3>
-              <p className="mt-2 text-sm text-slate-600">{chart.caption}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      {chartItems.length > 0 ? (
+        <section>
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.proofChartsTitle}</h2>
+          <p className="mt-2 max-w-3xl text-xs leading-relaxed text-slate-500">{t.validationFootnote}</p>
+          <div className="mt-5 grid gap-5 md:grid-cols-2">
+            {chartItems.map((chart) => (
+              <article key={chart.id} className="rounded-lg border border-slate-200 bg-white p-4">
+                <div data-proof-chart="true" data-chart-id={chart.id}>
+                  <MediaSlot
+                    imagePath={chart.imagePath}
+                    alt={chart.alt}
+                    fallbackLabel={chart.title}
+                    className="aspect-[16/10]"
+                    sizes={EV_IMG_SIZES.twoCol}
+                    imageFit="contain"
+                  />
+                </div>
+                <h3 className="mt-3 font-semibold text-slate-900">{chart.title}</h3>
+                <p className="mt-2 text-sm text-slate-600">{chart.caption}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.protectTitle}</h2>
@@ -323,11 +302,11 @@ export function EvApplicationPageClient({ locale, data }: Props) {
               />
             ))}
           </div>
-        ) : (
+        ) : trustedStats.length > 0 ? (
           <div>
             <p className="mt-4 text-sm font-medium text-slate-700">{t.trustedStatsTitle}</p>
             <div className="mt-3 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {data.trustedStats[locale].map((item) => (
+              {trustedStats.map((item) => (
                 <article key={item.id} className="rounded-lg border border-slate-200 bg-white p-4">
                   <p className="text-2xl font-semibold text-brand-blue">{item.value}</p>
                   <p className="mt-1 font-medium text-slate-900">{item.label}</p>
@@ -336,7 +315,7 @@ export function EvApplicationPageClient({ locale, data }: Props) {
               ))}
             </div>
           </div>
-        )}
+        ) : null}
       </section>
 
       <section>
@@ -365,13 +344,15 @@ export function EvApplicationPageClient({ locale, data }: Props) {
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {data.recommendedSolutions.map((solution) => (
             <article key={solution.id} className="rounded-lg border border-slate-200 bg-white p-4">
-              <MediaSlot
-                imagePath={solution.imagePath}
-                alt={solution.imageAlt}
-                fallbackLabel={solution.title}
-                className="aspect-[16/9]"
-                sizes={EV_IMG_SIZES.twoCol}
-              />
+              {solution.imagePath ? (
+                <MediaSlot
+                  imagePath={solution.imagePath}
+                  alt={solution.imageAlt}
+                  fallbackLabel={solution.title}
+                  className="aspect-[16/9]"
+                  sizes={EV_IMG_SIZES.twoCol}
+                />
+              ) : null}
               <h3 className="mt-4 font-semibold text-slate-900">{solution.title}</h3>
               <p className="mt-2 text-sm text-slate-600">{solution.summary}</p>
               <Link
@@ -393,30 +374,32 @@ export function EvApplicationPageClient({ locale, data }: Props) {
         </div>
       </section>
 
-      <section ref={comparisonSectionRef}>
-        <h2 className="text-2xl font-semibold text-brand-blue">{t.comparisonTitle}</h2>
-        <p className="mt-3 text-slate-600">{t.comparisonSubtitle}</p>
-        <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200">
-          <table className="min-w-full border-collapse text-sm">
-            <thead className="bg-slate-50 text-slate-700">
-              <tr>
-                <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadMetric}</th>
-                <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadConventional}</th>
-                <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadVolsun}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.comparisonRows.map((row) => (
-                <tr key={row.id} className="align-top">
-                  <td className="border-b border-slate-100 px-4 py-3 font-medium text-slate-900">{row.metric}</td>
-                  <td className="border-b border-slate-100 px-4 py-3 text-slate-600">{row.conventional}</td>
-                  <td className="border-b border-slate-100 px-4 py-3 text-slate-600">{row.volsun}</td>
+      {data.comparisonRows.length > 0 ? (
+        <section ref={comparisonSectionRef}>
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.comparisonTitle}</h2>
+          <p className="mt-3 text-slate-600">{t.comparisonSubtitle}</p>
+          <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200">
+            <table className="min-w-full border-collapse text-sm">
+              <thead className="bg-slate-50 text-slate-700">
+                <tr>
+                  <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadMetric}</th>
+                  <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadConventional}</th>
+                  <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadVolsun}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              </thead>
+              <tbody>
+                {data.comparisonRows.map((row) => (
+                  <tr key={row.id} className="align-top">
+                    <td className="border-b border-slate-100 px-4 py-3 font-medium text-slate-900">{row.metric}</td>
+                    <td className="border-b border-slate-100 px-4 py-3 text-slate-600">{row.conventional}</td>
+                    <td className="border-b border-slate-100 px-4 py-3 text-slate-600">{row.volsun}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
 
       <section className="rounded-lg border border-slate-200 bg-white p-5">
         <h2 className="text-xl font-semibold text-brand-blue">{t.midCtaTitle}</h2>
@@ -426,7 +409,6 @@ export function EvApplicationPageClient({ locale, data }: Props) {
               key={`mid-${cta.id}`}
               href={ctaHref(cta.href)}
               className={ctaClass(cta.style)}
-              download={cta.id === "cta-dvp" && hasDvpFile ? "" : undefined}
               onClick={() => onCtaClick("midpage", cta)}
             >
               {cta.label}
@@ -473,7 +455,6 @@ export function EvApplicationPageClient({ locale, data }: Props) {
               key={cta.id}
               href={ctaHref(cta.href)}
               className={ctaClass(cta.style)}
-              download={cta.id === "cta-dvp" && hasDvpFile ? "" : undefined}
               onClick={() => onCtaClick("bottom", cta)}
             >
               {cta.label}

@@ -38,8 +38,8 @@ export const resources: ResourceItem[] = [
   {
     id: "res-cat",
     slug: "volsun-shaft-grounding-conductive-ring-catalog",
-    title: "Volsun Shaft Grounding Conductive Ring (Brush) — Product Catalog",
-    summary: "Product family overview, typical size ranges, and ordering guidance for Volsun shaft grounding conductive rings.",
+    title: "Volsun Shaft Grounding Ring (Carbon Fiber Brush) - Product Catalog",
+    summary: "Product family overview, typical size ranges, and ordering guidance for Volsun shaft grounding rings.",
     resource_type: "catalog",
     cta_key: "catalog",
     tag: "PDF",

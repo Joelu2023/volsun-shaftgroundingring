@@ -111,6 +111,11 @@ export const publicContact = {
   address: "No.402, Mudong Road, Wuzhong District, Suzhou, Jiangsu 215101",
 } as const;
 
+export const whatsappConfig = {
+  whatsappNumber: "8618963669862",
+  whatsappMessage: "Hello Volsun, I am interested in shaft grounding rings. Please contact me.",
+} as const;
+
 export const siteConfig = {
   siteName: "Volsun Shaft Grounding Rings",
   baseUrl: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "",
@@ -121,6 +126,7 @@ export const siteConfig = {
   navigationEn,
   enHeaderLogoSrc,
   publicContact,
+  whatsappConfig,
 };
 
 export type HeroCtaTier = "primary" | "secondary_primary" | "secondary" | "text";

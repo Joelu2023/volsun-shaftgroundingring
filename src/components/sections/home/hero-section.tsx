@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { homeHeroCtas, EN_CATALOG_DOWNLOAD_SLUG } from "@/data";
@@ -5,6 +7,7 @@ import { cn } from "@/lib/utils/cn";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { resolveHeroImageSrc } from "@/lib/images/locale-visuals";
 import { heroCtaLabel, ui } from "@/lib/i18n/ui-messages";
+import { trackEvent } from "@/lib/analytics/events";
 
 export function HeroSection({ locale }: { locale: AppLocale }) {
   const t = ui(locale);
@@ -21,12 +24,14 @@ export function HeroSection({ locale }: { locale: AppLocale }) {
               <>
                 <Link
                   href={`/${locale}/contact?cta_key=quote`}
+                  onClick={() => trackEvent("cta_quote_click", { page: "home", cta: "hero_quote" })}
                   className="inline-flex items-center justify-center rounded bg-brand-orange px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:opacity-90"
                 >
                   {heroCtaLabel("quote", locale)}
                 </Link>
                 <Link
                   href={`/${locale}/resources/download/${EN_CATALOG_DOWNLOAD_SLUG}`}
+                  onClick={() => trackEvent("catalog_download_click", { page: "home", cta: "hero_catalog" })}
                   className="inline-flex items-center justify-center rounded border-2 border-brand-orange bg-white px-4 py-2.5 text-sm font-medium text-brand-orange transition hover:bg-orange-50"
                 >
                   {t.heroCtaCatalog}

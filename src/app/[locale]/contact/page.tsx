@@ -7,12 +7,13 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbListJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-import { getPageMeta } from "@/data";
+import { getPageMeta, whatsappConfig } from "@/data";
 import { firstStringParam, parseCtaKeyParam, resolveInitialInquiryType } from "@/lib/inquiry/contact-params";
 import { isAppLocale, type AppLocale } from "@/lib/i18n/locales";
 import { resolveContactAsideImageSrc } from "@/lib/images/locale-visuals";
 import { ui } from "@/lib/i18n/ui-messages";
 import { PublicContactCard } from "@/components/contact/public-contact-card";
+import { TrackedLink } from "@/components/common/tracked-link";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -45,6 +46,7 @@ export default async function LocalizedContactPage({ params, searchParams }: Pro
   const ctaKeyParam = parseCtaKeyParam(firstStringParam(sp, "cta_key"));
   const inquiryTypeParam = firstStringParam(sp, "inquiry_type");
   const initialInquiryType = resolveInitialInquiryType(inquiryTypeParam, ctaKeyParam);
+  const whatsappHref = `https://wa.me/${whatsappConfig.whatsappNumber}?text=${encodeURIComponent(whatsappConfig.whatsappMessage)}`;
 
   const formKey = [productInterest ?? "", applicationInterest ?? "", resourceSlug ?? "", initialInquiryType, ctaKeyParam ?? ""].join("|");
 
@@ -88,6 +90,22 @@ export default async function LocalizedContactPage({ params, searchParams }: Pro
         <div>
           <h2 className="text-lg font-semibold text-brand-blue">{t.contactInquiryFormTitle}</h2>
           <p className="mt-2 text-sm text-slate-500">{t.contactInquiryFormDevNote}</p>
+          {locale === "en" ? (
+            <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+              <p className="text-sm font-semibold text-emerald-900">Need a faster response?</p>
+              <p className="mt-1 text-sm text-emerald-800">Chat with our sales team on WhatsApp.</p>
+              <TrackedLink
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                eventName="whatsapp_click"
+                payload={{ location: "contact_page" }}
+                className="mt-3 inline-flex items-center rounded border border-emerald-500 bg-white px-3 py-1.5 text-sm font-medium text-emerald-700 hover:bg-emerald-100"
+              >
+                Chat on WhatsApp
+              </TrackedLink>
+            </div>
+          ) : null}
           <div className="mt-6 max-w-xl">
             <InquiryForm
               key={formKey}

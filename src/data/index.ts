@@ -1,4 +1,4 @@
-export { siteConfig, homeHeroCtas, navigationZh, navigationEn, enHeaderLogoSrc, publicContact } from "./mock/site";
+export { siteConfig, homeHeroCtas, navigationZh, navigationEn, enHeaderLogoSrc, publicContact, whatsappConfig } from "./mock/site";
 export { products, getProductBySlug, getProductForLocale } from "./mock/products";
 export type { ProductDetail, ProductFeature, ProductSpecField } from "./mock/products";
 export { applications, getApplicationBySlug, getApplicationForLocale } from "./mock/applications";

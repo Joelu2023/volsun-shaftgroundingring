@@ -45,6 +45,10 @@ const FORM_COPY = {
     errPhone: "Phone / WhatsApp is required.",
     errMessage: "Message is required.",
     errCountry: "Country is required.",
+    errInquiryType: "Inquiry type is required.",
+    errShaft: "Shaft diameter is required for quotation.",
+    companyHint: "required for quotation",
+    phoneHint: "faster response",
     apiInvalidJson: "The request could not be read. Please refresh the page and try again.",
     apiMissing: "Required information is missing. Please complete all required fields.",
     apiPayload: "Some fields were not accepted. Check your email format and try again.",
@@ -88,6 +92,10 @@ const FORM_COPY = {
     errPhone: "请填写电话 / WhatsApp。",
     errMessage: "请填写留言。",
     errCountry: "请填写国家/地区。",
+    errInquiryType: "请选择询盘类型。",
+    errShaft: "报价建议填写轴径。",
+    companyHint: "用于报价（建议填写）",
+    phoneHint: "回复更快（建议填写）",
     apiInvalidJson: "请求无法解析，请刷新页面后重试。",
     apiMissing: "必填信息不完整，请补全后提交。",
     apiPayload: "部分字段未通过校验，请检查后重试。",
@@ -150,26 +158,27 @@ export function InquiryForm({
   function validate(fd: FormData) {
     const next: Record<string, string> = {};
     if (enLeadSlim) {
+      const name = String(fd.get("name") ?? "").trim();
       const email = String(fd.get("email") ?? "").trim();
-      const phone = String(fd.get("phone_or_whatsapp") ?? "").trim();
-      const message = String(fd.get("message") ?? "").trim();
+      const shaft = String(fd.get("shaft_diameter") ?? "").trim();
+      // inquiry_type is fixed to "rfq" for slim form variants
+      if (!name) next.name = c.errName;
       if (!email) next.email = c.errEmail;
       else if (!EMAIL_RE.test(email)) next.email = c.errEmailFmt;
-      if (!phone) next.phone_or_whatsapp = c.errPhone;
-      if (!message) next.message = c.errMessage;
+      // For quotation flows, shaft diameter improves accuracy; keep it required for rfq variant.
+      if (!shaft) next.shaft_diameter = c.errShaft;
       return next;
     }
 
     const name = String(fd.get("name") ?? "").trim();
-    const company = String(fd.get("company") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
-    const country = String(fd.get("country") ?? "").trim();
+    const shaft = String(fd.get("shaft_diameter") ?? "").trim();
 
     if (!name) next.name = c.errName;
-    if (!company) next.company = c.errCompany;
     if (!email) next.email = c.errEmail;
     else if (!EMAIL_RE.test(email)) next.email = c.errEmailFmt;
-    if (!country) next.country = c.errCountry;
+    if (!inquiryType) next.inquiry_type = c.errInquiryType;
+    if (inquiryType === "rfq" && !shaft) next.shaft_diameter = c.errShaft;
 
     return next;
   }
@@ -250,23 +259,39 @@ export function InquiryForm({
       if (!res.ok || !data.ok) {
         setStatus("error");
         setSubmitError(messageForApiError(c, data.error, data.missing));
+        trackEvent("inquiry_submit_failed", {
+          page_source: pageSource,
+          cta_source: ctaSource,
+          inquiry_type: payload.inquiry_type,
+          product_interest: payload.product_interest ?? "",
+          application_interest: payload.application_interest ?? "",
+        });
         return;
       }
 
       setStatus("success");
       setFieldErrors({});
       setInquiryType(defaultInquiryType);
-      trackEvent("form_submit", {
+      trackEvent("inquiry_submit_success", {
         page_source: pageSource,
         cta_source: ctaSource,
         locale,
         inquiry_type: payload.inquiry_type,
+        product_interest: payload.product_interest ?? "",
+        application_interest: payload.application_interest ?? "",
       });
       form.reset();
       router.push(buildThankYouHref(locale, defaultResourceSlug, payload.product_interest));
     } catch {
       setStatus("error");
       setSubmitError(messageForApiError(c, undefined));
+      trackEvent("inquiry_submit_failed", {
+        page_source: pageSource,
+        cta_source: ctaSource,
+        inquiry_type: enLeadSlim ? "rfq" : inquiryType,
+        product_interest: String(fd.get("product_interest") ?? ""),
+        application_interest: String(fd.get("application_interest") ?? ""),
+      });
     }
   }
 
@@ -274,18 +299,16 @@ export function InquiryForm({
     return (
       <form onSubmit={onSubmit} className={cn("space-y-4", className)} noValidate>
         <div className="grid gap-3 sm:grid-cols-2">
-          <Field label={c.labelName} name="name" error={fieldErrors.name} />
-          <Field label={c.labelCompany} name="company" error={fieldErrors.company} />
+          <Field label={c.labelName} name="name" required showRequiredAsterisk error={fieldErrors.name} />
+          <Field label={c.labelCompany} name="company" hint={c.companyHint} error={fieldErrors.company} />
           <Field label={c.labelEmail} name="email" type="email" showRequiredAsterisk error={fieldErrors.email} />
-          <Field label={c.labelPhone} name="phone_or_whatsapp" showRequiredAsterisk error={fieldErrors.phone_or_whatsapp} />
+          <Field label={c.labelPhone} name="phone_or_whatsapp" hint={c.phoneHint} error={fieldErrors.phone_or_whatsapp} />
+          <Field label={c.labelShaft} name="shaft_diameter" required showRequiredAsterisk error={fieldErrors.shaft_diameter} />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-slate-800">
             {c.labelMessage}
-            <span className="text-brand-orange" aria-hidden="true">
-              {" *"}
-            </span>
           </label>
           <textarea
             name="message"
@@ -346,10 +369,10 @@ export function InquiryForm({
 
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label={c.labelName} name="name" required error={fieldErrors.name} />
-        <Field label={c.labelCompany} name="company" required error={fieldErrors.company} />
+        <Field label={c.labelCompany} name="company" hint={c.companyHint} error={fieldErrors.company} />
         <Field label={c.labelEmail} name="email" type="email" required error={fieldErrors.email} />
-        <Field label={c.labelPhone} name="phone_or_whatsapp" error={fieldErrors.phone_or_whatsapp} />
-        <Field label={c.labelCountry} name="country" required error={fieldErrors.country} />
+        <Field label={c.labelPhone} name="phone_or_whatsapp" hint={c.phoneHint} error={fieldErrors.phone_or_whatsapp} />
+        <Field label={c.labelCountry} name="country" error={fieldErrors.country} />
         <Field
           label={c.labelApplication}
           name="application_interest"
@@ -358,7 +381,7 @@ export function InquiryForm({
         />
         <Field label={c.labelMotorType} name="motor_type" />
         <Field label={c.labelPower} name="power" />
-        <Field label={c.labelShaft} name="shaft_diameter" />
+        <Field label={c.labelShaft} name="shaft_diameter" required={inquiryType === "rfq"} error={fieldErrors.shaft_diameter} />
         <Field label={c.labelQty} name="estimated_quantity" />
         <Field
           label={c.labelProduct}
@@ -417,6 +440,7 @@ function Field({
   type = "text",
   required,
   showRequiredAsterisk,
+  hint,
   className,
   error,
   defaultValue,
@@ -427,6 +451,7 @@ function Field({
   required?: boolean;
   /** Renders a trailing `*` in brand orange (matches primary CTA), e.g. for slim EN lead forms. */
   showRequiredAsterisk?: boolean;
+  hint?: string;
   className?: string;
   error?: string;
   defaultValue?: string;
@@ -441,6 +466,7 @@ function Field({
           </span>
         ) : null}
       </label>
+      {hint ? <p className="mt-0.5 text-xs text-slate-500">{hint}</p> : null}
       <input
         name={name}
         type={type}

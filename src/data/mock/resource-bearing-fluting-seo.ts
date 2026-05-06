@@ -52,7 +52,7 @@ export type BearingFlutingSeoPageData = {
   locales: { en: BearingFlutingSeoLocaleBlock; zh: BearingFlutingSeoLocaleBlock };
 };
 
-const HERO_IMG = "/images/placeholders/bearing-inspection-context-neutral.svg";
+const HERO_IMG = "/images/bearing-fluting-pit-damage.webp";
 const LOOKS_LIKE_IMG = "/images/placeholders/bearing-fluting-raceway-pattern-neutral.svg";
 
 export const bearingFlutingSeoPage: BearingFlutingSeoPageData = {

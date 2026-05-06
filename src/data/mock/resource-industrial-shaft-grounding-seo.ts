@@ -79,10 +79,10 @@ export type IndustrialShaftGroundingSeoPageData = {
 
 /** Neutral stock art: replace under `public/images/resources/...` when final photography is ready. */
 const SEO_HERO = "/images/placeholders/diagram-shaft-voltage-neutral.svg";
-const SEO_IMG_PUMP = "/images/placeholders/application-motor-neutral.svg";
-const SEO_IMG_FAN = "/images/placeholders/hero-industrial-neutral.svg";
-const SEO_IMG_COMPRESSOR = "/images/placeholders/factory-assembly-neutral.svg";
-const SEO_IMG_GENERAL = "/images/placeholders/factory-floor-neutral.svg";
+const SEO_IMG_PUMP = "/images/application-pump-system.webp";
+const SEO_IMG_FAN = "/images/application-fans-blowers.webp";
+const SEO_IMG_COMPRESSOR = "/images/application-compressors.webp";
+const SEO_IMG_GENERAL = "/images/application-general-machinery.webp";
 
 export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageData = {
   path: "/resources/shaft-grounding-for-industrial-motors",

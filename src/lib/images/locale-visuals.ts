@@ -18,7 +18,7 @@ export const PLACEHOLDER_IMAGES = {
  * Hero：固定使用首页主图，避免被环境变量误覆盖到业务卡片图（例如 wind-power 封面）。
  */
 export function resolveHeroImageSrc(_locale: AppLocale): string {
-  return "/images/home/home-hero-vfd-motor-v1.webp";
+  return "/images/home-hero-shaft-grounding-ring.webp";
 }
 
 /** 首页「轴电压机理」：按 locale 使用对应中英文机理图。 */
@@ -34,5 +34,5 @@ export function resolveFactoryImageSrc(slot: 1 | 2): string {
 }
 
 export function resolveContactAsideImageSrc(_locale: AppLocale): string {
-  return "/images/contact/contact-response-shared-v1.webp.png";
+  return "/images/contact-response-team.webp";
 }

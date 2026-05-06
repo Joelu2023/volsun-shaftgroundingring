@@ -107,7 +107,7 @@ export const products: ProductDetail[] = [
       "VS-ST/STW arc-shaped shaft grounding rings for VFD motor bearing protection. Suitable for larger shaft diameter review and screw-fastened mounting.",
     overview:
       "ST/STW is the arc-shaped shaft grounding ring family. It uses the same shaft-current diversion principle as solid and custom rings; the difference is mainly structure, mounting approach, and fit. The arc-shaped structure can be reviewed for larger shaft diameters such as industrial motors, typically with screw-fastened mounting.",
-    primaryImagePublicPath: "/images/products/arc-shaped-st-stw-shaft-grounding-ring-v1.webp",
+    primaryImagePublicPath: "/images/product-st-stw-shaft-grounding-ring.webp",
     secondaryImagePublicPath: null,
     specFields: [
       { label: "Product family", value: "ST/STW arc-shaped shaft grounding ring." },
@@ -178,7 +178,7 @@ export const products: ProductDetail[] = [
       "Custom shaft grounding rings engineered from drawings, shaft geometry, and installation constraints for non-catalog motor envelopes.",
     overview:
       "Custom shaft grounding rings are reviewed when catalog RD/RDW or ST/STW structures do not match the shaft, envelope, or contact position. Brush contact can be reviewed for shaft side or end contact, with shape and size confirmed from drawings and application constraints.",
-    primaryImagePublicPath: "/images/products/custom-shaft-grounding-ring-v1.webp",
+    primaryImagePublicPath: "/images/product-custom-shaft-grounding-ring.webp",
     secondaryImagePublicPath: null,
     specFields: [
       { label: "Input required", value: "Drawings, shaft geometry, available space, and target contact position." },

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getFaqItems, getPageMeta } from "@/data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -29,6 +30,10 @@ export default async function LocalizedFaqPage({ params }: Props) {
   const locale = raw as AppLocale;
   const m = getPageMeta("faq", locale);
   const t = ui(locale);
+  const mApp = getPageMeta("applications", locale);
+  const mRes = getPageMeta("resources", locale);
+  const mKc = getPageMeta("knowledgeCenter", locale);
+  const mContact = getPageMeta("contact", locale);
   const faqPageItems = getFaqItems(locale).filter((f) => f.scope === "faq_page" || f.scope === "global");
 
   const jsonLd = [
@@ -53,6 +58,24 @@ export default async function LocalizedFaqPage({ params }: Props) {
       <Breadcrumbs items={[{ label: t.breadcrumbHome, href: `/${locale}` }, { label: m.title, href: null }]} />
       <h1 className="mt-4 text-3xl font-bold text-brand-blue">{m.title}</h1>
       <p className="mt-4 text-slate-600">{m.description}</p>
+      <p className="mt-3 text-sm text-slate-600">
+        <span className="text-slate-500">{t.hubPageCrossLinksIntro}</span>{" "}
+        <Link href={`/${locale}/applications`} className="text-brand-orange hover:underline">
+          {mApp.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/knowledge-center`} className="text-brand-orange hover:underline">
+          {mKc.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/resources`} className="text-brand-orange hover:underline">
+          {mRes.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/contact`} className="text-brand-orange hover:underline">
+          {mContact.title}
+        </Link>
+      </p>
       <dl className="mt-10 space-y-8">
         {faqPageItems.map((f) => (
           <div key={f.id}>

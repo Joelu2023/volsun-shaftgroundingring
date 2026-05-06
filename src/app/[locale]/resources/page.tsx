@@ -33,6 +33,10 @@ export default async function LocalizedResourcesPage({ params }: Props) {
   const locale = raw as AppLocale;
   const meta = getPageMeta("resources", locale);
   const t = ui(locale);
+  const mApp = getPageMeta("applications", locale);
+  const mFaq = getPageMeta("faq", locale);
+  const mKc = getPageMeta("knowledgeCenter", locale);
+  const mCase = getPageMeta("caseStudies", locale);
   const resources = await listPublishedResourcesForResourcesPage(locale);
 
   const jsonLd = [
@@ -57,6 +61,24 @@ export default async function LocalizedResourcesPage({ params }: Props) {
           {t.contactRfq}
         </Link>
         .
+      </p>
+      <p className="mt-3 max-w-3xl text-sm text-slate-600">
+        <span className="text-slate-500">{t.hubPageCrossLinksIntro}</span>{" "}
+        <Link href={`/${locale}/applications`} className="text-brand-orange hover:underline">
+          {mApp.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/faq`} className="text-brand-orange hover:underline">
+          {mFaq.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/knowledge-center`} className="text-brand-orange hover:underline">
+          {mKc.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/case-studies`} className="text-brand-orange hover:underline">
+          {mCase.title}
+        </Link>
       </p>
 
       <section className="mt-10">

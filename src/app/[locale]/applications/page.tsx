@@ -32,6 +32,10 @@ export default async function LocalizedApplicationsPage({ params }: Props) {
   const locale = raw as AppLocale;
   const m = getPageMeta("applications", locale);
   const t = ui(locale);
+  const mFaq = getPageMeta("faq", locale);
+  const mRes = getPageMeta("resources", locale);
+  const mKc = getPageMeta("knowledgeCenter", locale);
+  const mContact = getPageMeta("contact", locale);
 
   const p0 = applications.filter((a) => a.phase === "p0");
   const p1 = applications.filter((a) => a.phase === "p1");
@@ -52,6 +56,24 @@ export default async function LocalizedApplicationsPage({ params }: Props) {
       <Breadcrumbs items={[{ label: t.breadcrumbHome, href: `/${locale}` }, { label: t.applicationListBreadcrumb, href: null }]} />
       <h1 className="mt-4 text-3xl font-bold text-brand-blue">{m.title}</h1>
       <p className="mt-4 max-w-3xl text-slate-600">{t.applicationsListLead}</p>
+      <p className="mt-3 max-w-3xl text-sm text-slate-600">
+        <span className="text-slate-500">{t.hubPageCrossLinksIntro}</span>{" "}
+        <Link href={`/${locale}/faq`} className="text-brand-orange hover:underline">
+          {mFaq.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/knowledge-center`} className="text-brand-orange hover:underline">
+          {mKc.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/resources`} className="text-brand-orange hover:underline">
+          {mRes.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/contact`} className="text-brand-orange hover:underline">
+          {mContact.title}
+        </Link>
+      </p>
 
       <h2 className="mt-10 text-lg font-semibold text-brand-blue">{t.applicationsP0Heading}</h2>
       <ul className="mt-4 grid gap-4 md:grid-cols-2">

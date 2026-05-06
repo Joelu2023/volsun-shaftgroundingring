@@ -93,8 +93,9 @@ const homeLocales = {
         description: "Engineering review helps confirm fit, contact position, and documentation needs before quotation.",
       },
       {
-        title: "Proven application coverage",
-        description: "Proven applications across EV motors, industrial motors, pump systems, and wind power.",
+        title: "Broad application experience",
+        description:
+          "Engineering teams align shaft grounding solutions with EV motors, industrial motors, pump systems, and wind power duty profiles.",
       },
     ],
   },

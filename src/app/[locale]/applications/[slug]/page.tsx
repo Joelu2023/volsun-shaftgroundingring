@@ -177,10 +177,10 @@ export default async function LocalizedApplicationDetailPage({ params }: Props) 
     { label: a.name, href: null },
   ] as const;
 
-  const heroPending =
+  const heroIllustrationNote =
     locale === "zh"
-      ? `${t.appHeroPendingPrefix}请在 applications.ts 中设置 coverImagePublicPath 并上传行业专用图片。`
-      : `${t.appHeroPendingPrefix} Please upload a dedicated industry photo and set coverImagePublicPath in applications.ts.`;
+      ? "在行业配图确认前，此处展示中性应用场景示意图。"
+      : "A neutral application illustration is shown until finalized photography for this scenario is available.";
 
   if (a.phase === "p1") {
     return (
@@ -192,10 +192,10 @@ export default async function LocalizedApplicationDetailPage({ params }: Props) 
         <p className="mt-6 rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">{t.appP1Notice}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href={`/${locale}/applications/hvac-motors`} className="text-sm font-medium text-brand-orange hover:underline">
-            HVAC (P0)
+            {getApplicationForLocale("hvac-motors", locale)!.name}
           </Link>
           <Link href={`/${locale}/applications/pump-systems`} className="text-sm font-medium text-brand-orange hover:underline">
-            {locale === "zh" ? "泵系统 (P0)" : "Pump Systems (P0)"}
+            {getApplicationForLocale("pump-systems", locale)!.name}
           </Link>
           <Link
             href={`/${locale}/contact?cta_key=quote&application_interest=${encodeURIComponent(a.slug)}`}
@@ -301,7 +301,7 @@ export default async function LocalizedApplicationDetailPage({ params }: Props) 
         </div>
       ) : (
         <div className="mt-6 flex aspect-[16/8] w-full items-center justify-center rounded-lg border border-dashed border-slate-300 bg-slate-50 p-4 text-center text-sm text-slate-600">
-          {heroPending}
+          {heroIllustrationNote}
         </div>
       )}
 

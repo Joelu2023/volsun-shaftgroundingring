@@ -289,15 +289,26 @@ export const applications: ApplicationDetail[] = [
     slug: "water-treatment",
     name: "Water Treatment",
     isIndexable: false,
-    summary: "Coming soon: extended guidance for treatment plant motor trains.",
+    summary:
+      "Shaft grounding for VFD-driven pumps, mixers, and auxiliary motors in water and wastewater treatment plants.",
     coverImagePublicPath: null,
     phase: "p1",
-    metaDescription: "Water treatment motor applications for shaft grounding rings — content expanding in P1.",
-    problem: "Content scheduled for P1.",
-    whyItMatters: "Placeholder.",
-    typicalRisks: [],
-    recommendedProducts: [],
-    checklist: [],
+    metaDescription:
+      "Water and wastewater treatment plants use VFDs on pumps and mixers, where shaft voltage can stress motor bearings. Review grounding options alongside application-specific RFQ inputs.",
+    problem:
+      "Treatment trains often run pumps and mixers on VFDs for flow and energy control. PWM-related shaft voltage can contribute to bearing currents and electrical wear if discharge paths are uncontrolled.",
+    whyItMatters:
+      "Predictable maintenance matters for continuous processes. A reviewed shaft grounding path supports clearer failure-mode separation between mechanical wear and electrical stress.",
+    typicalRisks: [
+      "Bearing damage misattributed to mechanical causes on long-run pump motors",
+      "Repeated bearing replacement without reviewing inverter-related discharge paths",
+    ],
+    recommendedProducts: ["split-shaft-grounding-ring", "solid-shaft-grounding-ring"],
+    checklist: [
+      "Document motor type, shaft diameter, and duty (continuous vs intermittent)",
+      "Note VFD brand and typical carrier frequency range if known",
+      "Describe washdown, humidity, or chemical exposure near the drive end",
+    ],
   },
 ];
 

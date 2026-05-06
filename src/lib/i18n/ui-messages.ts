@@ -43,7 +43,7 @@ export const uiMessages = {
     heroTitle: "Shaft Grounding Rings for VFD-Driven Motors",
     heroSubtitle:
       "Volsun shaft grounding rings use metallized carbon fiber technology to provide a low-resistance path for shaft currents. By effectively diverting shaft currents away from bearings, they help reduce electrical pitting, fluting, and premature bearing failure, supporting long-term motor reliability.",
-    heroImageAlt: "Motor application - shaft grounding context",
+    heroImageAlt: "Inverter-duty motor drive end showing shaft area where a grounding ring manages bearing currents",
     homeProblemTitle: "Why VFD motors fail bearings",
     homeProblemDiagramAlt: "Shaft voltage mechanism diagram",
     homeProductFamiliesTitle: "Main Products",
@@ -61,14 +61,14 @@ export const uiMessages = {
     homeAboutLink: "About Volsun",
     homeResourcesTitle: "Resources",
     homeResourcesLead:
-      "Product catalogs, datasheets, installation guides, and drawing templates. Some files may be provided on request during the first release.",
+      "Product catalogs, datasheets, installation guides, and drawing templates—request downloads or ask for files through RFQ.",
     homeAllResources: "All resources",
     homeKnowledgeTitle: "Knowledge Center",
     homeFaqTitle: "FAQ",
     homeFullFaq: "Full FAQ",
     homeInquiryTitle: "Contact & RFQ",
     homeInquiryLead:
-      "Request a quote, samples, or a technical review. Share your motor nameplate, VFD settings if known, and shaft diameter. We typically respond within 24 hours.",
+      "Request a quote or technical review—mention the motor application (pump, fan, traction, and so on), approximate shaft diameter, motor type or frame, and any known VFD brand or carrier-frequency range. All fields stay optional in the form; more detail usually speeds sizing. We typically respond within 24 hours.",
     coverPending: "cover image pending (manual asset required)",
     productListBreadcrumb: "Shaft Grounding Ring Products",
     productsListLead:
@@ -104,7 +104,7 @@ export const uiMessages = {
     appFieldChecklist: "Field checklist",
     viewProducts: "View products",
     appP1Notice:
-      "This application page is scheduled for P1 content. Explore HVAC and Pumps for full write-ups, or contact us with your motor details.",
+      "This application page has a shorter overview. For fuller write-ups, explore HVAC Motors and Pump Systems, or contact us with motor and VFD details.",
     appHeroPendingPrefix: "Application hero image pending for this scenario.",
     caseStudiesListBreadcrumb: "Case Studies",
     caseStudiesListLead:
@@ -119,6 +119,16 @@ export const uiMessages = {
     heroCtaQuote: "Request a Quote",
     heroCtaDrawing: "Share Drawing Details",
     heroCtaEngineer: "Ask an Engineer",
+    heroCtaCatalog: "Download Shaft Grounding Ring Catalog",
+    homeSelectionGuideTitle: "Selection guide",
+    homeSelectionGuideLead: "Match the ring family to shaft access and diameter before RFQ.",
+    homeSelectionGuideRd: "RD/RDW solid rings: strong default for smaller shaft diameters when the drive end is accessible for a one-piece install.",
+    homeSelectionGuideSt: "ST/STW arc-shaped rings: suited to larger shaft diameters or when motor access makes a split install more practical.",
+    homeSelectionGuideCustom: "Custom: drawing-based reviews when envelope, groove, or contact position needs a non-catalog layout.",
+    homeExploreLinksTitle: "Documentation & next steps",
+    homeExploreLinksLead: "Connect application context to downloads, Q&A, and RFQ.",
+    homeExploreLinkInstallation: "Installation guide (PDF)",
+    hubPageCrossLinksIntro: "Also see:",
     contactPageLead:
       "Request a quote, samples, or a technical review. Share your motor nameplate, VFD settings if known, and shaft diameter. We typically respond within 24 hours. You can also browse",
     contactPageResourcesWord: "resources",
@@ -252,7 +262,8 @@ export const uiMessages = {
     appRecommendedProducts: "推荐产品",
     appFieldChecklist: "现场核对清单",
     viewProducts: "查看产品",
-    appP1Notice: "本应用页内容计划在 P1 扩充。可先查看“暖通”与“水泵”全文，或直接联系提供电机信息。",
+    appP1Notice:
+      "本应用页为精简概述。若需更完整说明，可先查看“暖通”与“水泵”场景页，或通过询盘提供电机与变频器信息。",
     appHeroPendingPrefix: "本场景封面图待上传。",
     caseStudiesListBreadcrumb: "客户案例",
     caseStudiesListLead:
@@ -267,6 +278,16 @@ export const uiMessages = {
     heroCtaQuote: "索取报价",
     heroCtaDrawing: "发送图纸",
     heroCtaEngineer: "咨询工程师",
+    heroCtaCatalog: "下载轴接地环产品型录",
+    homeSelectionGuideTitle: "选型提示",
+    homeSelectionGuideLead: "在询盘前按轴径与安装可达性粗选产品族。",
+    homeSelectionGuideRd: "RD/RDW 整环：轴径相对较小、驱动端便于整环安装时的常用起点。",
+    homeSelectionGuideSt: "ST/STW 弧形环：更大轴径或维护空间受限、更适合分瓣安装的场景。",
+    homeSelectionGuideCustom: "定制：当包络、沟槽或接触位置需要按图纸评审时的路径。",
+    homeExploreLinksTitle: "资料与下一步",
+    homeExploreLinksLead: "把应用场景与下载、问答及询盘衔接起来。",
+    homeExploreLinkInstallation: "安装指南（PDF）",
+    hubPageCrossLinksIntro: "延伸阅读：",
     contactPageLead:
       "索取报价、样品或技术评审。请提供电机铭牌、已知变频器参数与轴径。我们通常在 24 小时内回复 [待确认：工作日/时区]。您也可先浏览",
     contactPageResourcesWord: "资料页",

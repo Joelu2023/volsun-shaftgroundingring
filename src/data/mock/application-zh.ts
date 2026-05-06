@@ -152,11 +152,21 @@ export const applicationZhBySlug: Record<string, ApplicationZhBody> = {
   },
   "water-treatment": {
     name: "水处理",
-    summary: "即将扩展：污水厂等电机机组的专题内容（P1）。",
-    metaDescription: "水处理电机应用场景——轴接地环专题内容将在 P1 扩充。",
-    problem: "内容计划在 P1 发布。",
-    whyItMatters: "占位。",
-    typicalRisks: [],
-    checklist: [],
+    summary: "面向水厂与污水厂中变频器驱动的水泵、搅拌器等辅助电机的轴接地场景。",
+    metaDescription:
+      "水务场景中的泵与搅拌电机常配合变频器运行，轴电压可能加剧轴承电气损伤风险。可结合应用说明与询盘资料进行选型沟通。",
+    problem:
+      "处理流程中的泵、搅拌设备多在变频器控制下运行，PWM 相关的轴电压若缺少可控泄放路径，可能带来轴承电流与电气磨损风险。",
+    whyItMatters:
+      "连续运行工况下，维护计划依赖对失效模式的准确判断；经评审的轴接地路径有助于区分机械磨损与电气应力因素。",
+    typicalRisks: [
+      "长周期运行泵电机轴承损伤被误判为纯机械问题",
+      "在未评估变频器放电路径的情况下反复更换轴承",
+    ],
+    checklist: [
+      "提供电机类型、轴径与连续/间歇运行特征",
+      "注明变频器品牌及已知载波频率范围",
+      "说明驱动端附近的冲洗、湿度或化学暴露条件",
+    ],
   },
 };

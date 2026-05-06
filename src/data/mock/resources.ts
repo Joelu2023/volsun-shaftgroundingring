@@ -2,6 +2,12 @@ import type { CtaKey } from "@/types/inquiry";
 import { suggestInquiryTypeFromCta } from "@/lib/inquiry/contact-params";
 import type { AppLocale } from "@/lib/i18n/locales";
 
+/** Published English catalog slug for `/[locale]/resources/download/[slug]` (resource center). */
+export const EN_CATALOG_DOWNLOAD_SLUG = "volsun-shaft-grounding-conductive-ring-catalog";
+
+/** Published English installation guide slug (resource center). */
+export const EN_INSTALLATION_GUIDE_DOWNLOAD_SLUG = "volsun-shaft-grounding-ring-installation-guide";
+
 export type ResourceItem = {
   id: string;
   slug: string;
@@ -39,7 +45,8 @@ export const resources: ResourceItem[] = [
     id: "res-cat",
     slug: "volsun-shaft-grounding-conductive-ring-catalog",
     title: "Volsun Shaft Grounding Ring (Carbon Fiber Brush) - Product Catalog",
-    summary: "Product family overview, typical size ranges, and ordering guidance for Volsun shaft grounding rings.",
+    summary:
+      "Product family overview, typical size ranges, and ordering guidance—use with motor application pages, installation guide, and RFQ for project-specific fit.",
     resource_type: "catalog",
     cta_key: "catalog",
     tag: "PDF",
@@ -50,7 +57,8 @@ export const resources: ResourceItem[] = [
     id: "res-ds",
     slug: "volsun-shaft-grounding-ring-datasheet",
     title: "Volsun Shaft Grounding Ring — Datasheet",
-    summary: "Key technical parameters, materials, and operating conditions for specification sheets and RFQs.",
+    summary:
+      "Key technical parameters, materials, and operating conditions for specification sheets and RFQs—pair with the FAQ and application pages when scoping a motor program.",
     resource_type: "datasheet",
     cta_key: "datasheet",
     tag: "PDF",
@@ -61,7 +69,8 @@ export const resources: ResourceItem[] = [
     id: "res-ig",
     slug: "volsun-shaft-grounding-ring-installation-guide",
     title: "Volsun Shaft Grounding Ring — Installation Guide",
-    summary: "Field installation steps, inspection points, and practical notes for reliable shaft grounding performance.",
+    summary:
+      "Field installation steps, inspection points, and practical notes for reliable shaft grounding performance; use with motor application context and post-install RFQ follow-up as needed.",
     resource_type: "installation_guide",
     cta_key: "datasheet",
     tag: "PDF",

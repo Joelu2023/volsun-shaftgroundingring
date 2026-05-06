@@ -30,6 +30,9 @@ export default async function LocalizedProductsPage({ params }: Props) {
   const locale = raw as AppLocale;
   const m = getPageMeta("products", locale);
   const t = ui(locale);
+  const mApp = getPageMeta("applications", locale);
+  const mRes = getPageMeta("resources", locale);
+  const mFaq = getPageMeta("faq", locale);
 
   const crumbs = [
     { label: t.breadcrumbHome, href: `/${locale}` },
@@ -52,6 +55,20 @@ export default async function LocalizedProductsPage({ params }: Props) {
       <Breadcrumbs items={crumbs.map((c) => ({ label: c.label, href: c.href }))} />
       <h1 className="mt-4 text-3xl font-bold text-brand-blue">{m.title}</h1>
       <p className="mt-4 max-w-3xl text-slate-600">{t.productsListLead}</p>
+      <p className="mt-3 max-w-3xl text-sm text-slate-600">
+        <span className="text-slate-500">{t.hubPageCrossLinksIntro}</span>{" "}
+        <Link href={`/${locale}/applications`} className="text-brand-orange hover:underline">
+          {mApp.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/resources`} className="text-brand-orange hover:underline">
+          {mRes.title}
+        </Link>
+        {" · "}
+        <Link href={`/${locale}/faq`} className="text-brand-orange hover:underline">
+          {mFaq.title}
+        </Link>
+      </p>
       <ul className="mt-10 grid gap-6 md:grid-cols-3">
         {products.map((p) => {
           const lp = getProductForLocale(p.slug, locale)!;

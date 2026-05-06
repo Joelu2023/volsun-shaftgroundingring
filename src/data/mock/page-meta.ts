@@ -7,11 +7,11 @@ export const staticPageMeta = {
   home: {
     path: "/",
     title: {
-      en: "Shaft Grounding Rings for VFD Motors",
+      en: "Shaft Grounding Rings for VFD Motors | Bearing Current Protection | Volsun",
       zh: "变频电机轴接地环 | Volsun",
     },
     description: {
-      en: "Volsun shaft grounding rings use metallized carbon fiber technology to divert shaft currents away from motor bearings. Solid RD/RDW, arc-shaped ST/STW, and custom options.",
+      en: "Volsun shaft grounding rings help prevent bearing damage, fluting, and downtime in VFD-driven motors. OEM, retrofit, and custom solutions available.",
       zh: "沃尔兴轴接地环采用金属化碳纤维技术，将轴电流从轴承旁路分流。提供 RD/RDW 整环、ST/STW 弧形环与定制方案。",
     },
   },
@@ -33,7 +33,7 @@ export const staticPageMeta = {
       zh: "电机应用场景",
     },
     description: {
-      en: "Application pages for electric vehicles, industrial motors, wind power, transportation, pump systems, and other inverter-duty motor scenarios.",
+      en: "VFD motor application guides for shaft grounding rings—EV, industrial, wind, pumps, and transport. Pair with FAQ, downloads, and RFQ for project fit.",
       zh: "覆盖电动车、工业电机、风电、交通运输、泵系统等变频电机场景的应用页。",
     },
   },
@@ -70,7 +70,7 @@ export const staticPageMeta = {
       zh: "常见问题",
     },
     description: {
-      en: "Answers to common questions about shaft voltage, bearing currents, and selecting a shaft grounding ring for VFD motors.",
+      en: "Shaft voltage, bearing currents, and shaft grounding ring selection for VFD motors—plus links to application guides and downloadable resources.",
       zh: "解答轴电压、轴承电流与变频电机轴接地环选型的常见问题。",
     },
   },
@@ -81,7 +81,7 @@ export const staticPageMeta = {
       zh: "下载与资料",
     },
     description: {
-      en: "Product catalogs, datasheets, installation guides, and templates for specifying Volsun shaft grounding rings.",
+      en: "Catalog, datasheet, and installation guide downloads for Volsun shaft grounding rings, with paths to applications, FAQ, and RFQ.",
       zh: "包含产品目录、数据手册、安装指南与选型模板，用于沃尔森轴接地环规格确认与采购沟通。",
     },
   },

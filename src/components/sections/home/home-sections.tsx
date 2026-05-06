@@ -14,6 +14,8 @@ import {
   PAGE_SOURCE_HOME,
   CTA_SOURCE_CONVERSION_FORM,
   HOME_EN_APPLICATION_SLOTS,
+  getPageMeta,
+  EN_INSTALLATION_GUIDE_DOWNLOAD_SLUG,
 } from "@/data";
 import { HeroSection } from "./hero-section";
 import { InquiryForm } from "@/components/forms/inquiry-form";
@@ -76,6 +78,18 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
           })}
         </div>
       </SectionWrapper>
+
+      {locale === "en" ? (
+        <SectionWrapper id="selection-guide" variant="muted">
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.homeSelectionGuideTitle}</h2>
+          <p className="mt-3 max-w-3xl text-slate-600">{t.homeSelectionGuideLead}</p>
+          <ul className="mt-6 space-y-3 text-sm text-slate-700">
+            <li className="rounded border border-slate-200 bg-white p-4">{t.homeSelectionGuideRd}</li>
+            <li className="rounded border border-slate-200 bg-white p-4">{t.homeSelectionGuideSt}</li>
+            <li className="rounded border border-slate-200 bg-white p-4">{t.homeSelectionGuideCustom}</li>
+          </ul>
+        </SectionWrapper>
+      ) : null}
 
       <SectionWrapper id="advantages" variant="muted">
         <h2 className="text-2xl font-semibold text-brand-blue">{t.homeWhyVolsunTitle}</h2>
@@ -251,6 +265,57 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
               {t.homeFullFaq}
             </Link>
           </p>
+        </SectionWrapper>
+      ) : null}
+
+      {locale === "en" ? (
+        <SectionWrapper id="explore" variant="muted">
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.homeExploreLinksTitle}</h2>
+          <p className="mt-3 max-w-3xl text-slate-600">{t.homeExploreLinksLead}</p>
+          <nav className="mt-6 flex flex-wrap gap-x-3 gap-y-2 text-sm" aria-label={t.homeExploreLinksTitle}>
+            <Link href={`/${locale}/applications`} className="text-brand-orange hover:underline">
+              {getPageMeta("applications", locale).title}
+            </Link>
+            <span className="text-slate-300" aria-hidden>
+              ·
+            </span>
+            <Link href={`/${locale}/knowledge-center`} className="text-brand-orange hover:underline">
+              {getPageMeta("knowledgeCenter", locale).title}
+            </Link>
+            <span className="text-slate-300" aria-hidden>
+              ·
+            </span>
+            <Link href={`/${locale}/faq`} className="text-brand-orange hover:underline">
+              {getPageMeta("faq", locale).title}
+            </Link>
+            <span className="text-slate-300" aria-hidden>
+              ·
+            </span>
+            <Link href={`/${locale}/resources`} className="text-brand-orange hover:underline">
+              {getPageMeta("resources", locale).title}
+            </Link>
+            <span className="text-slate-300" aria-hidden>
+              ·
+            </span>
+            <Link
+              href={`/${locale}/resources/download/${EN_INSTALLATION_GUIDE_DOWNLOAD_SLUG}`}
+              className="text-brand-orange hover:underline"
+            >
+              {t.homeExploreLinkInstallation}
+            </Link>
+            <span className="text-slate-300" aria-hidden>
+              ·
+            </span>
+            <Link href={`/${locale}/case-studies`} className="text-brand-orange hover:underline">
+              {getPageMeta("caseStudies", locale).title}
+            </Link>
+            <span className="text-slate-300" aria-hidden>
+              ·
+            </span>
+            <Link href={`/${locale}/contact`} className="text-brand-orange hover:underline">
+              {getPageMeta("contact", locale).title}
+            </Link>
+          </nav>
         </SectionWrapper>
       ) : null}
 

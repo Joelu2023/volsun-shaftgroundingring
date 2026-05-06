@@ -12,7 +12,13 @@ export type { CaseStudy } from "./mock/case-studies";
 export { articles, getArticleBySlug, getArticleForLocale, getArticleRecordBySlug } from "./mock/articles";
 export type { ArticleDetail, ArticleRecord, ArticleResolved } from "./mock/articles";
 export { faqItems, getFaqItems } from "./mock/faq";
-export { resources, resourceContactHref, getResourceForLocale } from "./mock/resources";
+export {
+  resources,
+  resourceContactHref,
+  getResourceForLocale,
+  EN_CATALOG_DOWNLOAD_SLUG,
+  EN_INSTALLATION_GUIDE_DOWNLOAD_SLUG,
+} from "./mock/resources";
 export type { ResourceItem } from "./mock/resources";
 export { homeContent, getHomeContent, HOME_EN_APPLICATION_SLOTS } from "./mock/home";
 export type { HomeEnApplicationSlot } from "./mock/home";

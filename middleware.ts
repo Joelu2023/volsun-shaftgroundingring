@@ -36,5 +36,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|pdf)$).*)"],
+  // 排除整个 /_next/*（含 webpack-hmr、turbopack、RSC data 等），避免误跑 locale 逻辑
+  matcher: ["/((?!_next/|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|pdf)$).*)"],
 };

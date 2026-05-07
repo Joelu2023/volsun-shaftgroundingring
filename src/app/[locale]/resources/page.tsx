@@ -86,16 +86,6 @@ export default async function LocalizedResourcesPage({ params }: Props) {
         <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">{t.resourcesGuidesHeading}</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-brand-blue">{t.resourcesGuideIndustrialShaftTitle}</h3>
-            <p className="mt-2 text-sm text-slate-600">{t.resourcesGuideIndustrialShaftDesc}</p>
-            <Link
-              href={`/${locale}${industrialShaftGroundingSeoPage.path}`}
-              className="mt-4 inline-flex text-sm font-medium text-brand-orange hover:underline"
-            >
-              {t.resourcesGuideIndustrialShaftCta}
-            </Link>
-          </div>
-          <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-brand-blue">{t.resourcesGuideBearingFlutingTitle}</h3>
             <p className="mt-2 text-sm text-slate-600">{t.resourcesGuideBearingFlutingDesc}</p>
             <Link
@@ -103,6 +93,16 @@ export default async function LocalizedResourcesPage({ params }: Props) {
               className="mt-4 inline-flex text-sm font-medium text-brand-orange hover:underline"
             >
               {t.resourcesGuideBearingFlutingCta}
+            </Link>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-brand-blue">{t.resourcesGuideIndustrialShaftTitle}</h3>
+            <p className="mt-2 text-sm text-slate-600">{t.resourcesGuideIndustrialShaftDesc}</p>
+            <Link
+              href={`/${locale}${industrialShaftGroundingSeoPage.path}`}
+              className="mt-4 inline-flex text-sm font-medium text-brand-orange hover:underline"
+            >
+              {t.resourcesGuideIndustrialShaftCta}
             </Link>
           </div>
         </div>

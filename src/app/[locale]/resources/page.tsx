@@ -145,7 +145,7 @@ export default async function LocalizedResourcesPage({ params }: Props) {
         ))}
         {resources.length === 0 ? (
           <div className="rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-600">
-            No published resources yet. Please publish files from the resource center admin.
+            {t.resourcesEmptyList}
           </div>
         ) : null}
       </div>

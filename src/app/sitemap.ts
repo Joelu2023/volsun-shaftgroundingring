@@ -2,11 +2,11 @@ import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/config/site";
 import { products, applications, articles, caseStudies, industrialShaftGroundingSeoPage, bearingFlutingSeoPage } from "@/data";
 
+/** When `NEXT_PUBLIC_SITE_URL` is unset (common misconfig), an empty sitemap was emitted. Prefer env; fallback to canonical production host. */
+const SITEMAP_BASE_FALLBACK = "https://volsunsgr.com";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = getSiteUrl();
-  if (!base) {
-    return [];
-  }
+  const base = getSiteUrl() ?? SITEMAP_BASE_FALLBACK;
   const indexableApplications = applications.filter((application) => application.isIndexable !== false);
 
   return [

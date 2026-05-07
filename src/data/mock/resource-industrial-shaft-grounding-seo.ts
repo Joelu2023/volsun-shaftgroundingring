@@ -1,5 +1,16 @@
 import type { AppLocale } from "@/lib/i18n/locales";
+import { getProductBySlug } from "./products";
 import { BEARING_FLUTING_SEO_RESOURCE_PATH } from "./resource-bearing-fluting-seo";
+
+/** Same primary images as the homepage product cards (`products[].primaryImagePublicPath`). */
+function productPrimaryImagePublicPath(slug: string): string | null {
+  const src = getProductBySlug(slug)?.primaryImagePublicPath?.trim();
+  return src || null;
+}
+
+const RECOMMENDED_SPLIT_IMAGE = productPrimaryImagePublicPath("split-shaft-grounding-ring");
+const RECOMMENDED_SOLID_IMAGE = productPrimaryImagePublicPath("solid-shaft-grounding-ring");
+const RECOMMENDED_CUSTOM_IMAGE = productPrimaryImagePublicPath("custom-shaft-grounding-ring");
 
 export type IndustrialShaftGroundingSeoCtaItem = {
   id: string;
@@ -170,7 +181,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         title: "Arc-shaped ST/STW shaft grounding ring",
         body: "Reviewed when shaft size, access, or mounting envelope is better suited to an arc-shaped structure.",
         productSlug: "split-shaft-grounding-ring",
-        imagePath: "/images/placeholders/product-shaft-ring-split.svg",
+        imagePath: RECOMMENDED_SPLIT_IMAGE,
         imageAlt: "Arc-shaped shaft grounding ring for industrial VFD motor shaft review",
       },
       {
@@ -178,7 +189,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         title: "Solid RD/RDW shaft grounding ring",
         body: "Reviewed when the shaft and installation envelope support a solid ring structure.",
         productSlug: "solid-shaft-grounding-ring",
-        imagePath: "/images/placeholders/product-shaft-ring-solid.svg",
+        imagePath: RECOMMENDED_SOLID_IMAGE,
         imageAlt: "RD/RDW solid one-piece shaft grounding ring for industrial motor bearing protection",
       },
       {
@@ -186,7 +197,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         title: "Custom grounding package",
         body: "When shaft geometry, shielding, or envelope constraints require a tailored grounding architecture.",
         productSlug: "custom-shaft-grounding-ring",
-        imagePath: "/images/placeholders/product-shaft-ring-custom.svg",
+        imagePath: RECOMMENDED_CUSTOM_IMAGE,
         imageAlt: "Custom engineered shaft grounding solution for non-standard industrial motor shafts",
       },
     ],
@@ -196,7 +207,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         title: "ST/STW 弧形轴接地环",
         body: "当轴径、可达性或安装包络更适合弧形结构时进行评审。",
         productSlug: "split-shaft-grounding-ring",
-        imagePath: "/images/placeholders/product-shaft-ring-split.svg",
+        imagePath: RECOMMENDED_SPLIT_IMAGE,
         imageAlt: "弧形轴接地环用于工业变频电机轴适配评审",
       },
       {
@@ -204,7 +215,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         title: "RD/RDW 整环轴接地环",
         body: "当轴和安装包络支持整环结构时进行评审。",
         productSlug: "solid-shaft-grounding-ring",
-        imagePath: "/images/placeholders/product-shaft-ring-solid.svg",
+        imagePath: RECOMMENDED_SOLID_IMAGE,
         imageAlt: "RD/RDW 整体式轴接地环用于工业电机轴承保护",
       },
       {
@@ -212,7 +223,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         title: "定制接地方案",
         body: "当轴几何、屏蔽或包络约束需要定制化的接地结构时。",
         productSlug: "custom-shaft-grounding-ring",
-        imagePath: "/images/placeholders/product-shaft-ring-custom.svg",
+        imagePath: RECOMMENDED_CUSTOM_IMAGE,
         imageAlt: "Custom engineered shaft grounding solution for non-standard industrial motor shafts",
       },
     ],

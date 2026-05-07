@@ -89,7 +89,7 @@ export type IndustrialShaftGroundingSeoPageData = {
 };
 
 /** Neutral stock art: replace under `public/images/resources/...` when final photography is ready. */
-const SEO_HERO = "/images/placeholders/diagram-shaft-voltage-neutral.svg";
+const SEO_HERO = "/images/resources/resource-industrial-shaft-grounding-hero-v1.webp";
 const SEO_IMG_PUMP = "/images/application-pump-system.webp";
 const SEO_IMG_FAN = "/images/application-fans-blowers.webp";
 const SEO_IMG_COMPRESSOR = "/images/application-compressors.webp";

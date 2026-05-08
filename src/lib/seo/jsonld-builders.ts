@@ -1,4 +1,4 @@
-import { getSiteUrl, siteName } from "@/config/site";
+import { getCanonicalSiteOrigin, siteName } from "@/config/site";
 import type { AppLocale } from "@/lib/i18n/locales";
 
 function absolutePathFromLocalePath(locale: AppLocale, path: string): string {
@@ -10,17 +10,13 @@ function absolutePathFromLocalePath(locale: AppLocale, path: string): string {
 }
 
 export function organizationJsonLd() {
-  const siteUrl = getSiteUrl();
+  const siteUrl = getCanonicalSiteOrigin();
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    ...(siteUrl
-      ? {
-          "@id": `${siteUrl}/#organization`,
-          url: siteUrl,
-          logo: `${siteUrl}/images/brand/volsun-mark-wordless.svg`,
-        }
-      : {}),
+    "@id": `${siteUrl}/#organization`,
+    url: siteUrl,
+    logo: `${siteUrl}/images/brand/volsun-mark-wordless.svg`,
     name: "Volsun",
     description: "Shaft grounding rings for VFD motor bearing protection.",
   };
@@ -29,19 +25,20 @@ export function organizationJsonLd() {
 export function webPageJsonLd(params: { name: string; description: string; path: string; locale?: AppLocale }) {
   const normalizedPath = params.path.startsWith("/") ? params.path : `/${params.path}`;
   const relativePath = params.locale ? absolutePathFromLocalePath(params.locale, params.path) : normalizedPath;
-  const siteUrl = getSiteUrl();
-  const pageUrl = siteUrl ? `${siteUrl}${relativePath}` : undefined;
+  const siteUrl = getCanonicalSiteOrigin();
+  const pageUrl = `${siteUrl}${relativePath}`;
 
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    ...(pageUrl ? { "@id": pageUrl, url: pageUrl } : {}),
+    "@id": pageUrl,
+    url: pageUrl,
     name: params.name,
     description: params.description,
     isPartOf: {
       "@type": "WebSite",
       name: siteName,
-      ...(siteUrl ? { url: siteUrl } : {}),
+      url: siteUrl,
     },
   };
 }
@@ -51,13 +48,14 @@ export function faqPageJsonLd(params: {
   locale: AppLocale;
   path: string;
 }) {
-  const siteUrl = getSiteUrl();
-  const pageUrl = siteUrl ? `${siteUrl}${absolutePathFromLocalePath(params.locale, params.path)}` : undefined;
+  const siteUrl = getCanonicalSiteOrigin();
+  const pageUrl = `${siteUrl}${absolutePathFromLocalePath(params.locale, params.path)}`;
 
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    ...(pageUrl ? { "@id": pageUrl, url: pageUrl } : {}),
+    "@id": pageUrl,
+    url: pageUrl,
     mainEntity: params.items.map((item) => ({
       "@type": "Question",
       name: item.question,
@@ -76,17 +74,16 @@ export function productJsonLd(params: {
   category?: string;
   locale?: AppLocale;
 }) {
-  const siteUrl = getSiteUrl();
-  const pageUrl = siteUrl
-    ? params.locale
-      ? `${siteUrl}/${params.locale}/products/${params.slug}`
-      : `${siteUrl}/products/${params.slug}`
-    : undefined;
+  const siteUrl = getCanonicalSiteOrigin();
+  const pageUrl = params.locale
+    ? `${siteUrl}/${params.locale}/products/${params.slug}`
+    : `${siteUrl}/products/${params.slug}`;
 
   return {
     "@context": "https://schema.org",
     "@type": "Product",
-    ...(pageUrl ? { "@id": pageUrl, url: pageUrl } : {}),
+    "@id": pageUrl,
+    url: pageUrl,
     name: params.name,
     description: params.description,
     category: params.category ?? (params.locale === "zh" ? "杞存帴鍦扮幆" : "Shaft grounding ring"),
@@ -105,17 +102,16 @@ export function articleJsonLd(params: {
   dateModified: string;
   locale?: AppLocale;
 }) {
-  const siteUrl = getSiteUrl();
-  const pageUrl = siteUrl
-    ? params.locale
-      ? `${siteUrl}/${params.locale}/knowledge-center/${params.slug}`
-      : `${siteUrl}/knowledge-center/${params.slug}`
-    : undefined;
+  const siteUrl = getCanonicalSiteOrigin();
+  const pageUrl = params.locale
+    ? `${siteUrl}/${params.locale}/knowledge-center/${params.slug}`
+    : `${siteUrl}/knowledge-center/${params.slug}`;
 
   return {
     "@context": "https://schema.org",
     "@type": "Article",
-    ...(pageUrl ? { "@id": pageUrl, url: pageUrl } : {}),
+    "@id": pageUrl,
+    url: pageUrl,
     headline: params.headline,
     description: params.description,
     author: {
@@ -125,23 +121,19 @@ export function articleJsonLd(params: {
     publisher: {
       "@type": "Organization",
       name: siteName,
-      ...(siteUrl ? { url: siteUrl } : {}),
+      url: siteUrl,
     },
     datePublished: params.datePublished,
     dateModified: params.dateModified,
-    ...(pageUrl
-      ? {
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": pageUrl,
-          },
-        }
-      : {}),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl,
+    },
   };
 }
 
 export function breadcrumbListJsonLd(items: { name: string; path: string }[], locale?: AppLocale) {
-  const siteUrl = getSiteUrl();
+  const siteUrl = getCanonicalSiteOrigin();
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -152,7 +144,7 @@ export function breadcrumbListJsonLd(items: { name: string; path: string }[], lo
         "@type": "ListItem",
         position: index + 1,
         name: item.name,
-        ...(siteUrl ? { item: `${siteUrl}${itemPath}` } : {}),
+        item: `${siteUrl}${itemPath}`,
       };
     }),
   };

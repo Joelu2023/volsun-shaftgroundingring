@@ -1,4 +1,5 @@
 import type { CtaKey } from "@/types/inquiry";
+import { getCanonicalSiteOrigin } from "@/config/site";
 
 /** 二级菜单叶子（英文站下拉用英文 label；中文站仍用 navLabel + 一级 href） */
 export type NavChildItem = {
@@ -118,7 +119,7 @@ export const whatsappConfig = {
 
 export const siteConfig = {
   siteName: "Volsun Shaft Grounding Rings",
-  baseUrl: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "",
+  baseUrl: getCanonicalSiteOrigin(),
   defaultLocale: "en",
   /** @deprecated 语义上等价于 navigationZh，保留字段名供旧引用 */
   navigation: navigationZh,

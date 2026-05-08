@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getSiteUrl } from "@/config/site";
+import { getCanonicalSiteOrigin } from "@/config/site";
 import type { AppLocale } from "@/lib/i18n/locales";
 
 type PageMetaInput = {
@@ -26,13 +26,13 @@ function alternateLanguageUrls(base: string, logicalPath: string): { en: string;
 }
 
 export function buildPageMetadata({ title, description, path, locale, absoluteTitle }: PageMetaInput): Metadata {
-  const base = getSiteUrl();
+  const base = getCanonicalSiteOrigin();
   const canonicalPath = locale ? pathWithLocale(locale, path) : path.startsWith("/") ? path : `/${path}`;
-  const canonicalUrl = base ? `${base}${canonicalPath}` : undefined;
+  const canonicalUrl = `${base}${canonicalPath}`;
   const ogLocale = locale === "zh" ? "zh_CN" : "en_US";
 
-  const alternates: Metadata["alternates"] = canonicalUrl ? { canonical: canonicalUrl } : undefined;
-  if (base && locale && alternates) {
+  const alternates: Metadata["alternates"] = { canonical: canonicalUrl };
+  if (locale) {
     const { en, zhCN } = alternateLanguageUrls(base, path);
     alternates.languages = {
       en,

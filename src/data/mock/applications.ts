@@ -261,14 +261,14 @@ export const applications: ApplicationDetail[] = [
     slug: "israel-aquaculture-pump-motor-75kw",
     name: "75 kW Pump Motor — Israel (Aquaculture)",
     summary:
-      "Industry: Pumps · Aquaculture · Israel. Real customer case: recurring bearing corrosion on VFD-driven pump motors solved with Volsun VS-RDW shaft grounding rings—strong reliability with better cost efficiency vs imported alternatives.",
+      "Industry: Pumps · Aquaculture · Israel. Real customer case: recurring bearing corrosion on VFD-driven pump motors where Volsun VS-RDW shaft grounding rings helped reduce bearing-current-related failures—strong reliability with better cost efficiency vs imported alternatives.",
     coverImagePublicPath: "/images/applications/case-study-pump-motor-shaft-grounding.jpg",
     heroImagePublicPath: "/images/applications/case-study-pump-systems-aeration.jpg",
     phase: "p1",
     metaDescription:
       "Case study: Israeli pump OEM (aquaculture / water systems) addressed recurring bearing corrosion on 75 kW VFD pump motors using Volsun VS-RDW 3rd generation shaft grounding rings.",
     problem:
-      "The customer—a major Israeli water pump supplier serving aquaculture and industrial water systems—saw recurring motor bearing corrosion that drove premature failures and higher maintenance frequency. Technical review pointed to shaft voltage and stray currents, a common pattern on VFD-driven motors. They initially evaluated well-known imported grounding rings, but unit cost blocked large-scale rollout across many pump systems.",
+      "The customer—a leading Israeli water pump manufacturer serving aquaculture and industrial water systems—saw recurring motor bearing corrosion that drove premature failures and higher maintenance frequency. Technical review pointed to shaft voltage and stray currents, a common pattern on VFD-driven motors. They initially evaluated well-known imported grounding rings, but unit cost blocked large-scale rollout across many pump systems.",
     whyItMatters:
       "Reliable oxygenation and pumping uptime is essential in aquaculture. Electrical bearing damage is easy to misread as mechanical wear, so a clear mitigation layer matters for both service cost and production continuity. A cost-effective grounding ring that still meets performance requirements enables fleet-wide deployment.",
     typicalRisks: [

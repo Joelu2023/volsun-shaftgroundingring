@@ -41,14 +41,14 @@ export const caseStudies: CaseStudy[] = [
       en: {
         title: "75 kW Pump Motor — Israel (Aquaculture & Water Systems)",
         summary:
-          "A leading Israeli pump OEM eliminated recurring bearing corrosion on VFD-driven motors using Volsun VS-RDW shaft grounding rings—achieving fleet-scale reliability with better cost efficiency than premium imported alternatives.",
+          "A leading Israeli pump OEM reduced recurring bearing-current-related failures associated with bearing corrosion on VFD-driven motors using Volsun VS-RDW shaft grounding rings—supporting fleet-scale reliability with better cost efficiency than premium imported alternatives.",
         challengeHeading: "The Challenge: Bearing Corrosion & High Replacement Costs",
         challenge:
-          "The customer is one of Israel’s largest water pump suppliers, serving aquaculture and industrial water systems worldwide. Motors suffered recurring bearing corrosion, premature failures, and higher maintenance frequency. Root-cause analysis pointed to shaft voltage and stray currents—common on VFD-driven pump trains. Imported grounding rings from established brands were considered, but unit cost blocked large-scale deployment across many systems.",
+          "The customer is a leading water pump manufacturer in Israel, serving aquaculture and industrial water systems worldwide. Motors suffered recurring bearing corrosion, premature failures, and higher maintenance frequency. Root-cause analysis pointed to shaft voltage and stray currents—common on VFD-driven pump trains. Imported grounding rings from established brands were considered, but unit cost blocked large-scale deployment across many systems.",
         solution:
           "Volsun recommended the VS-RDW 3rd generation shaft grounding ring, matched to motor specifications and duty. The design uses high-conductivity microfiber brush technology for continuous low-resistance shaft contact, supports a wide shaft compatibility range, targets low contact resistance for continuous operation, and is validated beyond the customer’s 1450 RPM requirement. Laser-engraved branding was also provided for OEM consistency.",
         results:
-          "After rollout, bearing corrosion issues were addressed, service life improved, maintenance and replacement costs dropped versus the previously evaluated import option, and overall reliability improved—especially valuable where many pumps run unattended.",
+          "After rollout, recurring bearing-current-related corrosion patterns were reduced, service life improved, maintenance and replacement costs dropped versus the previously evaluated import option, and overall reliability improved—especially valuable where many pumps run unattended.",
         highlights: [
           "75 kW, air-cooled low-voltage pump motor, 1450 RPM, humid continuous-duty environment",
           "VS-RDW 3rd generation shaft grounding ring",
@@ -58,14 +58,14 @@ export const caseStudies: CaseStudy[] = [
       zh: {
         title: "75 kW 水泵电机 — 以色列（水产养殖与工业水系统）",
         summary:
-          "以色列领先水泵制造商在变频泵电机上反复出现轴承电腐蚀，采用沃尔兴 VS-RDW 轴接地环后解决问题，相较进口方案更适合批量部署与成本控制。",
+          "以色列领先水泵制造商在变频泵电机上反复出现轴承电腐蚀及相关失效风险，采用沃尔兴 VS-RDW 轴接地环后得到缓解，相较进口方案更适合批量部署与成本控制。",
         challengeHeading: "挑战：轴承腐蚀与高更换成本",
         challenge:
-          "客户是以色列大型水泵供应商之一，服务水产增氧与工业水系统。现场轴承腐蚀反复、提前失效与维护频次上升。技术分析指向轴电压与杂散电流（变频泵组常见）。曾评估知名进口轴接地环，但单价过高，难以在多台泵组上规模化推广。",
+          "客户为以色列领先的水泵制造企业之一，服务水产增氧与工业水系统。现场轴承腐蚀反复、提前失效与维护频次上升。技术分析指向轴电压与杂散电流（变频泵组常见）。曾评估知名进口轴接地环，但单价过高，难以在多台泵组上规模化推广。",
         solution:
           "沃尔兴推荐 VS-RDW 第三代轴接地环，按电机规格与工况匹配。采用高导电微纤维刷技术保持连续低阻接触，轴径兼容范围宽，接触电阻目标满足连续运行，并通过高于客户 1450 RPM 要求的验证；同时提供激光打标以满足 OEM 品牌一致性。",
         results:
-          "实施后轴承腐蚀问题得到遏制，寿命与可靠性改善，相较原先评估的进口方案降低了维护与更换成本，特别适合大量无人值守泵组场景。",
+          "实施后反复出现的轴承电流相关腐蚀问题得到缓解，寿命与可靠性改善，相较原先评估的进口方案降低了维护与更换成本，特别适合大量无人值守泵组场景。",
         highlights: [
           "75 kW 空冷低压泵电机，1450 RPM，高湿连续运行",
           "VS-RDW 第三代轴接地环",

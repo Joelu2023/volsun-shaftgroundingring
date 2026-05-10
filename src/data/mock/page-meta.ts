@@ -44,8 +44,8 @@ export const staticPageMeta = {
       zh: "客户案例",
     },
     description: {
-      en: "Customer case studies: shaft grounding rings solving bearing corrosion and shaft voltage issues in real VFD motor deployments.",
-      zh: "客户案例：真实项目中轴接地环如何缓解变频电机轴承电腐蚀与轴电压问题。",
+      en: "Customer case studies: shaft grounding rings helping mitigate bearing corrosion and shaft voltage issues in real VFD motor deployments.",
+      zh: "客户案例：真实项目中轴接地环如何帮助缓解变频电机轴承电腐蚀与轴电压相关问题。",
     },
   },
   knowledgeCenter: {

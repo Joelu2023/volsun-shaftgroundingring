@@ -28,3 +28,7 @@ Thumbs.db
 *.log
 .vercel
 .env*.local
+
+# local staging / site review (keep on disk, not tracked)
+_incoming-images/
+docs/site-review-2026-05/

@@ -41,7 +41,7 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-6 md:py-8">
           <Link
-            href={`/${locale}/contact-us`}
+            href={`/${locale}/contact`}
             className="block rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
           >
             <Image

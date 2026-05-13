@@ -16,6 +16,8 @@ export type ProductDetail = {
   features: ProductFeature[];
   primaryImagePublicPath?: string | null;
   secondaryImagePublicPath?: string | null;
+  /** Homepage Main Products card; falls back to primary when empty. */
+  homeCardImagePublicPath?: string | null;
   specFields: ProductSpecField[];
   typicalApplications: string[];
   installationNotes: string[];
@@ -36,7 +38,8 @@ export const products: ProductDetail[] = [
     overview:
       "RD/RDW is the solid shaft grounding ring family. It uses the same shaft-current diversion principle as arc-shaped and custom rings; the difference is mainly structure, mounting approach, and fit. The solid structure is generally friendlier for smaller shaft diameters, with interference-fit or screw-fastened mounting reviewed by application.",
     primaryImagePublicPath: "/images/products/solid-rd-rdw-shaft-grounding-ring-v1.webp",
-    secondaryImagePublicPath: "/images/products/product-solid-shaft-grounding-ring-installation-reference-v1.webp",
+    secondaryImagePublicPath: "/images/products/product-solid-shaft-grounding-ring-home-card-v1.webp",
+    homeCardImagePublicPath: "/images/products/product-solid-shaft-grounding-ring-home-card-v1.webp",
     specFields: [
       { label: "Product family", value: "RD/RDW solid shaft grounding ring." },
       { label: "Mounting approach", value: "Reviewed for interference-fit or screw-fastened installation based on the motor structure." },
@@ -108,7 +111,8 @@ export const products: ProductDetail[] = [
     overview:
       "ST/STW is the arc-shaped shaft grounding ring family. It uses the same shaft-current diversion principle as solid and custom rings; the difference is mainly structure, mounting approach, and fit. The arc-shaped structure can be reviewed for larger shaft diameters such as industrial motors, typically with screw-fastened mounting.",
     primaryImagePublicPath: "/images/product-st-stw-shaft-grounding-ring.webp",
-    secondaryImagePublicPath: "/images/products/product-split-shaft-grounding-ring-installation-reference-v1.webp",
+    secondaryImagePublicPath: "/images/products/product-split-shaft-grounding-ring-home-card-v1.webp",
+    homeCardImagePublicPath: "/images/products/product-split-shaft-grounding-ring-home-card-v1.webp",
     specFields: [
       { label: "Product family", value: "ST/STW arc-shaped shaft grounding ring." },
       { label: "Mounting approach", value: "Typically reviewed for screw-fastened mounting according to the installation envelope." },
@@ -179,7 +183,8 @@ export const products: ProductDetail[] = [
     overview:
       "Custom shaft grounding rings are reviewed when catalog RD/RDW or ST/STW structures do not match the shaft, envelope, or contact position. Brush contact can be reviewed for shaft side or end contact, with shape and size confirmed from drawings and application constraints.",
     primaryImagePublicPath: "/images/product-custom-shaft-grounding-ring.webp",
-    secondaryImagePublicPath: "/images/products/product-custom-shaft-grounding-ring-installation-reference-v1.webp",
+    secondaryImagePublicPath: "/images/products/product-custom-shaft-grounding-ring-home-card-v1.webp",
+    homeCardImagePublicPath: "/images/products/product-custom-shaft-grounding-ring-home-card-v1.webp",
     specFields: [
       { label: "Input required", value: "Drawings, shaft geometry, available space, and target contact position." },
       { label: "Customization scope", value: "Shape, size, and contact arrangement are reviewed according to the application." },

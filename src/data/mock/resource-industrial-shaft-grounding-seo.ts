@@ -2,18 +2,15 @@ import type { AppLocale } from "@/lib/i18n/locales";
 import { getProductBySlug } from "./products";
 import { BEARING_FLUTING_SEO_RESOURCE_PATH } from "./resource-bearing-fluting-seo";
 
-/** Same images as homepage Main Products cards (`homeCardImagePublicPath` with primary fallback). */
-function productHomeCardImagePublicPath(slug: string): string | null {
-  const p = getProductBySlug(slug);
-  if (!p) return null;
-  const home = p.homeCardImagePublicPath?.trim();
-  if (home) return home;
-  return p.primaryImagePublicPath?.trim() || null;
+/** Same primary images as the homepage product cards (`products[].primaryImagePublicPath`). */
+function productPrimaryImagePublicPath(slug: string): string | null {
+  const src = getProductBySlug(slug)?.primaryImagePublicPath?.trim();
+  return src || null;
 }
 
-const RECOMMENDED_SPLIT_IMAGE = productHomeCardImagePublicPath("split-shaft-grounding-ring");
-const RECOMMENDED_SOLID_IMAGE = productHomeCardImagePublicPath("solid-shaft-grounding-ring");
-const RECOMMENDED_CUSTOM_IMAGE = productHomeCardImagePublicPath("custom-shaft-grounding-ring");
+const RECOMMENDED_SPLIT_IMAGE = productPrimaryImagePublicPath("split-shaft-grounding-ring");
+const RECOMMENDED_SOLID_IMAGE = productPrimaryImagePublicPath("solid-shaft-grounding-ring");
+const RECOMMENDED_CUSTOM_IMAGE = productPrimaryImagePublicPath("custom-shaft-grounding-ring");
 
 export type IndustrialShaftGroundingSeoCtaItem = {
   id: string;

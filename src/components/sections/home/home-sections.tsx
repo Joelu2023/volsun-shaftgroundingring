@@ -70,18 +70,16 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {products.map((p) => {
             const lp = getProductForLocale(p.slug, locale)!;
-            const cardSrc =
-              sanitizeLargeSlotImageSrc(p.homeCardImagePublicPath) || sanitizeLargeSlotImageSrc(p.primaryImagePublicPath);
             return (
               <Link
                 key={p.slug}
                 href={`/${locale}/products/${p.slug}`}
                 className="group flex flex-col overflow-hidden rounded border border-slate-200 bg-white hover:border-brand-orange"
               >
-                {cardSrc ? (
+                {sanitizeLargeSlotImageSrc(p.primaryImagePublicPath) ? (
                   <div className="relative aspect-[4/3] w-full shrink-0 bg-slate-100">
                     <Image
-                      src={cardSrc}
+                      src={sanitizeLargeSlotImageSrc(p.primaryImagePublicPath)!}
                       alt={lp.name}
                       fill
                       className="object-cover transition group-hover:opacity-95"

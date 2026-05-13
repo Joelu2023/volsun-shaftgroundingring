@@ -38,6 +38,25 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
         <HeroSection locale={locale} />
       </div>
 
+      <div className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-6 md:py-8">
+          <Link
+            href={`/${locale}/contact-us`}
+            className="block rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+          >
+            <Image
+              src="/images/home/easa-2026-banner-v1.webp"
+              alt="Meet VOLSUN at EASA 2026 Booth 1429 - Shaft Grounding Ring Solutions"
+              width={1600}
+              height={400}
+              sizes="(max-width: 1200px) calc(100vw - 2rem), 1152px"
+              className="h-auto w-full max-w-full rounded-lg border border-slate-200 bg-slate-50"
+              style={{ width: "100%", height: "auto" }}
+            />
+          </Link>
+        </div>
+      </div>
+
       {locale !== "en" ? (
         <SectionWrapper id="solution" variant="muted">
           <h2 className="text-2xl font-semibold text-brand-blue">{home.solution.title}</h2>

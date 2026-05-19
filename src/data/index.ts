@@ -10,7 +10,7 @@ export type { IndustrialApplicationPageData } from "./mock/application-industria
 export { caseStudies, getCaseStudyBySlug } from "./mock/case-studies";
 export type { CaseStudy } from "./mock/case-studies";
 export { articles, getArticleBySlug, getArticleForLocale, getArticleRecordBySlug } from "./mock/articles";
-export type { ArticleDetail, ArticleRecord, ArticleResolved } from "./mock/articles";
+export type { ArticleContentBlock, ArticleDetail, ArticleRecord, ArticleResolved } from "./mock/articles";
 export { faqItems, getFaqItems } from "./mock/faq";
 export {
   resources,

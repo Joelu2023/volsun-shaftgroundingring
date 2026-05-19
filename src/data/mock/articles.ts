@@ -1,11 +1,19 @@
 import type { AppLocale } from "@/lib/i18n/locales";
 
+export type ArticleContentBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string }
+  | { type: "list"; items: string[] }
+  | { type: "image"; src: string; alt: string };
+
 /** 单语言正文块 — 中英文共用同一 slug，便于 hreflang 与 sitemap 一一对应 */
 export type ArticleLocaleBlock = {
   title: string;
   excerpt: string;
   metaDescription: string;
   paragraphs: string[];
+  /** 结构化正文（标题、列表、插图）；未设置时回退到 paragraphs */
+  blocks?: ArticleContentBlock[];
 };
 
 export type ArticleRecord = {
@@ -14,6 +22,7 @@ export type ArticleRecord = {
   slug: string;
   datePublished: string;
   dateModified: string;
+  coverImagePublicPath?: string | null;
   locales: { en: ArticleLocaleBlock; zh: ArticleLocaleBlock };
 };
 
@@ -22,6 +31,7 @@ export type ArticleResolved = ArticleLocaleBlock & {
   slug: string;
   datePublished: string;
   dateModified: string;
+  coverImagePublicPath: string | null;
 };
 
 export const articles: ArticleRecord[] = [
@@ -122,6 +132,206 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-4",
+    slug: "what-is-shaft-voltage",
+    datePublished: "2026-05-19T08:00:00.000Z",
+    dateModified: "2026-05-19T08:00:00.000Z",
+    coverImagePublicPath: "/images/articles/article-shaft-voltage-vfd-bearing-current-hero-v1.webp",
+    locales: {
+      en: {
+        title: "What Is Shaft Voltage and How to Prevent Bearing Damage in VFD Motors",
+        excerpt:
+          "VFDs improve control and efficiency, but their switching can induce shaft voltage that discharges through motor bearings. Learn the causes, warning signs, and how shaft grounding rings help.",
+        metaDescription:
+          "What is shaft voltage in VFD motors? Learn how PWM drives cause bearing fluting and erosion, and how shaft grounding rings divert harmful current to protect bearing life.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Variable Frequency Drives (VFDs) have become standard in industrial motors and electric vehicles. While they improve efficiency and control, they can also create a hidden problem: shaft voltage.",
+          },
+          {
+            type: "paragraph",
+            text: "When shaft voltage discharges through motor bearings, it causes electrical erosion, fluting, noise, and premature bearing failure.",
+          },
+          { type: "heading", text: "What Causes Shaft Voltage?" },
+          {
+            type: "paragraph",
+            text: "High-frequency switching in VFDs induces common-mode currents. These currents seek the path of least resistance and often pass through motor bearings.",
+          },
+          { type: "paragraph", text: "Common causes include:" },
+          {
+            type: "list",
+            items: [
+              "PWM switching from VFDs",
+              "Poor grounding",
+              "High-speed motors",
+              "Insulated couplings",
+              "Long motor cables",
+            ],
+          },
+          { type: "heading", text: "Signs of Bearing Electrical Damage" },
+          { type: "paragraph", text: "Typical symptoms include:" },
+          {
+            type: "list",
+            items: [
+              "Bearing fluting",
+              "Frosted raceways",
+              "Unusual noise",
+              "Increased vibration",
+              "Shortened bearing life",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/articles/article-bearing-fluting-electrical-damage-v1.webp",
+            alt: "Bearing fluting and electrical erosion damage on a motor bearing race",
+          },
+          { type: "heading", text: "Why Bearing Failure Is Expensive" },
+          { type: "paragraph", text: "Bearing damage can lead to:" },
+          {
+            type: "list",
+            items: [
+              "Unexpected downtime",
+              "High maintenance costs",
+              "Production losses",
+              "Motor replacement",
+            ],
+          },
+          { type: "heading", text: "How Shaft Grounding Rings Work" },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring creates a low-resistance path from the shaft to ground.",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN Shaft Grounding Rings use metallized carbon fiber microfilaments to safely divert harmful currents without damaging the shaft.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/article-shaft-grounding-ring-current-path-v1.webp",
+            alt: "Shaft grounding ring providing a low-resistance current path from motor shaft to ground",
+          },
+          { type: "heading", text: "Advantages of VOLSUN Solutions" },
+          {
+            type: "list",
+            items: [
+              "Low contact resistance",
+              "Long service life",
+              "Suitable for oil-cooled and high-speed motors",
+              "Maintenance-free design",
+              "Customizable dimensions",
+            ],
+          },
+          { type: "heading", text: "Applications" },
+          {
+            type: "list",
+            items: [
+              "EV traction motors",
+              "Industrial motors",
+              "Pumps",
+              "Wind turbines",
+              "Railway motors",
+            ],
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "If your motors are driven by VFDs, shaft voltage is a serious reliability risk. Installing a shaft grounding ring is one of the most effective and economical solutions.",
+          },
+          {
+            type: "paragraph",
+            text: "Contact VOLSUN for technical support and product recommendations.",
+          },
+        ],
+      },
+      zh: {
+        title: "变频电机中的轴电压是什么？如何防止轴承损坏？",
+        excerpt:
+          "变频器提升控制与能效，但其开关过程可能在电机轴上感应轴电压，并经轴承泄放。了解成因、典型损伤迹象，以及轴接地环如何旁路有害电流。",
+        metaDescription:
+          "变频电机轴电压是什么？了解 PWM 驱动如何引发轴承搓板纹与电蚀，以及轴接地环如何将有害电流导向接地以保护轴承寿命。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "变频器（VFD）已成为工业电机与电动汽车驱动中的常见配置。在提升效率与控制精度的同时，也可能带来隐蔽风险：轴电压。",
+          },
+          {
+            type: "paragraph",
+            text: "当轴电压经电机轴承泄放时，会造成电蚀、搓板纹（沟槽）、异常噪声及轴承过早失效。",
+          },
+          { type: "heading", text: "轴电压的成因" },
+          {
+            type: "paragraph",
+            text: "变频器的高频开关会感应共模电流。这些电流沿阻抗最低路径流动，许多情况下会穿过电机轴承。",
+          },
+          { type: "paragraph", text: "常见诱因包括：" },
+          {
+            type: "list",
+            items: ["变频器 PWM 开关", "接地不良", "高速电机", "绝缘联轴器", "较长的电机电缆"],
+          },
+          { type: "heading", text: "轴承电损伤的典型迹象" },
+          { type: "paragraph", text: "常见表现包括：" },
+          {
+            type: "list",
+            items: ["轴承搓板纹", "滚道发雾/磨砂感", "异常噪声", "振动增大", "轴承寿命缩短"],
+          },
+          {
+            type: "image",
+            src: "/images/articles/article-bearing-fluting-electrical-damage-v1.webp",
+            alt: "电机轴承滚道上的搓板纹与电蚀损伤",
+          },
+          { type: "heading", text: "轴承失效为何代价高昂" },
+          { type: "paragraph", text: "轴承损坏可能导致：" },
+          {
+            type: "list",
+            items: ["非计划停机", "维护成本上升", "产能损失", "电机整体更换"],
+          },
+          { type: "heading", text: "轴接地环如何工作" },
+          {
+            type: "paragraph",
+            text: "轴接地环在电机轴与地之间提供低阻泄放通道。",
+          },
+          {
+            type: "paragraph",
+            text: "沃尔兴轴接地环采用金属化碳纤维微丝，在不对轴面造成损伤的前提下，将有害电流安全旁路。",
+          },
+          {
+            type: "image",
+            src: "/images/articles/article-shaft-grounding-ring-current-path-v1.webp",
+            alt: "轴接地环将电机轴电流导向接地的低阻路径示意",
+          },
+          { type: "heading", text: "沃尔兴方案的优势" },
+          {
+            type: "list",
+            items: [
+              "接触电阻低",
+              "使用寿命长",
+              "适用于油冷及高速电机",
+              "免维护设计",
+              "尺寸可定制",
+            ],
+          },
+          { type: "heading", text: "典型应用" },
+          {
+            type: "list",
+            items: ["电动汽车牵引电机", "工业电机", "泵类", "风力发电机", "轨道交通电机"],
+          },
+          { type: "heading", text: "结语" },
+          {
+            type: "paragraph",
+            text: "若电机由变频器驱动，轴电压是重要的可靠性风险。安装轴接地环是有效且经济的防护手段之一。",
+          },
+          {
+            type: "paragraph",
+            text: "如需技术支持或选型建议，欢迎联系沃尔兴。",
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getArticleRecordBySlug(slug: string) {
@@ -138,6 +348,7 @@ export function getArticleForLocale(slug: string, locale: AppLocale): ArticleRes
     slug: r.slug,
     datePublished: r.datePublished,
     dateModified: r.dateModified,
+    coverImagePublicPath: r.coverImagePublicPath ?? null,
     ...block,
   };
 }

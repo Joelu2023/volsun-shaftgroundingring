@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { articles, getArticleForLocale } from "@/data";
@@ -7,8 +8,10 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { articleJsonLd, breadcrumbListJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { PageCtaStrip } from "@/components/layout/page-cta";
+import { ArticleContent } from "@/components/knowledge/article-content";
 import { isAppLocale, type AppLocale } from "@/lib/i18n/locales";
 import { ui } from "@/lib/i18n/ui-messages";
+import { sanitizeLargeSlotImageSrc } from "@/lib/utils/image-slot-guards";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -46,6 +49,7 @@ export default async function LocalizedArticlePage({ params }: Props) {
   if (!a) notFound();
 
   const kcTitle = locale === "zh" ? "知识中心" : "Knowledge Center";
+  const coverSrc = sanitizeLargeSlotImageSrc(a.coverImagePublicPath);
 
   const jsonLd = [
     webPageJsonLd({ name: a.title, description: a.metaDescription, path: `/knowledge-center/${a.slug}`, locale }),
@@ -89,13 +93,19 @@ export default async function LocalizedArticlePage({ params }: Props) {
           </time>
         </p>
         <p className="mt-4 text-lg text-slate-600">{a.excerpt}</p>
-        <div className="prose prose-slate mt-8 max-w-none">
-          {a.paragraphs.map((p, i) => (
-            <p key={i} className="mt-4 text-slate-700">
-              {p}
-            </p>
-          ))}
-        </div>
+        {coverSrc ? (
+          <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+            <Image
+              src={coverSrc}
+              alt={a.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 672px"
+              priority
+            />
+          </div>
+        ) : null}
+        <ArticleContent blocks={a.blocks} paragraphs={a.paragraphs} />
         <div className="mt-10 rounded-lg border border-slate-200 bg-slate-50 p-6">
           <p className="font-medium text-slate-900">{t.knowledgeNeedSizingTitle}</p>
           <p className="mt-2 text-sm text-slate-600">{t.knowledgeNeedSizingBody}</p>

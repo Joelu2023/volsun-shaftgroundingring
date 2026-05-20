@@ -32,20 +32,20 @@ function dashIfAbsent(v: string | undefined): string {
   return v === undefined ? "—" : v;
 }
 
-/** 英文精简询盘（首页 / About）：仅校验 email、phone、message；其余文本空则记为「—」 */
+/** 英文精简询盘（首页 / About）：用户必填仅 name、email、phone；其余文本空则记为「—」 */
 function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | ValidateFailure {
+  const name = reqStr(o, "name");
   const email = reqStr(o, "email");
   const phone = reqStr(o, "phone_or_whatsapp");
-  const message = reqStr(o, "message");
   const page_source = reqStr(o, "page_source");
   const cta_source = reqStr(o, "cta_source");
   const submitted_at = reqStr(o, "submitted_at");
   const inquiry_type = reqStr(o, "inquiry_type");
 
   if (
+    name === undefined ||
     email === undefined ||
     phone === undefined ||
-    message === undefined ||
     page_source === undefined ||
     cta_source === undefined ||
     submitted_at === undefined ||
@@ -77,7 +77,6 @@ function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | Validate
     return { ok: false, error: "invalid_inquiry_payload" };
   }
 
-  const name = dashIfAbsent(reqStr(o, "name"));
   const company = dashIfAbsent(reqStr(o, "company"));
   const country = dashIfAbsent(reqStr(o, "country"));
 
@@ -90,6 +89,7 @@ function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | Validate
     strOrNull(o.product_interest),
     strOrNull(o.drawing_file_url),
     strOrNull(o.drawing_file_name),
+    strOrNull(o.message),
   ];
   if (opt.some((x) => x === "bad_type")) {
     return { ok: false, error: "invalid_inquiry_payload" };
@@ -109,7 +109,7 @@ function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | Validate
     product_interest: opt[5] as string | null,
     drawing_file_url: opt[6] as string | null,
     drawing_file_name: opt[7] as string | null,
-    message,
+    message: opt[8] as string | null,
     inquiry_type: "rfq",
     page_source,
     cta_source,
@@ -132,9 +132,8 @@ export function parseInquirySubmission(raw: unknown): ValidateSuccess | Validate
   }
 
   const name = reqStr(o, "name");
-  const company = reqStr(o, "company");
   const email = reqStr(o, "email");
-  const country = reqStr(o, "country");
+  const phone = reqStr(o, "phone_or_whatsapp");
   const inquiry_type = reqStr(o, "inquiry_type");
   const page_source = reqStr(o, "page_source");
   const cta_source = reqStr(o, "cta_source");
@@ -142,9 +141,8 @@ export function parseInquirySubmission(raw: unknown): ValidateSuccess | Validate
 
   if (
     name === undefined ||
-    company === undefined ||
     email === undefined ||
-    country === undefined ||
+    phone === undefined ||
     inquiry_type === undefined ||
     page_source === undefined ||
     cta_source === undefined ||
@@ -152,6 +150,9 @@ export function parseInquirySubmission(raw: unknown): ValidateSuccess | Validate
   ) {
     return { ok: false, error: "missing_required_fields" };
   }
+
+  const company = dashIfAbsent(reqStr(o, "company"));
+  const country = dashIfAbsent(reqStr(o, "country"));
 
   if (!EMAIL_RE.test(email)) {
     return { ok: false, error: "invalid_inquiry_payload" };
@@ -177,7 +178,6 @@ export function parseInquirySubmission(raw: unknown): ValidateSuccess | Validate
   }
 
   const opt = [
-    strOrNull(o.phone_or_whatsapp),
     strOrNull(o.application_interest),
     strOrNull(o.motor_type),
     strOrNull(o.power),
@@ -196,17 +196,17 @@ export function parseInquirySubmission(raw: unknown): ValidateSuccess | Validate
     name,
     company,
     email,
-    phone_or_whatsapp: opt[0] as string | null,
+    phone_or_whatsapp: phone,
     country,
-    application_interest: opt[1] as string | null,
-    motor_type: opt[2] as string | null,
-    power: opt[3] as string | null,
-    shaft_diameter: opt[4] as string | null,
-    estimated_quantity: opt[5] as string | null,
-    product_interest: opt[6] as string | null,
-    drawing_file_url: opt[7] as string | null,
-    drawing_file_name: opt[8] as string | null,
-    message: opt[9] as string | null,
+    application_interest: opt[0] as string | null,
+    motor_type: opt[1] as string | null,
+    power: opt[2] as string | null,
+    shaft_diameter: opt[3] as string | null,
+    estimated_quantity: opt[4] as string | null,
+    product_interest: opt[5] as string | null,
+    drawing_file_url: opt[6] as string | null,
+    drawing_file_name: opt[7] as string | null,
+    message: opt[8] as string | null,
     inquiry_type: inquiry_type as InquiryType,
     page_source,
     cta_source,

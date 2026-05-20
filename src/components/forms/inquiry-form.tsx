@@ -157,28 +157,18 @@ export function InquiryForm({
 
   function validate(fd: FormData) {
     const next: Record<string, string> = {};
-    if (enLeadSlim) {
-      const name = String(fd.get("name") ?? "").trim();
-      const email = String(fd.get("email") ?? "").trim();
-      const shaft = String(fd.get("shaft_diameter") ?? "").trim();
-      // inquiry_type is fixed to "rfq" for slim form variants
-      if (!name) next.name = c.errName;
-      if (!email) next.email = c.errEmail;
-      else if (!EMAIL_RE.test(email)) next.email = c.errEmailFmt;
-      // For quotation flows, shaft diameter improves accuracy; keep it required for rfq variant.
-      if (!shaft) next.shaft_diameter = c.errShaft;
-      return next;
-    }
-
     const name = String(fd.get("name") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
-    const shaft = String(fd.get("shaft_diameter") ?? "").trim();
+    const phone = String(fd.get("phone_or_whatsapp") ?? "").trim();
 
     if (!name) next.name = c.errName;
     if (!email) next.email = c.errEmail;
     else if (!EMAIL_RE.test(email)) next.email = c.errEmailFmt;
-    if (!inquiryType) next.inquiry_type = c.errInquiryType;
-    if (inquiryType === "rfq" && !shaft) next.shaft_diameter = c.errShaft;
+    if (!phone) next.phone_or_whatsapp = c.errPhone;
+
+    if (!enLeadSlim && !inquiryType) {
+      next.inquiry_type = c.errInquiryType;
+    }
 
     return next;
   }
@@ -301,9 +291,16 @@ export function InquiryForm({
         <div className="grid gap-3 sm:grid-cols-2">
           <Field label={c.labelName} name="name" required showRequiredAsterisk error={fieldErrors.name} />
           <Field label={c.labelCompany} name="company" hint={c.companyHint} error={fieldErrors.company} />
-          <Field label={c.labelEmail} name="email" type="email" showRequiredAsterisk error={fieldErrors.email} />
-          <Field label={c.labelPhone} name="phone_or_whatsapp" hint={c.phoneHint} error={fieldErrors.phone_or_whatsapp} />
-          <Field label={c.labelShaft} name="shaft_diameter" required showRequiredAsterisk error={fieldErrors.shaft_diameter} />
+          <Field label={c.labelEmail} name="email" type="email" required showRequiredAsterisk error={fieldErrors.email} />
+          <Field
+            label={c.labelPhone}
+            name="phone_or_whatsapp"
+            required
+            showRequiredAsterisk
+            hint={c.phoneHint}
+            error={fieldErrors.phone_or_whatsapp}
+          />
+          <Field label={c.labelShaft} name="shaft_diameter" error={fieldErrors.shaft_diameter} />
         </div>
 
         <div>
@@ -368,10 +365,17 @@ export function InquiryForm({
       />
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <Field label={c.labelName} name="name" required error={fieldErrors.name} />
+        <Field label={c.labelName} name="name" required showRequiredAsterisk error={fieldErrors.name} />
         <Field label={c.labelCompany} name="company" hint={c.companyHint} error={fieldErrors.company} />
-        <Field label={c.labelEmail} name="email" type="email" required error={fieldErrors.email} />
-        <Field label={c.labelPhone} name="phone_or_whatsapp" hint={c.phoneHint} error={fieldErrors.phone_or_whatsapp} />
+        <Field label={c.labelEmail} name="email" type="email" required showRequiredAsterisk error={fieldErrors.email} />
+        <Field
+          label={c.labelPhone}
+          name="phone_or_whatsapp"
+          required
+          showRequiredAsterisk
+          hint={c.phoneHint}
+          error={fieldErrors.phone_or_whatsapp}
+        />
         <Field label={c.labelCountry} name="country" error={fieldErrors.country} />
         <Field
           label={c.labelApplication}
@@ -381,7 +385,7 @@ export function InquiryForm({
         />
         <Field label={c.labelMotorType} name="motor_type" />
         <Field label={c.labelPower} name="power" />
-        <Field label={c.labelShaft} name="shaft_diameter" required={inquiryType === "rfq"} error={fieldErrors.shaft_diameter} />
+        <Field label={c.labelShaft} name="shaft_diameter" error={fieldErrors.shaft_diameter} />
         <Field label={c.labelQty} name="estimated_quantity" />
         <Field
           label={c.labelProduct}

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils/cn";
 import { getInquiryTypeOptions, publicContact } from "@/data";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { trackEvent } from "@/lib/tracking/events";
+import { trackGoogleAdsInquiryFormConversion } from "@/lib/analytics/events";
 
 const FORM_COPY = {
   en: {
@@ -270,6 +271,7 @@ export function InquiryForm({
         product_interest: payload.product_interest ?? "",
         application_interest: payload.application_interest ?? "",
       });
+      trackGoogleAdsInquiryFormConversion();
       form.reset();
       router.push(buildThankYouHref(locale, defaultResourceSlug, payload.product_interest));
     } catch {

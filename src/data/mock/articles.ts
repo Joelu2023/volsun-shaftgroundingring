@@ -332,6 +332,193 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-5",
+    slug: "shaft-grounding-ring-vs-carbon-brush",
+    datePublished: "2026-05-21T08:00:00.000Z",
+    dateModified: "2026-05-21T08:00:00.000Z",
+    coverImagePublicPath: "/images/articles/article-shaft-grounding-ring-vs-carbon-brush-v1-2.webp",
+    locales: {
+      en: {
+        title: "Shaft Grounding Ring vs Carbon Brush: Which Is Better?",
+        excerpt:
+          "Compare shaft grounding rings and carbon brushes for VFD motor bearing protection, including maintenance, shaft wear, reliability, cleanliness, and long-term cost.",
+        metaDescription:
+          "Learn the key differences between shaft grounding rings and carbon brushes for VFD motor bearing protection, including maintenance, shaft wear, reliability, and total cost.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Both shaft grounding rings and carbon brushes are used to discharge shaft currents, but they differ significantly in reliability, maintenance, and long-term cost.",
+          },
+          {
+            type: "paragraph",
+            text: "For VFD-driven industrial and EV motors, choosing the right shaft grounding method can reduce bearing electrical damage, unplanned downtime, and total ownership cost.",
+          },
+          { type: "heading", text: "Carbon Brush Limitations" },
+          {
+            type: "paragraph",
+            text: "Traditional carbon brush grounding relies on spring-loaded contact against the rotating shaft. In inverter-duty environments, this approach has several drawbacks:",
+          },
+          {
+            type: "list",
+            items: [
+              "Requires spring pressure to maintain contact",
+              "Produces wear debris that can contaminate the motor environment",
+              "Needs regular maintenance and brush replacement",
+              "Shorter service life under high-speed or continuous-duty operation",
+            ],
+          },
+          { type: "heading", text: "VOLSUN Shaft Grounding Ring Benefits" },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring provides a controlled low-resistance path for shaft current without the wear and maintenance burden of a carbon brush assembly:",
+          },
+          {
+            type: "list",
+            items: [
+              "Maintenance-free operation in typical installations",
+              "Stable contact resistance over long service life",
+              "No lubrication contamination from brush debris",
+              "Long-term reliability for industrial and high-speed motors",
+            ],
+          },
+          { type: "heading", text: "Why VOLSUN Uses Metallized Carbon Fiber" },
+          {
+            type: "paragraph",
+            text: "VOLSUN shaft grounding rings use metallized carbon fiber microfilaments instead of a single brush point. The conductive fibers provide:",
+          },
+          {
+            type: "list",
+            items: [
+              "Thousands of contact points around the shaft",
+              "Minimal shaft wear compared with brush scrubbing",
+              "Excellent conductivity for high-frequency shaft currents",
+              "Compatibility with oil-cooled and high-speed motor applications",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/articles/article-metallized-carbon-fiber-contact-v1-2.webp",
+            alt: "Metallized carbon fiber microfilaments on a VOLSUN shaft grounding ring for multi-point shaft contact",
+          },
+          { type: "heading", text: "Comparison at a Glance" },
+          {
+            type: "paragraph",
+            text: "When evaluating shaft grounding for VFD motors, consider how each option performs across maintenance, cleanliness, and lifecycle cost:",
+          },
+          {
+            type: "list",
+            items: [
+              "Maintenance: carbon brushes require periodic inspection and replacement; shaft grounding rings are designed for maintenance-free service",
+              "Shaft wear: brush contact can groove or polish the shaft; metallized fiber contact spreads load across many points",
+              "Reliability: brush bounce or weak spring pressure can interrupt grounding; rings maintain more consistent contact",
+              "Cleanliness: brush debris can affect seals and lubricants; rings avoid particulate generation",
+              "Total cost: lower lifetime maintenance and fewer bearing-related failures often favor shaft grounding rings",
+            ],
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "For modern VFD-driven motors, VOLSUN shaft grounding rings typically deliver better long-term performance and lower total ownership cost than carbon brush grounding.",
+          },
+          {
+            type: "paragraph",
+            text: "Contact VOLSUN for application guidance, shaft diameter sizing, and product selection for your motor platform.",
+          },
+        ],
+      },
+      zh: {
+        title: "轴接地环与碳刷：哪种方案更好？",
+        excerpt:
+          "对比轴接地环与碳刷在变频电机轴承防护中的差异，涵盖维护、轴面磨损、可靠性、清洁度与长期成本。",
+        metaDescription:
+          "了解轴接地环与碳刷在变频电机轴承电防护中的关键差异，包括维护、轴面磨损、可靠性与总拥有成本。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "轴接地环与碳刷都可用于泄放轴电流，但在可靠性、维护需求与长期成本方面差异显著。",
+          },
+          {
+            type: "paragraph",
+            text: "对变频驱动的工业电机与电动汽车牵引电机而言，选择合适的轴接地方式有助于降低轴承电损伤、非计划停机与总拥有成本。",
+          },
+          { type: "heading", text: "碳刷方案的局限" },
+          {
+            type: "paragraph",
+            text: "传统碳刷接地依赖弹簧压紧与旋转轴接触。在逆变器工况下，常见不足包括：",
+          },
+          {
+            type: "list",
+            items: [
+              "需弹簧压力维持接触",
+              "产生磨损碎屑，可能污染电机环境",
+              "需定期维护与更换碳刷",
+              "高速或连续运行工况下寿命较短",
+            ],
+          },
+          { type: "heading", text: "沃尔兴轴接地环的优势" },
+          {
+            type: "paragraph",
+            text: "轴接地环为轴电流提供可控低阻通道，避免碳刷组件的磨损与维护负担：",
+          },
+          {
+            type: "list",
+            items: [
+              "典型安装条件下可免维护运行",
+              "长期使用中接触电阻更稳定",
+              "无碳刷碎屑导致的润滑污染",
+              "适用于工业与高速电机的长期可靠性",
+            ],
+          },
+          { type: "heading", text: "沃尔兴为何采用金属化碳纤维" },
+          {
+            type: "paragraph",
+            text: "沃尔兴轴接地环采用金属化碳纤维微丝，而非单点碳刷接触。导电纤维可提供：",
+          },
+          {
+            type: "list",
+            items: [
+              "轴周数千个接触点",
+              "相较碳刷摩擦，轴面磨损更小",
+              "对高频轴电流导电性能优异",
+              "兼容油冷与高速电机应用",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/articles/article-metallized-carbon-fiber-contact-v1-2.webp",
+            alt: "沃尔兴轴接地环上的金属化碳纤维微丝，实现多点轴面接触",
+          },
+          { type: "heading", text: "对比一览" },
+          {
+            type: "paragraph",
+            text: "为变频电机选型轴接地方案时，可从维护、清洁度与全生命周期成本综合评估：",
+          },
+          {
+            type: "list",
+            items: [
+              "维护：碳刷需定期点检与更换；轴接地环面向免维护设计",
+              "轴面磨损：碳刷可能造成沟槽或抛光；金属化纤维分散接触载荷",
+              "可靠性：碳刷弹跳或压力不足可能中断接地；接地环接触更稳定",
+              "清洁度：碳刷碎屑可能影响密封与润滑；接地环不产生颗粒污染",
+              "总成本：更低维护与更少轴承相关失效，往往更利于轴接地环",
+            ],
+          },
+          { type: "heading", text: "结语" },
+          {
+            type: "paragraph",
+            text: "对现代变频驱动电机，沃尔兴轴接地环通常比碳刷接地具有更好的长期性能与更低的总拥有成本。",
+          },
+          {
+            type: "paragraph",
+            text: "如需应用建议、轴径选型或产品匹配，欢迎联系沃尔兴。",
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getArticleRecordBySlug(slug: string) {

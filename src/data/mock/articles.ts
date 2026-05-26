@@ -519,6 +519,233 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-6",
+    slug: "how-to-install-shaft-grounding-ring",
+    datePublished: "2026-05-26T08:00:00.000Z",
+    dateModified: "2026-05-26T08:00:00.000Z",
+    coverImagePublicPath: "/images/articles/shaft-grounding-ring-installation-guide.webp",
+    locales: {
+      en: {
+        title: "How to Install a Shaft Grounding Ring Correctly | VFD Motor Bearing Protection",
+        excerpt:
+          "Step-by-step installation guide for shaft grounding rings, covering shaft cleaning, fiber contact, grounding, continuity testing, and common installation mistakes.",
+        metaDescription:
+          "Learn how to install a shaft grounding ring correctly, including shaft cleaning, fiber contact, grounding, continuity testing, and common installation mistakes.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Proper installation is critical to the performance of a shaft grounding ring.",
+          },
+          {
+            type: "paragraph",
+            text: "When installed correctly, the ring provides a reliable path for shaft current to discharge to ground, helping reduce the risk of bearing electrical erosion, abnormal noise, and premature motor failure in VFD-driven motor applications.",
+          },
+          { type: "paragraph", text: "Below are the key installation steps to follow." },
+          { type: "heading", text: "Step 1: Clean the Shaft Surface" },
+          { type: "paragraph", text: "Before installation, clean the shaft surface thoroughly." },
+          {
+            type: "paragraph",
+            text: "Remove oil, grease, dust, oxide layers, and metal particles from the contact area. A clean shaft surface helps ensure stable contact between the conductive fibers and the rotating shaft.",
+          },
+          { type: "heading", text: "Step 2: Check the Shaft Contact Area" },
+          {
+            type: "paragraph",
+            text: "Inspect the shaft area where the conductive fibers will touch.",
+          },
+          {
+            type: "paragraph",
+            text: "The contact surface should be smooth, clean, and free from burrs, deep scratches, or heavy oxidation. If the shaft surface is rough or contaminated, contact resistance may become unstable.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-installation-guide.webp",
+            alt: "Shaft grounding ring installation guide for VFD motor bearing protection",
+          },
+          {
+            type: "paragraph",
+            text: "Correct shaft grounding ring installation helps ensure stable shaft current discharge and reduce bearing damage risk.",
+          },
+          { type: "heading", text: "Step 3: Mount the Shaft Grounding Ring Securely" },
+          {
+            type: "paragraph",
+            text: "Install the shaft grounding ring according to the motor structure and product design.",
+          },
+          {
+            type: "paragraph",
+            text: "Common mounting methods include screw mounting, bracket mounting, adhesive mounting, or customized mechanical fixing. The ring should be firmly positioned and should not become loose during motor operation.",
+          },
+          { type: "heading", text: "Step 4: Ensure Proper Fiber Contact" },
+          {
+            type: "paragraph",
+            text: "The conductive fibers should lightly and evenly touch the shaft surface.",
+          },
+          {
+            type: "paragraph",
+            text: "The contact should not be too loose or too tight. Uneven contact may affect shaft current discharge, while excessive pressure may increase fiber wear.",
+          },
+          { type: "heading", text: "Step 5: Ground the Motor Housing Properly" },
+          {
+            type: "paragraph",
+            text: "The shaft grounding ring must be connected to a reliable ground path.",
+          },
+          {
+            type: "paragraph",
+            text: "Make sure the mounting bracket or grounding wire is properly connected to the motor housing or grounding point. Poor grounding may reduce the effectiveness of the shaft grounding ring, even if the ring itself is installed correctly.",
+          },
+          { type: "heading", text: "Step 6: Test Electrical Continuity" },
+          {
+            type: "paragraph",
+            text: "After installation, test the electrical continuity between the shaft grounding ring and ground.",
+          },
+          {
+            type: "paragraph",
+            text: "Use a multimeter to check whether the discharge path is properly connected. A stable continuity reading helps confirm that shaft current has a reliable path to ground.",
+          },
+          { type: "heading", text: "Common Installation Mistakes" },
+          { type: "paragraph", text: "Avoid the following mistakes during installation:" },
+          {
+            type: "list",
+            items: [
+              "Installing the ring on a dirty shaft surface",
+              "Allowing uneven fiber contact",
+              "Mounting the ring in the wrong position",
+              "Failing to connect the ring to a reliable ground",
+              "Applying excessive pressure on the conductive fibers",
+              "Ignoring continuity testing after installation",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "These issues may reduce the performance of the shaft grounding ring and increase the risk of bearing damage.",
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "Correct installation is essential for shaft grounding ring performance.",
+          },
+          {
+            type: "paragraph",
+            text: "A properly installed shaft grounding ring helps discharge shaft current, reduce the risk of bearing electrical erosion, and support longer motor bearing life in VFD-driven motor applications.",
+          },
+          {
+            type: "paragraph",
+            text: "For motors operating with variable frequency drives, proper installation and grounding should always be checked as part of the motor protection process.",
+          },
+        ],
+      },
+      zh: {
+        title: "轴接地环正确安装方法 | 变频电机轴承防护",
+        excerpt:
+          "轴接地环安装步骤指南，涵盖轴面清洁、纤维接触、接地、导通测试与常见安装误区。",
+        metaDescription:
+          "了解轴接地环的正确安装方法，包括轴面清洁、纤维接触、接地连接、导通测试以及常见安装误区。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "正确安装对轴接地环的性能表现至关重要。",
+          },
+          {
+            type: "paragraph",
+            text: "安装到位后，轴接地环可为轴电流提供可靠的对地泄放通道，有助于降低变频驱动电机中轴承电蚀、异常噪声及过早失效的风险。",
+          },
+          { type: "paragraph", text: "以下为关键的安装步骤。" },
+          { type: "heading", text: "步骤一：清洁轴表面" },
+          { type: "paragraph", text: "安装前应对轴表面进行充分清洁。" },
+          {
+            type: "paragraph",
+            text: "清除接触区域的油污、油脂、灰尘、氧化层及金属颗粒。清洁的轴表面有助于导电纤维与旋转轴之间保持稳定接触。",
+          },
+          { type: "heading", text: "步骤二：检查轴接触区域" },
+          {
+            type: "paragraph",
+            text: "检查导电纤维将要接触的轴段区域。",
+          },
+          {
+            type: "paragraph",
+            text: "接触面应光滑、洁净，无毛刺、深划痕或严重氧化。若轴面粗糙或受污染，接触电阻可能变得不稳定。",
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-installation-guide.webp",
+            alt: "变频电机轴承防护用轴接地环安装指南示意",
+          },
+          {
+            type: "paragraph",
+            text: "正确的轴接地环安装有助于保持稳定的轴电流泄放，降低轴承损伤风险。",
+          },
+          { type: "heading", text: "步骤三：可靠固定轴接地环" },
+          {
+            type: "paragraph",
+            text: "应根据电机结构与产品设计安装轴接地环。",
+          },
+          {
+            type: "paragraph",
+            text: "常见的安装方式包括螺钉安装、支架安装、粘接安装或定制的机械固定方式。轴接地环应固定到位，电机运行过程中不得发生松动。",
+          },
+          { type: "heading", text: "步骤四：确保纤维接触合适" },
+          {
+            type: "paragraph",
+            text: "导电纤维应轻柔且均匀地接触轴表面。",
+          },
+          {
+            type: "paragraph",
+            text: "接触不应过松或过紧。接触不均可能影响轴电流泄放，而压力过大则可能加剧纤维磨损。",
+          },
+          { type: "heading", text: "步骤五：保证电机外壳可靠接地" },
+          {
+            type: "paragraph",
+            text: "轴接地环必须连接到可靠的接地路径。",
+          },
+          {
+            type: "paragraph",
+            text: "请确认安装支架或接地导线已正确连接到电机外壳或接地点。即便轴接地环本体安装正确，接地不良仍可能降低其防护效果。",
+          },
+          { type: "heading", text: "步骤六：测试电气导通" },
+          {
+            type: "paragraph",
+            text: "安装完成后，应测试轴接地环与地之间的电气导通情况。",
+          },
+          {
+            type: "paragraph",
+            text: "使用万用表检查泄放路径是否连接正常。稳定的导通读数有助于确认轴电流具备可靠的对地通路。",
+          },
+          { type: "heading", text: "常见安装误区" },
+          { type: "paragraph", text: "安装过程中应避免以下错误：" },
+          {
+            type: "list",
+            items: [
+              "在不洁净的轴表面上安装",
+              "纤维接触不均匀",
+              "安装位置不正确",
+              "未连接到可靠的接地",
+              "对导电纤维施加过大压力",
+              "安装后忽略导通测试",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "上述问题可能降低轴接地环的性能表现，并增加轴承损伤风险。",
+          },
+          { type: "heading", text: "结语" },
+          {
+            type: "paragraph",
+            text: "正确安装是轴接地环性能发挥的基础。",
+          },
+          {
+            type: "paragraph",
+            text: "安装到位的轴接地环有助于泄放轴电流、降低轴承电蚀风险，并支持变频驱动电机中轴承寿命的更长期表现。",
+          },
+          {
+            type: "paragraph",
+            text: "对于由变频器驱动的电机，正确安装与接地应作为电机防护流程的常规检查项之一。",
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getArticleRecordBySlug(slug: string) {

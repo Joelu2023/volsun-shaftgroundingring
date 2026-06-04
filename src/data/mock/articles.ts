@@ -746,6 +746,385 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-7",
+    slug: "why-shaft-grounding-ring-is-smarter-choice-for-vfd-motors",
+    datePublished: "2026-05-27T08:00:00.000Z",
+    dateModified: "2026-05-27T08:00:00.000Z",
+    coverImagePublicPath: "/images/articles/shaft-grounding-ring-offshore.jpg",
+    locales: {
+      en: {
+        title: "Why Shaft Grounding Ring is the Smarter Choice for VFD Motors",
+        excerpt:
+          "Learn why shaft grounding rings are a smarter solution for VFD motor bearing protection compared with traditional carbon brushes, especially in wind power, industrial motors, and variable frequency drive applications.",
+        metaDescription:
+          "Learn why shaft grounding rings are a smarter solution for VFD motor bearing protection compared with traditional carbon brushes, especially in wind power, industrial motors, and variable frequency drive applications.",
+        paragraphs: [],
+        blocks: [
+          { type: "heading", text: "Introduction" },
+          {
+            type: "paragraph",
+            text: "When a VFD-driven motor begins producing a high-pitched whine, maintenance teams often face a common question: how should the bearings be protected from electrical erosion?",
+          },
+          {
+            type: "paragraph",
+            text: "Three options dominate the conversation today—traditional carbon brushes, insulated bearings, and modern shaft grounding rings. Each follows a different protection philosophy. This article explains why shaft grounding rings are increasingly considered a smarter choice for VFD motor bearing protection in wind power, industrial, and variable frequency drive applications.",
+          },
+          { type: "heading", text: "Why VFD Motors Need Shaft Grounding Protection" },
+          {
+            type: "paragraph",
+            text: "Variable frequency drives use high-frequency PWM switching to control motor speed and torque efficiently. While this switching improves controllability and energy efficiency, it can also induce common-mode voltage that capacitively couples onto the motor shaft.",
+          },
+          {
+            type: "paragraph",
+            text: "When this shaft voltage discharges through the motor bearings, it can cause electrical bearing damage—commonly known as electrical discharge machining (EDM)—including pitting, fluting, increased vibration, abnormal noise, and premature bearing failure.",
+          },
+          {
+            type: "paragraph",
+            text: "Providing a controlled, low-impedance discharge path for shaft current is therefore an important part of any modern VFD motor protection strategy.",
+          },
+          { type: "heading", text: "The Limitations of Traditional Carbon Brushes" },
+          {
+            type: "paragraph",
+            text: "Traditional carbon brush grounding uses a spring-loaded graphite block pressed against the rotating shaft. In the early days of inverter-fed motors this was a common workaround, but in modern installations several drawbacks have become harder to ignore:",
+          },
+          {
+            type: "list",
+            items: [
+              "Spring pressure can weaken over time, causing brush bounce and intermittent grounding",
+              "Brush wear produces graphite debris that may contaminate seals and lubricants",
+              "Periodic inspection and replacement add to long-term maintenance cost",
+              "Friction and drag torque on the shaft can affect efficiency at higher speeds",
+              "Service life is typically shorter under continuous-duty or high-speed operation",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "These factors make carbon brush grounding less attractive for modern wind turbines, EV traction motors, and continuous-duty industrial drives.",
+          },
+          { type: "heading", text: "Why Shaft Grounding Rings Are a Smarter Choice" },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring (SGR) takes a different approach. Instead of blocking shaft current with insulation or relying on a single brush contact, an SGR provides a consistent, low-resistance discharge path through a ring of conductive fibers in continuous contact with the shaft.",
+          },
+          {
+            type: "paragraph",
+            text: "Compared with both carbon brushes and insulated bearings, the VOLSUN shaft grounding ring offers three core advantages:",
+          },
+          { type: "heading", text: "System-Wide Protection vs Local Insulation" },
+          {
+            type: "paragraph",
+            text: "Insulated bearings—including ceramic-coated and plastic-sleeved variants—attempt to block current at a single bearing. Because they do not neutralize shaft voltage, the residual potential remains on the shaft and tends to seek another ground path through coupled equipment such as gearboxes, pumps, or encoders. The motor bearing may be protected, but downstream components can become the new failure point.",
+          },
+          {
+            type: "paragraph",
+            text: "By maintaining a dynamic contact resistance of approximately ≤10Ω, VOLSUN's metal-coated carbon fiber (MCF) bleeds off shaft voltage before it reaches a discharge level. This helps keep shaft potential close to ground across the entire drive train, not just at one bearing.",
+          },
+          { type: "heading", text: "Cost-Efficient Modular Design" },
+          {
+            type: "paragraph",
+            text: "Insulated bearings—especially ceramic versions—are typically expensive to source and may require complete motor teardown to install. The VOLSUN third-generation RDW series uses a modular ring design that can help reduce comprehensive costs by over 20% in our reviewed cases, depending on motor size and installation method.",
+          },
+          { type: "heading", text: "Easy Retrofit on Existing Motors" },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring can typically be bolted onto the motor exterior or press-fitted during a routine maintenance window without disturbing internal alignment. Replacing a standard bearing with an insulated one, by contrast, generally requires a full motor disassembly.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-offshore.jpg",
+            alt: "Shaft grounding ring used in offshore wind power motor applications",
+          },
+          { type: "heading", text: "Conductive Fiber Contact and Low-Maintenance Design" },
+          {
+            type: "paragraph",
+            text: "VOLSUN shaft grounding rings use proprietary metal-coated carbon fiber (MCF) microfilaments arranged in a ring around the shaft. Instead of relying on a single brush point, thousands of soft, conductive fibers maintain continuous multi-point contact.",
+          },
+          {
+            type: "list",
+            items: [
+              "Thousands of fiber contact points distribute the load and help reduce localized wear",
+              "Verified wear rate of <0.2mm per 300,000 km in oil-cooled environments",
+              "Stable static resistance of <1Ω even when exposed to oil and lubricants",
+              "Drag torque under 0.1N·m in oil-cooled motors—negligible impact on motor efficiency",
+              "Maintenance-free in typical operating conditions, with no spring pressure to adjust",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-carbonfiber.jpg",
+            alt: "Conductive fiber detail of shaft grounding ring for VFD motor bearing protection",
+          },
+          {
+            type: "paragraph",
+            text: "This design is intended to support long-term operation across the typical motor service life, helping protect VFD motor bearings without the routine intervention required by carbon brush systems.",
+          },
+          { type: "heading", text: "Application Scenarios" },
+          {
+            type: "paragraph",
+            text: "Shaft grounding rings are commonly used in motor systems where shaft voltage and bearing currents are a known reliability concern, including:",
+          },
+          {
+            type: "list",
+            items: [
+              "Onshore and offshore wind power generators, where motor bearings face long service intervals and harsh environments",
+              "VFD-driven industrial motors used in pumps, compressors, fans, and conveyors",
+              "800V EV traction motors with high switching frequencies and oil-cooled designs",
+              "HVAC and water-treatment motor systems with continuous variable-speed operation",
+              "Rail and marine traction applications where downtime cost is high",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "In high-demand environments such as 800V EV traction motors and offshore wind turbines, conventional insulation can also degrade over time due to thermal stress, vibration, or contamination. The MCF technology used in VOLSUN rings is designed for these long-duty, oil-cooled, and high-speed conditions.",
+          },
+          { type: "heading", text: "Installation and Maintenance Considerations" },
+          {
+            type: "paragraph",
+            text: "Correct installation is important to the long-term performance of any shaft grounding ring. Key considerations include:",
+          },
+          {
+            type: "list",
+            items: [
+              "Clean the shaft surface in the contact area before mounting",
+              "Choose a mounting method (bolt-on bracket, press-fit, or adhesive) appropriate to the motor structure",
+              "Confirm that the conductive fibers contact the shaft evenly, without excessive pressure",
+              "Ensure the ring or its mounting bracket has a reliable connection to the motor housing or grounding point",
+              "Test electrical continuity from the ring to ground after installation",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Once installed, VOLSUN shaft grounding rings are designed to be largely maintenance-free, with periodic visual inspection generally sufficient under typical operating conditions.",
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "For modern VFD-driven motors, the choice of shaft current protection has a direct impact on bearing reliability, downtime cost, and total cost of ownership.",
+          },
+          {
+            type: "paragraph",
+            text: "Compared with traditional carbon brushes, shaft grounding rings can support cleaner operation, longer service life, and lower maintenance overhead. Compared with insulated bearings, they are designed to deliver system-wide protection at lower retrofit cost. For wind power, industrial, and EV motor platforms, a properly specified shaft grounding ring is increasingly considered the smarter choice for long-term VFD motor bearing protection.",
+          },
+          {
+            type: "paragraph",
+            text: "For sizing, application support, or selection between carbon brush replacement, insulated bearing pairing, or full SGR retrofit, the VOLSUN technical team can review your motor nameplate and shaft diameter on request.",
+          },
+          { type: "heading", text: "Frequently Asked Questions" },
+          { type: "heading", text: "What does a shaft grounding ring do?" },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring provides a low-resistance discharge path for shaft voltage that can be induced on the motor shaft by VFD switching. By bleeding off this voltage to ground in a controlled way, it helps reduce the risk of electrical bearing erosion, fluting, and premature bearing failure.",
+          },
+          { type: "heading", text: "Why do VFD motors need bearing protection?" },
+          {
+            type: "paragraph",
+            text: "VFDs use high-frequency PWM switching that can capacitively couple voltage onto the motor shaft. If this voltage discharges through the bearings, it can damage the raceways and shorten bearing life. Adding a shaft grounding ring is a common way to help mitigate this risk.",
+          },
+          { type: "heading", text: "Is a shaft grounding ring a replacement for a carbon brush?" },
+          {
+            type: "paragraph",
+            text: "In most modern installations a shaft grounding ring is used as a carbon brush alternative. It avoids the wear debris, periodic replacement, and brush-bounce issues that affect carbon brush grounding. The two solutions are not normally combined on the same shaft.",
+          },
+          { type: "heading", text: "Can I use a shaft grounding ring together with an insulated bearing?" },
+          {
+            type: "paragraph",
+            text: "Yes. For larger motors—commonly above 100 HP / 75 kW—a widely used industry approach is to install a shaft grounding ring on the drive end and an insulated bearing on the non-drive end. This combination helps protect against both shaft-to-ground voltage and high-frequency circulating currents.",
+          },
+          { type: "heading", text: "Where are shaft grounding rings commonly used?" },
+          {
+            type: "paragraph",
+            text: "Typical application areas include wind power generators, VFD-driven industrial motors (pumps, fans, compressors, conveyors), EV traction motors, HVAC and water-treatment systems, and rail and marine traction motors. They are especially relevant where motor reliability and uptime are critical.",
+          },
+        ],
+      },
+      zh: {
+        title: "为什么轴接地环是变频电机更明智的选择",
+        excerpt:
+          "了解为何在风电、工业电机及变频驱动场景下，轴接地环相较传统碳刷是更明智的变频电机轴承防护方案。",
+        metaDescription:
+          "了解为何在风电、工业电机及变频驱动场景下，轴接地环是比传统碳刷更明智的变频电机轴承防护方案。",
+        paragraphs: [],
+        blocks: [
+          { type: "heading", text: "引言" },
+          {
+            type: "paragraph",
+            text: "当变频驱动电机出现高频啸叫时，运维团队常常面临一个共同问题：如何防止轴承遭受电蚀损伤？",
+          },
+          {
+            type: "paragraph",
+            text: "目前常见的方案有三类——传统碳刷、绝缘轴承与现代轴接地环，三者背后是不同的防护理念。本篇说明在风电、工业电机和变频驱动应用中，为什么轴接地环正越来越被视为变频电机轴承防护的更明智选择。",
+          },
+          { type: "heading", text: "为何变频电机需要轴接地防护" },
+          {
+            type: "paragraph",
+            text: "变频器通过高频 PWM 开关来高效控制电机的转速与转矩。在提升可控性与能效的同时，这种开关方式也会感应共模电压，并通过容性耦合作用于电机轴上。",
+          },
+          {
+            type: "paragraph",
+            text: "当轴电压沿轴承泄放时，可能引发电蚀损伤（即 EDM）——表现为点蚀、搓板纹（沟槽）、振动增大、异常噪声及轴承提早失效。",
+          },
+          {
+            type: "paragraph",
+            text: "因此，为轴电流提供受控、低阻抗的泄放通道，是现代变频电机防护策略中的重要一环。",
+          },
+          { type: "heading", text: "传统碳刷的局限" },
+          {
+            type: "paragraph",
+            text: "传统碳刷接地依靠弹簧压紧的石墨块与旋转轴接触。在变频驱动早期这是常见的临时方案，但在现代装置中，其不足越来越难以忽视：",
+          },
+          {
+            type: "list",
+            items: [
+              "弹簧压力可能随时间衰减，造成碳刷弹跳与接地间歇",
+              "碳刷磨损产生的石墨碎屑可能污染密封与润滑",
+              "需定期点检与更换，长期维护成本上升",
+              "对轴的摩擦与拖矩可能在高速工况下影响效率",
+              "在连续运行或高速工况下使用寿命通常较短",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "这些因素使碳刷接地在现代风电机组、电动汽车牵引电机以及连续运行的工业驱动中吸引力下降。",
+          },
+          { type: "heading", text: "为什么轴接地环是更明智的选择" },
+          {
+            type: "paragraph",
+            text: "轴接地环（SGR）采用了不同的思路：不通过绝缘「阻断」电流，也不依赖单点碳刷接触，而是通过环形分布的导电纤维与轴持续接触，提供一条稳定的低阻泄放通道。",
+          },
+          {
+            type: "paragraph",
+            text: "相比碳刷与绝缘轴承，沃尔兴轴接地环具有以下三项核心优势：",
+          },
+          { type: "heading", text: "系统级防护 vs 单点绝缘" },
+          {
+            type: "paragraph",
+            text: "绝缘轴承（包含陶瓷涂层与塑料套等型式）只在单个轴承位置阻断电流，但并不消除轴电压。残余电势仍存在于轴上，会沿其他金属接触路径——例如齿轮箱、泵、编码器——寻路接地。这可能在保护电机轴承的同时，把故障点转移到下游设备。",
+          },
+          {
+            type: "paragraph",
+            text: "沃尔兴金属化碳纤维（MCF）通过维持约 ≤10Ω 的动态接触电阻，在轴电压达到放电阈值之前将其泄放。这有助于让整条传动链的轴电势保持接近地电位，而不是仅在某一个轴承位置受控。",
+          },
+          { type: "heading", text: "模块化设计带来的成本效益" },
+          {
+            type: "paragraph",
+            text: "绝缘轴承（尤其陶瓷版本）通常采购成本高，且安装时往往需要整机拆解。沃尔兴第三代 RDW 系列采用模块化环形设计，在评估场景中可帮助综合成本下降 20% 以上，具体取决于电机规格与安装方式。",
+          },
+          { type: "heading", text: "易于在既有电机上加装" },
+          {
+            type: "paragraph",
+            text: "轴接地环通常可以在不破坏电机内部对中的前提下，于常规维护窗口期通过外部螺栓固定或压装方式完成加装；而把标准轴承更换为绝缘轴承一般需要整机拆解。",
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-offshore.jpg",
+            alt: "用于海上风电电机应用的轴接地环",
+          },
+          { type: "heading", text: "导电纤维接触与免维护设计" },
+          {
+            type: "paragraph",
+            text: "沃尔兴轴接地环采用专有的金属化碳纤维（MCF）微丝，环绕轴呈环形布置。不同于单点碳刷接触，数千根柔性导电纤维与轴形成连续的多点接触。",
+          },
+          {
+            type: "list",
+            items: [
+              "数千个纤维接触点分散载荷，有助于降低局部磨损",
+              "在油冷工况下经验证的磨损率：每 30 万公里 <0.2mm",
+              "在接触油液与润滑剂的条件下，静态电阻仍可保持 <1Ω",
+              "油冷电机中的拖矩 <0.1N·m，对电机效率影响可忽略",
+              "典型工况下免维护，无需弹簧压力调节",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-carbonfiber.jpg",
+            alt: "用于变频电机轴承防护的轴接地环导电纤维细节",
+          },
+          {
+            type: "paragraph",
+            text: "该设计旨在支持电机典型寿命周期内的长期运行，在不依赖碳刷系统例行干预的前提下，帮助保护变频电机轴承。",
+          },
+          { type: "heading", text: "典型应用场景" },
+          {
+            type: "paragraph",
+            text: "轴接地环常用于轴电压与轴承电流被认为是可靠性风险的电机系统，典型场景包括：",
+          },
+          {
+            type: "list",
+            items: [
+              "陆上与海上风电发电机：维护周期长、运行环境严苛",
+              "变频驱动的工业电机：泵、压缩机、风机、输送机等",
+              "采用高开关频率和油冷设计的 800V 电动汽车牵引电机",
+              "连续变速运行的暖通空调与水处理电机系统",
+              "停机成本高的轨道交通与船舶推进电机",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "在 800V 电动汽车牵引电机及海上风电这样的高负荷场景中，常规绝缘也可能因热应力、振动或污染而逐步劣化。沃尔兴轴接地环采用的 MCF 技术，正是面向此类长时连续、油冷及高速工况设计。",
+          },
+          { type: "heading", text: "安装与维护要点" },
+          {
+            type: "paragraph",
+            text: "正确安装对任何轴接地环的长期表现都很重要，关键要点包括：",
+          },
+          {
+            type: "list",
+            items: [
+              "安装前清洁接触区域的轴表面",
+              "依据电机结构选择合适的安装方式（外部支架螺栓、压装或粘接）",
+              "确认导电纤维均匀接触轴面，避免压力过大",
+              "确保接地环或其安装支架与电机外壳/接地点形成可靠连接",
+              "安装后测试接地环到地的电气导通",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "安装到位后，沃尔兴轴接地环面向免维护使用设计，在典型工况下通常只需定期目视检查。",
+          },
+          { type: "heading", text: "结语" },
+          {
+            type: "paragraph",
+            text: "对现代变频驱动电机而言，轴电流防护方案的选择直接关系到轴承可靠性、停机损失与全生命周期成本。",
+          },
+          {
+            type: "paragraph",
+            text: "相比传统碳刷，轴接地环可支持更清洁的运行、更长的使用寿命与更低的维护负担；相比绝缘轴承，则可在更低改造成本下提供面向系统级的防护。在风电、工业及电动汽车电机平台上，按需求合理选型的轴接地环正越来越被视为长期变频电机轴承防护的更明智选择。",
+          },
+          {
+            type: "paragraph",
+            text: "如需选型支持，或需评估「碳刷替换」「绝缘轴承配套」或「整机轴接地环改造」等不同方案，沃尔兴技术团队可基于您的电机铭牌与轴径信息进行评估。",
+          },
+          { type: "heading", text: "常见问题" },
+          { type: "heading", text: "轴接地环的作用是什么？" },
+          {
+            type: "paragraph",
+            text: "轴接地环为变频开关感应到电机轴上的轴电压提供低阻泄放通道。通过将轴电压受控泄放到地，有助于降低电蚀、搓板纹与轴承过早失效的风险。",
+          },
+          { type: "heading", text: "变频电机为何需要轴承防护？" },
+          {
+            type: "paragraph",
+            text: "变频器的高频 PWM 开关会通过容性耦合在电机轴上感应电压。若该电压沿轴承泄放，可能损伤滚道并缩短轴承寿命。加装轴接地环是缓解该风险的常见方式。",
+          },
+          { type: "heading", text: "轴接地环可以替代碳刷吗？" },
+          {
+            type: "paragraph",
+            text: "在多数现代装置中，轴接地环被作为碳刷替代方案使用。它能避免碳刷磨损碎屑、定期更换以及碳刷弹跳等问题。两者通常不会同时安装在同一根轴上。",
+          },
+          { type: "heading", text: "轴接地环可以与绝缘轴承一起使用吗？" },
+          {
+            type: "paragraph",
+            text: "可以。对较大功率的电机（一般在 100 HP / 75 kW 以上），常见做法是在驱动端安装轴接地环、在非驱动端安装绝缘轴承。此种组合有助于同时应对轴对地电压与高频环流。",
+          },
+          { type: "heading", text: "轴接地环常见的应用场景有哪些？" },
+          {
+            type: "paragraph",
+            text: "典型应用包括风电发电机、变频驱动的工业电机（泵、风机、压缩机、输送机）、电动汽车牵引电机、暖通空调与水处理系统、轨道交通与船舶推进电机等，尤其适合可靠性与可用率要求高的场景。",
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getArticleRecordBySlug(slug: string) {

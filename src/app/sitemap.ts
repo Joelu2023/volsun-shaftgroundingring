@@ -41,6 +41,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/zh${bearingFlutingSeoPage.path}` },
     { url: `${base}/en/knowledge-center` },
     { url: `${base}/zh/knowledge-center` },
+    { url: `${base}/en/knowledge-center/news` },
+    { url: `${base}/zh/knowledge-center/news` },
+    { url: `${base}/en/knowledge-center/technical-articles` },
+    { url: `${base}/zh/knowledge-center/technical-articles` },
+    { url: `${base}/en/knowledge-center/faq` },
+    { url: `${base}/zh/knowledge-center/faq` },
     ...articles.flatMap((article) => [
       {
         url: `${base}/en/knowledge-center/${article.slug}`,

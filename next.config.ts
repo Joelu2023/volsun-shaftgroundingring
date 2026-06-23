@@ -16,6 +16,33 @@ const nextConfig: NextConfig = {
       { source: "/zh/knowledge-center/articles/:slug", destination: "/zh/knowledge-center/:slug", permanent: true },
     ];
 
+    const categoryLegacyRedirects = [
+      {
+        source: "/knowledge-center",
+        has: [{ type: "query", key: "category", value: "news" }],
+        destination: "/en/knowledge-center/news",
+        permanent: true,
+      },
+      {
+        source: "/knowledge-center",
+        has: [{ type: "query", key: "category", value: "articles" }],
+        destination: "/en/knowledge-center/technical-articles",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en|zh)/knowledge-center",
+        has: [{ type: "query", key: "category", value: "news" }],
+        destination: "/:locale/knowledge-center/news",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en|zh)/knowledge-center",
+        has: [{ type: "query", key: "category", value: "articles" }],
+        destination: "/:locale/knowledge-center/technical-articles",
+        permanent: true,
+      },
+    ];
+
     return [
       {
         source: "/",
@@ -23,6 +50,7 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       ...articleLegacyRedirects,
+      ...categoryLegacyRedirects,
     ];
   },
 };

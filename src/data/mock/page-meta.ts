@@ -64,25 +64,36 @@ export const staticPageMeta = {
     },
   },
   knowledgeCenterNews: {
-    path: "/knowledge-center",
+    path: "/knowledge-center/news",
     title: {
-      en: "News | Knowledge Center",
-      zh: "新闻动态 | 知识中心",
+      en: "VOLSUN News",
+      zh: "沃尔兴新闻",
     },
     description: {
-      en: "Company news and product updates from Volsun on shaft grounding rings, VFD motor bearing protection, and industrial applications.",
-      zh: "沃尔兴轴接地环、变频电机轴承防护与工业应用相关的公司新闻与产品动态。",
+      en: "Latest news, company updates, and product information from VOLSUN.",
+      zh: "沃尔兴最新新闻、公司动态与产品资讯。",
     },
   },
   knowledgeCenterArticles: {
-    path: "/knowledge-center",
+    path: "/knowledge-center/technical-articles",
     title: {
-      en: "Technical Articles | Knowledge Center",
-      zh: "技术文章 | 知识中心",
+      en: "Technical Articles",
+      zh: "技术文章",
     },
     description: {
-      en: "Technical articles on shaft voltage, shaft grounding ring selection, installation, and VFD motor bearing protection for engineers and maintenance teams.",
-      zh: "面向工程师与维护团队的技术文章：轴电压、轴接地环选型、安装与变频电机轴承防护。",
+      en: "Technical articles and application guides about shaft grounding rings, cold shrink tubes, insulation protection, and material solutions.",
+      zh: "轴接地环、冷缩管、绝缘防护与材料方案相关的技术文章与应用指南。",
+    },
+  },
+  knowledgeCenterFaq: {
+    path: "/knowledge-center/faq",
+    title: {
+      en: "Frequently Asked Questions",
+      zh: "常见问题",
+    },
+    description: {
+      en: "Frequently asked questions about VOLSUN products, applications, installation, and customization.",
+      zh: "关于沃尔兴产品、应用、安装与定制的常见问题解答。",
     },
   },
   faq: {

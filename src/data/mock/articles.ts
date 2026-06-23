@@ -6,6 +6,9 @@ export type ArticleContentBlock =
   | { type: "list"; items: string[] }
   | { type: "image"; src: string; alt: string };
 
+/** Knowledge Center 栏目：news = 公司/产品动态；technical-articles = 技术文章 */
+export type ArticleCategory = "news" | "technical-articles";
+
 /** 单语言正文块 — 中英文共用同一 slug，便于 hreflang 与 sitemap 一一对应 */
 export type ArticleLocaleBlock = {
   title: string;
@@ -20,6 +23,7 @@ export type ArticleRecord = {
   id: string;
   /** 跨语言唯一标识，URL 中 `/en/knowledge-center/[slug]` 与 `/zh/...` 使用相同 slug */
   slug: string;
+  category: ArticleCategory;
   datePublished: string;
   dateModified: string;
   coverImagePublicPath?: string | null;
@@ -38,6 +42,7 @@ export const articles: ArticleRecord[] = [
   {
     id: "art-1",
     slug: "what-causes-shaft-voltage-in-vfd-motors",
+    category: "technical-articles",
     datePublished: "2026-03-01T08:00:00.000Z",
     dateModified: "2026-03-15T10:00:00.000Z",
     locales: {
@@ -70,6 +75,7 @@ export const articles: ArticleRecord[] = [
   {
     id: "art-2",
     slug: "split-vs-solid-shaft-grounding-rings-which-one-should-you-choose",
+    category: "technical-articles",
     datePublished: "2026-03-05T08:00:00.000Z",
     dateModified: "2026-03-15T10:00:00.000Z",
     locales: {
@@ -103,6 +109,7 @@ export const articles: ArticleRecord[] = [
   {
     id: "art-3",
     slug: "how-to-install-split-shaft-grounding-ring-without-full-motor-disassembly",
+    category: "technical-articles",
     datePublished: "2026-03-10T08:00:00.000Z",
     dateModified: "2026-03-18T10:00:00.000Z",
     locales: {
@@ -135,6 +142,7 @@ export const articles: ArticleRecord[] = [
   {
     id: "art-4",
     slug: "what-is-shaft-voltage",
+    category: "technical-articles",
     datePublished: "2026-05-19T08:00:00.000Z",
     dateModified: "2026-05-19T08:00:00.000Z",
     coverImagePublicPath: "/images/articles/article-shaft-voltage-vfd-bearing-current-hero-v1.webp",
@@ -335,6 +343,7 @@ export const articles: ArticleRecord[] = [
   {
     id: "art-5",
     slug: "shaft-grounding-ring-vs-carbon-brush",
+    category: "technical-articles",
     datePublished: "2026-05-21T08:00:00.000Z",
     dateModified: "2026-05-21T08:00:00.000Z",
     coverImagePublicPath: "/images/articles/article-shaft-grounding-ring-vs-carbon-brush-v1-2.webp",
@@ -522,6 +531,7 @@ export const articles: ArticleRecord[] = [
   {
     id: "art-6",
     slug: "how-to-install-shaft-grounding-ring",
+    category: "technical-articles",
     datePublished: "2026-05-26T08:00:00.000Z",
     dateModified: "2026-05-26T08:00:00.000Z",
     coverImagePublicPath: "/images/articles/shaft-grounding-ring-installation-guide.webp",
@@ -749,6 +759,7 @@ export const articles: ArticleRecord[] = [
   {
     id: "art-7",
     slug: "why-shaft-grounding-ring-is-smarter-choice-for-vfd-motors",
+    category: "technical-articles",
     datePublished: "2026-05-27T08:00:00.000Z",
     dateModified: "2026-05-27T08:00:00.000Z",
     coverImagePublicPath: "/images/articles/shaft-grounding-ring-offshore.jpg",
@@ -1126,6 +1137,10 @@ export const articles: ArticleRecord[] = [
     },
   },
 ];
+
+export function getArticlesByCategory(category: ArticleCategory): ArticleRecord[] {
+  return articles.filter((a) => a.category === category);
+}
 
 export function getArticleRecordBySlug(slug: string) {
   return articles.find((a) => a.slug === slug);

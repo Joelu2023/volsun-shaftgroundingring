@@ -74,9 +74,9 @@ export const navigationEn: NavItem[] = [
     type: "dropdown",
     highlight: false,
     children: [
-      { label: "News", href: "/knowledge-center?category=news" },
-      { label: "Technical Articles", href: "/knowledge-center?category=articles" },
-      { label: "FAQ", href: "/faq" },
+      { label: "News", href: "/knowledge-center/news" },
+      { label: "Technical Articles", href: "/knowledge-center/technical-articles" },
+      { label: "FAQ", href: "/knowledge-center/faq" },
     ],
   },
   {

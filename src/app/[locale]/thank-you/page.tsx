@@ -19,12 +19,18 @@ export async function generateMetadata({ params }: Pick<Props, "params">): Promi
   const { locale: raw } = await params;
   if (!isAppLocale(raw)) return {};
   const locale = raw as AppLocale;
-  return buildPageMetadata({
-    title: "Thank You",
-    description: "Thank you page with optional published download resources.",
-    path: "/thank-you",
-    locale,
-  });
+  return {
+    ...buildPageMetadata({
+      title: "Thank You",
+      description: "Thank you page with optional published download resources.",
+      path: "/thank-you",
+      locale,
+    }),
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 }
 
 export default async function ThankYouPage({ params, searchParams }: Props) {

@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = getCanonicalSiteOrigin();
   const indexableApplications = applications.filter((application) => application.isIndexable !== false);
 
-  return [
+  const staticEntries: MetadataRoute.Sitemap = [
     { url: `${base}/en` },
     { url: `${base}/zh` },
     { url: `${base}/en/products` },
@@ -42,10 +42,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/en/knowledge-center` },
     { url: `${base}/zh/knowledge-center` },
     ...articles.flatMap((article) => [
-      { url: `${base}/en/knowledge-center/${article.slug}` },
-      { url: `${base}/zh/knowledge-center/${article.slug}` },
+      {
+        url: `${base}/en/knowledge-center/${article.slug}`,
+        lastModified: article.dateModified,
+      },
+      {
+        url: `${base}/zh/knowledge-center/${article.slug}`,
+        lastModified: article.dateModified,
+      },
     ]),
-    { url: `${base}/en/privacy-policy` },
-    { url: `${base}/zh/privacy-policy` },
   ];
+
+  return staticEntries;
 }

@@ -9,26 +9,42 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { PageCtaStrip } from "@/components/layout/page-cta";
 import { isAppLocale, type AppLocale } from "@/lib/i18n/locales";
 import { ui } from "@/lib/i18n/ui-messages";
+import type { StaticPageMetaKey } from "@/data/mock/page-meta";
 
-type Props = { params: Promise<{ locale: string }> };
+type Props = {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+function knowledgeCenterMetaKey(category: string | undefined): StaticPageMetaKey {
+  if (category === "news") return "knowledgeCenterNews";
+  if (category === "articles") return "knowledgeCenterArticles";
+  return "knowledgeCenter";
+}
+
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { locale: raw } = await params;
   if (!isAppLocale(raw)) {
     return {};
   }
   const locale = raw as AppLocale;
-  const m = getPageMeta("knowledgeCenter", locale);
+  const sp = await searchParams;
+  const category = typeof sp.category === "string" ? sp.category : undefined;
+  const metaKey = knowledgeCenterMetaKey(category);
+  const m = getPageMeta(metaKey, locale);
   return buildPageMetadata({ title: m.title, description: m.description, path: m.path, locale });
 }
 
-export default async function LocalizedKnowledgeCenterPage({ params }: Props) {
+export default async function LocalizedKnowledgeCenterPage({ params, searchParams }: Props) {
   const { locale: raw } = await params;
   if (!isAppLocale(raw)) {
     notFound();
   }
   const locale = raw as AppLocale;
-  const m = getPageMeta("knowledgeCenter", locale);
+  const sp = await searchParams;
+  const category = typeof sp.category === "string" ? sp.category : undefined;
+  const metaKey = knowledgeCenterMetaKey(category);
+  const m = getPageMeta(metaKey, locale);
   const t = ui(locale);
   const listIntro = m.listIntro ?? m.description;
 

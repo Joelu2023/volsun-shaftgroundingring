@@ -7,12 +7,22 @@ import type { NextConfig } from "next";
  */
 const nextConfig: NextConfig = {
   async redirects() {
+    const articleLegacyRedirects = [
+      { source: "/articles/:slug", destination: "/en/knowledge-center/:slug", permanent: true },
+      { source: "/en/articles/:slug", destination: "/en/knowledge-center/:slug", permanent: true },
+      { source: "/zh/articles/:slug", destination: "/zh/knowledge-center/:slug", permanent: true },
+      { source: "/knowledge-center/articles/:slug", destination: "/en/knowledge-center/:slug", permanent: true },
+      { source: "/en/knowledge-center/articles/:slug", destination: "/en/knowledge-center/:slug", permanent: true },
+      { source: "/zh/knowledge-center/articles/:slug", destination: "/zh/knowledge-center/:slug", permanent: true },
+    ];
+
     return [
       {
         source: "/",
         destination: "/en",
         permanent: false,
       },
+      ...articleLegacyRedirects,
     ];
   },
 };

@@ -63,6 +63,28 @@ export const staticPageMeta = {
       zh: "围绕轴电压、产品选型与安装实践的技术内容，面向工程师与设备维护团队。",
     },
   },
+  knowledgeCenterNews: {
+    path: "/knowledge-center",
+    title: {
+      en: "News | Knowledge Center",
+      zh: "新闻动态 | 知识中心",
+    },
+    description: {
+      en: "Company news and product updates from Volsun on shaft grounding rings, VFD motor bearing protection, and industrial applications.",
+      zh: "沃尔兴轴接地环、变频电机轴承防护与工业应用相关的公司新闻与产品动态。",
+    },
+  },
+  knowledgeCenterArticles: {
+    path: "/knowledge-center",
+    title: {
+      en: "Technical Articles | Knowledge Center",
+      zh: "技术文章 | 知识中心",
+    },
+    description: {
+      en: "Technical articles on shaft voltage, shaft grounding ring selection, installation, and VFD motor bearing protection for engineers and maintenance teams.",
+      zh: "面向工程师与维护团队的技术文章：轴电压、轴接地环选型、安装与变频电机轴承防护。",
+    },
+  },
   faq: {
     path: "/faq",
     title: {

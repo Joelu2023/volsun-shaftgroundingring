@@ -20,6 +20,7 @@ const LOCALIZED_ROUTE_PREFIXES = [
   /^\/resources$/,
   /^\/knowledge-center(\/|$)/,
   /^\/privacy-policy$/,
+  /^\/thank-you$/,
 ];
 
 export function isRouteLocalizedPath(pathname: string): boolean {
@@ -62,6 +63,8 @@ export function localizeNavHref(href: string, locale: AppLocale): string {
     localized = `/${locale}${path}`;
   } else if (path === "/privacy-policy") {
     localized = `/${locale}/privacy-policy`;
+  } else if (path === "/thank-you") {
+    localized = `/${locale}/thank-you`;
   } else {
     localized = path;
   }

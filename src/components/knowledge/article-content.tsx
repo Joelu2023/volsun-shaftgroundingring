@@ -1,13 +1,22 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ArticleContentBlock } from "@/data/mock/articles";
+import type { AppLocale } from "@/lib/i18n/locales";
 import { sanitizeLargeSlotImageSrc } from "@/lib/utils/image-slot-guards";
 
 type Props = {
   blocks?: ArticleContentBlock[];
   paragraphs: string[];
+  locale?: AppLocale;
 };
 
-export function ArticleContent({ blocks, paragraphs }: Props) {
+function resolveArticleHref(href: string, locale?: AppLocale): string {
+  if (!locale || href.startsWith("/en/") || href.startsWith("/zh/")) return href;
+  if (href.startsWith("/")) return `/${locale}${href}`;
+  return href;
+}
+
+export function ArticleContent({ blocks, paragraphs, locale }: Props) {
   if (blocks?.length) {
     return (
       <div className="prose prose-slate mt-8 max-w-none">
@@ -53,6 +62,15 @@ export function ArticleContent({ blocks, paragraphs }: Props) {
                 </figure>
               );
             }
+            case "link":
+              return (
+                <p key={i} className="mt-4 text-slate-700">
+                  {block.intro ? <span>{block.intro} </span> : null}
+                  <Link href={resolveArticleHref(block.href, locale)} className="font-medium text-brand-orange hover:underline">
+                    {block.label}
+                  </Link>
+                </p>
+              );
             default:
               return null;
           }

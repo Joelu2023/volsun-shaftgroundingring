@@ -105,7 +105,7 @@ export default async function LocalizedArticlePage({ params }: Props) {
             />
           </div>
         ) : null}
-        <ArticleContent blocks={a.blocks} paragraphs={a.paragraphs} />
+        <ArticleContent blocks={a.blocks} paragraphs={a.paragraphs} locale={locale} />
         <div className="mt-10 rounded-lg border border-slate-200 bg-slate-50 p-6">
           <p className="font-medium text-slate-900">{t.knowledgeNeedSizingTitle}</p>
           <p className="mt-2 text-sm text-slate-600">{t.knowledgeNeedSizingBody}</p>

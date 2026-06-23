@@ -4,7 +4,8 @@ export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
   | { type: "list"; items: string[] }
-  | { type: "image"; src: string; alt: string };
+  | { type: "image"; src: string; alt: string }
+  | { type: "link"; label: string; href: string; intro?: string };
 
 /** Knowledge Center 栏目：news = 公司/产品动态；technical-articles = 技术文章 */
 export type ArticleCategory = "news" | "technical-articles";
@@ -1131,6 +1132,395 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "典型应用包括风电发电机、变频驱动的工业电机（泵、风机、压缩机、输送机）、电动汽车牵引电机、暖通空调与水处理系统、轨道交通与船舶推进电机等，尤其适合可靠性与可用率要求高的场景。",
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "art-8",
+    slug: "volsun-at-easa-2026-orlando",
+    category: "news",
+    datePublished: "2026-06-15T10:00:00.000Z",
+    dateModified: "2026-06-15T10:00:00.000Z",
+    coverImagePublicPath: "/images/news/easa-2026-orlando/product-display.jpg",
+    locales: {
+      en: {
+        title: "Volsun at EASA 2026 Orlando",
+        excerpt:
+          "Volsun joined EASA 2026 in Orlando to discuss shaft grounding rings, VFD motor bearing protection, and practical reliability strategies with motor repair and OEM professionals.",
+        metaDescription:
+          "Volsun at EASA 2026 Orlando: shaft grounding ring solutions for VFD motor bearing protection, booth highlights, and technical discussions with motor industry professionals.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Volsun recently concluded a successful participation at EASA 2026 in Orlando, Florida. The exhibition provided a strong platform to meet industry professionals, exchange technical insights, and present shaft grounding ring solutions for electric motors and rotating equipment.",
+          },
+          {
+            type: "paragraph",
+            text: "Throughout the event, our team welcomed visitors from motor manufacturing, motor repair and maintenance, industrial automation, power generation, and electric vehicle applications. Many conversations centered on bearing damage linked to shaft voltage and bearing currents in inverter-fed motor systems.",
+          },
+          { type: "heading", text: "Shaft Grounding Ring Solutions on Display" },
+          {
+            type: "paragraph",
+            text: "At our booth, visitors reviewed how Volsun shaft grounding rings are designed to provide a controlled path for harmful shaft currents to reach ground. As variable frequency drives (VFDs) become more common, effective shaft grounding is increasingly discussed as part of a practical motor reliability strategy.",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/product-display.jpg",
+            alt: "Volsun shaft grounding ring product display at EASA 2026 Orlando",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/booth-overview.jpg",
+            alt: "Overview of the Volsun booth at EASA 2026 in Orlando",
+          },
+          { type: "heading", text: "Technical Discussions with Industry Professionals" },
+          {
+            type: "paragraph",
+            text: "Face-to-face discussions with engineers, maintenance specialists, distributors, and OEM manufacturers helped our team understand application challenges across different markets. Several visitors asked how shaft grounding can support bearing life when VFD switching contributes to shaft voltage buildup.",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/booth-visitor-meeting-1.jpg",
+            alt: "Volsun team discussing shaft grounding applications with an EASA 2026 visitor",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/booth-visitor-meeting-2.jpg",
+            alt: "Technical conversation at the Volsun booth during EASA 2026 Orlando",
+          },
+          { type: "heading", text: "Growing Awareness of VFD Motor Bearing Protection" },
+          {
+            type: "paragraph",
+            text: "We were encouraged by increasing awareness of shaft voltage protection in electric vehicles, industrial motors, renewable energy systems, pumps, and compressors. More customers are actively reviewing solutions that can help extend bearing life, improve equipment uptime, and reduce unexpected failures.",
+          },
+          { type: "heading", text: "Learning Across the Exhibition Floor" },
+          {
+            type: "paragraph",
+            text: "In addition to presenting Volsun shaft grounding ring series, our team visited other exhibitors to explore developments in motor reliability, condition monitoring, and electrical protection technologies. These conversations support our ongoing product review and application guidance work.",
+          },
+          {
+            type: "paragraph",
+            text: "Trade shows such as EASA are not only about presenting products—they are also about listening, learning, and building long-term partnerships. We appreciate everyone who visited the Volsun booth and shared their experiences, challenges, and ideas with our team.",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/volsun-team-easa-2026.jpg",
+            alt: "Volsun team at EASA 2026 Orlando",
+          },
+          { type: "heading", text: "Looking Ahead" },
+          {
+            type: "paragraph",
+            text: "Volsun remains committed to developing reliable shaft grounding ring solutions that can support VFD motor performance, help protect critical equipment, and reduce maintenance requirements in the field.",
+          },
+          {
+            type: "link",
+            intro: "For a technical overview of why VFD-driven motors can experience bearing failure, read:",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+        ],
+      },
+      zh: {
+        title: "沃尔兴亮相 EASA 2026 奥兰多展",
+        excerpt:
+          "沃尔兴参加 EASA 2026 奥兰多展，与电机维修及 OEM 专业人士交流轴接地环、变频电机轴承防护与可靠性实践。",
+        metaDescription:
+          "沃尔兴亮相 EASA 2026 奥兰多：轴接地环与变频电机轴承防护方案、展位亮点及与电机行业人士的技术交流。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "沃尔兴近日完成 EASA 2026 佛罗里达奥兰多展的参展。本次展会为与行业专业人士交流、分享技术观点并展示电机及旋转设备用轴接地环方案提供了良好平台。",
+          },
+          {
+            type: "paragraph",
+            text: "展会期间，团队接待了来自电机制造、维修维护、工业自动化、发电及电动汽车等领域的访客。许多讨论聚焦于逆变器供电系统中与轴电压、轴承电流相关的轴承损伤问题。",
+          },
+          { type: "heading", text: "轴接地环方案展示" },
+          {
+            type: "paragraph",
+            text: "在展位上，访客了解了沃尔兴轴接地环如何为有害轴电流提供受控接地通道。随着变频器应用日益普遍，有效轴接地正越来越多地被纳入电机可靠性策略的讨论之中。",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/product-display.jpg",
+            alt: "EASA 2026 奥兰多沃尔兴轴接地环产品展示",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/booth-overview.jpg",
+            alt: "EASA 2026 奥兰多沃尔兴展位全景",
+          },
+          { type: "heading", text: "与行业人士的技术交流" },
+          {
+            type: "paragraph",
+            text: "与工程师、维护专家、分销商及 OEM 制造商的面对面交流，有助于团队了解不同市场的应用挑战。多位访客询问了在变频开关可能加剧轴电压时，轴接地如何支持轴承寿命管理。",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/booth-visitor-meeting-1.jpg",
+            alt: "EASA 2026 沃尔兴团队与访客交流轴接地应用",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/booth-visitor-meeting-2.jpg",
+            alt: "EASA 2026 奥兰多沃尔兴展位技术交流",
+          },
+          { type: "heading", text: "变频电机轴承防护认知提升" },
+          {
+            type: "paragraph",
+            text: "我们注意到电动汽车、工业电机、可再生能源系统、泵与压缩机等领域对轴电压防护的关注度持续上升。更多客户正在评估有助于延长轴承寿命、提升设备可用率并降低非计划失效风险的方案。",
+          },
+          { type: "heading", text: "展会参观与学习" },
+          {
+            type: "paragraph",
+            text: "除展示沃尔兴轴接地环系列产品外，团队也参观了其他展商，了解电机可靠性、状态监测与电气防护技术的发展。这些交流支持我们持续完善产品与选型指导。",
+          },
+          {
+            type: "paragraph",
+            text: "EASA 等展会不仅是产品展示，也是倾听、学习与建立长期合作的机会。感谢所有到访沃尔兴展位并分享经验、挑战与建议的专业人士。",
+          },
+          {
+            type: "image",
+            src: "/images/news/easa-2026-orlando/volsun-team-easa-2026.jpg",
+            alt: "EASA 2026 奥兰多沃尔兴团队合影",
+          },
+          { type: "heading", text: "展望" },
+          {
+            type: "paragraph",
+            text: "沃尔兴将继续开发可靠的轴接地环方案，以支持变频电机运行表现、帮助保护关键设备并降低现场维护负担。",
+          },
+          {
+            type: "link",
+            intro: "如需了解变频驱动电机轴承失效的技术背景，请阅读：",
+            label: "变频电机轴承失效的成因是什么？",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "art-9",
+    slug: "what-causes-vfd-bearing-failure",
+    category: "technical-articles",
+    datePublished: "2026-06-22T10:00:00.000Z",
+    dateModified: "2026-06-22T10:00:00.000Z",
+    coverImagePublicPath: "/images/articles/vfd-bearing-failure/vfd-motor-shaft-current-flow.jpg",
+    locales: {
+      en: {
+        title: "What Causes VFD Bearing Failure?",
+        excerpt:
+          "VFDs improve motor control and efficiency, but shaft voltage and bearing currents can contribute to premature bearing failure. Learn the mechanisms, warning signs, and common mitigation approaches.",
+        metaDescription:
+          "What causes VFD motor bearing failure? Learn how shaft voltage and bearing currents damage motor bearings, and how shaft grounding rings can help reduce electrical discharge risk.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Variable frequency drives (VFDs) are commonly used in modern motor systems. They can improve energy efficiency, provide precise speed control, and help reduce operating costs across industrial applications.",
+          },
+          {
+            type: "paragraph",
+            text: "However, maintenance engineers and motor operators often find that bearings fail earlier than expected on inverter-fed equipment. In many cases, the root cause is not mechanical wear alone—electrical currents generated by the VFD can damage bearings long before obvious symptoms appear.",
+          },
+          { type: "heading", text: "Why Motor Bearings Matter" },
+          {
+            type: "paragraph",
+            text: "Motor bearings support the rotating shaft and allow smooth operation with controlled friction. Healthy bearings are essential for efficiency, stable vibration levels, and long service life.",
+          },
+          { type: "paragraph", text: "When bearings fail, facilities may face:" },
+          {
+            type: "list",
+            items: [
+              "Unplanned downtime",
+              "Increased maintenance costs",
+              "Production interruptions",
+              "Reduced equipment reliability",
+              "Motor repair or replacement expenses",
+            ],
+          },
+          { type: "heading", text: "Shaft Voltage and Bearing Currents" },
+          {
+            type: "paragraph",
+            text: "One of the most significant contributors to bearing failure in VFD-driven motors is electrical discharge damage. Unlike many direct-on-line motors, inverter-fed motors operate with high-frequency switching that can generate common-mode voltages on the motor shaft.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/vfd-motor-shaft-current-flow.jpg",
+            alt: "Shaft current flow path in a VFD-driven motor system",
+          },
+          { type: "heading", text: "How Electrical Discharge Damages Bearings" },
+          {
+            type: "paragraph",
+            text: "As shaft voltage increases, it seeks a path to ground. In many installations, motor bearings become part of that path. When voltage exceeds the insulating capability of the lubricant film, micro-discharges can occur across bearing surfaces.",
+          },
+          {
+            type: "paragraph",
+            text: "These events may repeat at high frequency. Although each discharge is small, the cumulative effect can create pitting, fluting, and other electrical erosion patterns that shorten bearing life.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/vfd-motor-bearing-damage.jpg",
+            alt: "Electrical erosion and bearing damage on a VFD motor bearing race",
+          },
+          { type: "heading", text: "Warning Signs to Watch For" },
+          {
+            type: "paragraph",
+            text: "Electrical bearing damage often develops gradually and may initially resemble normal wear. Common indicators include:",
+          },
+          {
+            type: "list",
+            items: [
+              "Increased bearing noise",
+              "Higher vibration levels",
+              "Repeated premature bearing replacement",
+              "Fluting patterns on bearing races",
+              "Pitting on rolling surfaces",
+              "Unexpected motor failures on VFD-controlled drives",
+            ],
+          },
+          { type: "heading", text: "Common Mitigation Approaches" },
+          {
+            type: "paragraph",
+            text: "A practical strategy is to reduce harmful shaft current flow through bearings before damage accumulates. Approaches commonly reviewed in the field include:",
+          },
+          {
+            type: "list",
+            items: [
+              "Shaft grounding rings",
+              "Insulated bearings",
+              "Conductive couplings",
+              "Improved motor grounding practices",
+              "VFD filtering and cable routing reviews",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Among these options, shaft grounding rings are widely used because they are designed to provide a low-resistance path to ground and can help divert bearing currents away from the rolling interface.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/shaft-grounding-ring-vfd-bearing-protection.jpg",
+            alt: "Shaft grounding ring designed to help protect VFD motor bearings from shaft current damage",
+          },
+          { type: "heading", text: "Field Discussions at EASA 2026" },
+          {
+            type: "paragraph",
+            text: "At EASA 2026 in Orlando, many maintenance teams and motor repair specialists discussed bearing failures that appeared mechanical at first review but were later associated with inverter-related shaft voltage. These conversations reinforced the value of reviewing electrical discharge paths during root-cause analysis.",
+          },
+          {
+            type: "link",
+            intro: "Read our event recap:",
+            label: "Volsun at EASA 2026 Orlando",
+            href: "/knowledge-center/volsun-at-easa-2026-orlando",
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "For facilities operating VFD-driven motors, understanding shaft voltage and bearing currents is an important part of reliability planning. Implementing shaft grounding protection, where appropriate to the application, can support longer bearing life, help reduce maintenance requirements, and improve equipment uptime in pumps, compressors, HVAC systems, renewable energy equipment, and industrial automation.",
+          },
+        ],
+      },
+      zh: {
+        title: "变频电机轴承失效的成因是什么？",
+        excerpt:
+          "变频器提升控制与能效，但轴电压与轴承电流可能导致轴承过早失效。了解机理、典型迹象与常见抑制手段。",
+        metaDescription:
+          "变频电机轴承为何失效？了解轴电压与轴承电流如何损伤轴承，以及轴接地环如何帮助降低电蚀放电风险。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "变频器（VFD）在现代电机系统中应用广泛，可提升能效、实现精确调速，并有助于降低工业场景下的运行成本。",
+          },
+          {
+            type: "paragraph",
+            text: "然而，维护工程师常发现逆变器驱动设备的轴承寿命短于预期。在许多情况下，根因并非单纯机械磨损——变频器感应的电流可能在明显症状出现之前就已损伤轴承。",
+          },
+          { type: "heading", text: "轴承为何关键" },
+          {
+            type: "paragraph",
+            text: "电机轴承支撑旋转轴并保持可控摩擦下的平稳运行。轴承状态直接影响效率、振动水平与使用寿命。",
+          },
+          { type: "paragraph", text: "轴承失效可能带来：" },
+          {
+            type: "list",
+            items: ["非计划停机", "维护成本上升", "产能中断", "设备可靠性下降", "电机维修或更换支出"],
+          },
+          { type: "heading", text: "轴电压与轴承电流" },
+          {
+            type: "paragraph",
+            text: "变频驱动电机轴承失效的重要诱因之一是电蚀放电。相较不少工频直启电机，逆变器供电依赖高频开关，可能在电机轴上形成共模电压。",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/vfd-motor-shaft-current-flow.jpg",
+            alt: "变频驱动电机系统中的轴电流路径示意",
+          },
+          { type: "heading", text: "电蚀放电如何损伤轴承" },
+          {
+            type: "paragraph",
+            text: "轴电压升高后会寻找对地路径，许多装置中轴承会成为该路径的一部分。当电压超过润滑膜绝缘能力时，滚道表面可能发生微观放电。",
+          },
+          {
+            type: "paragraph",
+            text: "此类事件可能高频重复。单次放电量虽小，但累积效应可形成点蚀、搓板纹等电蚀特征，从而缩短轴承寿命。",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/vfd-motor-bearing-damage.jpg",
+            alt: "变频电机轴承滚道上的电蚀损伤",
+          },
+          { type: "heading", text: "需要关注的预警信号" },
+          { type: "paragraph", text: "电气性轴承损伤往往逐步发展，初期可能类似普通过磨。常见表现包括：" },
+          {
+            type: "list",
+            items: [
+              "轴承噪声增大",
+              "振动水平上升",
+              "轴承反复过早更换",
+              "滚道搓板纹",
+              "滚动面点蚀",
+              "变频控制驱动上的非预期电机失效",
+            ],
+          },
+          { type: "heading", text: "常见抑制手段" },
+          {
+            type: "paragraph",
+            text: "实用策略是在损伤累积前减少有害轴电流经轴承流动。现场常见评估方向包括：",
+          },
+          {
+            type: "list",
+            items: ["轴接地环", "绝缘轴承", "导电联轴器", "改进电机接地", "变频器滤波与电缆敷设复核"],
+          },
+          {
+            type: "paragraph",
+            text: "其中轴接地环应用较广，其设计目标是在轴与地之间提供低阻通道，帮助将轴承电流从滚动接触面旁路。",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/shaft-grounding-ring-vfd-bearing-protection.jpg",
+            alt: "用于帮助保护变频电机轴承的轴接地环示意",
+          },
+          { type: "heading", text: "EASA 2026 现场讨论" },
+          {
+            type: "paragraph",
+            text: "在奥兰多 EASA 2026 展会期间，许多维护团队与电机维修专家讨论了初判为机械失效、后续却与逆变器相关轴电压有关的轴承案例。这类交流凸显了在根因分析中复核电蚀泄放路径的价值。",
+          },
+          {
+            type: "link",
+            intro: "阅读展会回顾：",
+            label: "沃尔兴亮相 EASA 2026 奥兰多展",
+            href: "/knowledge-center/volsun-at-easa-2026-orlando",
+          },
+          { type: "heading", text: "结语" },
+          {
+            type: "paragraph",
+            text: "对运行变频驱动电机的设施而言，理解轴电压与轴承电流是可靠性规划的重要环节。在应用条件允许时实施轴接地防护，有助于延长轴承寿命、降低维护需求，并改善泵、压缩机、暖通、可再生能源及工业自动化等场景的可用率。",
           },
         ],
       },

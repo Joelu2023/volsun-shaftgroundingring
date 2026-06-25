@@ -30,12 +30,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = raw as AppLocale;
   const article = getArticleForLocale(slug, locale);
   if (!article) return {};
-  return buildPageMetadata({
+  const meta = buildPageMetadata({
     title: article.title,
     description: article.metaDescription,
     path: `/knowledge-center/${article.slug}`,
     locale,
   });
+  const ogImage = sanitizeLargeSlotImageSrc(article.coverImagePublicPath);
+  if (!ogImage) return meta;
+  return {
+    ...meta,
+    openGraph: {
+      ...meta.openGraph,
+      images: [{ url: ogImage, alt: article.title }],
+    },
+  };
 }
 
 export default async function LocalizedArticlePage({ params }: Props) {

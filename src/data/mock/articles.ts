@@ -1526,6 +1526,213 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-10",
+    slug: "xev-exhibition-2026-report",
+    category: "news",
+    datePublished: "2026-06-24T08:00:00.000Z",
+    dateModified: "2026-06-24T08:00:00.000Z",
+    coverImagePublicPath: "/images/news/xev-2026/exhibition-theme.jpg",
+    locales: {
+      en: {
+        title: "Volsun at 2026 Global XEV Drive System Conference",
+        excerpt:
+          "Volsun presented electric drive safety protection solutions at the 2026 Global XEV Drive System Conference in Shanghai, with shaft grounding rings for VFD motor bearing protection among the booth highlights.",
+        metaDescription:
+          "Volsun exhibits at the 2026 Global XEV Drive System Conference in Shanghai, presenting shaft grounding ring solutions for VFD motor bearing protection at this industrial exhibition.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "On June 23, the 6th Global XEV Drive System Technology and Industry Conference opened in Shanghai under the theme \"Driving a New Era: From Scenario Integration to Value Transformation.\" Companies from electric drive, vehicle manufacturing, and key component sectors gathered to review trends in electrified mobility and system reliability.",
+          },
+          { type: "heading", text: "Exhibition Overview" },
+          {
+            type: "paragraph",
+            text: "Volsun participated in the event to present electric drive safety protection solutions designed to support reliability, durability, and operational safety in modern drive systems. Discussions across the conference floor reflected a shift toward longer service life and verifiable field performance—not only peak performance metrics.",
+          },
+          {
+            type: "paragraph",
+            text: "As electric drive systems operate under high-voltage insulation requirements, elevated temperatures, humidity, and vibration, material selection and electrical protection are increasingly treated as system-level decisions rather than isolated component choices.",
+          },
+          {
+            type: "image",
+            src: "/images/news/xev-2026/exhibition-theme.jpg",
+            alt: "2026 Global XEV Drive System Technology and Industry Conference exhibition theme",
+          },
+          { type: "heading", text: "Customer Engagement at Booth" },
+          {
+            type: "paragraph",
+            text: "At the Volsun booth, engineers and procurement teams from electric drive and vehicle-related industries reviewed protection options for motors operating with inverters, potting materials for thermal management, and insulation solutions for wire harnesses in demanding environments.",
+          },
+          {
+            type: "paragraph",
+            text: "A recurring theme in visitor conversations was how protection strategies perform under real operating conditions—not only in laboratory tests. Many teams asked how material choices map to specific failure mechanisms seen in the field.",
+          },
+          {
+            type: "image",
+            src: "/images/news/xev-2026/booth-exchange-1.jpg",
+            alt: "Customer discussion at the Volsun booth during the 2026 Global XEV conference",
+          },
+          {
+            type: "image",
+            src: "/images/news/xev-2026/booth-exchange-2.jpg",
+            alt: "Technical exchange with visitors at the Volsun booth at XEV 2026 Shanghai",
+          },
+          {
+            type: "image",
+            src: "/images/news/xev-2026/booth-exchange-3.jpg",
+            alt: "Volsun team engaging with electric drive industry professionals at XEV 2026",
+          },
+          { type: "heading", text: "Product Highlights (Shaft Grounding Ring)" },
+          {
+            type: "paragraph",
+            text: "Among the protection topics discussed, Volsun shaft grounding rings (SGR) drew attention from teams addressing bearing current and electrical erosion in VFD-driven motors. Shaft grounding rings are commonly used to provide a controlled low-resistance path that can help reduce shaft voltage discharge through motor bearings.",
+          },
+          {
+            type: "paragraph",
+            text: "For inverter-fed traction and industrial motor applications, shaft grounding is often reviewed alongside thermal management and harness insulation as part of a broader reliability plan. Volsun also discussed conductive brush and material options where application requirements call for a different contact approach.",
+          },
+          { type: "heading", text: "Industry Applications Discussed" },
+          {
+            type: "paragraph",
+            text: "Visitor questions covered a range of electric drive use cases, including:",
+          },
+          {
+            type: "list",
+            items: [
+              "EV and hybrid traction motors with high switching frequencies",
+              "Industrial automation drives with continuous variable-speed duty",
+              "Pump and compressor motors exposed to humidity and contamination",
+              "Systems where bearing protection must be validated under field load",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Thermal conductive potting compounds, silicone thermal interface materials, and high-temperature insulation sleeves were also discussed for teams managing heat and environmental stress in compact motor assemblies.",
+          },
+          {
+            type: "link",
+            intro: "For background on VFD-related bearing failure mechanisms, read:",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "link",
+            intro: "See also our earlier exhibition recap:",
+            label: "Volsun at EASA 2026 Orlando",
+            href: "/knowledge-center/volsun-at-easa-2026-orlando",
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "The 2026 Global XEV conference reinforced that electric drive competitiveness increasingly depends on verifiable reliability in real operating environments. Volsun will continue to develop shaft grounding ring and related protection solutions that can support VFD motor bearing protection, thermal management, and insulation needs for electric drive customers.",
+          },
+          {
+            type: "paragraph",
+            text: "For application questions, shaft diameter inputs, or project-specific reviews, contact the Volsun team through the published RFQ channel on this site.",
+          },
+        ],
+      },
+      zh: {
+        title: "沃尔兴参加 2026 全球 XEV 电驱动系统大会",
+        excerpt:
+          "沃尔兴在上海举行的 2026 全球 XEV 电驱动系统大会上展示电驱动安全保护方案，展位重点包括面向变频电机轴承防护的轴接地环。",
+        metaDescription:
+          "沃尔兴亮相 2026 上海全球 XEV 电驱动系统大会，展示轴接地环等变频电机轴承防护方案，分享工业展会现场交流与行业应用讨论。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "6 月 23 日，第六届全球 XEV 电驱动系统技术与产业大会在上海开幕，主题聚焦「驱动新时代：从场景融合到价值转化」。电驱动、整车制造及关键部件企业齐聚，共议电动化与系统可靠性趋势。",
+          },
+          { type: "heading", text: "展会概览" },
+          {
+            type: "paragraph",
+            text: "沃尔兴参会展示电驱动安全保护方案，旨在支持现代驱动系统的可靠性、耐久性与运行安全。现场讨论反映行业正更关注可验证的寿命表现，而非仅看峰值性能指标。",
+          },
+          {
+            type: "paragraph",
+            text: "在高电压绝缘、高温高湿与振动等工况下，材料选型与电气防护越来越被视为系统级决策，而非孤立零部件问题。",
+          },
+          {
+            type: "image",
+            src: "/images/news/xev-2026/exhibition-theme.jpg",
+            alt: "2026 全球 XEV 电驱动系统技术与产业大会主题",
+          },
+          { type: "heading", text: "展位交流" },
+          {
+            type: "paragraph",
+            text: "在沃尔兴展位，来自电驱动及相关行业的工程师与采购团队了解了逆变器工况下的电机防护、灌封导热材料以及线束绝缘方案。",
+          },
+          {
+            type: "paragraph",
+            text: "访客普遍关注保护策略在真实运行条件下的表现，而不仅是实验室数据。许多团队询问材料方案如何对应现场常见的失效机理。",
+          },
+          {
+            type: "image",
+            src: "/images/news/xev-2026/booth-exchange-1.jpg",
+            alt: "2026 全球 XEV 大会沃尔兴展位客户交流",
+          },
+          {
+            type: "image",
+            src: "/images/news/xev-2026/booth-exchange-2.jpg",
+            alt: "XEV 2026 上海沃尔兴展位技术交流",
+          },
+          {
+            type: "image",
+            src: "/images/news/xev-2026/booth-exchange-3.jpg",
+            alt: "沃尔兴团队与电驱动行业专业人士在 XEV 2026 现场交流",
+          },
+          { type: "heading", text: "产品亮点（轴接地环）" },
+          {
+            type: "paragraph",
+            text: "在防护话题中，沃尔兴轴接地环（SGR）受到关注，尤其面向变频驱动电机中的轴承电流与电蚀问题。轴接地环常用于提供受控低阻通道，帮助降低轴电压经轴承泄放的风险。",
+          },
+          {
+            type: "paragraph",
+            text: "对逆变器驱动牵引及工业电机应用，轴接地常与热管理与线束绝缘一并纳入可靠性规划。沃尔兴亦就不同接触需求下的碳刷及材料选项进行了说明。",
+          },
+          { type: "heading", text: "讨论的行业应用" },
+          { type: "paragraph", text: "访客问题覆盖多种电驱动场景，包括：" },
+          {
+            type: "list",
+            items: [
+              "高开关频率的 EV 及混合动力牵引电机",
+              "连续变速运行的工业自动化驱动",
+              "暴露于湿度与污染的泵类、压缩机电机",
+              "需在负载工况下验证轴承防护的系统",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "导热灌封胶、硅胶导热垫及高温绝缘套管等方案，也用于讨论紧凑电机总成中的散热与环境应力管理。",
+          },
+          {
+            type: "link",
+            intro: "了解变频相关轴承失效机理，请阅读：",
+            label: "变频电机轴承失效的成因是什么？",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "link",
+            intro: "另见此前展会回顾：",
+            label: "沃尔兴亮相 EASA 2026 奥兰多展",
+            href: "/knowledge-center/volsun-at-easa-2026-orlando",
+          },
+          { type: "heading", text: "结语" },
+          {
+            type: "paragraph",
+            text: "2026 全球 XEV 大会进一步表明，电驱动竞争力越来越取决于真实工况下可验证的可靠性。沃尔兴将持续开发轴接地环及相关防护方案，以支持变频电机轴承防护、热管理与绝缘需求。",
+          },
+          {
+            type: "paragraph",
+            text: "如需应用咨询、轴径输入或项目复核，欢迎通过本站询盘渠道联系沃尔兴团队。",
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getArticlesByCategory(category: ArticleCategory): ArticleRecord[] {

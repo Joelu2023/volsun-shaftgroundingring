@@ -4,16 +4,19 @@ import { SectionWrapper } from "@/components/layout/section-wrapper";
 import {
   products,
   applications,
-  articles,
   resources,
   getHomeContent,
   getFaqItems,
   getProductForLocale,
   getApplicationForLocale,
   getResourceForLocale,
+  getLatestArticlesByCategory,
   PAGE_SOURCE_HOME,
   CTA_SOURCE_CONVERSION_FORM,
   HOME_EN_APPLICATION_SLOTS,
+  HOME_CRAWL_FEATURED_PRODUCT_SLUGS,
+  HOME_LATEST_NEWS_LIMIT,
+  HOME_FEATURED_TECHNICAL_LIMIT,
   getPageMeta,
   EN_INSTALLATION_GUIDE_DOWNLOAD_SLUG,
 } from "@/data";
@@ -31,6 +34,11 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
   const featuredRes = resources
     .filter((r) => home.featuredResourceIds.includes(r.id))
     .map((r) => getResourceForLocale(r, locale));
+  const latestNews = getLatestArticlesByCategory("news", HOME_LATEST_NEWS_LIMIT);
+  const featuredTechnical = getLatestArticlesByCategory("technical-articles", HOME_FEATURED_TECHNICAL_LIMIT);
+  const crawlProducts = HOME_CRAWL_FEATURED_PRODUCT_SLUGS.map((slug) => products.find((p) => p.slug === slug)).filter(
+    (p): p is (typeof products)[number] => p !== undefined,
+  );
 
   return (
     <>
@@ -57,18 +65,60 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
         </div>
       </div>
 
-      {locale !== "en" ? (
-        <SectionWrapper id="solution" variant="muted">
-          <h2 className="text-2xl font-semibold text-brand-blue">{home.solution.title}</h2>
-          <p className="mt-4 text-slate-600">{home.solution.body}</p>
-        </SectionWrapper>
-      ) : null}
+      <SectionWrapper id="latest-news" variant="bordered">
+        <h2 className="text-2xl font-semibold text-brand-blue">{t.homeLatestNewsTitle}</h2>
+        <p className="mt-3 max-w-3xl text-slate-600">{t.homeLatestNewsLead}</p>
+        <ul className="mt-6 space-y-4">
+          {latestNews.map((rec) => {
+            const block = rec.locales[locale];
+            return (
+              <li key={rec.slug} className="rounded border border-slate-200 bg-white p-4">
+                <Link href={`/${locale}/knowledge-center/${rec.slug}`} className="font-semibold text-slate-900 hover:text-brand-orange">
+                  {block.title}
+                </Link>
+                <p className="mt-2 text-sm text-slate-600">{block.excerpt}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <p className="mt-4 text-sm">
+          <Link href={`/${locale}/knowledge-center/news`} className="text-brand-orange hover:underline">
+            {t.homeLatestNewsViewAll}
+          </Link>
+        </p>
+      </SectionWrapper>
 
-      <SectionWrapper id="products" variant="bordered">
-        <h2 className="text-2xl font-semibold text-brand-blue">{t.homeProductFamiliesTitle}</h2>
-        <p className="mt-3 max-w-3xl text-slate-600">{t.homeProductFamiliesLead}</p>
+      <SectionWrapper id="featured-technical-articles" variant="muted">
+        <h2 className="text-2xl font-semibold text-brand-blue">{t.homeFeaturedTechnicalTitle}</h2>
+        <p className="mt-3 max-w-3xl text-slate-600">{t.homeFeaturedTechnicalLead}</p>
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+          {featuredTechnical.map((rec) => {
+            const block = rec.locales[locale];
+            return (
+              <li key={rec.slug}>
+                <Link
+                  href={`/${locale}/knowledge-center/${rec.slug}`}
+                  className="block h-full rounded border border-slate-200 bg-white p-4 hover:border-brand-orange"
+                >
+                  <h3 className="font-semibold text-slate-900">{block.title}</h3>
+                  <p className="mt-2 text-sm text-slate-600">{block.excerpt}</p>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        <p className="mt-4 text-sm">
+          <Link href={`/${locale}/knowledge-center/technical-articles`} className="text-brand-orange hover:underline">
+            {t.homeFeaturedTechnicalViewAll}
+          </Link>
+        </p>
+      </SectionWrapper>
+
+      <SectionWrapper id="featured-products" variant="bordered">
+        <h2 className="text-2xl font-semibold text-brand-blue">{t.homeFeaturedProductsTitle}</h2>
+        <p className="mt-3 max-w-3xl text-slate-600">{t.homeFeaturedProductsLead}</p>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {products.map((p) => {
+          {crawlProducts.map((p) => {
             const lp = getProductForLocale(p.slug, locale)!;
             return (
               <Link
@@ -96,7 +146,55 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
             );
           })}
         </div>
+        <p className="mt-4 text-sm">
+          <Link href={`/${locale}/products`} className="text-brand-orange hover:underline">
+            {t.homeProductFamiliesTitle}
+          </Link>
+        </p>
       </SectionWrapper>
+
+      {locale !== "en" ? (
+        <SectionWrapper id="solution" variant="muted">
+          <h2 className="text-2xl font-semibold text-brand-blue">{home.solution.title}</h2>
+          <p className="mt-4 text-slate-600">{home.solution.body}</p>
+        </SectionWrapper>
+      ) : null}
+
+      {locale !== "en" ? (
+        <SectionWrapper id="products" variant="bordered">
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.homeProductFamiliesTitle}</h2>
+          <p className="mt-3 max-w-3xl text-slate-600">{t.homeProductFamiliesLead}</p>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {products.map((p) => {
+              const lp = getProductForLocale(p.slug, locale)!;
+              return (
+                <Link
+                  key={p.slug}
+                  href={`/${locale}/products/${p.slug}`}
+                  className="group flex flex-col overflow-hidden rounded border border-slate-200 bg-white hover:border-brand-orange"
+                >
+                  {sanitizeLargeSlotImageSrc(p.primaryImagePublicPath) ? (
+                    <div className="relative aspect-[4/3] w-full shrink-0 bg-slate-100">
+                      <Image
+                        src={sanitizeLargeSlotImageSrc(p.primaryImagePublicPath)!}
+                        alt={lp.name}
+                        fill
+                        className="object-cover transition group-hover:opacity-95"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                    </div>
+                  ) : null}
+                  <div className="flex flex-1 flex-col p-4">
+                    <span className="text-xs font-medium uppercase text-brand-orange">{lp.badge}</span>
+                    <h3 className="mt-2 font-semibold text-slate-900">{lp.name}</h3>
+                    <p className="mt-2 text-sm text-slate-600">{lp.shortDescription}</p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </SectionWrapper>
+      ) : null}
 
       {locale === "en" ? (
         <SectionWrapper id="selection-guide" variant="muted">
@@ -249,23 +347,27 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
         </SectionWrapper>
       ) : null}
 
-      <SectionWrapper id="knowledge" variant="bordered">
+      <SectionWrapper id="knowledge-hub" variant="bordered">
         <h2 className="text-2xl font-semibold text-brand-blue">{t.homeKnowledgeTitle}</h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {articles.map((rec) => {
-            const block = rec.locales[locale];
-            return (
-              <Link
-                key={rec.slug}
-                href={`/${locale}/knowledge-center/${rec.slug}`}
-                className="rounded border border-slate-200 p-4 hover:border-brand-orange"
-              >
-                <h3 className="font-semibold text-slate-900">{block.title}</h3>
-                <p className="mt-2 text-sm text-slate-600">{block.excerpt}</p>
-              </Link>
-            );
-          })}
-        </div>
+        <p className="mt-3 max-w-3xl text-slate-600">
+          {locale === "zh"
+            ? "浏览新闻、技术文章与常见问题，了解轴接地环应用与选型。"
+            : "Browse news, technical articles, and FAQs on shaft grounding ring applications and selection."}
+        </p>
+        <nav className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label={t.homeKnowledgeTitle}>
+          <Link href={`/${locale}/knowledge-center`} className="font-medium text-brand-orange hover:underline">
+            {locale === "zh" ? "知识中心首页" : "Knowledge Center hub"}
+          </Link>
+          <Link href={`/${locale}/knowledge-center/news`} className="font-medium text-brand-orange hover:underline">
+            {locale === "zh" ? "新闻动态" : "News"}
+          </Link>
+          <Link href={`/${locale}/knowledge-center/technical-articles`} className="font-medium text-brand-orange hover:underline">
+            {locale === "zh" ? "技术文章" : "Technical Articles"}
+          </Link>
+          <Link href={`/${locale}/knowledge-center/faq`} className="font-medium text-brand-orange hover:underline">
+            {locale === "zh" ? "常见问题" : "FAQ"}
+          </Link>
+        </nav>
       </SectionWrapper>
 
       {locale !== "en" ? (

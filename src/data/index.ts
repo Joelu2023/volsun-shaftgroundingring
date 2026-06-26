@@ -9,7 +9,7 @@ export { industrialMotorsApplicationPage, getIndustrialMotorsContent } from "./m
 export type { IndustrialApplicationPageData } from "./mock/application-industrial";
 export { caseStudies, getCaseStudyBySlug } from "./mock/case-studies";
 export type { CaseStudy } from "./mock/case-studies";
-export { articles, getArticleBySlug, getArticleForLocale, getArticleRecordBySlug, getArticlesByCategory } from "./mock/articles";
+export { articles, getArticleBySlug, getArticleForLocale, getArticleRecordBySlug, getArticlesByCategory, getLatestArticlesByCategory } from "./mock/articles";
 export type { ArticleCategory, ArticleContentBlock, ArticleDetail, ArticleRecord, ArticleResolved } from "./mock/articles";
 export { faqItems, getFaqItems } from "./mock/faq";
 export {
@@ -20,7 +20,14 @@ export {
   EN_INSTALLATION_GUIDE_DOWNLOAD_SLUG,
 } from "./mock/resources";
 export type { ResourceItem } from "./mock/resources";
-export { homeContent, getHomeContent, HOME_EN_APPLICATION_SLOTS } from "./mock/home";
+export {
+  homeContent,
+  getHomeContent,
+  HOME_EN_APPLICATION_SLOTS,
+  HOME_CRAWL_FEATURED_PRODUCT_SLUGS,
+  HOME_LATEST_NEWS_LIMIT,
+  HOME_FEATURED_TECHNICAL_LIMIT,
+} from "./mock/home";
 export type { HomeEnApplicationSlot } from "./mock/home";
 export { inquiryTypeOptions, getInquiryTypeOptions } from "./mock/inquiry-types";
 export { PAGE_SOURCE_HOME, PAGE_SOURCE_ABOUT, CTA_SOURCE_CONVERSION_FORM } from "./mock/tracking";

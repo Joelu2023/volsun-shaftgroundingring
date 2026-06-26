@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getArticlesByCategory, getPageMeta } from "@/data";
+import {
+  getArticlesByCategory,
+  getLatestArticlesByCategory,
+  getPageMeta,
+  HOME_FEATURED_TECHNICAL_LIMIT,
+  HOME_LATEST_NEWS_LIMIT,
+} from "@/data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbListJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
@@ -35,6 +41,8 @@ export default async function LocalizedKnowledgeCenterPage({ params }: Props) {
   const listIntro = m.listIntro ?? m.description;
   const newsCount = getArticlesByCategory("news").length;
   const articlesCount = getArticlesByCategory("technical-articles").length;
+  const latestNews = getLatestArticlesByCategory("news", HOME_LATEST_NEWS_LIMIT);
+  const featuredTechnical = getLatestArticlesByCategory("technical-articles", HOME_FEATURED_TECHNICAL_LIMIT);
 
   const jsonLd = [
     webPageJsonLd({ name: m.title, description: m.description, path: m.path, locale }),
@@ -53,6 +61,22 @@ export default async function LocalizedKnowledgeCenterPage({ params }: Props) {
       <Breadcrumbs items={[{ label: t.breadcrumbHome, href: `/${locale}` }, { label: m.title, href: null }]} />
       <h1 className="mt-4 text-3xl font-bold text-brand-blue">{m.title}</h1>
       <p className="mt-4 max-w-3xl text-slate-600">{listIntro}</p>
+
+      <nav className="mt-8 flex flex-wrap gap-3 text-sm" aria-label={m.title}>
+        {sections.map(({ metaKey, path }) => {
+          const section = getPageMeta(metaKey, locale);
+          return (
+            <Link
+              key={path}
+              href={`/${locale}${path}`}
+              className="rounded-full border border-brand-orange px-4 py-2 font-medium text-brand-orange hover:bg-brand-orange hover:text-white"
+            >
+              {section.title}
+            </Link>
+          );
+        })}
+      </nav>
+
       <ul className="mt-10 grid gap-6 sm:grid-cols-3">
         {sections.map(({ metaKey, path }) => {
           const section = getPageMeta(metaKey, locale);
@@ -82,6 +106,51 @@ export default async function LocalizedKnowledgeCenterPage({ params }: Props) {
           );
         })}
       </ul>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold text-brand-blue">{getPageMeta("knowledgeCenterNews", locale).title}</h2>
+        <ul className="mt-6 space-y-4">
+          {latestNews.map((rec) => {
+            const block = rec.locales[locale];
+            return (
+              <li key={rec.slug} className="rounded-lg border border-slate-200 bg-white p-5">
+                <Link href={`/${locale}/knowledge-center/${rec.slug}`} className="text-lg font-semibold text-slate-900 hover:text-brand-orange">
+                  {block.title}
+                </Link>
+                <p className="mt-2 text-sm text-slate-600">{block.excerpt}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <p className="mt-4 text-sm">
+          <Link href={`/${locale}/knowledge-center/news`} className="text-brand-orange hover:underline">
+            {locale === "zh" ? "查看全部新闻" : "View all news"}
+          </Link>
+        </p>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold text-brand-blue">{getPageMeta("knowledgeCenterArticles", locale).title}</h2>
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+          {featuredTechnical.map((rec) => {
+            const block = rec.locales[locale];
+            return (
+              <li key={rec.slug} className="rounded-lg border border-slate-200 bg-white p-5">
+                <Link href={`/${locale}/knowledge-center/${rec.slug}`} className="font-semibold text-slate-900 hover:text-brand-orange">
+                  {block.title}
+                </Link>
+                <p className="mt-2 text-sm text-slate-600">{block.excerpt}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <p className="mt-4 text-sm">
+          <Link href={`/${locale}/knowledge-center/technical-articles`} className="text-brand-orange hover:underline">
+            {locale === "zh" ? "查看全部技术文章" : "View all technical articles"}
+          </Link>
+        </p>
+      </section>
+
       <div className="mt-12">
         <PageCtaStrip locale={locale} />
       </div>

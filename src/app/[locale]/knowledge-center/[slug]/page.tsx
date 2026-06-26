@@ -9,6 +9,7 @@ import { articleJsonLd, breadcrumbListJsonLd, webPageJsonLd } from "@/lib/seo/js
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { PageCtaStrip } from "@/components/layout/page-cta";
 import { ArticleContent } from "@/components/knowledge/article-content";
+import { ArticleInternalLinks } from "@/components/knowledge/article-internal-links";
 import { isAppLocale, type AppLocale } from "@/lib/i18n/locales";
 import { ui } from "@/lib/i18n/ui-messages";
 import { sanitizeLargeSlotImageSrc } from "@/lib/utils/image-slot-guards";
@@ -115,6 +116,7 @@ export default async function LocalizedArticlePage({ params }: Props) {
           </div>
         ) : null}
         <ArticleContent blocks={a.blocks} paragraphs={a.paragraphs} locale={locale} />
+        <ArticleInternalLinks slug={a.slug} locale={locale} />
         <div className="mt-10 rounded-lg border border-slate-200 bg-slate-50 p-6">
           <p className="font-medium text-slate-900">{t.knowledgeNeedSizingTitle}</p>
           <p className="mt-2 text-sm text-slate-600">{t.knowledgeNeedSizingBody}</p>

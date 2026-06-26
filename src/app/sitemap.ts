@@ -1,63 +1,31 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalSiteOrigin } from "@/config/site";
-import { products, applications, articles, caseStudies, industrialShaftGroundingSeoPage, bearingFlutingSeoPage } from "@/data";
+import { products, articles } from "@/data";
 
+/**
+ * English-only sitemap to focus crawl budget on /en URLs.
+ * Paths follow site routing: /en/knowledge-center/news|technical-articles|{slug}
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getCanonicalSiteOrigin();
-  const indexableApplications = applications.filter((application) => application.isIndexable !== false);
 
-  const staticEntries: MetadataRoute.Sitemap = [
-    { url: `${base}/en` },
-    { url: `${base}/zh` },
-    { url: `${base}/en/products` },
-    { url: `${base}/zh/products` },
-    ...products.flatMap((product) => [
-      { url: `${base}/en/products/${product.slug}` },
-      { url: `${base}/zh/products/${product.slug}` },
-    ]),
-    { url: `${base}/en/contact` },
-    { url: `${base}/zh/contact` },
-    { url: `${base}/en/applications` },
-    { url: `${base}/zh/applications` },
-    { url: `${base}/en/case-studies` },
-    { url: `${base}/zh/case-studies` },
-    ...caseStudies.flatMap((c) => [
-      { url: `${base}/en/case-studies/${c.slug}` },
-      { url: `${base}/zh/case-studies/${c.slug}` },
-    ]),
-    ...indexableApplications.flatMap((application) => [
-      { url: `${base}/en/applications/${application.slug}` },
-      { url: `${base}/zh/applications/${application.slug}` },
-    ]),
-    { url: `${base}/en/about-us` },
-    { url: `${base}/zh/about-us` },
-    { url: `${base}/en/faq` },
-    { url: `${base}/zh/faq` },
-    { url: `${base}/en/resources` },
-    { url: `${base}/zh/resources` },
-    { url: `${base}/en${industrialShaftGroundingSeoPage.path}` },
-    { url: `${base}/zh${industrialShaftGroundingSeoPage.path}` },
-    { url: `${base}/en${bearingFlutingSeoPage.path}` },
-    { url: `${base}/zh${bearingFlutingSeoPage.path}` },
-    { url: `${base}/en/knowledge-center` },
-    { url: `${base}/zh/knowledge-center` },
-    { url: `${base}/en/knowledge-center/news` },
-    { url: `${base}/zh/knowledge-center/news` },
-    { url: `${base}/en/knowledge-center/technical-articles` },
-    { url: `${base}/zh/knowledge-center/technical-articles` },
-    { url: `${base}/en/knowledge-center/faq` },
-    { url: `${base}/zh/knowledge-center/faq` },
+  return [
+    { url: `${base}/en`, priority: 1 },
+    { url: `${base}/en/products`, priority: 0.9 },
+    ...products.map((product) => ({
+      url: `${base}/en/products/${product.slug}`,
+      priority: 0.9,
+    })),
+    { url: `${base}/en/knowledge-center`, priority: 0.85 },
+    { url: `${base}/en/knowledge-center/news`, priority: 0.85 },
+    { url: `${base}/en/knowledge-center/technical-articles`, priority: 0.85 },
+    { url: `${base}/en/knowledge-center/faq`, priority: 0.8 },
     ...articles.flatMap((article) => [
       {
         url: `${base}/en/knowledge-center/${article.slug}`,
         lastModified: article.dateModified,
-      },
-      {
-        url: `${base}/zh/knowledge-center/${article.slug}`,
-        lastModified: article.dateModified,
+        priority: article.category === "news" ? 0.85 : 0.8,
       },
     ]),
   ];
-
-  return staticEntries;
 }

@@ -39,6 +39,16 @@ export const HOME_EN_APPLICATION_SLOTS: HomeEnApplicationSlot[] = [
   },
 ];
 
+/** Crawl hub: core product detail pages linked from the English homepage. */
+export const HOME_CRAWL_FEATURED_PRODUCT_SLUGS = [
+  "solid-shaft-grounding-ring",
+  "split-shaft-grounding-ring",
+  "custom-shaft-grounding-ring",
+] as const;
+
+export const HOME_LATEST_NEWS_LIMIT = 5;
+export const HOME_FEATURED_TECHNICAL_LIMIT = 8;
+
 const homeBase = {
   featuredProductSlugs: products.map((p) => p.slug),
   featuredApplicationSlugs: applications.filter((a) => a.phase === "p0").map((a) => a.slug),

@@ -1733,10 +1733,191 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-11",
+    slug: "volsun-award-news-2026",
+    category: "news",
+    datePublished: "2026-06-25T10:00:00.000Z",
+    dateModified: "2026-06-25T10:00:00.000Z",
+    coverImagePublicPath: "/images/news/award-news-2026/award-ceremony-overview.jpg",
+    locales: {
+      en: {
+        title: "Volsun Wins Recognition in VFD Motor Protection Field (Award News 2026)",
+        excerpt:
+          "Volsun's fiber-based high-conductivity shaft grounding ring received the 2026 Electric Drive Innovation Technology Award, recognizing progress in VFD motor bearing protection.",
+        metaDescription:
+          "Volsun's fiber-based shaft grounding ring won the 2026 Electric Drive Innovation Technology Award, supporting VFD motor bearing protection across electric drive applications.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "As electric vehicles, high-speed motors, and advanced electric drive technologies continue to evolve, bearing damage linked to shaft currents remains a critical challenge for motor reliability and service life. Effectively mitigating shaft current-related electrical erosion has become an important focus for manufacturers in new energy vehicles, industrial motors, and high-end equipment.",
+          },
+          {
+            type: "paragraph",
+            text: "Volsun's independently developed fiber-based high-conductivity shaft grounding ring (SGR) was recently honored with the 2026 Electric Drive Innovation Technology Award. The recognition reflects industry confidence in Volsun's continued work on electric drive system protection technologies.",
+          },
+          { type: "heading", text: "Industry Challenge and the Role of Shaft Grounding" },
+          {
+            type: "paragraph",
+            text: "During motor operation, shaft currents can discharge through bearings and contribute to raceway electrical erosion, lubricant degradation, increased noise, and higher maintenance requirements. Providing a stable, low-impedance path for shaft current discharge is commonly reviewed as a practical way to help improve electric drive system reliability.",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft grounding rings are designed to divert harmful currents away from the bearing interface. This approach is widely discussed in VFD motor applications where inverter switching can increase shaft voltage and bearing current risk.",
+          },
+          {
+            type: "image",
+            src: "/images/news/award-news-2026/award-ceremony-overview.jpg",
+            alt: "Volsun receives the 2026 Electric Drive Innovation Technology Award ceremony overview",
+          },
+          { type: "heading", text: "Award-Winning Fiber-Based Shaft Grounding Ring" },
+          {
+            type: "paragraph",
+            text: "Drawing on long-term experience in high-performance polymer materials, Volsun has continued to develop and optimize shaft grounding protection technologies. The award-winning product uses engineered conductive fibers as the core conductive medium, creating a continuous discharge path that can help reduce bearing electrical erosion risk under demanding operating conditions.",
+          },
+          {
+            type: "image",
+            src: "/images/news/award-news-2026/award-product-display.jpg",
+            alt: "Volsun fiber-based high-conductivity shaft grounding ring product display",
+          },
+          { type: "paragraph", text: "Key development areas for the shaft grounding ring include:" },
+          {
+            type: "list",
+            items: [
+              "Stable electrical conductivity through optimized fiber structures for consistent performance over service life",
+              "Long-term durability with improved wear resistance to help reduce maintenance requirements",
+              "Installation flexibility designed to support integration across common motor configurations",
+            ],
+          },
+          { type: "heading", text: "Applications Across Electric Drive Systems" },
+          {
+            type: "paragraph",
+            text: "Volsun shaft grounding solutions are commonly used in electric vehicle drive motors, industrial VFD motors, high-speed motors, rail transit systems, and other electric drive applications where shaft current protection is part of a reliability plan.",
+          },
+          { type: "heading", text: "Industry Recognition and Alliance Participation" },
+          {
+            type: "paragraph",
+            text: "For Volsun, product development is closely tied to understanding customer application challenges and optimizing solutions for real operating conditions. Volsun has also joined the Electric Vehicle Electric Drive System Technology Innovation Strategic Alliance to participate in technical exchange and collaborative industry programs.",
+          },
+          {
+            type: "link",
+            intro: "Related exhibition and technical coverage:",
+            label: "Volsun at EASA 2026 Orlando",
+            href: "/knowledge-center/volsun-at-easa-2026-orlando",
+          },
+          {
+            type: "link",
+            label: "Volsun at 2026 Global XEV Drive System Conference",
+            href: "/knowledge-center/xev-exhibition-2026-report",
+          },
+          {
+            type: "link",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "Awards recognize past progress, but product development continues. Volsun remains focused on new energy vehicles, electric drive systems, and industrial motor applications, expanding its shaft grounding protection portfolio to support safer and more reliable equipment operation worldwide.",
+          },
+        ],
+      },
+      zh: {
+        title: "沃尔兴荣获 VFD 电机防护领域认可（2026 获奖新闻）",
+        excerpt:
+          "沃尔兴纤维基高导电轴接地环荣获 2026 电驱动创新技术奖，体现其在变频电机轴承防护领域的技术进展获得行业认可。",
+        metaDescription:
+          "沃尔兴纤维基轴接地环荣获 2026 电驱动创新技术奖，为变频驱动系统中的电机轴承防护提供轴接地环解决方案，获得行业认可。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "随着电动汽车、高速电机及先进电驱动技术的发展，与轴电流相关的轴承损伤仍是影响电机可靠性与寿命的关键挑战。有效抑制轴电流引起的电蚀，已成为新能源车辆、工业电机及高端装备制造商的重要关注点。",
+          },
+          {
+            type: "paragraph",
+            text: "沃尔兴自主研发的纤维基高导电轴接地环（SGR）近日荣获 2026 电驱动创新技术奖。该认可体现了行业对沃尔兴持续投入电驱动系统防护技术的信心。",
+          },
+          { type: "heading", text: "行业挑战与轴接地的作用" },
+          {
+            type: "paragraph",
+            text: "电机运行过程中，轴电流可能经轴承泄放，导致滚道电蚀、润滑劣化、噪声上升及维护需求增加。提供稳定、低阻抗的轴电流泄放通道，通常被视为有助于提升电驱动系统可靠性的实用手段。",
+          },
+          {
+            type: "paragraph",
+            text: "轴接地环旨在将有害电流从轴承接触面旁路。在变频电机应用中，逆变器开关可能加剧轴电压与轴承电流风险，轴接地方案因此受到广泛讨论。",
+          },
+          {
+            type: "image",
+            src: "/images/news/award-news-2026/award-ceremony-overview.jpg",
+            alt: "沃尔兴荣获 2026 电驱动创新技术奖颁奖现场",
+          },
+          { type: "heading", text: "获奖纤维基轴接地环" },
+          {
+            type: "paragraph",
+            text: "依托高性能聚合物材料领域的长期积累，沃尔兴持续开发并优化轴接地防护技术。获奖产品采用工程化导电纤维作为核心导电介质，形成连续泄放通道，可在苛刻工况下帮助降低轴承电蚀风险。",
+          },
+          {
+            type: "image",
+            src: "/images/news/award-news-2026/award-product-display.jpg",
+            alt: "沃尔兴纤维基高导电轴接地环产品展示",
+          },
+          { type: "paragraph", text: "轴接地环的关键开发方向包括：" },
+          {
+            type: "list",
+            items: [
+              "通过优化纤维结构保持稳定导电性能，支持全寿命周期内的一致表现",
+              "提升耐磨性以延长使用寿命，帮助降低维护需求",
+              "兼顾兼容性与装配效率，支持常见电机结构的灵活集成",
+            ],
+          },
+          { type: "heading", text: "电驱动系统应用场景" },
+          {
+            type: "paragraph",
+            text: "沃尔兴轴接地方案常用于电动汽车驱动电机、工业变频电机、高速电机、轨道交通系统及其他需要将轴电流防护纳入可靠性规划的电驱动应用。",
+          },
+          { type: "heading", text: "行业认可与联盟参与" },
+          {
+            type: "paragraph",
+            text: "对沃尔兴而言，产品开发与客户应用挑战及真实工况优化紧密相关。沃尔兴已加入电动汽车电驱动系统技术创新战略联盟，参与技术交流与协同创新。",
+          },
+          {
+            type: "link",
+            intro: "相关展会与技术内容：",
+            label: "沃尔兴亮相 EASA 2026 奥兰多展",
+            href: "/knowledge-center/volsun-at-easa-2026-orlando",
+          },
+          {
+            type: "link",
+            label: "沃尔兴参加 2026 全球 XEV 电驱动系统大会",
+            href: "/knowledge-center/xev-exhibition-2026-report",
+          },
+          {
+            type: "link",
+            label: "变频电机轴承失效的成因是什么？",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          { type: "heading", text: "结语" },
+          {
+            type: "paragraph",
+            text: "奖项是对过往成果的认可，产品研发仍将持续推进。沃尔兴将继续聚焦新能源汽车、电驱动系统及工业电机应用，扩展轴接地防护产品组合，以支持全球客户更安全、更可靠的设备运行。",
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getArticlesByCategory(category: ArticleCategory): ArticleRecord[] {
   return articles.filter((a) => a.category === category);
+}
+
+export function getLatestArticlesByCategory(category: ArticleCategory, limit: number): ArticleRecord[] {
+  return articles
+    .filter((a) => a.category === category)
+    .sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime())
+    .slice(0, limit);
 }
 
 export function getArticleRecordBySlug(slug: string) {

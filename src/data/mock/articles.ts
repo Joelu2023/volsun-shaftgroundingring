@@ -1907,6 +1907,174 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-12",
+    slug: "motor-china-2026-shaft-grounding-ring-exhibition",
+    category: "news",
+    datePublished: "2026-06-26T08:00:00.000Z",
+    dateModified: "2026-06-26T08:00:00.000Z",
+    coverImagePublicPath: "/images/news/motor-china-2026/motor-china-2026-volsun-booth.png",
+    locales: {
+      en: {
+        title: "Volsun to Exhibit at MOTOR CHINA 2026 | Shaft Grounding Ring Solutions for VFD Motor Protection",
+        excerpt:
+          "Volsun will exhibit shaft grounding ring and motor protection material solutions at MOTOR CHINA 2026, Hall E7 Booth H875, for VFD motor bearing protection and electric drive reliability.",
+        metaDescription:
+          "Meet Volsun at MOTOR CHINA 2026 for shaft grounding ring solutions that help protect VFD motor bearings. Visit Hall E7 Booth H875 for application support.",
+        paragraphs: [],
+        blocks: [
+          { type: "heading", text: "Exhibition Introduction" },
+          {
+            type: "paragraph",
+            text: "MOTOR CHINA 2026 brings together engineers, OEMs, motor manufacturers, and Tier-1 suppliers to review electric motor technology, materials, and reliability strategies. As electric drive systems become more powerful and compact, material selection for conductive, insulation, and protective functions is increasingly treated as a core design decision rather than a secondary specification.",
+          },
+          {
+            type: "paragraph",
+            text: "Volsun will participate in the exhibition to present advanced material solutions for electric motors, with a focus on shaft grounding rings and related protection technologies for inverter-fed applications.",
+          },
+          { type: "heading", text: "Volsun Booth Display" },
+          {
+            type: "paragraph",
+            text: "Visit Volsun at Hall E7, Booth H875 to review product samples, discuss application requirements, and explore how material systems can support safer and longer-lasting electric drive applications.",
+          },
+          {
+            type: "image",
+            src: "/images/news/motor-china-2026/motor-china-2026-volsun-booth.png",
+            alt: "Volsun booth display at MOTOR CHINA 2026 for shaft grounding ring and motor protection solutions",
+          },
+          { type: "heading", text: "Shaft Grounding Ring Product Overview" },
+          {
+            type: "paragraph",
+            text: "Shaft grounding rings are designed to provide a controlled low-impedance path for shaft currents, helping divert electrical discharge away from motor bearings. Volsun shaft grounding solutions use engineered conductive fiber contact to support consistent performance in industrial and electric drive motor programs.",
+          },
+          {
+            type: "image",
+            src: "/images/news/motor-china-2026/motor-china-2026-shaft-grounding-ring.jpg",
+            alt: "Volsun shaft grounding ring product for VFD motor bearing protection at MOTOR CHINA 2026",
+          },
+          { type: "heading", text: "VFD Motor Bearing Protection Applications" },
+          {
+            type: "paragraph",
+            text: "In VFD-driven motors, high-frequency inverter switching can contribute to shaft voltage buildup and bearing current discharge. Without a controlled grounding path, repeated micro-discharges may lead to raceway pitting, fluting, increased vibration, and premature bearing replacement.",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft grounding rings are commonly reviewed alongside insulation and thermal management materials as part of a broader motor protection plan for pumps, compressors, industrial automation drives, EV traction systems, and other inverter-duty equipment.",
+          },
+          { type: "heading", text: "Exhibition Invitation" },
+          {
+            type: "paragraph",
+            text: "Volsun invites motor engineers, maintenance teams, and procurement specialists to visit Hall E7, Booth H875 during MOTOR CHINA 2026. Our team can review shaft diameter inputs, installation constraints, and VFD motor bearing protection requirements for your application.",
+          },
+          {
+            type: "image",
+            src: "/images/news/motor-china-2026/motor-china-2026-invitation-banner.jpg",
+            alt: "MOTOR CHINA 2026 invitation to visit Volsun at Hall E7 Booth H875",
+          },
+          {
+            type: "link",
+            intro: "Related news and technical resources:",
+            label: "Volsun at EASA 2026 Orlando",
+            href: "/knowledge-center/volsun-at-easa-2026-orlando",
+          },
+          {
+            type: "link",
+            label: "Volsun at 2026 Global XEV Drive System Conference",
+            href: "/knowledge-center/xev-exhibition-2026-report",
+          },
+          {
+            type: "link",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "Reliable electric motors depend on the right combination of conductive, insulation, and protective materials working together under real operating conditions. At MOTOR CHINA 2026, Volsun looks forward to meeting industry partners and discussing shaft grounding ring solutions that can support VFD motor bearing protection and long-term drive system reliability.",
+          },
+        ],
+      },
+      zh: {
+        title: "沃尔兴将亮相 MOTOR CHINA 2026 | 轴接地环与变频电机轴承防护方案",
+        excerpt:
+          "沃尔兴将在 MOTOR CHINA 2026 E7 馆 H875 展位展示轴接地环及电机防护材料方案，面向变频电机轴承防护与电驱动可靠性需求。",
+        metaDescription:
+          "沃尔兴亮相 MOTOR CHINA 2026，展示面向变频电机轴承防护的轴接地环方案。欢迎莅临 E7 馆 H875 展位，了解电机材料防护与电驱动可靠性解决方案。",
+        paragraphs: [],
+        blocks: [
+          { type: "heading", text: "展会介绍" },
+          {
+            type: "paragraph",
+            text: "MOTOR CHINA 2026 汇聚电机工程师、OEM、整机厂与 Tier-1 供应商，共议电机技术、材料体系与可靠性策略。随着电驱动系统功率密度提升与结构紧凑化，导电、绝缘与防护材料的选型越来越被视为核心设计环节，而非次要规格参数。",
+          },
+          {
+            type: "paragraph",
+            text: "沃尔兴将参展展示面向电机的高级材料解决方案，重点包括轴接地环及适用于逆变器工况的防护技术。",
+          },
+          { type: "heading", text: "沃尔兴展位展示" },
+          {
+            type: "paragraph",
+            text: "欢迎莅临 E7 馆 H875 展位，查看产品样件、交流应用需求，并探讨材料体系如何支持更安全、更长寿命的电驱动应用。",
+          },
+          {
+            type: "image",
+            src: "/images/news/motor-china-2026/motor-china-2026-volsun-booth.png",
+            alt: "MOTOR CHINA 2026 沃尔兴展位——轴接地环与电机防护方案展示",
+          },
+          { type: "heading", text: "轴接地环产品介绍" },
+          {
+            type: "paragraph",
+            text: "轴接地环旨在为轴电流提供受控低阻抗通道，帮助将电蚀放电从电机轴承旁路。沃尔兴轴接地方案采用工程化导电纤维接触设计，以支持工业及电驱动电机项目中的一致表现。",
+          },
+          {
+            type: "image",
+            src: "/images/news/motor-china-2026/motor-china-2026-shaft-grounding-ring.jpg",
+            alt: "MOTOR CHINA 2026 沃尔兴轴接地环产品——变频电机轴承防护",
+          },
+          { type: "heading", text: "变频电机轴承防护应用说明" },
+          {
+            type: "paragraph",
+            text: "在变频驱动电机中，逆变器高频开关可能加剧轴电压积累与轴承电流泄放。若缺乏可控接地路径，反复微观放电可能导致滚道点蚀、搓板纹、振动增大及轴承过早更换。",
+          },
+          {
+            type: "paragraph",
+            text: "轴接地环通常与绝缘及热管理材料一并纳入更广泛的电机防护规划，适用于泵类、压缩机、工业自动化驱动、电动汽车牵引系统及其他变频工况设备。",
+          },
+          { type: "heading", text: "展会邀请" },
+          {
+            type: "paragraph",
+            text: "沃尔兴诚邀电机工程师、维护团队及采购人员于 MOTOR CHINA 2026 期间莅临 E7 馆 H875 展位。团队可协助复核轴径、安装约束及变频电机轴承防护需求。",
+          },
+          {
+            type: "image",
+            src: "/images/news/motor-china-2026/motor-china-2026-invitation-banner.jpg",
+            alt: "MOTOR CHINA 2026 邀请莅临沃尔兴 E7 馆 H875 展位",
+          },
+          {
+            type: "link",
+            intro: "相关新闻与技术资料：",
+            label: "沃尔兴亮相 EASA 2026 奥兰多展",
+            href: "/knowledge-center/volsun-at-easa-2026-orlando",
+          },
+          {
+            type: "link",
+            label: "沃尔兴参加 2026 全球 XEV 电驱动系统大会",
+            href: "/knowledge-center/xev-exhibition-2026-report",
+          },
+          {
+            type: "link",
+            label: "变频电机轴承失效的成因是什么？",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          { type: "heading", text: "总结" },
+          {
+            type: "paragraph",
+            text: "可靠电机运行依赖导电、绝缘与防护材料在真实工况下的协同配合。沃尔兴期待在 MOTOR CHINA 2026 与行业伙伴会面，共同探讨可支持变频电机轴承防护与电驱动长期可靠性的轴接地环方案。",
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getArticlesByCategory(category: ArticleCategory): ArticleRecord[] {

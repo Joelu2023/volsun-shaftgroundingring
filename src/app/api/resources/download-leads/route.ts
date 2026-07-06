@@ -107,8 +107,9 @@ export async function POST(request: Request) {
   const pipelineResult = await submitLeadViaInquiryPipeline(inquiryPayload);
   console.info("[download-leads] CRM inquiry pipeline result", {
     requestId: pipelineResult.requestId,
-    delivery: pipelineResult.delivery,
-    emailStatus: pipelineResult.emailStatus,
+    delivered: pipelineResult.delivered,
+    devPersisted: pipelineResult.devPersisted,
+    error: pipelineResult.error,
   });
 
   // ── 3. 原下载流程

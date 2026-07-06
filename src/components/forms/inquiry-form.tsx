@@ -37,8 +37,10 @@ const FORM_COPY = {
     labelMessage: "Message",
     submit: "Submit inquiry",
     submitting: "Submitting...",
-    successTitle: "Thank you. Your inquiry was received.",
+    successTitle: "Thank you. Your inquiry has been sent successfully.",
     successBody: "We will respond within 24 hours. If you need urgent attention, add WhatsApp in the next message.",
+    devSuccessTitle: "Inquiry saved locally for development testing only.",
+    devSuccessBody: "SMTP delivery was skipped in development mode. Do not treat this as a production lead delivery.",
     errName: "Name is required.",
     errCompany: "Company is required.",
     errEmail: "Email is required.",
@@ -56,9 +58,9 @@ const FORM_COPY = {
     apiSmtpMissing: (m: string) =>
       `Email delivery is not configured on the server. Missing: ${m}. Please contact us at ${publicContact.email} until this is resolved.`,
     apiSmtp:
-      `Email delivery is not configured on the server. Please contact us at ${publicContact.email} until this is resolved.`,
+      `Sorry, your inquiry could not be sent. Please email us directly at ${publicContact.email} or try again later.`,
     apiDelivery:
-      `We could not deliver your inquiry by email. Please try again shortly or email us directly at ${publicContact.email}.`,
+      `Sorry, your inquiry could not be sent. Please email us directly at ${publicContact.email} or try again later.`,
     apiDefault: `Submission failed. Please try again or email us directly at ${publicContact.email} from your mail client.`,
   },
   zh: {
@@ -84,8 +86,10 @@ const FORM_COPY = {
     labelMessage: "留言",
     submit: "提交询盘",
     submitting: "提交中...",
-    successTitle: "已收到您的询盘，谢谢。",
+    successTitle: "您的询盘已成功发送，谢谢。",
     successBody: "我们将在 24 小时内回复。如需加急，可在后续消息中留下 WhatsApp。",
+    devSuccessTitle: "询盘已仅在本地开发环境保存。",
+    devSuccessBody: "当前为开发模式，未通过 SMTP 发送邮件，请勿视为生产环境线索已送达。",
     errName: "请填写姓名。",
     errCompany: "请填写公司。",
     errEmail: "请填写邮箱。",
@@ -102,8 +106,8 @@ const FORM_COPY = {
     apiPayload: "部分字段未通过校验，请检查后重试。",
     apiSmtpMissing: (m: string) =>
       `服务器邮件配置不完整，缺少：${m}。修复前请直接发送邮件至 ${publicContact.email} 联系我们。`,
-    apiSmtp: `服务器邮件未配置完成，修复前请直接发送邮件至 ${publicContact.email} 联系我们。`,
-    apiDelivery: `邮件发送失败，请稍后重试，或直接发送邮件至 ${publicContact.email} 联系我们。`,
+    apiSmtp: `抱歉，询盘未能发送。请直接发送邮件至 ${publicContact.email}，或稍后重试。`,
+    apiDelivery: `抱歉，询盘未能发送。请直接发送邮件至 ${publicContact.email}，或稍后重试。`,
     apiDefault: `提交失败，请重试，或改用邮件客户端直接发送至 ${publicContact.email}。`,
   },
 } as const;
@@ -147,7 +151,7 @@ export function InquiryForm({
   const c = FORM_COPY[locale];
   const typeOptions = getInquiryTypeOptions(locale);
   const [inquiryType, setInquiryType] = useState<InquiryType>(defaultInquiryType);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "dev-success" | "error">("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const successRef = useRef<HTMLDivElement>(null);
@@ -240,9 +244,16 @@ export function InquiryForm({
         body: JSON.stringify(payload),
       });
 
-      let data: { ok?: boolean; error?: string; missing?: string[] } = {};
+      let data: {
+        ok?: boolean;
+        delivered?: boolean;
+        devPersisted?: boolean;
+        message?: string;
+        error?: string;
+        missing?: string[];
+      } = {};
       try {
-        data = (await res.json()) as { ok?: boolean; error?: string; missing?: string[] };
+        data = (await res.json()) as typeof data;
       } catch {
         data = {};
       }
@@ -250,6 +261,25 @@ export function InquiryForm({
       if (!res.ok || !data.ok) {
         setStatus("error");
         setSubmitError(messageForApiError(c, data.error, data.missing));
+        trackEvent("inquiry_submit_failed", {
+          page_source: pageSource,
+          cta_source: ctaSource,
+          inquiry_type: payload.inquiry_type,
+          product_interest: payload.product_interest ?? "",
+          application_interest: payload.application_interest ?? "",
+        });
+        return;
+      }
+
+      if (!data.delivered) {
+        if (data.devPersisted) {
+          setStatus("dev-success");
+          setFieldErrors({});
+          form.reset();
+          return;
+        }
+        setStatus("error");
+        setSubmitError(messageForApiError(c, "Inquiry delivery failed"));
         trackEvent("inquiry_submit_failed", {
           page_source: pageSource,
           cta_source: ctaSource,
@@ -343,6 +373,12 @@ export function InquiryForm({
               <p className="mt-1">{c.successBody}</p>
             </div>
           )}
+          {status === "dev-success" && (
+            <div className="rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900" role="status">
+              <p className="font-medium">{c.devSuccessTitle}</p>
+              <p className="mt-1">{c.devSuccessBody}</p>
+            </div>
+          )}
         </div>
 
         {status === "error" && submitError && (
@@ -429,6 +465,12 @@ export function InquiryForm({
             <p className="mt-1">{c.successBody}</p>
           </div>
         )}
+        {status === "dev-success" && (
+          <div className="rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900" role="status">
+            <p className="font-medium">{c.devSuccessTitle}</p>
+            <p className="mt-1">{c.devSuccessBody}</p>
+          </div>
+        )}
       </div>
 
       {status === "error" && submitError && (
@@ -507,11 +549,13 @@ function messageForApiError(c: FormCopy, code: string | undefined, missing?: str
       return c.apiMissing;
     case "invalid_inquiry_payload":
       return c.apiPayload;
+    case "Inquiry delivery is not configured":
     case "smtp_config_incomplete":
       if (missing && missing.length > 0) {
         return c.apiSmtpMissing(missing.join(", "));
       }
       return c.apiSmtp;
+    case "Inquiry delivery failed":
     case "email_delivery_failed":
       return c.apiDelivery;
     default:

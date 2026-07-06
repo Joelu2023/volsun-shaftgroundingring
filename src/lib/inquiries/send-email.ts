@@ -1,25 +1,36 @@
 import nodemailer from "nodemailer";
 import type { InquirySubmission } from "@/types/inquiry";
 
-const REQUIRED_ENV = [
-  "SMTP_HOST",
-  "SMTP_PORT",
-  "SMTP_USER",
-  "SMTP_PASS",
-  "INQUIRY_EMAIL_TO",
-  "INQUIRY_EMAIL_FROM",
-] as const;
+const REQUIRED_ENV = ["SMTP_HOST", "SMTP_PORT", "SMTP_USER", "SMTP_PASS"] as const;
 
-/** 返回缺失的环境变量名（未配置时用于 503 响应，不静默失败） */
+function readEnv(...keys: string[]): string {
+  for (const key of keys) {
+    const value = process.env[key]?.trim();
+    if (value) return value;
+  }
+  return "";
+}
+
+export function getInquiryToEmail(): string {
+  return readEnv("INQUIRY_EMAIL_TO", "INQUIRY_TO_EMAIL");
+}
+
+export function getInquiryFromEmail(): string {
+  return readEnv("INQUIRY_EMAIL_FROM", "INQUIRY_FROM_EMAIL");
+}
+
+/** Returns missing environment variable names (used at request time, not build time). */
 export function getMissingSmtpEnv(): string[] {
   const missing: string[] = [];
   for (const key of REQUIRED_ENV) {
-    const v = process.env[key];
-    if (typeof v !== "string" || v.trim() === "") {
+    const value = process.env[key];
+    if (typeof value !== "string" || value.trim() === "") {
       missing.push(key);
     }
   }
-  return missing;
+  if (!getInquiryToEmail()) missing.push("INQUIRY_EMAIL_TO");
+  if (!getInquiryFromEmail()) missing.push("INQUIRY_EMAIL_FROM");
+  return [...new Set(missing)];
 }
 
 function buildSummary(data: InquirySubmission): string {
@@ -84,8 +95,8 @@ ${JSON.stringify(data, null, 2)}
 `;
 
   await transporter.sendMail({
-    from: process.env.INQUIRY_EMAIL_FROM,
-    to: process.env.INQUIRY_EMAIL_TO,
+    from: getInquiryFromEmail(),
+    to: getInquiryToEmail(),
     subject,
     text,
   });

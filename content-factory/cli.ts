@@ -16,7 +16,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parseDocx } from "./docx-parser";
 import { buildArticle } from "./builder";
-import { countZhTodos, publishArticle, summarize } from "./publisher";
+import { countZhTodos, publishArticle, summarize, DirtyWorktreeError } from "./publisher";
 import { QualityGateBlockedError } from "./governance";
 import { autoPublishInbox, startWatcher } from "./watcher";
 import { loadGscConfig } from "./gsc-client";
@@ -165,30 +165,49 @@ async function cmdPublish(args: string[]): Promise<void> {
         console.error("Dry run blocked — fix governance errors before publishing.");
         process.exit(1);
       }
+      if (err instanceof DirtyWorktreeError) {
+        console.error("");
+        console.error("Dry run blocked — unexpected dirty worktree.");
+        for (const f of err.dirtyFiles) console.error(`  ${f}`);
+        process.exit(1);
+      }
       throw err;
     }
     return;
   }
 
   console.log("Injecting article into src/data/mock/articles.ts ...");
-  const outcome = publishArticle(draft.record, draft.meta.sourceDocx, {
-    ...publishOpts,
-    dryRun: false,
-  });
+  try {
+    const outcome = publishArticle(draft.record, draft.meta.sourceDocx, {
+      ...publishOpts,
+      dryRun: false,
+    });
 
-  fs.mkdirSync(PUBLISHED, { recursive: true });
-  fs.renameSync(draftPath, path.join(PUBLISHED, `${slug}.json`));
+    fs.mkdirSync(PUBLISHED, { recursive: true });
+    fs.renameSync(draftPath, path.join(PUBLISHED, `${slug}.json`));
 
-  const s = summarize(draft.record);
-  console.log("");
-  console.log("Published");
-  console.log(`  slug:           ${s.slug}`);
-  console.log(`  EN URL:         ${s.enUrl}`);
-  console.log(`  ZH URL:         ${s.zhUrl}`);
-  console.log(`  production:     ${s.productionUrl}`);
-  console.log(`  sitemap:        +1 entry → ${s.sitemapEntry}`);
-  console.log(`  commit:         ${outcome.commit}`);
-  console.log(`  pushed:         ${outcome.pushed ? "yes (Vercel will auto-deploy)" : "no"}`);
+    const s = summarize(draft.record);
+    console.log("");
+    console.log("Published");
+    console.log(`  slug:           ${s.slug}`);
+    console.log(`  EN URL:         ${s.enUrl}`);
+    console.log(`  ZH URL:         ${s.zhUrl}`);
+    console.log(`  production:     ${s.productionUrl}`);
+    console.log(`  sitemap:        +1 entry → ${s.sitemapEntry}`);
+    console.log(`  commit:         ${outcome.commit}`);
+    console.log(`  pushed:         ${outcome.pushed ? "yes (Vercel will auto-deploy)" : "no"}`);
+  } catch (err) {
+    if (err instanceof DirtyWorktreeError) {
+      console.error("");
+      console.error("Publish blocked — git worktree is not clean.");
+      for (const f of err.dirtyFiles) console.error(`  ${f}`);
+      console.error("");
+      console.error("Commit, stash, or clean unrelated changes before publishing with git.");
+      console.error("Or use --no-git to publish locally without committing.");
+      process.exit(1);
+    }
+    throw err;
+  }
 }
 
 function pipelineFlags(args: string[]) {

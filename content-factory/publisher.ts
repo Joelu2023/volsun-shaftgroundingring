@@ -71,14 +71,65 @@ export function runBuild(): void {
   run("npm run build");
 }
 
-export type GitResult = { commit: string; pushed: boolean };
+export type GitResult = { commit: string; pushed: boolean; scopedPaths: string[] };
 
-export function gitPublish(slug: string, push: boolean): GitResult {
-  run("git add .");
+export class DirtyWorktreeError extends Error {
+  readonly dirtyFiles: string[];
+
+  constructor(dirtyFiles: string[]) {
+    super(
+      "Git worktree is not clean — publish aborted before any file changes.\n" +
+        dirtyFiles.map((f) => `  ${f}`).join("\n"),
+    );
+    this.name = "DirtyWorktreeError";
+    this.dirtyFiles = dirtyFiles;
+  }
+}
+
+function gitPath(rel: string): string {
+  return rel.replace(/\\/g, "/");
+}
+
+export function getDirtyWorktreeFiles(): string[] {
+  const porcelain = run("git status --porcelain", { quiet: true }).trim();
+  if (!porcelain) return [];
+  return porcelain.split(/\r?\n/).filter(Boolean);
+}
+
+export function assertCleanWorktree(): void {
+  const dirty = getDirtyWorktreeFiles();
+  if (dirty.length) throw new DirtyWorktreeError(dirty);
+}
+
+/** Paths allowed in a factory publish commit (explicit allowlist). */
+export function getScopedPublishPaths(record: ArticleRecord): string[] {
+  const bucket = record.category === "news" ? "news" : "articles";
+  return [`src/data/mock/articles.ts`, `public/images/${bucket}/${record.slug}/`];
+}
+
+function scopedGitAdd(paths: string[]): void {
+  for (const rel of paths) {
+    const abs = path.join(ROOT, rel);
+    if (!fs.existsSync(abs)) continue;
+    run(`git add -- ${gitPath(rel)}`);
+  }
+}
+
+export function logScopedGitPaths(paths: string[]): void {
+  console.log("");
+  console.log("Manual git add (scoped paths only):");
+  for (const rel of paths) console.log(`  git add -- ${gitPath(rel)}`);
+  console.log("");
+  console.log("Do not git add content/inbox/, content-factory/drafts/, content-factory/reports/, or .env files.");
+}
+
+export function gitPublish(slug: string, record: ArticleRecord, push: boolean): GitResult {
+  const scopedPaths = getScopedPublishPaths(record);
+  scopedGitAdd(scopedPaths);
   run(`git commit -m "feat: auto publish ${slug} (content-factory v2)"`);
   const commit = run("git rev-parse --short HEAD", { quiet: true }).trim();
   if (push) run("git push origin main");
-  return { commit, pushed: push };
+  return { commit, pushed: push, scopedPaths };
 }
 
 export type PublishSummary = {
@@ -187,8 +238,12 @@ export function logPublishDryRunReport(
   console.log("Planned actions (if not dry-run)");
   console.log(`  inject article:  yes → src/data/mock/articles.ts (${summary.slug})`);
   console.log(`  run build:       ${opts.skipBuild ? "no (--skip-build)" : "yes (npm run build)"}`);
-  console.log(`  git commit:      ${opts.noGit ? "no (--no-git)" : "yes"}`);
-  console.log(`  git push:        ${opts.noGit || opts.noPush ? "no" : "yes (origin main)"}`);
+  if (opts.dryRun) {
+    console.log(`  git:             will not execute (dry-run)`);
+  } else {
+    console.log(`  git commit:      ${opts.noGit ? "no (--no-git)" : "yes (scoped paths only)"}`);
+    console.log(`  git push:        ${opts.noGit || opts.noPush ? "no" : "yes (origin main)"}`);
+  }
   console.log(`  archive inbox:   yes → content/inbox/archive/${summary.slug}/`);
 
   console.log("");
@@ -234,16 +289,26 @@ export function publishArticle(
     throw new QualityGateBlockedError(governance);
   }
 
+  if (!opts.noGit) {
+    assertCleanWorktree();
+  }
+
   injectArticle(record);
 
   if (!opts.skipBuild) runBuild();
 
   let commit = "(not committed)";
   let pushed = false;
+  const scopedPaths = getScopedPublishPaths(record);
   if (!opts.noGit) {
-    const res = gitPublish(record.slug, !opts.noPush);
+    const res = gitPublish(record.slug, record, !opts.noPush);
     commit = res.commit;
     pushed = res.pushed;
+    console.log("");
+    console.log("Git commit (scoped paths):");
+    for (const rel of res.scopedPaths) console.log(`  + ${gitPath(rel)}`);
+  } else {
+    logScopedGitPaths(scopedPaths);
   }
 
   archiveInbox(record.slug, sourceDocx);

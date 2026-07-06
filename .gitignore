@@ -32,3 +32,17 @@ Thumbs.db
 # local staging / site review (keep on disk, not tracked)
 _incoming-images/
 docs/site-review-2026-05/
+
+# content-factory runtime artifacts (keep sources tracked)
+content/inbox/*
+!content/inbox/.gitkeep
+!content/inbox/images/
+content/inbox/images/*
+!content/inbox/images/.gitkeep
+content/inbox/archive/
+
+content-factory/drafts/*
+!content-factory/drafts/.gitkeep
+content-factory/drafts/published/
+
+content-factory/reports/*.json

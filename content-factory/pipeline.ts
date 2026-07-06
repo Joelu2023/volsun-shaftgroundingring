@@ -4,7 +4,7 @@
 import path from "node:path";
 import { parseDocx } from "./docx-parser";
 import { buildArticle } from "./builder";
-import { publishArticle } from "./publisher";
+import { DirtyWorktreeError, publishArticle } from "./publisher";
 import { QualityGateBlockedError } from "./governance";
 import type { PipelineOptions, PipelineResult } from "./types";
 
@@ -92,6 +92,12 @@ export async function runPipeline(docxPath: string, opts: PipelineOptions = {}):
       }
       console.error("");
       console.error("Fix issues above, or use --skip-governance to bypass (not recommended).");
+    } else if (err instanceof DirtyWorktreeError) {
+      console.error("");
+      console.error("Publish blocked — git worktree is not clean.");
+      for (const f of err.dirtyFiles) console.error(`  ${f}`);
+      console.error("");
+      console.error("Commit, stash, or clean unrelated changes before publishing with git.");
     }
     throw err;
   }

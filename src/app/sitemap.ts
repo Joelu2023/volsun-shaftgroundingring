@@ -1,30 +1,38 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalSiteOrigin } from "@/config/site";
 import { products, articles } from "@/data";
+import { calculateScore } from "../../content-factory/scoring-engine";
+import {
+  getCrawlPriority,
+  knowledgeCenterListPriority,
+} from "../../content-factory/crawl-priority";
 
 /**
  * English-only sitemap to focus crawl budget on /en URLs.
- * Paths follow site routing: /en/knowledge-center/news|technical-articles|{slug}
+ * Priority scores from content-factory/crawl-priority.ts (Governance Layer).
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getCanonicalSiteOrigin();
 
   return [
-    { url: `${base}/en`, priority: 1 },
-    { url: `${base}/en/products`, priority: 0.9 },
+    { url: `${base}/en`, priority: getCrawlPriority("homepage") },
+    { url: `${base}/en/products`, priority: getCrawlPriority("products-list") },
     ...products.map((product) => ({
       url: `${base}/en/products/${product.slug}`,
-      priority: 0.9,
+      priority: getCrawlPriority("product"),
     })),
-    { url: `${base}/en/knowledge-center`, priority: 0.85 },
-    { url: `${base}/en/knowledge-center/news`, priority: 0.85 },
-    { url: `${base}/en/knowledge-center/technical-articles`, priority: 0.85 },
-    { url: `${base}/en/knowledge-center/faq`, priority: 0.8 },
+    { url: `${base}/en/knowledge-center`, priority: getCrawlPriority("knowledge-center") },
+    { url: `${base}/en/knowledge-center/news`, priority: knowledgeCenterListPriority("news") },
+    {
+      url: `${base}/en/knowledge-center/technical-articles`,
+      priority: knowledgeCenterListPriority("technical-articles"),
+    },
+    { url: `${base}/en/knowledge-center/faq`, priority: knowledgeCenterListPriority("faq") },
     ...articles.flatMap((article) => [
       {
         url: `${base}/en/knowledge-center/${article.slug}`,
         lastModified: article.dateModified,
-        priority: article.category === "news" ? 0.85 : 0.8,
+        priority: calculateScore(article).decision.normalizedPriority,
       },
     ]),
   ];

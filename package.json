@@ -6,7 +6,13 @@
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings=0"
+    "lint": "eslint . --max-warnings=0",
+    "factory": "tsx content-factory/cli.ts",
+    "factory:draft": "tsx content-factory/cli.ts draft",
+    "factory:publish": "tsx content-factory/cli.ts publish",
+    "factory:report": "tsx content-factory/cli.ts report",
+    "factory:auto": "tsx content-factory/cli.ts auto",
+    "factory:watch": "tsx content-factory/cli.ts watch"
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^3.0.1",
@@ -29,6 +35,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^9.16.0",
     "eslint-config-next": "^15.1.0",
+    "mammoth": "^1.12.0",
     "pg": "^8.20.0",
     "postcss": "^8.4.49",
     "prisma": "^7.7.0",

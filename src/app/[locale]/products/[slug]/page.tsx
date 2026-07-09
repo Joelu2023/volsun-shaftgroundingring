@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getProductForLocale, products } from "@/data";
+import { getArticleRecordBySlug, getProductForLocale, products } from "@/data";
+import { ArticleListSection } from "@/components/knowledge/article-list-section";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbListJsonLd, productJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
@@ -17,6 +18,7 @@ import { getPublishedResourcesForProductDetailPage } from "@/lib/resource-center
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
 const CONFIRM_MARKER = "[TO BE CONFIRMED]";
+const SOLID_RING_RELATED_ARTICLE_SLUG = "why-vfd-motors-need-shaft-grounding-rings";
 
 function isPublishableText(value: string | null | undefined): value is string {
   return typeof value === "string" && !value.includes(CONFIRM_MARKER);
@@ -69,6 +71,10 @@ export default async function LocalizedProductDetailPage({ params }: Props) {
     (row) => isPublishableText(row.question) && isPublishableText(row.answer),
   );
   const linkedResources = await getPublishedResourcesForProductDetailPage(product.slug, locale, ["catalog", "datasheet"]);
+  const relatedTechnicalArticle =
+    locale === "en" && product.slug === "solid-shaft-grounding-ring"
+      ? getArticleRecordBySlug(SOLID_RING_RELATED_ARTICLE_SLUG)
+      : null;
 
   const jsonLd = [
     webPageJsonLd({ name: product.name, description: product.metaDescription, path: `/products/${product.slug}`, locale }),
@@ -252,6 +258,15 @@ export default async function LocalizedProductDetailPage({ params }: Props) {
               </div>
             ))}
           </dl>
+        </section>
+      ) : null}
+
+      {relatedTechnicalArticle ? (
+        <section className="mt-10" aria-labelledby="related-technical-articles-heading">
+          <h2 id="related-technical-articles-heading" className="text-xl font-semibold text-brand-blue">
+            Related Technical Articles
+          </h2>
+          <ArticleListSection locale={locale} items={[relatedTechnicalArticle]} emptyMessage="" />
         </section>
       ) : null}
 

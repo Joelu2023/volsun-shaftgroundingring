@@ -2373,6 +2373,650 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-14",
+    slug: "why-vfd-motors-need-shaft-grounding-rings",
+    category: "technical-articles",
+    datePublished: "2026-07-09T03:24:51.211Z",
+    dateModified: "2026-07-09T03:24:51.211Z",
+    coverImagePublicPath: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/01-vfd-motor-bearing-failure-mechanism.webp",
+    locales: {
+      en: {
+        title: "Why VFD Motors Need Shaft Grounding Rings to Prevent Bearing Failure",
+        excerpt: "VFD-driven motors can develop shaft voltage and bearing current that lead to EDM damage and premature bearing failure. Learn how shaft grounding rings help protect motor bearings in industrial applications.",
+        metaDescription: "Learn why VFD-driven motors need shaft grounding rings to prevent bearing current, EDM damage, bearing fluting and premature motor failure.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Variable frequency drives, commonly known as VFDs, have become essential in modern industrial motor systems. They help improve energy efficiency, enable precise speed control, and support automation across pumps, fans, compressors, conveyors, machine tools, HVAC systems, and many other industrial applications.",
+          },
+          {
+            type: "paragraph",
+            text: "However, as VFD usage increases, many motor manufacturers, maintenance teams, and industrial users face a recurring problem: why do motor bearings fail earlier than expected after a VFD is installed?",
+          },
+          {
+            type: "paragraph",
+            text: "One important cause is electrical bearing damage. In VFD-driven motors, high-frequency switching can create shaft voltage. When this voltage discharges through the motor bearings, it can cause electrical discharge machining, also known as EDM. Over time, this may lead to bearing pitting, fluting, lubricant degradation, abnormal noise, vibration, and premature motor failure.",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring provides a practical way to reduce this risk by creating a low-resistance path for shaft current. Instead of allowing harmful current to pass through the bearings, the shaft grounding ring helps discharge the current safely to ground.",
+          },
+          {
+            type: "paragraph",
+            text: "For industrial motors operating with VFDs, shaft grounding is not just an optional accessory. It is becoming an important part of motor reliability design.",
+          },
+          {
+            type: "heading",
+            text: "1. Why VFD-Driven Motors Face Bearing Current Problems",
+          },
+          {
+            type: "paragraph",
+            text: "Traditional fixed-speed motors are connected directly to the power supply. In these systems, bearing current problems may still occur, especially in large motors, but the risk is often lower and more predictable.",
+          },
+          {
+            type: "paragraph",
+            text: "VFD-driven motors operate differently. A VFD controls motor speed by converting fixed-frequency AC power into variable-frequency output. This process uses high-speed switching devices to generate pulse-width modulation, or PWM, voltage waveforms.",
+          },
+          {
+            type: "paragraph",
+            text: "While this control method improves efficiency and flexibility, it also introduces high-frequency electrical effects inside the motor system.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/01-vfd-motor-bearing-failure-mechanism.webp",
+            alt: "VFD motor bearing failure mechanism caused by shaft voltage and bearing current",
+          },
+          {
+            type: "paragraph",
+            text: "These effects may include common-mode voltage, shaft voltage, high-frequency circulating current, bearing discharge current, electromagnetic interference, and insulation stress.",
+          },
+          {
+            type: "paragraph",
+            text: "When shaft voltage builds up to a certain level, the bearing lubricant film may no longer act as an effective insulating barrier. The voltage can then discharge through the bearing. Each discharge event creates a microscopic electrical arc.",
+          },
+          {
+            type: "paragraph",
+            text: "This arc can damage the bearing surface. Although the damage may be very small at first, repeated discharge over time can create visible wear patterns and serious reliability problems.",
+          },
+          {
+            type: "heading",
+            text: "2. What Is Electrical Discharge Machining Damage?",
+          },
+          {
+            type: "paragraph",
+            text: "Electrical discharge machining, or EDM, is a process in which electrical sparks remove material from a metal surface. In manufacturing, EDM can be used intentionally for precision machining. In motor bearings, however, EDM is harmful.",
+          },
+          {
+            type: "paragraph",
+            text: "When current passes through the bearing, tiny discharge events occur between the rolling elements and bearing raceways. These discharges can create small pits on the bearing surface. Over time, repeated pitting can develop into a frosted surface or a fluted pattern.",
+          },
+          {
+            type: "paragraph",
+            text: "Common symptoms of electrical bearing damage include bearing noise, increased vibration, higher operating temperature, lubricant breakdown, raceways with pitting or frosting, fluting marks on bearing raceways, reduced bearing life, and unexpected motor downtime.",
+          },
+          {
+            type: "paragraph",
+            text: "For users of industrial motors, the cost is not limited to the bearing itself. The real cost may include production shutdown, emergency maintenance, equipment damage, and reduced confidence in the motor system. This is why bearing current protection is increasingly important in VFD motor applications.",
+          },
+          {
+            type: "heading",
+            text: "3. How Shaft Grounding Rings Protect Motor Bearings",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring is designed to provide a controlled path for shaft current. Without proper grounding, shaft current may discharge through the bearing. With a shaft grounding ring, the current has a lower-resistance path from the rotating shaft to the grounded motor frame.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/03-shaft-grounding-ring-working-principle-before-after.webp",
+            alt: "Before and after diagram of shaft grounding ring working principle",
+          },
+          {
+            type: "paragraph",
+            text: "This helps reduce the possibility of current passing through the bearing. VFD switching creates shaft voltage. Shaft voltage seeks a discharge path. Without protection, the bearing may become the discharge path. With a shaft grounding ring, current is redirected away from the bearing.",
+          },
+          {
+            type: "paragraph",
+            text: "As a result, the shaft grounding ring helps protect the bearing surface from electrical erosion and premature damage.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/02-shaft-grounding-ring-vfd-motor-bearing-protection.webp",
+            alt: "Shaft grounding ring protects VFD motor bearings from electrical discharge damage",
+          },
+          {
+            type: "paragraph",
+            text: "For VFD motor bearing protection, a properly specified shaft grounding ring solution can redirect shaft current before it reaches the bearing lubricant film and raceway surfaces.",
+          },
+          {
+            type: "heading",
+            text: "4. Why Shaft Grounding Rings Are Important for Industrial Applications",
+          },
+          {
+            type: "paragraph",
+            text: "Industrial motors are often used in demanding environments where reliability is critical. Typical applications include pumps, fans, compressors, HVAC systems, conveyors, machine tools, production lines, water treatment systems, and industrial automation equipment.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/05-shaft-grounding-ring-industrial-applications.webp",
+            alt: "Shaft grounding ring applications for industrial motors pumps fans and compressors",
+          },
+          {
+            type: "paragraph",
+            text: "Many of these applications now use VFDs for energy savings and process control. However, if bearing current protection is ignored, the reliability benefit of the motor system may be reduced. A VFD can improve energy efficiency, but it may also introduce electrical stress that shortens bearing life.",
+          },
+          {
+            type: "paragraph",
+            text: "For motor manufacturers, this may lead to warranty claims and customer complaints. For maintenance teams, it may lead to repeated bearing replacement. For equipment OEMs, it may affect machine uptime and brand reputation. For system integrators, it may create after-sales problems when users experience repeated motor failures.",
+          },
+          {
+            type: "paragraph",
+            text: "Therefore, shaft grounding rings are valuable not only for motor protection, but also for system-level reliability.",
+          },
+          {
+            type: "heading",
+            text: "5. Shaft Grounding Ring vs. Other Bearing Protection Methods",
+          },
+          {
+            type: "paragraph",
+            text: "There are several common methods used to reduce bearing current damage.",
+          },
+          {
+            type: "heading",
+            text: "Insulated Bearings",
+          },
+          {
+            type: "paragraph",
+            text: "Insulated bearings can block current from passing through the bearing. They are useful in many applications, especially where circulating currents are a concern. However, insulated bearings do not always remove shaft voltage from the system. In some cases, voltage may seek another path to ground through connected equipment.",
+          },
+          {
+            type: "heading",
+            text: "Carbon Brushes",
+          },
+          {
+            type: "paragraph",
+            text: "Carbon brushes can provide a grounding path, but they may require regular maintenance. Brush wear, dust generation, and contact stability can become concerns in long-term operation.",
+          },
+          {
+            type: "heading",
+            text: "Shaft Grounding Rings",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft grounding rings are designed to provide continuous contact around the shaft using conductive fibers or similar conductive structures. They are often used to discharge shaft voltage and reduce bearing current risk in VFD-driven motors.",
+          },
+          {
+            type: "paragraph",
+            text: "In many industrial applications, the best solution depends on motor size, drive type, installation condition, and reliability requirements. For some systems, shaft grounding rings may be used together with insulated bearings or other protection methods. The key point is not to choose a component blindly. The correct approach is to evaluate the motor system and select the right bearing protection strategy.",
+          },
+          {
+            type: "heading",
+            text: "6. Key Requirements for a Reliable Shaft Grounding Ring",
+          },
+          {
+            type: "paragraph",
+            text: "Not all shaft grounding rings are the same. For industrial motor applications, a reliable shaft grounding solution should consider low resistance path, stable contact, long service life, suitable material design, customization capability, and application support.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/06-conductive-carbon-fiber-shaft-grounding-ring-technology.webp",
+            alt: "Conductive carbon fiber technology for shaft grounding ring bearing protection",
+          },
+          {
+            type: "paragraph",
+            text: "Engineering support is important. Customers may need help with shaft diameter selection, mounting design, and application evaluation.",
+          },
+          {
+            type: "heading",
+            text: "7. VOLSUN Shaft Grounding Ring Solution",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN develops shaft grounding ring solutions for industrial motor reliability and bearing current protection. Based on conductive carbon fiber technology, VOLSUN shaft grounding rings are designed to provide a low-resistance discharge path for shaft current, helping protect bearings from electrical damage caused by VFD operation.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/04-shaft-grounding-ring-structure-diagram.webp",
+            alt: "VOLSUN shaft grounding ring structure with conductive carbon fiber technology",
+          },
+          {
+            type: "link",
+            label: "shaft grounding ring solution",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN shaft grounding rings are suitable for VFD-driven industrial motors, pump motors, fan motors, compressor motors, HVAC motors, industrial equipment motors, and generator and rotating equipment applications.",
+          },
+          {
+            type: "list",
+            items: [
+              "Conductive carbon fiber technology",
+              "Stable electrical performance",
+              "Low-resistance grounding path",
+              "Long-term reliability design",
+              "OEM customization support",
+              "Application engineering assistance",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "For motor manufacturers, VOLSUN can support product design improvement and customized shaft grounding solutions. For motor repair companies, VOLSUN can provide a practical retrofit solution for repeated bearing failure problems. For VFD system integrators, VOLSUN can support system reliability improvement in variable-speed motor applications.",
+          },
+          {
+            type: "heading",
+            text: "8. When Should You Consider Shaft Grounding Rings?",
+          },
+          {
+            type: "paragraph",
+            text: "You should consider shaft grounding protection if your motor system has one or more of the following conditions: the motor is driven by a VFD; the motor experiences repeated bearing failure; bearings show pitting, frosting, or fluting; the motor has abnormal noise or vibration after VFD installation; the application requires high reliability and low downtime; the equipment operates continuously; or the motor is used in pumps, fans, compressors, HVAC systems, or production equipment.",
+          },
+          {
+            type: "heading",
+            text: "9. How to Select the Right Shaft Grounding Ring",
+          },
+          {
+            type: "paragraph",
+            text: "To select the right shaft grounding ring, the following information is usually required: motor type, shaft diameter, motor power, operating speed, VFD usage condition, installation space, housing structure, environmental conditions, annual requirement, and drawing or motor specification.",
+          },
+          {
+            type: "paragraph",
+            text: "For OEM projects, customized design may be required to match the motor structure. For repair or retrofit projects, the installation method should be evaluated based on the existing motor condition. VOLSUN can support customers with technical evaluation and product selection based on application requirements.",
+          },
+          {
+            type: "link",
+            label: "request a technical evaluation",
+            href: "/contact",
+          },
+          {
+            type: "link",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+            intro: "Related technical resources:",
+          },
+          {
+            type: "heading",
+            text: "Conclusion",
+          },
+          {
+            type: "paragraph",
+            text: "VFDs bring major benefits to industrial motor systems, including energy savings, process control, and automation flexibility. But they can also create shaft voltage and bearing current problems that lead to EDM damage, bearing fluting, and premature motor failure.",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft grounding rings provide a practical and effective way to help protect motor bearings by redirecting shaft current away from the bearing. For industrial motor manufacturers, motor repair companies, VFD system integrators, and equipment OEMs, shaft grounding should be considered as part of a complete motor reliability strategy.",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN shaft grounding ring solutions are designed to support reliable motor operation in VFD-driven industrial applications. If you are facing repeated motor bearing failure or developing a VFD-driven motor system, VOLSUN can help evaluate a suitable shaft grounding solution for your application.",
+          },
+          {
+            type: "heading",
+            text: "FAQ",
+          },
+          {
+            type: "heading",
+            text: "What is a shaft grounding ring?",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring is a motor protection component that provides a low-resistance path for shaft current, helping prevent current from discharging through motor bearings.",
+          },
+          {
+            type: "heading",
+            text: "Why do VFD motors need shaft grounding?",
+          },
+          {
+            type: "paragraph",
+            text: "VFDs can generate high-frequency shaft voltage. If this voltage discharges through the motor bearing, it may cause electrical damage, pitting, fluting, and premature bearing failure.",
+          },
+          {
+            type: "heading",
+            text: "What is bearing fluting?",
+          },
+          {
+            type: "paragraph",
+            text: "Bearing fluting is a pattern of grooves or lines formed on the bearing raceway. It can be caused by repeated electrical discharge through the bearing.",
+          },
+          {
+            type: "heading",
+            text: "Can shaft grounding rings replace insulated bearings?",
+          },
+          {
+            type: "paragraph",
+            text: "Not always. Shaft grounding rings and insulated bearings solve related but different problems. The right solution depends on motor size, drive system, and application conditions.",
+          },
+          {
+            type: "heading",
+            text: "What information is needed to select a shaft grounding ring?",
+          },
+          {
+            type: "paragraph",
+            text: "Typical information includes motor type, shaft diameter, VFD usage, operating speed, installation space, and application environment.",
+          },
+        ],
+      },
+      zh: {
+        title: "[ZH-TODO] Why VFD Motors Need Shaft Grounding Rings to Prevent Bearing Failure",
+        excerpt: "[ZH-TODO] VFD-driven motors can develop shaft voltage and bearing current that lead to EDM damage and premature bearing failure.",
+        metaDescription: "[ZH-TODO] Learn why VFD-driven motors need shaft grounding rings to prevent bearing current, EDM damage, bearing fluting and premature motor failure.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Variable frequency drives, commonly known as VFDs, have become essential in modern industrial motor systems. They help improve energy efficiency, enable precise speed control, and support automation across pumps, fans, compressors, conveyors, machine tools, HVAC systems, and many other industrial applications.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] However, as VFD usage increases, many motor manufacturers, maintenance teams, and industrial users face a recurring problem: why do motor bearings fail earlier than expected after a VFD is installed?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] One important cause is electrical bearing damage. In VFD-driven motors, high-frequency switching can create shaft voltage. When this voltage discharges through the motor bearings, it can cause electrical discharge machining, also known as EDM. Over time, this may lead to bearing pitting, fluting, lubricant degradation, abnormal noise, vibration, and premature motor failure.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] A shaft grounding ring provides a practical way to reduce this risk by creating a low-resistance path for shaft current. Instead of allowing harmful current to pass through the bearings, the shaft grounding ring helps discharge the current safely to ground.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] For industrial motors operating with VFDs, shaft grounding is not just an optional accessory. It is becoming an important part of motor reliability design.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 1. Why VFD-Driven Motors Face Bearing Current Problems",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Traditional fixed-speed motors are connected directly to the power supply. In these systems, bearing current problems may still occur, especially in large motors, but the risk is often lower and more predictable.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] VFD-driven motors operate differently. A VFD controls motor speed by converting fixed-frequency AC power into variable-frequency output. This process uses high-speed switching devices to generate pulse-width modulation, or PWM, voltage waveforms.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] While this control method improves efficiency and flexibility, it also introduces high-frequency electrical effects inside the motor system.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/01-vfd-motor-bearing-failure-mechanism.webp",
+            alt: "[ZH-TODO] VFD motor bearing failure mechanism caused by shaft voltage and bearing current",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] These effects may include common-mode voltage, shaft voltage, high-frequency circulating current, bearing discharge current, electromagnetic interference, and insulation stress.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] When shaft voltage builds up to a certain level, the bearing lubricant film may no longer act as an effective insulating barrier. The voltage can then discharge through the bearing. Each discharge event creates a microscopic electrical arc.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] This arc can damage the bearing surface. Although the damage may be very small at first, repeated discharge over time can create visible wear patterns and serious reliability problems.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 2. What Is Electrical Discharge Machining Damage?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Electrical discharge machining, or EDM, is a process in which electrical sparks remove material from a metal surface. In manufacturing, EDM can be used intentionally for precision machining. In motor bearings, however, EDM is harmful.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] When current passes through the bearing, tiny discharge events occur between the rolling elements and bearing raceways. These discharges can create small pits on the bearing surface. Over time, repeated pitting can develop into a frosted surface or a fluted pattern.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Common symptoms of electrical bearing damage include bearing noise, increased vibration, higher operating temperature, lubricant breakdown, raceways with pitting or frosting, fluting marks on bearing raceways, reduced bearing life, and unexpected motor downtime.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] For users of industrial motors, the cost is not limited to the bearing itself. The real cost may include production shutdown, emergency maintenance, equipment damage, and reduced confidence in the motor system. This is why bearing current protection is increasingly important in VFD motor applications.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 3. How Shaft Grounding Rings Protect Motor Bearings",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] A shaft grounding ring is designed to provide a controlled path for shaft current. Without proper grounding, shaft current may discharge through the bearing. With a shaft grounding ring, the current has a lower-resistance path from the rotating shaft to the grounded motor frame.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/03-shaft-grounding-ring-working-principle-before-after.webp",
+            alt: "[ZH-TODO] Before and after diagram of shaft grounding ring working principle",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] This helps reduce the possibility of current passing through the bearing. VFD switching creates shaft voltage. Shaft voltage seeks a discharge path. Without protection, the bearing may become the discharge path. With a shaft grounding ring, current is redirected away from the bearing.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] As a result, the shaft grounding ring helps protect the bearing surface from electrical erosion and premature damage.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/02-shaft-grounding-ring-vfd-motor-bearing-protection.webp",
+            alt: "[ZH-TODO] Shaft grounding ring protects VFD motor bearings from electrical discharge damage",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] For VFD motor bearing protection, a properly specified shaft grounding ring solution can redirect shaft current before it reaches the bearing lubricant film and raceway surfaces.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 4. Why Shaft Grounding Rings Are Important for Industrial Applications",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Industrial motors are often used in demanding environments where reliability is critical. Typical applications include pumps, fans, compressors, HVAC systems, conveyors, machine tools, production lines, water treatment systems, and industrial automation equipment.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/05-shaft-grounding-ring-industrial-applications.webp",
+            alt: "[ZH-TODO] Shaft grounding ring applications for industrial motors pumps fans and compressors",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Many of these applications now use VFDs for energy savings and process control. However, if bearing current protection is ignored, the reliability benefit of the motor system may be reduced. A VFD can improve energy efficiency, but it may also introduce electrical stress that shortens bearing life.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] For motor manufacturers, this may lead to warranty claims and customer complaints. For maintenance teams, it may lead to repeated bearing replacement. For equipment OEMs, it may affect machine uptime and brand reputation. For system integrators, it may create after-sales problems when users experience repeated motor failures.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Therefore, shaft grounding rings are valuable not only for motor protection, but also for system-level reliability.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 5. Shaft Grounding Ring vs. Other Bearing Protection Methods",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] There are several common methods used to reduce bearing current damage.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Insulated Bearings",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Insulated bearings can block current from passing through the bearing. They are useful in many applications, especially where circulating currents are a concern. However, insulated bearings do not always remove shaft voltage from the system. In some cases, voltage may seek another path to ground through connected equipment.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Carbon Brushes",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Carbon brushes can provide a grounding path, but they may require regular maintenance. Brush wear, dust generation, and contact stability can become concerns in long-term operation.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Shaft Grounding Rings",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Shaft grounding rings are designed to provide continuous contact around the shaft using conductive fibers or similar conductive structures. They are often used to discharge shaft voltage and reduce bearing current risk in VFD-driven motors.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] In many industrial applications, the best solution depends on motor size, drive type, installation condition, and reliability requirements. For some systems, shaft grounding rings may be used together with insulated bearings or other protection methods. The key point is not to choose a component blindly. The correct approach is to evaluate the motor system and select the right bearing protection strategy.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 6. Key Requirements for a Reliable Shaft Grounding Ring",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Not all shaft grounding rings are the same. For industrial motor applications, a reliable shaft grounding solution should consider low resistance path, stable contact, long service life, suitable material design, customization capability, and application support.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/06-conductive-carbon-fiber-shaft-grounding-ring-technology.webp",
+            alt: "[ZH-TODO] Conductive carbon fiber technology for shaft grounding ring bearing protection",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Engineering support is important. Customers may need help with shaft diameter selection, mounting design, and application evaluation.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 7. VOLSUN Shaft Grounding Ring Solution",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] VOLSUN develops shaft grounding ring solutions for industrial motor reliability and bearing current protection. Based on conductive carbon fiber technology, VOLSUN shaft grounding rings are designed to provide a low-resistance discharge path for shaft current, helping protect bearings from electrical damage caused by VFD operation.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/04-shaft-grounding-ring-structure-diagram.webp",
+            alt: "[ZH-TODO] VOLSUN shaft grounding ring structure with conductive carbon fiber technology",
+          },
+          {
+            type: "link",
+            label: "shaft grounding ring solution",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] VOLSUN shaft grounding rings are suitable for VFD-driven industrial motors, pump motors, fan motors, compressor motors, HVAC motors, industrial equipment motors, and generator and rotating equipment applications.",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Conductive carbon fiber technology",
+              "[ZH-TODO] Stable electrical performance",
+              "[ZH-TODO] Low-resistance grounding path",
+              "[ZH-TODO] Long-term reliability design",
+              "[ZH-TODO] OEM customization support",
+              "[ZH-TODO] Application engineering assistance",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] For motor manufacturers, VOLSUN can support product design improvement and customized shaft grounding solutions. For motor repair companies, VOLSUN can provide a practical retrofit solution for repeated bearing failure problems. For VFD system integrators, VOLSUN can support system reliability improvement in variable-speed motor applications.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 8. When Should You Consider Shaft Grounding Rings?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] You should consider shaft grounding protection if your motor system has one or more of the following conditions: the motor is driven by a VFD; the motor experiences repeated bearing failure; bearings show pitting, frosting, or fluting; the motor has abnormal noise or vibration after VFD installation; the application requires high reliability and low downtime; the equipment operates continuously; or the motor is used in pumps, fans, compressors, HVAC systems, or production equipment.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] 9. How to Select the Right Shaft Grounding Ring",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] To select the right shaft grounding ring, the following information is usually required: motor type, shaft diameter, motor power, operating speed, VFD usage condition, installation space, housing structure, environmental conditions, annual requirement, and drawing or motor specification.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] For OEM projects, customized design may be required to match the motor structure. For repair or retrofit projects, the installation method should be evaluated based on the existing motor condition. VOLSUN can support customers with technical evaluation and product selection based on application requirements.",
+          },
+          {
+            type: "link",
+            label: "request a technical evaluation",
+            href: "/contact",
+          },
+          {
+            type: "link",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+            intro: "Related technical resources:",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Conclusion",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] VFDs bring major benefits to industrial motor systems, including energy savings, process control, and automation flexibility. But they can also create shaft voltage and bearing current problems that lead to EDM damage, bearing fluting, and premature motor failure.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Shaft grounding rings provide a practical and effective way to help protect motor bearings by redirecting shaft current away from the bearing. For industrial motor manufacturers, motor repair companies, VFD system integrators, and equipment OEMs, shaft grounding should be considered as part of a complete motor reliability strategy.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] VOLSUN shaft grounding ring solutions are designed to support reliable motor operation in VFD-driven industrial applications. If you are facing repeated motor bearing failure or developing a VFD-driven motor system, VOLSUN can help evaluate a suitable shaft grounding solution for your application.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] FAQ",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] What is a shaft grounding ring?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] A shaft grounding ring is a motor protection component that provides a low-resistance path for shaft current, helping prevent current from discharging through motor bearings.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Why do VFD motors need shaft grounding?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] VFDs can generate high-frequency shaft voltage. If this voltage discharges through the motor bearing, it may cause electrical damage, pitting, fluting, and premature bearing failure.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] What is bearing fluting?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Bearing fluting is a pattern of grooves or lines formed on the bearing raceway. It can be caused by repeated electrical discharge through the bearing.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Can shaft grounding rings replace insulated bearings?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Not always. Shaft grounding rings and insulated bearings solve related but different problems. The right solution depends on motor size, drive system, and application conditions.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] What information is needed to select a shaft grounding ring?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Typical information includes motor type, shaft diameter, VFD usage, operating speed, installation space, and application environment.",
+          },
+        ],
+      },
+    },
+  },
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 

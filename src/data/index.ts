@@ -9,7 +9,15 @@ export { industrialMotorsApplicationPage, getIndustrialMotorsContent } from "./m
 export type { IndustrialApplicationPageData } from "./mock/application-industrial";
 export { caseStudies, getCaseStudyBySlug } from "./mock/case-studies";
 export type { CaseStudy } from "./mock/case-studies";
-export { articles, getArticleBySlug, getArticleForLocale, getArticleRecordBySlug, getArticlesByCategory, getLatestArticlesByCategory } from "./mock/articles";
+export {
+  articles,
+  getArticleBySlug,
+  getArticleForLocale,
+  getArticleRecordBySlug,
+  getArticlesByCategory,
+  getLatestArticlesByCategory,
+  isArticleLocalePublished,
+} from "./mock/articles";
 export type { ArticleCategory, ArticleContentBlock, ArticleDetail, ArticleRecord, ArticleResolved } from "./mock/articles";
 export { faqItems, getFaqItems } from "./mock/faq";
 export {

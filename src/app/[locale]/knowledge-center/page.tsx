@@ -39,10 +39,10 @@ export default async function LocalizedKnowledgeCenterPage({ params }: Props) {
   const m = getPageMeta("knowledgeCenter", locale);
   const t = ui(locale);
   const listIntro = m.listIntro ?? m.description;
-  const newsCount = getArticlesByCategory("news").length;
-  const articlesCount = getArticlesByCategory("technical-articles").length;
-  const latestNews = getLatestArticlesByCategory("news", HOME_LATEST_NEWS_LIMIT);
-  const featuredTechnical = getLatestArticlesByCategory("technical-articles", HOME_FEATURED_TECHNICAL_LIMIT);
+  const newsCount = getArticlesByCategory("news", locale).length;
+  const articlesCount = getArticlesByCategory("technical-articles", locale).length;
+  const latestNews = getLatestArticlesByCategory("news", HOME_LATEST_NEWS_LIMIT, locale);
+  const featuredTechnical = getLatestArticlesByCategory("technical-articles", HOME_FEATURED_TECHNICAL_LIMIT, locale);
 
   const jsonLd = [
     webPageJsonLd({ name: m.title, description: m.description, path: m.path, locale }),

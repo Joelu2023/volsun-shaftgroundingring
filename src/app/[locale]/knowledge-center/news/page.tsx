@@ -30,7 +30,7 @@ export default async function KnowledgeCenterNewsPage({ params }: Props) {
   const m = getPageMeta("knowledgeCenterNews", locale);
   const kc = getPageMeta("knowledgeCenter", locale);
   const t = ui(locale);
-  const newsArticles = getArticlesByCategory("news");
+  const newsArticles = getArticlesByCategory("news", locale);
   const emptyMessage =
     locale === "zh"
       ? "暂无新闻内容。公司新闻与产品动态将在此发布。"

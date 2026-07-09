@@ -30,7 +30,7 @@ export default async function KnowledgeCenterTechnicalArticlesPage({ params }: P
   const m = getPageMeta("knowledgeCenterArticles", locale);
   const kc = getPageMeta("knowledgeCenter", locale);
   const t = ui(locale);
-  const technicalArticles = getArticlesByCategory("technical-articles");
+  const technicalArticles = getArticlesByCategory("technical-articles", locale);
 
   const jsonLd = [
     webPageJsonLd({ name: m.title, description: m.description, path, locale }),

@@ -3020,13 +3020,27 @@ export const articles: ArticleRecord[] = [
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 
-export function getArticlesByCategory(category: ArticleCategory): ArticleRecord[] {
-  return articles.filter((a) => a.category === category);
+/** Matches content-factory ZH_TODO_PREFIX marker (without trailing space). */
+const ZH_TODO_MARKER = "[ZH-TODO]";
+
+/** True when a locale has real published copy (zh blocks with [ZH-TODO] are withheld). */
+export function isArticleLocalePublished(record: ArticleRecord, locale: AppLocale): boolean {
+  if (locale === "en") return true;
+  return !JSON.stringify(record.locales.zh).includes(ZH_TODO_MARKER);
 }
 
-export function getLatestArticlesByCategory(category: ArticleCategory, limit: number): ArticleRecord[] {
-  return articles
-    .filter((a) => a.category === category)
+export function getArticlesByCategory(category: ArticleCategory, locale?: AppLocale): ArticleRecord[] {
+  const list = articles.filter((a) => a.category === category);
+  if (!locale) return list;
+  return list.filter((a) => isArticleLocalePublished(a, locale));
+}
+
+export function getLatestArticlesByCategory(
+  category: ArticleCategory,
+  limit: number,
+  locale?: AppLocale,
+): ArticleRecord[] {
+  return getArticlesByCategory(category, locale)
     .sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime())
     .slice(0, limit);
 }
@@ -3038,7 +3052,7 @@ export function getArticleRecordBySlug(slug: string) {
 /** 按 slug + locale 解析文章正文与 SEO 字段（slug 在中英文 URL 中保持一致） */
 export function getArticleForLocale(slug: string, locale: AppLocale): ArticleResolved | null {
   const r = getArticleRecordBySlug(slug);
-  if (!r) return null;
+  if (!r || !isArticleLocalePublished(r, locale)) return null;
   const block = r.locales[locale];
   return {
     id: r.id,

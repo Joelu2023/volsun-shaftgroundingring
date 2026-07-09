@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { articles, getArticleForLocale } from "@/data";
+import { articles, getArticleForLocale, getArticleRecordBySlug, isArticleLocalePublished } from "@/data";
+import { getCanonicalSiteOrigin } from "@/config/site";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/json-ld";
 import { articleJsonLd, breadcrumbListJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
@@ -17,10 +18,13 @@ import { sanitizeLargeSlotImageSrc } from "@/lib/utils/image-slot-guards";
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
 export async function generateStaticParams() {
-  return articles.flatMap((a) => [
-    { locale: "en" as const, slug: a.slug },
-    { locale: "zh" as const, slug: a.slug },
-  ]);
+  return articles.flatMap((a) => {
+    const params: Array<{ locale: "en" | "zh"; slug: string }> = [{ locale: "en", slug: a.slug }];
+    if (isArticleLocalePublished(a, "zh")) {
+      params.push({ locale: "zh", slug: a.slug });
+    }
+    return params;
+  });
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -29,20 +33,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
   const locale = raw as AppLocale;
-  const article = getArticleForLocale(slug, locale);
-  if (!article) return {};
+  const record = getArticleRecordBySlug(slug);
+  const article = record ? getArticleForLocale(slug, locale) : null;
+  if (!article || !record) return {};
   const meta = buildPageMetadata({
     title: article.title,
     description: article.metaDescription,
     path: `/knowledge-center/${article.slug}`,
     locale,
   });
+  const base = getCanonicalSiteOrigin();
+  const enPath = `/en/knowledge-center/${article.slug}`;
+  const enUrl = `${base}${enPath}`;
+  const withAlternates =
+    locale === "en" && !isArticleLocalePublished(record, "zh")
+      ? {
+          ...meta,
+          alternates: {
+            canonical: enUrl,
+            languages: { en: enUrl, "x-default": enUrl },
+          },
+        }
+      : meta;
   const ogImage = sanitizeLargeSlotImageSrc(article.coverImagePublicPath);
-  if (!ogImage) return meta;
+  if (!ogImage) return withAlternates;
   return {
-    ...meta,
+    ...withAlternates,
     openGraph: {
-      ...meta.openGraph,
+      ...withAlternates.openGraph,
       images: [{ url: ogImage, alt: article.title }],
     },
   };

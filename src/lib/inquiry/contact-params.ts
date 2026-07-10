@@ -1,5 +1,7 @@
 import type { CtaKey, InquiryType } from "@/types/inquiry";
 
+const ATTRIBUTION_MAX_LEN = 200;
+
 /** Next.js searchParams：取首个字符串值 */
 export function firstStringParam(
   sp: Record<string, string | string[] | undefined>,
@@ -55,4 +57,24 @@ export function resolveInitialInquiryType(
   fallback: InquiryType = "rfq",
 ): InquiryType {
   return parseInquiryTypeParam(inquiryParam) ?? suggestInquiryTypeFromCta(cta) ?? fallback;
+}
+
+function truncateAttributionParam(v: string | undefined): string | undefined {
+  if (!v) return undefined;
+  const t = v.trim();
+  if (!t) return undefined;
+  return t.length > ATTRIBUTION_MAX_LEN ? t.slice(0, ATTRIBUTION_MAX_LEN) : t;
+}
+
+/** URL ?campaign= */
+export function parseCampaignParam(sp: Record<string, string | string[] | undefined>): string | undefined {
+  return truncateAttributionParam(firstStringParam(sp, "campaign"));
+}
+
+/** URL ?source_page= 优先，否则 ?source= */
+export function resolveSourcePageParam(sp: Record<string, string | string[] | undefined>): string | undefined {
+  return (
+    truncateAttributionParam(firstStringParam(sp, "source_page")) ??
+    truncateAttributionParam(firstStringParam(sp, "source"))
+  );
 }

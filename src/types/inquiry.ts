@@ -42,6 +42,10 @@ export type InquirySubmission = {
   page_source: string;
   cta_source: string;
   cta_key: CtaKey | null;
+  /** 营销活动标识，如 sgr-vfd-bearing-protection */
+  campaign?: string;
+  /** 来源页面标识，如文章 slug 或产品页标识 */
+  source_page?: string;
   submitted_at: string;
 };
 

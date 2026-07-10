@@ -2628,7 +2628,7 @@ export const articles: ArticleRecord[] = [
           {
             type: "link",
             label: "request a technical evaluation",
-            href: "/contact",
+            href: "/contact?product_interest=solid-shaft-grounding-ring&campaign=sgr-vfd-bearing-protection&source_page=why-vfd-motors-need-shaft-grounding-rings&cta_key=engineer&inquiry_type=technical_inquiry",
           },
           {
             type: "link",

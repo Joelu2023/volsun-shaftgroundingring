@@ -5,6 +5,7 @@ const INQUIRY_TYPES: InquiryType[] = ["rfq", "sample_request", "drawing_submissi
 const CTA_KEYS: CtaKey[] = ["quote", "drawing", "sample", "datasheet", "catalog", "fast_quote", "engineer"];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ATTRIBUTION_MAX_LEN = 200;
 
 /** 可选字符串：仅接受 string / null / undefined；空串视为 null */
 function strOrNull(v: unknown): string | null | "bad_type" {
@@ -30,6 +31,28 @@ export type ValidateSuccess = { ok: true; data: InquirySubmission };
 
 function dashIfAbsent(v: string | undefined): string {
   return v === undefined ? "—" : v;
+}
+
+/** 可选归因字段：空串视为 null；超过 200 字符视为 invalid */
+function attributionOrNull(v: unknown): string | null | "bad_type" | "too_long" {
+  const r = strOrNull(v);
+  if (r === "bad_type") return "bad_type";
+  if (r === null) return null;
+  if (r.length > ATTRIBUTION_MAX_LEN) return "too_long";
+  return r;
+}
+
+function applyAttributionFields(
+  data: InquirySubmission,
+  o: Record<string, unknown>,
+): ValidateFailure | void {
+  const campaign = attributionOrNull(o.campaign);
+  const source_page = attributionOrNull(o.source_page);
+  if (campaign === "bad_type" || campaign === "too_long" || source_page === "bad_type" || source_page === "too_long") {
+    return { ok: false, error: "invalid_inquiry_payload" };
+  }
+  if (campaign) data.campaign = campaign;
+  if (source_page) data.source_page = source_page;
 }
 
 /** 英文精简询盘（首页 / About）：用户必填仅 name、email、phone；其余文本空则记为「—」 */
@@ -116,6 +139,9 @@ function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | Validate
     cta_key,
     submitted_at,
   };
+
+  const attrErr = applyAttributionFields(data, o);
+  if (attrErr) return attrErr;
 
   return { ok: true, data };
 }
@@ -213,6 +239,9 @@ export function parseInquirySubmission(raw: unknown): ValidateSuccess | Validate
     cta_key,
     submitted_at,
   };
+
+  const attrErr = applyAttributionFields(data, o);
+  if (attrErr) return attrErr;
 
   return { ok: true, data };
 }

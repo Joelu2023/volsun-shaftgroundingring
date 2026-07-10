@@ -123,6 +123,8 @@ export type InquiryFormProps = {
   defaultProductInterest?: string;
   defaultApplicationInterest?: string;
   defaultResourceSlug?: string;
+  defaultCampaign?: string;
+  defaultSourcePage?: string;
   className?: string;
   locale?: AppLocale;
   /** English homepage slim form variant. */
@@ -141,6 +143,8 @@ export function InquiryForm({
   defaultProductInterest,
   defaultApplicationInterest,
   defaultResourceSlug,
+  defaultCampaign,
+  defaultSourcePage,
   className,
   locale = "en",
   homeEnLeadForm = false,
@@ -235,6 +239,7 @@ export function InquiryForm({
           cta_source: ctaSource,
           cta_key: defaultCtaKey,
           submitted_at: new Date().toISOString(),
+          ...attributionPayload(defaultCampaign, defaultSourcePage),
         };
 
     try {
@@ -539,6 +544,15 @@ function Field({
 function emptyToNull(v: FormDataEntryValue | null) {
   const s = typeof v === "string" ? v.trim() : "";
   return s === "" ? null : s;
+}
+
+function attributionPayload(campaign?: string, sourcePage?: string): { campaign?: string; source_page?: string } {
+  const out: { campaign?: string; source_page?: string } = {};
+  const c = campaign?.trim();
+  const s = sourcePage?.trim();
+  if (c) out.campaign = c;
+  if (s) out.source_page = s;
+  return out;
 }
 
 function messageForApiError(c: FormCopy, code: string | undefined, missing?: string[]): string {

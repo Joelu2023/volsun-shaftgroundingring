@@ -42,6 +42,8 @@ function buildSummary(data: InquirySubmission): string {
     `Country: ${data.country}`,
     `Phone / WhatsApp: ${data.phone_or_whatsapp ?? "—"}`,
     `Product interest: ${data.product_interest ?? "—"}`,
+    `Campaign: ${data.campaign ?? "—"}`,
+    `Source page: ${data.source_page ?? "—"}`,
     `Application interest: ${data.application_interest ?? "—"}`,
     `Motor type: ${data.motor_type ?? "—"}`,
     `Power: ${data.power ?? "—"}`,

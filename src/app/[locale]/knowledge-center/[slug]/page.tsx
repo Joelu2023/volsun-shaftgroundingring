@@ -79,6 +79,11 @@ export default async function LocalizedArticlePage({ params }: Props) {
   const kcTitle = locale === "zh" ? "知识中心" : "Knowledge Center";
   const coverSrc = sanitizeLargeSlotImageSrc(a.coverImagePublicPath);
 
+  const articleBottomContactHref =
+    locale === "en" && a.slug === "why-vfd-motors-need-shaft-grounding-rings"
+      ? `/${locale}/contact?product_interest=solid-shaft-grounding-ring&campaign=sgr-vfd-bearing-protection&source_page=why-vfd-motors-need-shaft-grounding-rings&cta_key=engineer&inquiry_type=technical_inquiry`
+      : `/${locale}/contact`;
+
   const jsonLd = [
     webPageJsonLd({ name: a.title, description: a.metaDescription, path: `/knowledge-center/${a.slug}`, locale }),
     articleJsonLd({
@@ -138,7 +143,7 @@ export default async function LocalizedArticlePage({ params }: Props) {
         <div className="mt-10 rounded-lg border border-slate-200 bg-slate-50 p-6">
           <p className="font-medium text-slate-900">{t.knowledgeNeedSizingTitle}</p>
           <p className="mt-2 text-sm text-slate-600">{t.knowledgeNeedSizingBody}</p>
-          <Link href={`/${locale}/contact`} className="mt-4 inline-block text-sm font-medium text-brand-orange hover:underline">
+          <Link href={articleBottomContactHref} className="mt-4 inline-block text-sm font-medium text-brand-orange hover:underline">
             {t.contactRfq}
           </Link>
         </div>

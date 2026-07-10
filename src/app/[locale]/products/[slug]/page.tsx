@@ -76,6 +76,11 @@ export default async function LocalizedProductDetailPage({ params }: Props) {
       ? getArticleRecordBySlug(SOLID_RING_RELATED_ARTICLE_SLUG)
       : null;
 
+  const quoteContactHref =
+    locale === "en" && product.slug === "solid-shaft-grounding-ring"
+      ? `/${locale}/contact?product_interest=solid-shaft-grounding-ring&campaign=sgr-product-page&source_page=solid-shaft-grounding-ring-product-page&cta_key=quote`
+      : `/${locale}/contact?cta_key=quote&product_interest=${encodeURIComponent(product.slug)}`;
+
   const jsonLd = [
     webPageJsonLd({ name: product.name, description: product.metaDescription, path: `/products/${product.slug}`, locale }),
     productJsonLd({
@@ -272,7 +277,7 @@ export default async function LocalizedProductDetailPage({ params }: Props) {
 
       <div className="mt-10 flex flex-wrap gap-3">
         <Link
-          href={`/${locale}/contact?cta_key=quote&product_interest=${encodeURIComponent(product.slug)}`}
+          href={quoteContactHref}
           className="rounded bg-brand-orange px-4 py-2 text-sm font-medium text-white hover:opacity-90"
         >
           {t.requestQuote}

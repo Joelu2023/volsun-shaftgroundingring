@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbListJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { getPageMeta, whatsappConfig } from "@/data";
-import { firstStringParam, parseCtaKeyParam, resolveInitialInquiryType } from "@/lib/inquiry/contact-params";
+import { firstStringParam, parseCampaignParam, parseCtaKeyParam, resolveInitialInquiryType, resolveSourcePageParam } from "@/lib/inquiry/contact-params";
 import { isAppLocale, type AppLocale } from "@/lib/i18n/locales";
 import { resolveContactAsideImageSrc } from "@/lib/images/locale-visuals";
 import { ui } from "@/lib/i18n/ui-messages";
@@ -45,10 +45,12 @@ export default async function LocalizedContactPage({ params, searchParams }: Pro
   const resourceSlug = firstStringParam(sp, "resource");
   const ctaKeyParam = parseCtaKeyParam(firstStringParam(sp, "cta_key"));
   const inquiryTypeParam = firstStringParam(sp, "inquiry_type");
+  const campaign = parseCampaignParam(sp);
+  const sourcePage = resolveSourcePageParam(sp);
   const initialInquiryType = resolveInitialInquiryType(inquiryTypeParam, ctaKeyParam);
   const whatsappHref = `https://wa.me/${whatsappConfig.whatsappNumber}?text=${encodeURIComponent(whatsappConfig.whatsappMessage)}`;
 
-  const formKey = [productInterest ?? "", applicationInterest ?? "", resourceSlug ?? "", initialInquiryType, ctaKeyParam ?? ""].join("|");
+  const formKey = [productInterest ?? "", applicationInterest ?? "", resourceSlug ?? "", initialInquiryType, ctaKeyParam ?? "", campaign ?? "", sourcePage ?? ""].join("|");
 
   const jsonLd = [
     webPageJsonLd({ name: m.title, description: m.description, path: m.path, locale }),
@@ -116,6 +118,8 @@ export default async function LocalizedContactPage({ params, searchParams }: Pro
               defaultProductInterest={productInterest}
               defaultApplicationInterest={applicationInterest}
               defaultResourceSlug={resourceSlug}
+              defaultCampaign={campaign}
+              defaultSourcePage={sourcePage}
               locale={locale}
             />
           </div>

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { isRouteLocalizedPath, type AppLocale } from "@/lib/i18n/locales";
+import { nextWithPathname } from "@/lib/middleware/pathname-headers";
 
 function localeFromPathname(pathname: string): AppLocale | null {
   if (pathname === "/en" || pathname.startsWith("/en/")) return "en";
@@ -11,9 +12,7 @@ export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
 
   if (localeFromPathname(pathname)) {
-    const res = NextResponse.next();
-    res.headers.set("x-pathname", pathname);
-    return res;
+    return nextWithPathname(request);
   }
 
   if (pathname === "/") {
@@ -30,9 +29,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  const res = NextResponse.next();
-  res.headers.set("x-pathname", pathname);
-  return res;
+  return nextWithPathname(request);
 }
 
 export const config = {

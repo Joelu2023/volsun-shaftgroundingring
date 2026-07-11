@@ -7,6 +7,11 @@ import { cn } from "@/lib/utils/cn";
 import { localizeNavHref, switchLocalePath, type AppLocale } from "@/lib/i18n/locales";
 import { navLabel, ui } from "@/lib/i18n/ui-messages";
 
+type HeaderProps = {
+  /** Server-resolved locale switch path (no query string). */
+  localeSwitchBasePath?: string;
+};
+
 function navLocaleFromPathname(pathname: string): AppLocale {
   if (pathname === "/zh" || pathname.startsWith("/zh/")) return "zh";
   return "en";
@@ -144,13 +149,13 @@ function ZhDesktopNav({ locale, pathname }: { locale: "zh"; pathname: string }) 
   );
 }
 
-export function Header() {
+export function Header({ localeSwitchBasePath }: HeaderProps) {
   const pathname = usePathname() ?? "";
   const searchParams = useSearchParams();
   const search = searchParams?.toString() ? `?${searchParams.toString()}` : "";
   const locale = navLocaleFromPathname(pathname);
   const otherLocale: AppLocale = locale === "en" ? "zh" : "en";
-  const switchHref = switchLocalePath(pathname, search, otherLocale);
+  const switchHref = `${localeSwitchBasePath ?? switchLocalePath(pathname, "", otherLocale)}${search}`;
   const t = ui(locale);
 
   return (

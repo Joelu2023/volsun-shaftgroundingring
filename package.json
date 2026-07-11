@@ -13,7 +13,9 @@
     "factory:report": "tsx content-factory/cli.ts report",
     "factory:auto": "tsx content-factory/cli.ts auto",
     "factory:watch": "tsx content-factory/cli.ts watch",
-    "test:factory": "tsx --test content-factory/inbox-paths.test.ts"
+    "test:factory": "tsx --test content-factory/inbox-paths.test.ts",
+    "test:i18n": "tsx --test src/lib/i18n/locale-switch.test.ts",
+    "test:middleware": "tsx --test src/lib/middleware/pathname-headers.test.ts"
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^3.0.1",

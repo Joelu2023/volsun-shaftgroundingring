@@ -7,6 +7,8 @@ import { Footer } from "@/components/layout/footer";
 import { JsonLd } from "@/components/seo/json-ld";
 import { organizationJsonLd } from "@/lib/seo/jsonld-builders";
 import { getMetadataBase } from "@/config/site";
+import { resolveLocaleSwitchPath } from "@/lib/i18n/locale-switch";
+import type { AppLocale } from "@/lib/i18n/locales";
 import "./globals.css";
 
 const GOOGLE_ADS_TAG_ID = "AW-18164748319";
@@ -31,6 +33,8 @@ export default async function RootLayout({
 }>) {
   const pathname = (await headers()).get("x-pathname") ?? "";
   const lang = pathname === "/zh" || pathname.startsWith("/zh/") ? "zh" : "en";
+  const otherLocale: AppLocale = lang === "en" ? "zh" : "en";
+  const localeSwitchBasePath = resolveLocaleSwitchPath(pathname, otherLocale);
   const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
 
   return (
@@ -54,7 +58,7 @@ gtag('config', '${GOOGLE_ADS_TAG_ID}');`}
         <JsonLd data={organizationJsonLd()} />
         {!isAdminRoute ? (
           <Suspense fallback={<div className="h-[72px] border-b border-slate-200 bg-white" aria-hidden />}>
-            <Header />
+            <Header localeSwitchBasePath={localeSwitchBasePath} />
           </Suspense>
         ) : null}
         <main>{children}</main>

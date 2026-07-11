@@ -4,7 +4,7 @@ export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
   | { type: "list"; items: string[] }
-  | { type: "image"; src: string; alt: string }
+  | { type: "image"; src: string; alt: string; width?: number; height?: number }
   | { type: "link"; label: string; href: string; intro?: string };
 
 /** Knowledge Center 栏目：news = 公司/产品动态；technical-articles = 技术文章 */
@@ -3012,6 +3012,205 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "[ZH-TODO] Typical information includes motor type, shaft diameter, VFD usage, operating speed, installation space, and application environment.",
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "art-15",
+    slug: "volsun-at-tmc2026-e-drive-material-solutions",
+    category: "news",
+    datePublished: "2026-07-10T08:00:00.000Z",
+    dateModified: "2026-07-10T08:00:00.000Z",
+    coverImagePublicPath: "/images/news/tmc2026/volsun-tmc2026-exhibition-booth-e-drive-material-solutions.webp",
+    locales: {
+      en: {
+        title:
+          "Volsun Showcases E-Drive Material Solutions at TMC2026, Third-Generation Shaft Grounding Ring Recognized as Innovative Technology",
+        excerpt:
+          "Volsun joined TMC2026 in Nantong to present e-drive material solutions, including a third-generation shaft grounding ring recognized as innovative technology for electric motor reliability.",
+        metaDescription:
+          "Volsun showcased e-drive material solutions at TMC2026 in Nantong, including third-generation shaft grounding rings recognized as innovative technology for electric drive reliability.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Suzhou Volsun Electronics Technology Co., Ltd. successfully participated in the TMC2026 International Automotive Powertrain Technology Congress held in Nantong, Jiangsu, China on July 9–10, 2026.",
+          },
+          {
+            type: "paragraph",
+            text: "Focusing on the reliability challenges of next-generation electric drive systems, Volsun presented its latest material technologies, including the third-generation shaft grounding ring, metallized carbon fiber conductive technology, and thermally conductive potting materials.",
+          },
+          {
+            type: "paragraph",
+            text: "During the event, Volsun's independently developed third-generation shaft grounding ring (SGR) was recognized as an Innovative Technology, highlighting the company's continued efforts in developing advanced material solutions for safer and more reliable electric drive systems.",
+          },
+          {
+            type: "image",
+            src: "/images/news/tmc2026/volsun-team-at-tmc2026-powertrain-technology-congress.webp",
+            alt: "Volsun team at the TMC2026 International Automotive Powertrain Technology Congress",
+            width: 1448,
+            height: 1086,
+          },
+          { type: "heading", text: "Addressing Reliability Challenges in Future Electric Drive Systems" },
+          {
+            type: "paragraph",
+            text: "With the rapid development of electrification, automotive power systems are moving toward higher power density, greater integration, and longer service life. As electric drive systems become more compact and powerful, reliability challenges related to shaft current and bearing electrical damage, thermal management under high-power operation, insulation reliability, and environmental protection and sealing performance have become increasingly important for manufacturers and suppliers across the automotive industry.",
+          },
+          {
+            type: "paragraph",
+            text: "Based on these challenges, Volsun focuses on developing high-performance material solutions that improve system reliability throughout the product lifecycle. The company's technologies cover electrical conductivity solutions, thermal management materials, insulation protection systems, and sealing and environmental protection solutions.",
+          },
+          {
+            type: "paragraph",
+            text: "Through material innovation and application engineering, Volsun helps customers improve the safety, durability, and reliability of advanced power systems.",
+          },
+          {
+            type: "image",
+            src: "/images/news/tmc2026/volsun-customer-discussion-at-tmc2026.webp",
+            alt: "Volsun team discussing e-drive material solutions with a customer at TMC2026",
+            width: 3923,
+            height: 2615,
+          },
+          { type: "heading", text: "Third-Generation Shaft Grounding Ring Recognized at TMC2026" },
+          {
+            type: "paragraph",
+            text: "At TMC2026, Volsun's third-generation shaft grounding ring received recognition as an Innovative Technology. Designed for electric motors and electrified power systems, the shaft grounding ring provides a reliable discharge path for shaft currents, helping reduce the risk of electrical bearing damage and improve motor reliability.",
+          },
+          {
+            type: "paragraph",
+            text: "As electric motors increasingly adopt high-speed operation and advanced power electronics control, managing shaft current and protecting bearings have become important engineering considerations. Through continuous improvements in conductive material development, structural optimization, application validation, and manufacturing capability, Volsun has enhanced its shaft grounding ring technology to better support demanding motor reliability requirements.",
+          },
+          {
+            type: "image",
+            src: "/images/news/tmc2026/third-generation-shaft-grounding-ring-tmc2026.webp",
+            alt: "Volsun third-generation shaft grounding ring displayed at TMC2026",
+            width: 2560,
+            height: 1707,
+          },
+          {
+            type: "paragraph",
+            text: "This recognition represents Volsun's commitment to solving practical engineering challenges through material innovation.",
+          },
+          {
+            type: "image",
+            src: "/images/news/tmc2026/volsun-tmc2026-innovative-technology-recognition-certificate.webp",
+            alt: "TMC2026 innovative technology recognition certificate for Volsun's shaft grounding ring",
+            width: 1440,
+            height: 1080,
+          },
+          { type: "heading", text: "Three Material Technologies Supporting Electric Drive Reliability" },
+          {
+            type: "paragraph",
+            text: "At TMC2026, Volsun highlighted three key technology areas supporting future power systems.",
+          },
+          { type: "heading", text: "Third-Generation Shaft Grounding Ring" },
+          {
+            type: "paragraph",
+            text: "The shaft grounding ring is designed to help protect motor bearings from electrical damage caused by shaft currents. It is suitable for applications including electric motors, variable frequency drive systems, industrial motor applications, and electrified power systems. By providing a controlled current discharge path, the technology helps improve long-term motor reliability.",
+          },
+          { type: "heading", text: "Metallized Carbon Fiber Conductive Technology" },
+          {
+            type: "paragraph",
+            text: "Volsun's metallized carbon fiber technology combines lightweight characteristics with excellent electrical conductivity. The technology supports applications requiring stable conductive performance, lightweight structures, flexible conductive solutions, and advanced electrical contact materials.",
+          },
+          { type: "heading", text: "Thermally Conductive Potting Materials" },
+          {
+            type: "paragraph",
+            text: "As power electronics continue to increase in power density, effective thermal management becomes critical. Volsun's thermally conductive potting materials are designed for applications such as electronic control units, power modules, and electrical components, providing thermal dissipation, insulation protection, and environmental reliability.",
+          },
+          { type: "heading", text: "From Material Innovation to Application Solutions" },
+          {
+            type: "paragraph",
+            text: "Founded in 2006, Suzhou Volsun Electronics Technology Co., Ltd. specializes in the research, development, manufacturing, and application of high-performance polymer material solutions. With expertise in insulation protection, sealing technology, electrical conductivity, and thermal management, Volsun serves customers across automotive, power, telecommunications, electronics, and industrial equipment industries.",
+          },
+          {
+            type: "paragraph",
+            text: "By combining material science with application engineering, Volsun continues to work with global partners to develop safer, more reliable, and higher-performance products. Looking ahead, Volsun will continue investing in advanced materials and application technologies for electric motors, power electronics, and next-generation energy systems.",
+          },
+          {
+            type: "link",
+            intro: "Related technical and exhibition coverage:",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "link",
+            label: "Solid Shaft Grounding Ring Product Overview",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "Volsun at 2026 Global XEV Drive System Conference",
+            href: "/knowledge-center/xev-exhibition-2026-report",
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "Material Innovation, For a Better Life. Volsun thanks the organizers, partners, and visitors who engaged with our team at TMC2026. We remain committed to practical material solutions that support electric drive reliability, shaft grounding ring performance, and long-term motor protection in electrified applications.",
+          },
+        ],
+      },
+      zh: {
+        title:
+          "[ZH-TODO] Volsun Showcases E-Drive Material Solutions at TMC2026, Third-Generation Shaft Grounding Ring Recognized as Innovative Technology",
+        excerpt:
+          "[ZH-TODO] Volsun joined TMC2026 in Nantong to present e-drive material solutions, including a third-generation shaft grounding ring recognized as innovative technology for electric motor reliability.",
+        metaDescription:
+          "[ZH-TODO] Volsun showcased e-drive material solutions at TMC2026 in Nantong, including third-generation shaft grounding rings recognized as innovative technology for electric drive reliability.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Suzhou Volsun Electronics Technology Co., Ltd. successfully participated in the TMC2026 International Automotive Powertrain Technology Congress held in Nantong, Jiangsu, China on July 9–10, 2026.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Focusing on the reliability challenges of next-generation electric drive systems, Volsun presented its latest material technologies, including the third-generation shaft grounding ring, metallized carbon fiber conductive technology, and thermally conductive potting materials.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] During the event, Volsun's independently developed third-generation shaft grounding ring (SGR) was recognized as an Innovative Technology, highlighting the company's continued efforts in developing advanced material solutions for safer and more reliable electric drive systems.",
+          },
+          {
+            type: "image",
+            src: "/images/news/tmc2026/volsun-team-at-tmc2026-powertrain-technology-congress.webp",
+            alt: "[ZH-TODO] Volsun team at the TMC2026 International Automotive Powertrain Technology Congress",
+            width: 1448,
+            height: 1086,
+          },
+          { type: "heading", text: "[ZH-TODO] Addressing Reliability Challenges in Future Electric Drive Systems" },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] With the rapid development of electrification, automotive power systems are moving toward higher power density, greater integration, and longer service life.",
+          },
+          {
+            type: "image",
+            src: "/images/news/tmc2026/volsun-customer-discussion-at-tmc2026.webp",
+            alt: "[ZH-TODO] Volsun team discussing e-drive material solutions with a customer at TMC2026",
+            width: 3923,
+            height: 2615,
+          },
+          { type: "heading", text: "[ZH-TODO] Third-Generation Shaft Grounding Ring Recognized at TMC2026" },
+          {
+            type: "image",
+            src: "/images/news/tmc2026/third-generation-shaft-grounding-ring-tmc2026.webp",
+            alt: "[ZH-TODO] Volsun third-generation shaft grounding ring displayed at TMC2026",
+            width: 2560,
+            height: 1707,
+          },
+          {
+            type: "image",
+            src: "/images/news/tmc2026/volsun-tmc2026-innovative-technology-recognition-certificate.webp",
+            alt: "[ZH-TODO] TMC2026 innovative technology recognition certificate for Volsun's shaft grounding ring",
+            width: 1440,
+            height: 1080,
+          },
+          { type: "heading", text: "[ZH-TODO] Conclusion" },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Material Innovation, For a Better Life.",
           },
         ],
       },

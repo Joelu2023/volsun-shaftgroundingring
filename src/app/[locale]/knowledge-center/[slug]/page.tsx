@@ -17,6 +17,18 @@ import { sanitizeLargeSlotImageSrc } from "@/lib/utils/image-slot-guards";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
+const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
+  "why-vfd-motors-need-shaft-grounding-rings":
+    "product_interest=solid-shaft-grounding-ring&campaign=sgr-vfd-bearing-protection&source_page=why-vfd-motors-need-shaft-grounding-rings&cta_key=engineer&inquiry_type=technical_inquiry",
+  "volsun-at-tmc2026-e-drive-material-solutions":
+    "campaign=tmc2026&source=news&source_page=volsun-at-tmc2026-e-drive-material-solutions&cta_key=quote",
+};
+
+function buildArticleBottomContactHref(locale: AppLocale, slug: string): string {
+  const query = locale === "en" ? EN_ATTRIBUTED_CONTACT_QUERY[slug] : undefined;
+  return query ? `/${locale}/contact?${query}` : `/${locale}/contact`;
+}
+
 export async function generateStaticParams() {
   return articles.flatMap((a) => {
     const params: Array<{ locale: "en" | "zh"; slug: string }> = [{ locale: "en", slug: a.slug }];
@@ -79,10 +91,7 @@ export default async function LocalizedArticlePage({ params }: Props) {
   const kcTitle = locale === "zh" ? "知识中心" : "Knowledge Center";
   const coverSrc = sanitizeLargeSlotImageSrc(a.coverImagePublicPath);
 
-  const articleBottomContactHref =
-    locale === "en" && a.slug === "why-vfd-motors-need-shaft-grounding-rings"
-      ? `/${locale}/contact?product_interest=solid-shaft-grounding-ring&campaign=sgr-vfd-bearing-protection&source_page=why-vfd-motors-need-shaft-grounding-rings&cta_key=engineer&inquiry_type=technical_inquiry`
-      : `/${locale}/contact`;
+  const articleBottomContactHref = buildArticleBottomContactHref(locale, a.slug);
 
   const jsonLd = [
     webPageJsonLd({ name: a.title, description: a.metaDescription, path: `/knowledge-center/${a.slug}`, locale }),

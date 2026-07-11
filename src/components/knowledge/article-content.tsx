@@ -45,6 +45,23 @@ export function ArticleContent({ blocks, paragraphs, locale }: Props) {
             case "image": {
               const src = sanitizeLargeSlotImageSrc(block.src);
               if (!src) return null;
+              if (block.width && block.height) {
+                return (
+                  <figure key={i} className="mt-6">
+                    <Image
+                      src={src}
+                      alt={block.alt}
+                      width={block.width}
+                      height={block.height}
+                      className="h-auto w-full rounded-lg border border-slate-200 bg-slate-50 object-contain p-2"
+                      sizes="(max-width: 768px) 100vw, 672px"
+                    />
+                    {block.alt ? (
+                      <figcaption className="mt-2 text-center text-sm text-slate-500">{block.alt}</figcaption>
+                    ) : null}
+                  </figure>
+                );
+              }
               return (
                 <figure key={i} className="mt-6">
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-50">

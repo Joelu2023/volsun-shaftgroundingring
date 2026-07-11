@@ -29,8 +29,9 @@ export function sanitizeLargeSlotImageSrc(src: string | null | undefined): strin
   if (forbiddenPrefixes.some((p) => lower.startsWith(p))) return null;
 
   // Extra token checks for common naming patterns.
+  // News article body images may intentionally include recognition certificates from /images/news/.
   const forbiddenTokens = ["certificate", "certification", "test-report", "test_report", "inspection-report", "inspection_report", "/reports/"];
-  if (forbiddenTokens.some((t) => lower.includes(t))) return null;
+  if (!lower.startsWith("/images/news/") && forbiddenTokens.some((t) => lower.includes(t))) return null;
 
   return s;
 }

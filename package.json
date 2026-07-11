@@ -12,7 +12,8 @@
     "factory:publish": "tsx content-factory/cli.ts publish",
     "factory:report": "tsx content-factory/cli.ts report",
     "factory:auto": "tsx content-factory/cli.ts auto",
-    "factory:watch": "tsx content-factory/cli.ts watch"
+    "factory:watch": "tsx content-factory/cli.ts watch",
+    "test:factory": "tsx --test content-factory/inbox-paths.test.ts"
   },
   "dependencies": {
     "@prisma/extension-accelerate": "^3.0.1",

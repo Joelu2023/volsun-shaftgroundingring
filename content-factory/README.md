@@ -157,6 +157,8 @@ docx-parser seo-engine image-mapper  builder   links
    en + zh 页面自动生成
 ```
 
+**Inbox input boundary:** `content/inbox/archive/**` stores published source files and is never considered an input source for auto, watch, draft, or status processing. Only direct `.docx` files in the inbox root are eligible (`content-factory/inbox-paths.ts`).
+
 ### 一键命令
 
 ```bash

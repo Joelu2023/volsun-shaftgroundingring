@@ -10,9 +10,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { runPipeline } from "./pipeline";
 import type { PipelineOptions } from "./types";
+import {
+  evaluateInboxDocxCandidate,
+  listInboxDocxFiles,
+  normalizeWatchFilename,
+  resolveInboxDir,
+} from "./inbox-paths";
 
-const ROOT = path.resolve(__dirname, "..");
-export const INBOX_DIR = path.join(ROOT, "content", "inbox");
+export const INBOX_DIR = resolveInboxDir();
 const LOCK_FILE = path.join(__dirname, ".watcher.lock");
 const DEBOUNCE_MS = 2000;
 
@@ -20,30 +25,24 @@ const processing = new Set<string>();
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let pendingFile: string | null = null;
 
-function isProcessableDocx(name: string): boolean {
-  return name.toLowerCase().endsWith(".docx") && !name.startsWith("~$");
-}
-
 function listInboxDocx(): string[] {
-  if (!fs.existsSync(INBOX_DIR)) return [];
-  return fs
-    .readdirSync(INBOX_DIR, { withFileTypes: true })
-    .filter((e) => e.isFile() && isProcessableDocx(e.name))
-    .map((e) => e.name)
-    .sort();
+  return listInboxDocxFiles(INBOX_DIR);
 }
 
 async function processFile(fileName: string, opts: PipelineOptions): Promise<void> {
-  const fullPath = path.join(INBOX_DIR, fileName);
-  if (processing.has(fullPath) || !fs.existsSync(fullPath)) return;
+  const evaluated = evaluateInboxDocxCandidate(INBOX_DIR, fileName, { requireExistingFile: true });
+  if (!evaluated.ok) return;
+
+  const fullPath = evaluated.absolutePath;
+  if (processing.has(fullPath)) return;
 
   processing.add(fullPath);
-  fs.writeFileSync(LOCK_FILE, `${fileName}\n${new Date().toISOString()}`, "utf8");
+  fs.writeFileSync(LOCK_FILE, `${evaluated.basename}\n${new Date().toISOString()}`, "utf8");
 
   try {
     await runPipeline(fullPath, opts);
   } catch (err) {
-    console.error(`[watcher] failed: ${fileName}`, err instanceof Error ? err.message : err);
+    console.error(`[watcher] failed: ${evaluated.basename}`, err instanceof Error ? err.message : err);
   } finally {
     processing.delete(fullPath);
     if (fs.existsSync(LOCK_FILE)) fs.unlinkSync(LOCK_FILE);
@@ -68,7 +67,7 @@ export type WatcherOptions = PipelineOptions & {
 
 export function startWatcher(opts: WatcherOptions = {}): void {
   fs.mkdirSync(INBOX_DIR, { recursive: true });
-  fs.mkdirSync(path.join(INBOX_DIR, "images"), { recursive: true });
+  fs.mkdirSync(`${INBOX_DIR}/images`, { recursive: true });
 
   console.log("Auto Publish Watcher v2");
   console.log(`  watching: ${INBOX_DIR}`);
@@ -84,10 +83,12 @@ export function startWatcher(opts: WatcherOptions = {}): void {
   }
 
   fs.watch(INBOX_DIR, (event, filename) => {
-    if (!filename || !isProcessableDocx(filename)) return;
+    const normalized = normalizeWatchFilename(filename);
+    if (!normalized) return;
+    if (!evaluateInboxDocxCandidate(INBOX_DIR, normalized).ok) return;
     if (event !== "rename" && event !== "change") return;
-    console.log(`[watcher] detected: ${filename}`);
-    scheduleProcess(filename, opts);
+    console.log(`[watcher] detected: ${normalized}`);
+    scheduleProcess(normalized, opts);
   });
 }
 
@@ -96,5 +97,7 @@ export async function autoPublishInbox(opts: PipelineOptions = {}): Promise<void
   const docx = listInboxDocx();
   if (!docx.length) throw new Error("No .docx file in content/inbox");
   if (docx.length > 1) console.warn(`[auto] multiple docx found, using: ${docx[0]}`);
-  await runPipeline(path.join(INBOX_DIR, docx[0]), opts);
+  const evaluated = evaluateInboxDocxCandidate(INBOX_DIR, docx[0], { requireExistingFile: true });
+  if (!evaluated.ok) throw new Error(`Inbox docx candidate rejected: ${docx[0]}`);
+  await runPipeline(evaluated.absolutePath, opts);
 }

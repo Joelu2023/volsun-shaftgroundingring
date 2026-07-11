@@ -14,6 +14,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { listInboxDocxFiles, resolveFirstInboxDocx, resolveInboxDir } from "./inbox-paths";
 import { parseDocx } from "./docx-parser";
 import { buildArticle } from "./builder";
 import { countZhTodos, publishArticle, summarize, DirtyWorktreeError } from "./publisher";
@@ -60,20 +61,16 @@ function loadEnvFiles(): void {
 }
 loadEnvFiles();
 
-const INBOX = path.join(ROOT, "content", "inbox");
+const INBOX = resolveInboxDir(ROOT);
 const INBOX_IMAGES = path.join(INBOX, "images");
 const DRAFTS = path.join(__dirname, "drafts");
 const PUBLISHED = path.join(DRAFTS, "published");
 
 function findInboxDocx(): string {
   if (!fs.existsSync(INBOX)) throw new Error(`Inbox not found: ${INBOX}`);
-  const docx = fs
-    .readdirSync(INBOX)
-    .filter((f) => f.toLowerCase().endsWith(".docx") && !f.startsWith("~$"))
-    .sort();
-  if (!docx.length) throw new Error("No .docx file found in content/inbox");
-  if (docx.length > 1) console.warn(`Multiple .docx files found, using: ${docx[0]}`);
-  return path.join(INBOX, docx[0]);
+  const names = listInboxDocxFiles(INBOX);
+  if (names.length > 1) console.warn(`Multiple .docx files found, using: ${names[0]}`);
+  return resolveFirstInboxDocx(INBOX).absolutePath;
 }
 
 function getFlag(args: string[], name: string): string | undefined {
@@ -402,9 +399,7 @@ async function cmdReport(args: string[]): Promise<void> {
 }
 
 function cmdStatus(): void {
-  const docx = fs.existsSync(INBOX)
-    ? fs.readdirSync(INBOX).filter((f) => f.toLowerCase().endsWith(".docx") && !f.startsWith("~$"))
-    : [];
+  const docx = listInboxDocxFiles(INBOX);
   const images = fs.existsSync(INBOX_IMAGES)
     ? fs.readdirSync(INBOX_IMAGES).filter((f) => /\.(jpe?g|png|webp|gif)$/i.test(f))
     : [];

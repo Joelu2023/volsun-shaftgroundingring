@@ -2619,11 +2619,18 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "paragraph",
-            text: "To select the right shaft grounding ring, the following information is usually required: motor type, shaft diameter, motor power, operating speed, VFD usage condition, installation space, housing structure, environmental conditions, annual requirement, and drawing or motor specification.",
+            text: "Selecting a shaft grounding ring requires more than matching the nominal shaft diameter. Motor speed, shaft surface condition, grounding architecture, installation space, operating environment, and maintenance expectations should also be reviewed.",
+          },
+          {
+            type: "link",
+            intro:
+              "For a structured engineering selection process, including shaft-voltage interpretation, conductive fiber configuration, mounting options, and the information required for a preliminary evaluation, read our complete guide:",
+            label: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
           },
           {
             type: "paragraph",
-            text: "For OEM projects, customized design may be required to match the motor structure. For repair or retrofit projects, the installation method should be evaluated based on the existing motor condition. VOLSUN can support customers with technical evaluation and product selection based on application requirements.",
+            text: "For project evaluation, provide the shaft diameter and tolerance, rated and maximum speed, available installation space, operating environment, and motor drawings or photos.",
           },
           {
             type: "link",
@@ -2694,7 +2701,13 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "paragraph",
-            text: "Typical information includes motor type, shaft diameter, VFD usage, operating speed, installation space, and application environment.",
+            text: "The initial review normally requires the shaft diameter and tolerance, rated and maximum speed, available installation space, operating conditions, and motor drawings or photos.",
+          },
+          {
+            type: "link",
+            intro: "See our complete engineering checklist:",
+            label: "shaft grounding ring selection guide for EC and VFD motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
           },
         ],
       },
@@ -2936,11 +2949,18 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "paragraph",
-            text: "[ZH-TODO] To select the right shaft grounding ring, the following information is usually required: motor type, shaft diameter, motor power, operating speed, VFD usage condition, installation space, housing structure, environmental conditions, annual requirement, and drawing or motor specification.",
+            text: "[ZH-TODO] Selecting a shaft grounding ring requires more than matching the nominal shaft diameter. Motor speed, shaft surface condition, grounding architecture, installation space, operating environment, and maintenance expectations should also be reviewed.",
+          },
+          {
+            type: "link",
+            intro:
+              "[ZH-TODO] For a structured engineering selection process, including shaft-voltage interpretation, conductive fiber configuration, mounting options, and the information required for a preliminary evaluation, read our complete guide:",
+            label: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
           },
           {
             type: "paragraph",
-            text: "[ZH-TODO] For OEM projects, customized design may be required to match the motor structure. For repair or retrofit projects, the installation method should be evaluated based on the existing motor condition. VOLSUN can support customers with technical evaluation and product selection based on application requirements.",
+            text: "[ZH-TODO] For project evaluation, provide the shaft diameter and tolerance, rated and maximum speed, available installation space, operating environment, and motor drawings or photos.",
           },
           {
             type: "link",
@@ -3011,7 +3031,13 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "paragraph",
-            text: "[ZH-TODO] Typical information includes motor type, shaft diameter, VFD usage, operating speed, installation space, and application environment.",
+            text: "[ZH-TODO] The initial review normally requires the shaft diameter and tolerance, rated and maximum speed, available installation space, operating conditions, and motor drawings or photos.",
+          },
+          {
+            type: "link",
+            intro: "[ZH-TODO] See our complete engineering checklist:",
+            label: "shaft grounding ring selection guide for EC and VFD motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
           },
         ],
       },

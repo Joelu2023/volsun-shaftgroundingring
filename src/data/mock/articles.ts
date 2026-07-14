@@ -3216,6 +3216,802 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-16",
+    slug: "how-to-select-shaft-grounding-ring-ec-vfd-motors",
+    category: "technical-articles",
+    datePublished: "2026-07-14T15:10:25.238Z",
+    dateModified: "2026-07-14T15:10:25.238Z",
+    coverImagePublicPath: "/images/products/solid-rd-rdw-shaft-grounding-ring-v1.webp",
+    locales: {
+      en: {
+        title: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
+        excerpt: "A practical engineering guide to selecting shaft grounding rings for EC and VFD motors, covering shaft dimensions, speed, fiber configuration, installation, environment and validation.",
+        metaDescription: "Learn how to select a shaft grounding ring using shaft size, speed, electrical measurements, grounding layout, installation space and service conditions.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Selecting a shaft grounding ring is not only a catalog matching exercise. The goal is to help create a stable, low-impedance path that can divert shaft current away from the motor bearings under real operating conditions. Motor power rating alone is not enough.",
+          },
+          {
+            type: "paragraph",
+            text: "For background on why inverter-fed motors can develop shaft voltage and bearing current risk, see our guides on why VFD motors need shaft grounding rings and what causes VFD bearing failure. This article focuses on the inputs needed to select and evaluate a solution for EC motors and VFD-driven industrial motors.",
+          },
+          {
+            type: "image",
+            src: "/images/products/solid-rd-rdw-shaft-grounding-ring-v1.webp",
+            alt: "Three solid shaft grounding rings with conductive fibers along the inner circumference",
+          },
+          {
+            type: "heading",
+            text: "A Four-Step Selection Process",
+          },
+          {
+            type: "list",
+            items: [
+              "Confirm electrical and grounding architecture — understand where shaft current can flow and how the motor is grounded.",
+              "Define the mechanical contact interface — shaft diameter, tolerance, surface condition, contact position, and runout if available.",
+              "Select ring structure and mounting method — solid, arc-shaped, or custom/integrated forms may be considered based on access and packaging.",
+              "Validate operating and life requirements — speed profile, environment, inspection expectations, and application-relevant confirmation.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "These steps keep electrical, mechanical, packaging, and service questions in order before product comparison begins.",
+          },
+          {
+            type: "heading",
+            text: "Quick Selection Summary",
+          },
+          {
+            type: "paragraph",
+            text: "Collect these application inputs before reviewing product options:",
+          },
+          {
+            type: "list",
+            items: [
+              "Shaft diameter and tolerance — ring size, fit, and contact geometry",
+              "Shaft surface condition — contact quality of conductive fibers",
+              "Rated and maximum speed — contact stability under duty extremes",
+              "Duty cycle — continuous, intermittent, and cycling wear stress",
+              "Shaft voltage — electrical stress indicator, not a complete sizing input",
+              "Shaft current, if available — supports review when measurement quality is reliable",
+              "Grounding architecture — possible current paths in the system",
+              "Installation space — structure type and mounting options",
+              "Environment — temperature, humidity, oil, dust, and contamination",
+              "Required service life — separate motor life from device wear and inspection intervals",
+              "Drawing or 3D model — realistic fit and clearance review",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Structure Direction Table",
+          },
+          {
+            type: "paragraph",
+            text: "The following are possible directions only. Final choice depends on shaft size, access, envelope, and mounting review.",
+          },
+          {
+            type: "list",
+            items: [
+              "Solid ring (RD/RDW) — May be considered when the shaft and housing envelope support a continuous ring with confirmed OEM fit.",
+              "Arc-shaped ring (ST/STW) — May be considered for larger shaft diameters or access-constrained motors where an arc housing can simplify mounting.",
+              "Integrated / custom structure — May be considered for non-catalog geometry, special end-shield integration, or constrained envelopes.",
+            ],
+          },
+          {
+            type: "link",
+            intro: "Compare RD/RDW and ST/STW families:",
+            label: "ST/STW vs RD/RDW: Which Shaft Grounding Ring Structure?",
+            href: "/knowledge-center/split-vs-solid-shaft-grounding-rings-which-one-should-you-choose",
+          },
+          {
+            type: "link",
+            label: "Solid shaft grounding ring (RD/RDW)",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "Arc-shaped shaft grounding ring (ST/STW)",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "Custom shaft grounding ring",
+            href: "/products/custom-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "EC Motors vs VFD-Driven Industrial Motors",
+          },
+          {
+            type: "paragraph",
+            text: "Both EC motors and industrial motors with external VFDs can face bearing current risk, but installation and evaluation constraints often differ.",
+          },
+          {
+            type: "paragraph",
+            text: "EC motors are frequently compact and highly integrated. Installation space may be limited, and the contact zone may depend on enclosure design, bearing insulation strategy, and casing access. Retrofit can be difficult without housing review.",
+          },
+          {
+            type: "paragraph",
+            text: "VFD-driven industrial motors are more often treated as separate drive-motor systems. There may be more room for solid or arc-shaped rings, but grounding can still be complex due to couplings, driven equipment, and existing grounding devices.",
+          },
+          {
+            type: "paragraph",
+            text: "In both cases, ask the same question: can the device maintain stable conductive-fiber contact and a controlled discharge path under the motor’s speed, envelope, environment, and grounding layout?",
+          },
+          {
+            type: "heading",
+            text: "Shaft Diameter, Tolerance and Surface Condition",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft diameter is usually the first dimensional input, but it is rarely enough. Provide nominal diameter, manufacturing tolerance if available, and the intended contact position.",
+          },
+          {
+            type: "paragraph",
+            text: "Tolerance matters because conductive-fiber engagement depends on the actual shaft diameter at the contact zone, not only a nameplate value. If tolerance data is unavailable, drawings and measured diameters become more important.",
+          },
+          {
+            type: "paragraph",
+            text: "Surface condition is equally important:",
+          },
+          {
+            type: "list",
+            items: [
+              "Shaft material influences conductivity and wear at the contact interface.",
+              "Coating or oxidation can raise contact resistance or reduce fiber effectiveness.",
+              "Contamination from dust, oil film, coolant, or process debris can interrupt contact.",
+              "Contact position should avoid keyways, steps, grooves, sharp edges, or damaged zones whenever possible.",
+              "Shaft runout and concentricity, when available, help estimate contact continuity under rotation.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "A ring sized only by nominal diameter may still underperform if the contact surface is oxidized, contaminated, or poorly positioned.",
+          },
+          {
+            type: "heading",
+            text: "Rated Speed, Maximum Speed and Duty Cycle",
+          },
+          {
+            type: "paragraph",
+            text: "Review speed as a set of operating conditions. Share both rated speed and maximum speed that can occur in service.",
+          },
+          {
+            type: "list",
+            items: [
+              "Continuous or intermittent operation",
+              "Short-duration maximum-speed operation, rapid acceleration or deceleration, and intermittent high-speed duty",
+              "Typical operating hours, if known",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "These inputs do not create a universal safe-speed chart. They help evaluate whether contact stability, friction and wear fit the installation envelope and planned inspection practice.",
+          },
+          {
+            type: "heading",
+            text: "Shaft Voltage, Shaft Current and Grounding Architecture",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft voltage indicates electrical stress. Shaft current data, when measured reliably, can further support review. Electrical values must still be interpreted with grounding architecture.",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor frame grounding practice",
+              "Insulated bearing arrangement",
+              "Drive-end versus non-drive-end constraints",
+              "Coupling style and driven-equipment grounding path",
+              "Existing grounding devices or filters",
+              "Expected common-mode current path through the motor and connected machinery",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Shaft-voltage and shaft-current results should be reviewed together with the measurement method, probe position, grounding reference and instrument bandwidth. Where possible, provide a measurement setup description or waveform screenshot.",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring is only one element in bearing current protection. An insulated bearing may change where current tries to flow. A weakly bonded frame or an alternate path through coupled equipment can move risk rather than remove it.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/04-shaft-grounding-ring-structure-diagram.webp",
+            alt: "Shaft grounding ring structure showing conductive carbon fiber contact with a motor shaft",
+          },
+          {
+            type: "heading",
+            text: "Why Shaft Voltage Alone Cannot Determine the Number of Conductive Fiber Bundles",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft voltage alone cannot determine the required number and arrangement of conductive fiber bundles.",
+          },
+          {
+            type: "paragraph",
+            text: "Voltage amplitude is useful, but it does not fully describe contact geometry, waveform quality, surface films, speed stability, clearance limits, duty cycle, or whether another grounding method already alters the current path.",
+          },
+          {
+            type: "paragraph",
+            text: "Two motors with similar measured shaft voltage can still need different designs if shaft finish, speed profile, housing space, and grounding architecture differ.",
+          },
+          {
+            type: "heading",
+            text: "How Many Conductive Fiber Bundles Are Needed?",
+          },
+          {
+            type: "paragraph",
+            text: "More conductive fiber bundles do not automatically mean better grounding performance.",
+          },
+          {
+            type: "paragraph",
+            text: "The number and arrangement of conductive fiber bundles is a trade-off among contact opportunities, stability under speed and runout, friction and wear, installation limits, and service assumptions.",
+          },
+          {
+            type: "paragraph",
+            text: "Increasing bundle count may improve contact redundancy in some layouts. In others, it may increase friction or wear in some configurations, complicate packaging, or add little benefit if surface condition, mounting quality, or grounding paths are the real bottlenecks.",
+          },
+          {
+            type: "paragraph",
+            text: "Define contact and discharge needs first, then evaluate a metallized carbon fiber configuration that balances conductivity, contact stability, friction and wear, installation space, and serviceability.",
+          },
+          {
+            type: "heading",
+            text: "Installation Space and Mounting Method",
+          },
+          {
+            type: "paragraph",
+            text: "Installation constraints often decide which structure direction is realistic. Check radial and axial clearance, assembly access, housing geometry, fasteners, and whether partial disassembly is possible.",
+          },
+          {
+            type: "paragraph",
+            text: "OEM designs usually allow earlier packaging decisions. Retrofit work may favor arc-shaped or custom approaches. Confirm that mounting can place conductive fibers on a suitable shaft zone and bond to the intended ground path.",
+          },
+          {
+            type: "link",
+            intro: "For installation process detail, see:",
+            label: "How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "paragraph",
+            text: "Distorted housings, uneven fastening, or contact against damaged shaft surfaces can reduce field performance, even when the electrical concept looks correct on paper.",
+          },
+          {
+            type: "image",
+            src: "/images/products/product-split-shaft-grounding-ring-installation-reference-v1.webp",
+            alt: "Arc-shaped shaft grounding ring with conductive fibers and mounting holes",
+          },
+          {
+            type: "heading",
+            text: "Temperature, Humidity, Lubrication and Contamination",
+          },
+          {
+            type: "paragraph",
+            text: "Operating environment affects contact quality and wear expectations. Provide temperature, humidity, oil or coolant exposure, dust or process contamination, and chemical exposure if relevant.",
+          },
+          {
+            type: "paragraph",
+            text: "Lubrication can help mechanical systems and still challenge electrical contact if a dielectric film builds between conductive fibers and the shaft. Dust can abrade or interrupt contact. Describe the actual environment rather than calling it normal industrial conditions.",
+          },
+          {
+            type: "heading",
+            text: "Service Life, Inspection and Validation",
+          },
+          {
+            type: "paragraph",
+            text: "Keep service-life language precise. Do not mix these concepts:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor design life — intended life target of the motor platform",
+              "Wear life of conductive fibers — contact-element wear under the actual duty",
+              "Inspection interval — when contact, continuity, and contamination should be reviewed",
+              "Replacement interval — when replacement is planned or triggered by inspection",
+              "Motor-level validation — confirmation under application-relevant motor conditions",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Motor design life and grounding-device maintenance expectations must be evaluated separately. Where life targets are critical, define success criteria clearly. Final configuration requires application-specific validation.",
+          },
+          {
+            type: "heading",
+            text: "Technical Evaluation Checklist",
+          },
+          {
+            type: "heading",
+            text: "Minimum Information for Preliminary Review",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor type and application",
+              "Drive type",
+              "Rated and maximum speed",
+              "Shaft diameter and tolerance",
+              "Available radial and axial installation space",
+              "Basic operating environment, including temperature and any oil, dust or contamination",
+              "2D drawing, photos, or basic envelope sketch",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Helpful Information for Detailed Engineering Evaluation",
+          },
+          {
+            type: "list",
+            items: [
+              "Operating duty cycle",
+              "Shaft material and surface condition",
+              "Shaft runout, if available",
+              "Measured shaft voltage",
+              "Measured shaft current or waveform, if available",
+              "Measurement method, probe position, grounding reference, and instrument bandwidth",
+              "Bearing insulation arrangement",
+              "Motor grounding configuration and known common-mode path comments",
+              "Operating temperature and humidity",
+              "Lubrication, oil, dust, or contamination conditions",
+              "Expected motor design life and inspection requirements",
+              "3D model or detailed installation drawing",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Project Information",
+          },
+          {
+            type: "paragraph",
+            text: "Annual demand or project volume and timeline or sample quantity, if relevant. Annual demand supports commercial planning. It is not a technical sizing parameter.",
+          },
+          {
+            type: "heading",
+            text: "Selecting the Right Shaft Grounding Solution",
+          },
+          {
+            type: "paragraph",
+            text: "A properly selected and installed shaft grounding ring can help establish a stable, low-impedance discharge path from the shaft to the grounded motor frame. Its effectiveness depends on the motor’s mechanical interface, electrical architecture, operating environment and validation conditions.",
+          },
+          {
+            type: "paragraph",
+            text: "The objective is not to choose the largest ring or the greatest number of conductive fiber bundles. It is to identify the configuration that provides stable electrical contact, suitable mechanical integration and practical service life for the specific motor application.",
+          },
+          {
+            type: "paragraph",
+            text: "Need help selecting a shaft grounding solution?",
+          },
+          {
+            type: "paragraph",
+            text: "Send us your shaft dimensions, motor speed, installation drawing and operating conditions for a preliminary engineering review.",
+          },
+          {
+            type: "link",
+            label: "Request an Engineering Evaluation",
+            href: "/contact?campaign=shaft-grounding-selection&source=technical_article&source_page=how-to-select-shaft-grounding-ring-ec-vfd-motors&cta_key=engineer",
+          },
+          {
+            type: "link",
+            intro: "Related technical resources:",
+            label: "Why VFD Motors Need Shaft Grounding Rings to Prevent Bearing Failure",
+            href: "/knowledge-center/why-vfd-motors-need-shaft-grounding-rings",
+          },
+          {
+            type: "link",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "link",
+            label: "How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "ST/STW vs RD/RDW: Which Shaft Grounding Ring Structure?",
+            href: "/knowledge-center/split-vs-solid-shaft-grounding-rings-which-one-should-you-choose",
+          },
+        ],
+      },
+      zh: {
+        title: "[ZH-TODO] How to Select a Shaft Grounding Ring for EC and VFD Motors",
+        excerpt: "[ZH-TODO] A practical engineering guide to selecting shaft grounding rings for EC and VFD motors, covering shaft dimensions, speed, fiber configuration, installation, environment and validation.",
+        metaDescription: "[ZH-TODO] Learn how to select a shaft grounding ring using shaft size, speed, electrical measurements, grounding layout, installation space and service conditions.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Selecting a shaft grounding ring is not only a catalog matching exercise. The goal is to help create a stable, low-impedance path that can divert shaft current away from the motor bearings under real operating conditions. Motor power rating alone is not enough.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] For background on why inverter-fed motors can develop shaft voltage and bearing current risk, see our guides on why VFD motors need shaft grounding rings and what causes VFD bearing failure. This article focuses on the inputs needed to select and evaluate a solution for EC motors and VFD-driven industrial motors.",
+          },
+          {
+            type: "image",
+            src: "/images/products/solid-rd-rdw-shaft-grounding-ring-v1.webp",
+            alt: "[ZH-TODO] Three solid shaft grounding rings with conductive fibers along the inner circumference",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] A Four-Step Selection Process",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Confirm electrical and grounding architecture — understand where shaft current can flow and how the motor is grounded.",
+              "[ZH-TODO] Define the mechanical contact interface — shaft diameter, tolerance, surface condition, contact position, and runout if available.",
+              "[ZH-TODO] Select ring structure and mounting method — solid, arc-shaped, or custom/integrated forms may be considered based on access and packaging.",
+              "[ZH-TODO] Validate operating and life requirements — speed profile, environment, inspection expectations, and application-relevant confirmation.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] These steps keep electrical, mechanical, packaging, and service questions in order before product comparison begins.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Quick Selection Summary",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Collect these application inputs before reviewing product options:",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Shaft diameter and tolerance — ring size, fit, and contact geometry",
+              "[ZH-TODO] Shaft surface condition — contact quality of conductive fibers",
+              "[ZH-TODO] Rated and maximum speed — contact stability under duty extremes",
+              "[ZH-TODO] Duty cycle — continuous, intermittent, and cycling wear stress",
+              "[ZH-TODO] Shaft voltage — electrical stress indicator, not a complete sizing input",
+              "[ZH-TODO] Shaft current, if available — supports review when measurement quality is reliable",
+              "[ZH-TODO] Grounding architecture — possible current paths in the system",
+              "[ZH-TODO] Installation space — structure type and mounting options",
+              "[ZH-TODO] Environment — temperature, humidity, oil, dust, and contamination",
+              "[ZH-TODO] Required service life — separate motor life from device wear and inspection intervals",
+              "[ZH-TODO] Drawing or 3D model — realistic fit and clearance review",
+            ],
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Structure Direction Table",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] The following are possible directions only. Final choice depends on shaft size, access, envelope, and mounting review.",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Solid ring (RD/RDW) — May be considered when the shaft and housing envelope support a continuous ring with confirmed OEM fit.",
+              "[ZH-TODO] Arc-shaped ring (ST/STW) — May be considered for larger shaft diameters or access-constrained motors where an arc housing can simplify mounting.",
+              "[ZH-TODO] Integrated / custom structure — May be considered for non-catalog geometry, special end-shield integration, or constrained envelopes.",
+            ],
+          },
+          {
+            type: "link",
+            intro: "[ZH-TODO] Compare RD/RDW and ST/STW families:",
+            label: "[ZH-TODO] ST/STW vs RD/RDW: Which Shaft Grounding Ring Structure?",
+            href: "/knowledge-center/split-vs-solid-shaft-grounding-rings-which-one-should-you-choose",
+          },
+          {
+            type: "link",
+            label: "[ZH-TODO] Solid shaft grounding ring (RD/RDW)",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "[ZH-TODO] Arc-shaped shaft grounding ring (ST/STW)",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "[ZH-TODO] Custom shaft grounding ring",
+            href: "/products/custom-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] EC Motors vs VFD-Driven Industrial Motors",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Both EC motors and industrial motors with external VFDs can face bearing current risk, but installation and evaluation constraints often differ.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] EC motors are frequently compact and highly integrated. Installation space may be limited, and the contact zone may depend on enclosure design, bearing insulation strategy, and casing access. Retrofit can be difficult without housing review.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] VFD-driven industrial motors are more often treated as separate drive-motor systems. There may be more room for solid or arc-shaped rings, but grounding can still be complex due to couplings, driven equipment, and existing grounding devices.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] In both cases, ask the same question: can the device maintain stable conductive-fiber contact and a controlled discharge path under the motor’s speed, envelope, environment, and grounding layout?",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Shaft Diameter, Tolerance and Surface Condition",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Shaft diameter is usually the first dimensional input, but it is rarely enough. Provide nominal diameter, manufacturing tolerance if available, and the intended contact position.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Tolerance matters because conductive-fiber engagement depends on the actual shaft diameter at the contact zone, not only a nameplate value. If tolerance data is unavailable, drawings and measured diameters become more important.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Surface condition is equally important:",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Shaft material influences conductivity and wear at the contact interface.",
+              "[ZH-TODO] Coating or oxidation can raise contact resistance or reduce fiber effectiveness.",
+              "[ZH-TODO] Contamination from dust, oil film, coolant, or process debris can interrupt contact.",
+              "[ZH-TODO] Contact position should avoid keyways, steps, grooves, sharp edges, or damaged zones whenever possible.",
+              "[ZH-TODO] Shaft runout and concentricity, when available, help estimate contact continuity under rotation.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] A ring sized only by nominal diameter may still underperform if the contact surface is oxidized, contaminated, or poorly positioned.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Rated Speed, Maximum Speed and Duty Cycle",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Review speed as a set of operating conditions. Share both rated speed and maximum speed that can occur in service.",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Continuous or intermittent operation",
+              "[ZH-TODO] Short-duration maximum-speed operation, rapid acceleration or deceleration, and intermittent high-speed duty",
+              "[ZH-TODO] Typical operating hours, if known",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] These inputs do not create a universal safe-speed chart. They help evaluate whether contact stability, friction and wear fit the installation envelope and planned inspection practice.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Shaft Voltage, Shaft Current and Grounding Architecture",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Shaft voltage indicates electrical stress. Shaft current data, when measured reliably, can further support review. Electrical values must still be interpreted with grounding architecture.",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Motor frame grounding practice",
+              "[ZH-TODO] Insulated bearing arrangement",
+              "[ZH-TODO] Drive-end versus non-drive-end constraints",
+              "[ZH-TODO] Coupling style and driven-equipment grounding path",
+              "[ZH-TODO] Existing grounding devices or filters",
+              "[ZH-TODO] Expected common-mode current path through the motor and connected machinery",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Shaft-voltage and shaft-current results should be reviewed together with the measurement method, probe position, grounding reference and instrument bandwidth. Where possible, provide a measurement setup description or waveform screenshot.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] A shaft grounding ring is only one element in bearing current protection. An insulated bearing may change where current tries to flow. A weakly bonded frame or an alternate path through coupled equipment can move risk rather than remove it.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/04-shaft-grounding-ring-structure-diagram.webp",
+            alt: "[ZH-TODO] Shaft grounding ring structure showing conductive carbon fiber contact with a motor shaft",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Why Shaft Voltage Alone Cannot Determine the Number of Conductive Fiber Bundles",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Shaft voltage alone cannot determine the required number and arrangement of conductive fiber bundles.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Voltage amplitude is useful, but it does not fully describe contact geometry, waveform quality, surface films, speed stability, clearance limits, duty cycle, or whether another grounding method already alters the current path.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Two motors with similar measured shaft voltage can still need different designs if shaft finish, speed profile, housing space, and grounding architecture differ.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] How Many Conductive Fiber Bundles Are Needed?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] More conductive fiber bundles do not automatically mean better grounding performance.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] The number and arrangement of conductive fiber bundles is a trade-off among contact opportunities, stability under speed and runout, friction and wear, installation limits, and service assumptions.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Increasing bundle count may improve contact redundancy in some layouts. In others, it may increase friction or wear in some configurations, complicate packaging, or add little benefit if surface condition, mounting quality, or grounding paths are the real bottlenecks.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Define contact and discharge needs first, then evaluate a metallized carbon fiber configuration that balances conductivity, contact stability, friction and wear, installation space, and serviceability.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Installation Space and Mounting Method",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Installation constraints often decide which structure direction is realistic. Check radial and axial clearance, assembly access, housing geometry, fasteners, and whether partial disassembly is possible.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] OEM designs usually allow earlier packaging decisions. Retrofit work may favor arc-shaped or custom approaches. Confirm that mounting can place conductive fibers on a suitable shaft zone and bond to the intended ground path.",
+          },
+          {
+            type: "link",
+            intro: "[ZH-TODO] For installation process detail, see:",
+            label: "[ZH-TODO] How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Distorted housings, uneven fastening, or contact against damaged shaft surfaces can reduce field performance, even when the electrical concept looks correct on paper.",
+          },
+          {
+            type: "image",
+            src: "/images/products/product-split-shaft-grounding-ring-installation-reference-v1.webp",
+            alt: "[ZH-TODO] Arc-shaped shaft grounding ring with conductive fibers and mounting holes",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Temperature, Humidity, Lubrication and Contamination",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Operating environment affects contact quality and wear expectations. Provide temperature, humidity, oil or coolant exposure, dust or process contamination, and chemical exposure if relevant.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Lubrication can help mechanical systems and still challenge electrical contact if a dielectric film builds between conductive fibers and the shaft. Dust can abrade or interrupt contact. Describe the actual environment rather than calling it normal industrial conditions.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Service Life, Inspection and Validation",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Keep service-life language precise. Do not mix these concepts:",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Motor design life — intended life target of the motor platform",
+              "[ZH-TODO] Wear life of conductive fibers — contact-element wear under the actual duty",
+              "[ZH-TODO] Inspection interval — when contact, continuity, and contamination should be reviewed",
+              "[ZH-TODO] Replacement interval — when replacement is planned or triggered by inspection",
+              "[ZH-TODO] Motor-level validation — confirmation under application-relevant motor conditions",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Motor design life and grounding-device maintenance expectations must be evaluated separately. Where life targets are critical, define success criteria clearly. Final configuration requires application-specific validation.",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Technical Evaluation Checklist",
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Minimum Information for Preliminary Review",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Motor type and application",
+              "[ZH-TODO] Drive type",
+              "[ZH-TODO] Rated and maximum speed",
+              "[ZH-TODO] Shaft diameter and tolerance",
+              "[ZH-TODO] Available radial and axial installation space",
+              "[ZH-TODO] Basic operating environment, including temperature and any oil, dust or contamination",
+              "[ZH-TODO] 2D drawing, photos, or basic envelope sketch",
+            ],
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Helpful Information for Detailed Engineering Evaluation",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Operating duty cycle",
+              "[ZH-TODO] Shaft material and surface condition",
+              "[ZH-TODO] Shaft runout, if available",
+              "[ZH-TODO] Measured shaft voltage",
+              "[ZH-TODO] Measured shaft current or waveform, if available",
+              "[ZH-TODO] Measurement method, probe position, grounding reference, and instrument bandwidth",
+              "[ZH-TODO] Bearing insulation arrangement",
+              "[ZH-TODO] Motor grounding configuration and known common-mode path comments",
+              "[ZH-TODO] Operating temperature and humidity",
+              "[ZH-TODO] Lubrication, oil, dust, or contamination conditions",
+              "[ZH-TODO] Expected motor design life and inspection requirements",
+              "[ZH-TODO] 3D model or detailed installation drawing",
+            ],
+          },
+          {
+            type: "heading",
+            text: "[ZH-TODO] Project Information",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Annual demand or project volume and timeline or sample quantity, if relevant. Annual demand supports commercial planning. It is not a technical sizing parameter.",
+          },
+          {
+            type: "heading",
+            text: "总结",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] A properly selected and installed shaft grounding ring can help establish a stable, low-impedance discharge path from the shaft to the grounded motor frame. Its effectiveness depends on the motor’s mechanical interface, electrical architecture, operating environment and validation conditions.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] The objective is not to choose the largest ring or the greatest number of conductive fiber bundles. It is to identify the configuration that provides stable electrical contact, suitable mechanical integration and practical service life for the specific motor application.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Need help selecting a shaft grounding solution?",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Send us your shaft dimensions, motor speed, installation drawing and operating conditions for a preliminary engineering review.",
+          },
+          {
+            type: "link",
+            label: "Request an Engineering Evaluation",
+            href: "/contact?campaign=shaft-grounding-selection&source=technical_article&source_page=how-to-select-shaft-grounding-ring-ec-vfd-motors&cta_key=engineer",
+          },
+          {
+            type: "link",
+            intro: "[ZH-TODO] Related technical resources:",
+            label: "[ZH-TODO] Why VFD Motors Need Shaft Grounding Rings to Prevent Bearing Failure",
+            href: "/knowledge-center/why-vfd-motors-need-shaft-grounding-rings",
+          },
+          {
+            type: "link",
+            label: "[ZH-TODO] What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "link",
+            label: "[ZH-TODO] How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "[ZH-TODO] ST/STW vs RD/RDW: Which Shaft Grounding Ring Structure?",
+            href: "/knowledge-center/split-vs-solid-shaft-grounding-rings-which-one-should-you-choose",
+          },
+        ],
+      },
+    },
+  },
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 

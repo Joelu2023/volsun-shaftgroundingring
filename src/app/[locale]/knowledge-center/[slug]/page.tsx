@@ -22,6 +22,8 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "product_interest=solid-shaft-grounding-ring&campaign=sgr-vfd-bearing-protection&source_page=why-vfd-motors-need-shaft-grounding-rings&cta_key=engineer&inquiry_type=technical_inquiry",
   "volsun-at-tmc2026-e-drive-material-solutions":
     "campaign=tmc2026&source=news&source_page=volsun-at-tmc2026-e-drive-material-solutions&cta_key=quote",
+  "how-to-select-shaft-grounding-ring-ec-vfd-motors":
+    "campaign=shaft-grounding-selection&source=technical_article&source_page=how-to-select-shaft-grounding-ring-ec-vfd-motors&cta_key=engineer",
 };
 
 function buildArticleBottomContactHref(locale: AppLocale, slug: string): string {

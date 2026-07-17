@@ -9,12 +9,13 @@ import {
 
 /**
  * English-only sitemap to focus crawl budget on /en URLs.
+ * Chinese (/zh) URLs are intentionally omitted; they remain crawlable but noindex.
  * Priority scores from content-factory/crawl-priority.ts (Governance Layer).
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getCanonicalSiteOrigin();
 
-  return [
+  const entries: MetadataRoute.Sitemap = [
     { url: `${base}/en`, priority: getCrawlPriority("homepage") },
     { url: `${base}/en/products`, priority: getCrawlPriority("products-list") },
     ...products.map((product) => ({
@@ -36,4 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     ]),
   ];
+
+  // Defensive: never emit /zh or /zh/** even if a future edit adds a locale loop.
+  return entries.filter((entry) => !entry.url.includes("/zh/") && !entry.url.endsWith("/zh"));
 }

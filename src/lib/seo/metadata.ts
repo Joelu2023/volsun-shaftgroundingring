@@ -25,6 +25,14 @@ function alternateLanguageUrls(base: string, logicalPath: string): { en: string;
   };
 }
 
+/** Crawl allowed for all locales; only Chinese pages opt out of indexing. */
+export function localeRobots(locale: AppLocale | undefined): Metadata["robots"] {
+  if (locale === "zh") {
+    return { index: false, follow: true };
+  }
+  return { index: true, follow: true };
+}
+
 export function buildPageMetadata({ title, description, path, locale, absoluteTitle }: PageMetaInput): Metadata {
   const base = getCanonicalSiteOrigin();
   const canonicalPath = locale ? pathWithLocale(locale, path) : path.startsWith("/") ? path : `/${path}`;
@@ -45,6 +53,7 @@ export function buildPageMetadata({ title, description, path, locale, absoluteTi
     ...(absoluteTitle ? { title: { absolute: title } } : { title }),
     description,
     alternates,
+    robots: localeRobots(locale),
     openGraph: {
       title: absoluteTitle ? title : undefined,
       description,

@@ -24,6 +24,12 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=tmc2026&source=news&source_page=volsun-at-tmc2026-e-drive-material-solutions&cta_key=quote",
   "how-to-select-shaft-grounding-ring-ec-vfd-motors":
     "campaign=shaft-grounding-selection&source=technical_article&source_page=how-to-select-shaft-grounding-ring-ec-vfd-motors&cta_key=engineer",
+  "shaft-grounding-ring-vs-carbon-brush":
+    "campaign=sgr-brush-vs-ring&source=technical_article&source_page=shaft-grounding-ring-vs-carbon-brush&cta_key=engineer&inquiry_type=technical_inquiry",
+};
+
+const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
+  "shaft-grounding-ring-vs-carbon-brush": "Submit Motor Operating Conditions",
 };
 
 function buildArticleBottomContactHref(locale: AppLocale, slug: string): string {
@@ -94,6 +100,8 @@ export default async function LocalizedArticlePage({ params }: Props) {
   const coverSrc = sanitizeLargeSlotImageSrc(a.coverImagePublicPath);
 
   const articleBottomContactHref = buildArticleBottomContactHref(locale, a.slug);
+  const articleBottomCtaLabel =
+    locale === "en" ? (EN_ARTICLE_CTA_LABEL[a.slug] ?? t.contactRfq) : t.contactRfq;
 
   const jsonLd = [
     webPageJsonLd({ name: a.title, description: a.metaDescription, path: `/knowledge-center/${a.slug}`, locale }),
@@ -155,7 +163,7 @@ export default async function LocalizedArticlePage({ params }: Props) {
           <p className="font-medium text-slate-900">{t.knowledgeNeedSizingTitle}</p>
           <p className="mt-2 text-sm text-slate-600">{t.knowledgeNeedSizingBody}</p>
           <Link href={articleBottomContactHref} className="mt-4 inline-block text-sm font-medium text-brand-orange hover:underline">
-            {t.contactRfq}
+            {articleBottomCtaLabel}
           </Link>
         </div>
       </article>

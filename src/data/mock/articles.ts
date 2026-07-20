@@ -346,95 +346,211 @@ export const articles: ArticleRecord[] = [
     slug: "shaft-grounding-ring-vs-carbon-brush",
     category: "technical-articles",
     datePublished: "2026-05-21T08:00:00.000Z",
-    dateModified: "2026-05-21T08:00:00.000Z",
+    dateModified: "2026-07-17T08:00:00.000Z",
     coverImagePublicPath: "/images/articles/article-shaft-grounding-ring-vs-carbon-brush-v1-2.webp",
     locales: {
       en: {
-        title: "Shaft Grounding Ring vs Carbon Brush: Which Is Better?",
+        title: "Shaft Grounding Ring vs. Carbon Brush: An Engineering Comparison for VFD Motors",
         excerpt:
-          "Compare shaft grounding rings and carbon brushes for VFD motor bearing protection, including maintenance, shaft wear, reliability, cleanliness, and long-term cost.",
+          "Engineering comparison of conductive-fiber shaft grounding rings and carbon brush grounding for VFD motors, covering shaft current formation, contact mechanisms, application fit, and the operating data needed for selection.",
         metaDescription:
-          "Learn the key differences between shaft grounding rings and carbon brushes for VFD motor bearing protection, including maintenance, shaft wear, reliability, and total cost.",
+          "Compare shaft grounding rings and carbon brushes for VFD motor bearing protection: how shaft current forms, how each grounding method works, where each fits, and eight parameters to submit for evaluation.",
         paragraphs: [],
         blocks: [
           {
             type: "paragraph",
-            text: "Both shaft grounding rings and carbon brushes are used to discharge shaft currents, but they differ significantly in reliability, maintenance, and long-term cost.",
+            text: "VFD-driven motors can develop shaft voltage and bearing current that lead to electrical discharge damage. Two common shaft grounding approaches are carbon brush assemblies and conductive-fiber shaft grounding rings. They share the same objective—provide a controlled path for shaft current—but differ in contact geometry, maintenance expectations, and integration constraints.",
           },
           {
             type: "paragraph",
-            text: "For VFD-driven industrial and EV motors, choosing the right shaft grounding method can reduce bearing electrical damage, unplanned downtime, and total ownership cost.",
+            text: "This article compares the two methods from an engineering perspective. It is not a universal ranking. The appropriate choice depends on motor speed, duty cycle, installation access, environmental conditions, and how the motor is grounded.",
           },
-          { type: "heading", text: "Carbon Brush Limitations" },
+          {
+            type: "heading",
+            text: "How Shaft Current Forms in VFD Motor Systems",
+          },
           {
             type: "paragraph",
-            text: "Traditional carbon brush grounding relies on spring-loaded contact against the rotating shaft. In inverter-duty environments, this approach has several drawbacks:",
+            text: "A variable frequency drive converts fixed-frequency AC power into a PWM output to control motor speed. High-speed switching in the inverter creates common-mode voltage on the motor windings and frame. Capacitive coupling between the rotor and stator can charge the shaft relative to ground.",
           },
-          {
-            type: "list",
-            items: [
-              "Requires spring pressure to maintain contact",
-              "Produces wear debris that can contaminate the motor environment",
-              "Needs regular maintenance and brush replacement",
-              "Shorter service life under high-speed or continuous-duty operation",
-            ],
-          },
-          { type: "heading", text: "VOLSUN Shaft Grounding Ring Benefits" },
           {
             type: "paragraph",
-            text: "A shaft grounding ring provides a controlled low-resistance path for shaft current without the wear and maintenance burden of a carbon brush assembly:",
-          },
-          {
-            type: "list",
-            items: [
-              "Maintenance-free operation in typical installations",
-              "Stable contact resistance over long service life",
-              "No lubrication contamination from brush debris",
-              "Long-term reliability for industrial and high-speed motors",
-            ],
-          },
-          { type: "heading", text: "Why VOLSUN Uses Metallized Carbon Fiber" },
-          {
-            type: "paragraph",
-            text: "VOLSUN shaft grounding rings use metallized carbon fiber microfilaments instead of a single brush point. The conductive fibers provide:",
-          },
-          {
-            type: "list",
-            items: [
-              "Thousands of contact points around the shaft",
-              "Minimal shaft wear compared with brush scrubbing",
-              "Excellent conductivity for high-frequency shaft currents",
-              "Compatibility with oil-cooled and high-speed motor applications",
-            ],
+            text: "When shaft voltage rises, the bearing lubricant film may break down. Current can then discharge through the rolling elements and raceways, causing pitting, frosting, or fluting over time. Without a defined low-impedance discharge path, the bearings may become the default path for high-frequency shaft current.",
           },
           {
             type: "image",
-            src: "/images/articles/article-metallized-carbon-fiber-contact-v1-2.webp",
-            alt: "Metallized carbon fiber microfilaments on a VOLSUN shaft grounding ring for multi-point shaft contact",
+            src: "/images/articles/article-shaft-grounding-ring-current-path-v1.webp",
+            alt: "VFD motor shaft current path diagram showing discharge through bearings versus a shaft grounding device",
           },
-          { type: "heading", text: "Comparison at a Glance" },
           {
             type: "paragraph",
-            text: "When evaluating shaft grounding for VFD motors, consider how each option performs across maintenance, cleanliness, and lifecycle cost:",
+            text: "Shaft grounding is one way to redirect current away from the bearing interface. Whether a carbon brush or a conductive-fiber ring is more suitable depends on how reliably each can maintain contact under the actual speed, environment, and mechanical constraints of the application.",
+          },
+          {
+            type: "heading",
+            text: "How a Carbon Brush Grounding System Works",
+          },
+          {
+            type: "paragraph",
+            text: "A traditional carbon brush grounding assembly uses a spring-loaded graphite block pressed against the rotating shaft. The brush slides on the shaft surface and transfers current to a holder connected to the motor frame or an external ground point.",
           },
           {
             type: "list",
             items: [
-              "Maintenance: carbon brushes require periodic inspection and replacement; shaft grounding rings are designed for maintenance-free service",
-              "Shaft wear: brush contact can groove or polish the shaft; metallized fiber contact spreads load across many points",
-              "Reliability: brush bounce or weak spring pressure can interrupt grounding; rings maintain more consistent contact",
-              "Cleanliness: brush debris can affect seals and lubricants; rings avoid particulate generation",
-              "Total cost: lower lifetime maintenance and fewer bearing-related failures often favor shaft grounding rings",
+              "Single-point contact on the shaft circumference",
+              "Spring force maintains brush pressure as the brush wears",
+              "Graphite-to-shaft interface carries the discharge current",
+              "Holder and grounding wire complete the path to frame ground",
             ],
           },
-          { type: "heading", text: "Conclusion" },
           {
             type: "paragraph",
-            text: "For modern VFD-driven motors, VOLSUN shaft grounding rings typically deliver better long-term performance and lower total ownership cost than carbon brush grounding.",
+            text: "Carbon brushes are widely understood and can be retrofitted on many motor platforms. In inverter-duty service, engineers should evaluate brush wear rate, debris generation, contact stability at speed, and the inspection interval required to maintain a reliable ground path.",
+          },
+          {
+            type: "heading",
+            text: "How a Conductive-Fiber Shaft Grounding Ring Works",
           },
           {
             type: "paragraph",
-            text: "Contact VOLSUN for application guidance, shaft diameter sizing, and product selection for your motor platform.",
+            text: "A conductive-fiber shaft grounding ring mounts around the shaft so that metallized carbon fibers or similar conductive elements lightly contact the shaft surface. Multiple fibers around the circumference share contact duty instead of relying on one brush point.",
+          },
+          {
+            type: "list",
+            items: [
+              "Circumferential fiber contact along the shaft",
+              "Current transfers from shaft through fibers to the ring body",
+              "Ring body or bracket connects to the grounded motor frame",
+              "Solid, split, or custom ring forms adapt to installation access",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "The design intent is to provide a continuous low-impedance path for high-frequency shaft current while spreading mechanical contact over many small fiber tips. Performance still depends on correct installation, shaft surface condition, fiber pressure, and grounding integrity.",
+          },
+          {
+            type: "heading",
+            text: "Engineering Comparison: Carbon Brush vs. Conductive-Fiber Ring",
+          },
+          {
+            type: "paragraph",
+            text: "The table below summarizes typical engineering trade-offs. Actual results vary with motor platform, speed, environment, and maintenance practice.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/article-shaft-grounding-ring-vs-carbon-brush-v1-2.webp",
+            alt: "Comparison table of carbon brush grounding versus conductive-fiber shaft grounding ring for VFD motors",
+          },
+          {
+            type: "list",
+            items: [
+              "Contact geometry: single brush point vs. distributed fiber contact around the shaft",
+              "Maintenance: brushes typically require periodic inspection and replacement; rings may reduce brush replacement cycles but still need installation and continuity checks",
+              "Debris and cleanliness: brush wear can generate carbon dust; fiber contact may produce less brush-style particulate but still requires a clean shaft surface",
+              "Shaft surface effect: concentrated brush contact can groove or polish local areas; distributed fiber contact can spread mechanical load but does not eliminate shaft interaction",
+              "High-speed behavior: brush bounce or film breakdown can interrupt contact; ring performance depends on fiber compliance, runout, and surface condition at operating speed",
+              "Integration: brush holders suit some retrofit envelopes; rings require radial space and a secure mount aligned to the contact zone",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Where Each Approach May Fit",
+          },
+          {
+            type: "heading",
+            text: "Carbon brush grounding may be considered when",
+          },
+          {
+            type: "list",
+            items: [
+              "Existing brush hardware and maintenance routines are already established on the platform",
+              "Installation space favors a compact holder on one side of the shaft",
+              "Operating speed and duty cycle stay within the brush and holder rating",
+              "Inspection and replacement intervals are acceptable in the maintenance plan",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Conductive-fiber shaft grounding rings may be considered when",
+          },
+          {
+            type: "list",
+            items: [
+              "Continuous-duty or higher-speed VFD applications need a circumferential contact path",
+              "Reducing brush replacement cycles and carbon dust near seals or lubricants is a priority",
+              "The motor envelope can accommodate a ring mount with stable fiber-to-shaft contact",
+              "A defined grounding path to frame is available and can be verified after installation",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Some projects use insulated bearings or hybrid strategies to manage circulating currents. Shaft grounding addresses shaft-to-frame discharge but does not replace a full review of drive topology, cable routing, and system grounding.",
+          },
+          {
+            type: "heading",
+            text: "Eight Parameters to Submit for Selection Review",
+          },
+          {
+            type: "paragraph",
+            text: "To compare carbon brush and conductive-fiber ring options for a specific motor, provide the following operating and mechanical inputs:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor type and application (pump, fan, compressor, traction, etc.)",
+              "Drive type and inverter topology, if known",
+              "Shaft diameter and tolerance at the intended contact location",
+              "Rated speed and maximum operating speed",
+              "Available radial and axial space for a brush holder or ring mount",
+              "Operating environment, including temperature, humidity, oil exposure, and dust or contamination",
+              "Bearing insulation arrangement and motor grounding configuration",
+              "Motor drawing, photos, or measured shaft voltage / shaft current data if available",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "These inputs support a preliminary review of contact feasibility, mounting options, and whether brush maintenance or ring integration better matches the duty profile. Final configuration should be validated under application-relevant conditions.",
+          },
+          {
+            type: "heading",
+            text: "Installation Affects Grounding Performance",
+          },
+          {
+            type: "paragraph",
+            text: "Both methods depend on installation quality. The shaft contact zone should be clean, the ground connection verified, and continuity checked after assembly. For conductive-fiber rings, fiber contact should be even and the mount secured against vibration.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-installation-guide.webp",
+            alt: "Shaft grounding ring installation diagram showing shaft contact zone and grounding connection",
+          },
+          {
+            type: "heading",
+            text: "Summary",
+          },
+          {
+            type: "paragraph",
+            text: "Carbon brushes and conductive-fiber shaft grounding rings both aim to divert shaft current away from motor bearings in VFD applications. Brushes rely on a maintained single-point contact; rings use distributed fiber contact around the shaft. Neither removes the need for correct grounding, environmental control, or application-specific validation.",
+          },
+          {
+            type: "paragraph",
+            text: "For a project-specific comparison, share motor operating conditions and installation constraints so the grounding approach can be reviewed against the actual duty profile.",
+          },
+          {
+            type: "link",
+            label: "Submit Motor Operating Conditions",
+            href: "/contact?campaign=sgr-brush-vs-ring&source=technical_article&source_page=shaft-grounding-ring-vs-carbon-brush&cta_key=engineer&inquiry_type=technical_inquiry",
+          },
+          {
+            type: "link",
+            intro: "Related technical resources:",
+            label: "Why VFD Motors Need Shaft Grounding Rings to Prevent Bearing Failure",
+            href: "/knowledge-center/why-vfd-motors-need-shaft-grounding-rings",
+          },
+          {
+            type: "link",
+            label: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
           },
         ],
       },

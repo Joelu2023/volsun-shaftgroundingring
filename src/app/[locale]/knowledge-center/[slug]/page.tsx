@@ -26,10 +26,13 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=shaft-grounding-selection&source=technical_article&source_page=how-to-select-shaft-grounding-ring-ec-vfd-motors&cta_key=engineer",
   "shaft-grounding-ring-vs-carbon-brush":
     "campaign=sgr-brush-vs-ring&source=technical_article&source_page=shaft-grounding-ring-vs-carbon-brush&cta_key=engineer&inquiry_type=technical_inquiry",
+  "why-ev-drive-motors-need-shaft-current-protection":
+    "campaign=ev-motor-shaft-current-protection&source=technical_article&source_page=why-ev-drive-motors-need-shaft-current-protection&cta_key=engineer&inquiry_type=technical_inquiry",
 };
 
 const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
   "shaft-grounding-ring-vs-carbon-brush": "Submit Motor Operating Conditions",
+  "why-ev-drive-motors-need-shaft-current-protection": "Submit EV Motor Requirements",
 };
 
 function buildArticleBottomContactHref(locale: AppLocale, slug: string): string {

@@ -34,8 +34,12 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
   const featuredRes = resources
     .filter((r) => home.featuredResourceIds.includes(r.id))
     .map((r) => getResourceForLocale(r, locale));
-  const latestNews = getLatestArticlesByCategory("news", HOME_LATEST_NEWS_LIMIT);
-  const featuredTechnical = getLatestArticlesByCategory("technical-articles", HOME_FEATURED_TECHNICAL_LIMIT);
+  const latestNews = getLatestArticlesByCategory("news", HOME_LATEST_NEWS_LIMIT, locale);
+  const featuredTechnical = getLatestArticlesByCategory(
+    "technical-articles",
+    HOME_FEATURED_TECHNICAL_LIMIT,
+    locale,
+  );
   const crawlProducts = HOME_CRAWL_FEATURED_PRODUCT_SLUGS.map((slug) => products.find((p) => p.slug === slug)).filter(
     (p): p is (typeof products)[number] => p !== undefined,
   );

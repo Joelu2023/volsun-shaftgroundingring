@@ -194,23 +194,71 @@ export async function resolvePublishedDownloadResource(slug: string, locale: App
   return getResourceBySlug(slug, locale);
 }
 
+export type CreateResourceDownloadLeadResult =
+  | { ok: true; leadId: string }
+  | { ok: false; reason: "db_unavailable" | "db_write_failed" };
+
+/** Mask email for structured logs — never log the full address. */
+export function maskLeadEmail(email: string) {
+  const trimmed = email.trim().toLowerCase();
+  const at = trimmed.indexOf("@");
+  if (at <= 0 || at === trimmed.length - 1) {
+    return "[redacted]";
+  }
+  const local = trimmed.slice(0, at);
+  const domain = trimmed.slice(at + 1);
+  const localHint = local.length <= 1 ? "*" : `${local[0]}***`;
+  return `${localHint}@${domain}`;
+}
+
+/**
+ * Persist a download lead via Prisma.
+ * Never throws for missing DATABASE_URL / write failures — callers must degrade.
+ */
 export async function createResourceDownloadLead(input: {
   resourceId: string;
   email: string;
   company?: string | null;
   name?: string | null;
-}) {
-  const db = getResourceCenterDbClient() as unknown as {
-    rcResourceDownloadLead: RcResourceDownloadLeadDelegate;
-  };
-  return db.rcResourceDownloadLead.create({
-    data: {
+  requestId?: string;
+}): Promise<CreateResourceDownloadLeadResult> {
+  if (!process.env.DATABASE_URL?.trim()) {
+    console.warn("[download-leads] DB unavailable; skipping Prisma lead write", {
+      requestId: input.requestId ?? null,
       resourceId: input.resourceId,
-      email: input.email,
-      company: input.company ?? null,
-      name: input.name ?? null,
-    },
-  });
+      reason: "db_unavailable",
+      email: maskLeadEmail(input.email),
+    });
+    return { ok: false, reason: "db_unavailable" };
+  }
+
+  try {
+    const db = getResourceCenterDbClient() as unknown as {
+      rcResourceDownloadLead: RcResourceDownloadLeadDelegate;
+    };
+    const lead = await db.rcResourceDownloadLead.create({
+      data: {
+        resourceId: input.resourceId,
+        email: input.email,
+        company: input.company ?? null,
+        name: input.name ?? null,
+      },
+    });
+    return { ok: true, leadId: lead.id };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "unknown";
+    const isUnavailable =
+      message.includes("DATABASE_URL") || message.includes("Prisma client cannot start");
+    console.warn("[download-leads] Prisma lead write failed; degrading", {
+      requestId: input.requestId ?? null,
+      resourceId: input.resourceId,
+      reason: isUnavailable ? "db_unavailable" : "db_write_failed",
+      email: maskLeadEmail(input.email),
+      // Intentionally omit stack / Prisma meta / env values
+      errorName: error instanceof Error ? error.name : "Error",
+    });
+    return { ok: false, reason: isUnavailable ? "db_unavailable" : "db_write_failed" };
+  }
 }
 
 export async function recordResourceDownloadPageView(resourceId: string) {
@@ -326,6 +374,19 @@ export async function listResourceDownloadLeadsForAdmin(resourceId?: string) {
   }));
 }
 
+const LEAD_EMAIL_MAX_LEN = 254;
+const LEAD_TEXT_MAX_LEN = 200;
+
+/** Reject CR/LF (header injection) and oversize optional text fields. */
+export function isSafeLeadTextField(value: string, maxLen = LEAD_TEXT_MAX_LEN) {
+  if (!value) return true;
+  if (value.length > maxLen) return false;
+  if (/[\r\n]/.test(value)) return false;
+  return true;
+}
+
 export function isValidLeadEmail(value: string) {
+  if (!value || value.length > LEAD_EMAIL_MAX_LEN) return false;
+  if (/[\r\n]/.test(value)) return false;
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }

@@ -6,14 +6,17 @@ import type { InquirySubmission } from "@/types/inquiry";
  * Internal inquiry pipeline used by download-leads and other server flows.
  * Shares delivery rules with POST /api/inquiries.
  */
-export async function submitLeadViaInquiryPipeline(submission: InquirySubmission): Promise<{
+export async function submitLeadViaInquiryPipeline(
+  submission: InquirySubmission,
+  options?: { requestId?: string },
+): Promise<{
   requestId: string;
   delivered: boolean;
   devPersisted?: boolean;
   channel?: "email";
   error?: string;
 }> {
-  const requestId = randomUUID();
+  const requestId = options?.requestId?.trim() || randomUUID();
   const result = await deliverInquirySubmission(submission, requestId);
 
   if (!result.ok) {

@@ -37,7 +37,20 @@ function buildZhBlocks(enBlocks: ArticleContentBlock[]): ArticleContentBlock[] {
       case "list":
         return { type: "list", items: b.items.map((it) => `${ZH_TODO_PREFIX}${it}`) };
       case "image":
-        return { type: "image", src: b.src, alt: `${ZH_TODO_PREFIX}${b.alt}` };
+        return {
+          type: "image",
+          src: b.src,
+          alt: `${ZH_TODO_PREFIX}${b.alt}`,
+          ...(b.caption ? { caption: `${ZH_TODO_PREFIX}${b.caption}` } : {}),
+          ...(b.width ? { width: b.width } : {}),
+          ...(b.height ? { height: b.height } : {}),
+        };
+      case "youtube":
+        return {
+          type: "youtube",
+          videoId: b.videoId,
+          title: `${ZH_TODO_PREFIX}${b.title}`,
+        };
       case "link":
         return b;
     }

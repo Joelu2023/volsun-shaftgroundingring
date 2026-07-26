@@ -28,11 +28,21 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=sgr-brush-vs-ring&source=technical_article&source_page=shaft-grounding-ring-vs-carbon-brush&cta_key=engineer&inquiry_type=technical_inquiry",
   "why-ev-drive-motors-need-shaft-current-protection":
     "campaign=ev-motor-shaft-current-protection&source=technical_article&source_page=why-ev-drive-motors-need-shaft-current-protection&cta_key=engineer&inquiry_type=technical_inquiry",
+  "inside-volsun-testing-laboratories-shaft-grounding-ring-quality":
+    "campaign=shaft-grounding-ring-quality-testing&source=technical_article&source_page=inside-volsun-testing-laboratories-shaft-grounding-ring-quality&cta_key=engineer&inquiry_type=technical_inquiry",
 };
 
 const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
   "shaft-grounding-ring-vs-carbon-brush": "Submit Motor Operating Conditions",
   "why-ev-drive-motors-need-shaft-current-protection": "Submit EV Motor Requirements",
+  "inside-volsun-testing-laboratories-shaft-grounding-ring-quality": "Submit Motor Test Requirements",
+};
+
+const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
+  "inside-volsun-testing-laboratories-shaft-grounding-ring-quality": {
+    title: "Need Application-Specific Shaft Grounding Ring Evaluation?",
+    body: "Send us your shaft dimensions, motor speed, operating environment, installation space and validation requirements. VOLSUN’s engineering team will review the application and recommend a preliminary product and evaluation plan.",
+  },
 };
 
 function buildArticleBottomContactHref(locale: AppLocale, slug: string): string {
@@ -59,11 +69,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const record = getArticleRecordBySlug(slug);
   const article = record ? getArticleForLocale(slug, locale) : null;
   if (!article || !record) return {};
+  const documentTitle = article.seoTitle ?? article.title;
   const meta = buildPageMetadata({
-    title: article.title,
+    title: documentTitle,
     description: article.metaDescription,
     path: `/knowledge-center/${article.slug}`,
     locale,
+    absoluteTitle: Boolean(article.seoTitle),
   });
   const base = getCanonicalSiteOrigin();
   const enPath = `/en/knowledge-center/${article.slug}`;
@@ -105,6 +117,9 @@ export default async function LocalizedArticlePage({ params }: Props) {
   const articleBottomContactHref = buildArticleBottomContactHref(locale, a.slug);
   const articleBottomCtaLabel =
     locale === "en" ? (EN_ARTICLE_CTA_LABEL[a.slug] ?? t.contactRfq) : t.contactRfq;
+  const articleBottomCtaCopy =
+    locale === "en" ? EN_ARTICLE_CTA_COPY[a.slug] : undefined;
+  const coverAlt = a.coverImageAlt?.trim() || a.title;
 
   const jsonLd = [
     webPageJsonLd({ name: a.title, description: a.metaDescription, path: `/knowledge-center/${a.slug}`, locale }),
@@ -152,7 +167,7 @@ export default async function LocalizedArticlePage({ params }: Props) {
           <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
             <Image
               src={coverSrc}
-              alt={a.title}
+              alt={coverAlt}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 672px"
@@ -163,8 +178,12 @@ export default async function LocalizedArticlePage({ params }: Props) {
         <ArticleContent blocks={a.blocks} paragraphs={a.paragraphs} locale={locale} />
         <ArticleInternalLinks slug={a.slug} locale={locale} />
         <div className="mt-10 rounded-lg border border-slate-200 bg-slate-50 p-6">
-          <p className="font-medium text-slate-900">{t.knowledgeNeedSizingTitle}</p>
-          <p className="mt-2 text-sm text-slate-600">{t.knowledgeNeedSizingBody}</p>
+          <p className="font-medium text-slate-900">
+            {articleBottomCtaCopy?.title ?? t.knowledgeNeedSizingTitle}
+          </p>
+          <p className="mt-2 text-sm text-slate-600">
+            {articleBottomCtaCopy?.body ?? t.knowledgeNeedSizingBody}
+          </p>
           <Link href={articleBottomContactHref} className="mt-4 inline-block text-sm font-medium text-brand-orange hover:underline">
             {articleBottomCtaLabel}
           </Link>

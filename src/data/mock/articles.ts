@@ -4,7 +4,16 @@ export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
   | { type: "list"; items: string[] }
-  | { type: "image"; src: string; alt: string; width?: number; height?: number }
+  | {
+      type: "image";
+      src: string;
+      alt: string;
+      /** Visible caption; when omitted, figcaption falls back to alt for legacy blocks. */
+      caption?: string;
+      width?: number;
+      height?: number;
+    }
+  | { type: "youtube"; videoId: string; title: string }
   | { type: "link"; label: string; href: string; intro?: string };
 
 /** Knowledge Center 栏目：news = 公司/产品动态；technical-articles = 技术文章 */
@@ -13,6 +22,8 @@ export type ArticleCategory = "news" | "technical-articles";
 /** 单语言正文块 — 中英文共用同一 slug，便于 hreflang 与 sitemap 一一对应 */
 export type ArticleLocaleBlock = {
   title: string;
+  /** Optional document title override (may include brand suffix; use with absoluteTitle). */
+  seoTitle?: string;
   excerpt: string;
   metaDescription: string;
   paragraphs: string[];
@@ -28,6 +39,8 @@ export type ArticleRecord = {
   datePublished: string;
   dateModified: string;
   coverImagePublicPath?: string | null;
+  /** Cover image alt; falls back to locale title when omitted. */
+  coverImageAlt?: string | null;
   locales: { en: ArticleLocaleBlock; zh: ArticleLocaleBlock };
 };
 
@@ -37,6 +50,7 @@ export type ArticleResolved = ArticleLocaleBlock & {
   datePublished: string;
   dateModified: string;
   coverImagePublicPath: string | null;
+  coverImageAlt: string | null;
 };
 
 export const articles: ArticleRecord[] = [
@@ -4418,6 +4432,374 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-18",
+    slug: "inside-volsun-testing-laboratories-shaft-grounding-ring-quality",
+    category: "technical-articles",
+    datePublished: "2026-07-24T08:00:00.000Z",
+    dateModified: "2026-07-24T08:00:00.000Z",
+    coverImagePublicPath: "/images/articles/volsun-shaft-grounding-ring-quality-testing.webp",
+    coverImageAlt: "VOLSUN shaft grounding ring quality testing and laboratory evaluation",
+    locales: {
+      en: {
+        title: "Inside VOLSUN’s Testing Laboratories: How We Evaluate Shaft Grounding Ring Quality",
+        seoTitle: "Shaft Grounding Ring Testing and Quality Evaluation | VOLSUN",
+        excerpt:
+          "See how material inspection, dimensional measurement, wear testing and performance evaluation support VOLSUN shaft grounding ring development and customer application review.",
+        metaDescription:
+          "Go inside VOLSUN’s testing laboratories to see how material inspection, dimensional measurement, wear testing and performance evaluation support shaft grounding ring quality.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Customers usually see the finished product.",
+          },
+          {
+            type: "paragraph",
+            text: "What they do not always see is the material evaluation, dimensional measurement, wear testing and performance verification behind it.",
+          },
+          {
+            type: "paragraph",
+            text: "Recently, VOLSUN’s integrated marketing team visited three testing laboratories to better understand how product quality is evaluated and how engineering data supports customer applications.",
+          },
+          {
+            type: "paragraph",
+            text: "For shaft grounding rings, quality cannot be judged by appearance alone. Material consistency, dimensional accuracy, shaft contact, wear behavior and the electrical grounding path can all influence performance in the final motor application.",
+          },
+          {
+            type: "heading",
+            text: "Inside VOLSUN’s Testing Laboratories",
+          },
+          {
+            type: "youtube",
+            videoId: "2VbIN_Rc2yE",
+            title: "Inside VOLSUN’s Testing Laboratories",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN’s team visited three testing laboratories to understand how material inspection, dimensional measurement, wear evaluation and performance testing support product quality.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/volsun-team-testing-laboratory-visit.webp",
+            alt: "VOLSUN team learning about product testing and quality validation",
+            caption:
+              "VOLSUN’s integrated marketing team visited the testing laboratories to better understand how engineering verification supports customer applications.",
+            width: 850,
+            height: 567,
+          },
+          {
+            type: "heading",
+            text: "Quality Starts with the Material",
+          },
+          {
+            type: "paragraph",
+            text: "The conductive material is one of the most important elements in a shaft grounding ring.",
+          },
+          {
+            type: "paragraph",
+            text: "Its conductivity, flexibility, structural consistency and wear behavior may affect how the conductive fibers maintain contact with the rotating shaft.",
+          },
+          {
+            type: "paragraph",
+            text: "Material evaluation helps engineers determine whether the conductive elements and supporting components are suitable for the intended product structure and operating conditions.",
+          },
+          {
+            type: "paragraph",
+            text: "For VOLSUN shaft grounding rings, material selection is reviewed together with factors such as:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor speed",
+              "Operating temperature",
+              "Shaft surface condition",
+              "Dry, grease or oil exposure",
+              "Installation structure",
+              "Expected operating life",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "The evaluation method depends on the product design and customer application.",
+          },
+          {
+            type: "heading",
+            text: "Dimensional Measurement Supports Proper Installation",
+          },
+          {
+            type: "paragraph",
+            text: "Dimensional inspection is not only about confirming that a component can be installed.",
+          },
+          {
+            type: "paragraph",
+            text: "For a shaft grounding ring, dimensional accuracy may affect:",
+          },
+          {
+            type: "list",
+            items: [
+              "Fit with the motor housing or end shield",
+              "Radial and axial installation space",
+              "Alignment with the shaft",
+              "Conductive-fiber contact position",
+              "Assembly consistency",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Shaft diameter and tolerance are particularly important.",
+          },
+          {
+            type: "paragraph",
+            text: "If the shaft and grounding-ring dimensions are not properly matched, installation may become difficult and the intended contact condition may not be maintained.",
+          },
+          {
+            type: "paragraph",
+            text: "This is why accurate shaft drawings, tolerances and installation-space information are required during application review.",
+          },
+          {
+            type: "heading",
+            text: "Wear Testing Looks Beyond Material Loss",
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-wear-and-dimension-testing.webp",
+            alt: "Wear and dimensional testing supporting shaft grounding ring evaluation",
+            caption:
+              "Testing and measurement help engineers evaluate material behavior, dimensional consistency and application suitability under defined conditions.",
+            width: 850,
+            height: 478,
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring operates in continuous contact with a rotating shaft.",
+          },
+          {
+            type: "paragraph",
+            text: "Wear testing is therefore not only about measuring how much material is removed.",
+          },
+          {
+            type: "paragraph",
+            text: "Engineers may also observe:",
+          },
+          {
+            type: "list",
+            items: [
+              "Changes in fiber contact",
+              "Fiber deformation",
+              "Shaft surface condition",
+              "Mechanical stability",
+              "Contact consistency during the defined test cycle",
+              "The influence of speed, temperature and contamination",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "A product that performs well in a short static measurement may behave differently during extended rotation.",
+          },
+          {
+            type: "paragraph",
+            text: "Wear evaluation helps provide a more complete understanding of product behavior under defined conditions.",
+          },
+          {
+            type: "heading",
+            text: "Electrical Performance Requires Context",
+          },
+          {
+            type: "paragraph",
+            text: "Electrical performance is another important part of shaft grounding ring evaluation.",
+          },
+          {
+            type: "paragraph",
+            text: "Depending on the project, testing may include:",
+          },
+          {
+            type: "list",
+            items: [
+              "Static resistance",
+              "Contact resistance",
+              "Electrical continuity",
+              "The conductive path from the shaft to the grounded housing",
+              "Changes before and after wear or environmental testing",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "However, a resistance value should not be evaluated by itself.",
+          },
+          {
+            type: "paragraph",
+            text: "Test results should be interpreted together with:",
+          },
+          {
+            type: "list",
+            items: [
+              "Measurement method",
+              "Shaft material and surface condition",
+              "Contact structure",
+              "Motor speed",
+              "Operating temperature",
+              "Lubrication condition",
+              "Installation method",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Different test conditions may produce different results.",
+          },
+          {
+            type: "heading",
+            text: "Different Motors Require Different Validation",
+          },
+          {
+            type: "paragraph",
+            text: "There is no single test plan suitable for every motor.",
+          },
+          {
+            type: "list",
+            items: [
+              "EV traction motors may require attention to high speed, temperature, oil exposure and limited installation space.",
+              "Industrial VFD motors may require attention to continuous operation, dust, maintenance intervals and retrofit space.",
+              "HVAC and pump motors may require attention to moisture, operating cycles and installation structure.",
+              "Wind-power applications may require attention to long operating periods, environmental variation and maintenance accessibility.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "The final validation plan should reflect the actual motor design and operating environment.",
+          },
+          {
+            type: "heading",
+            text: "Why Sales Teams Need to Understand Testing",
+          },
+          {
+            type: "paragraph",
+            text: "The laboratory visit was not only about recognizing equipment.",
+          },
+          {
+            type: "paragraph",
+            text: "It helped the marketing and sales team understand where product quality comes from.",
+          },
+          {
+            type: "paragraph",
+            text: "Professional technical sales should not only repeat product parameters. They should also understand:",
+          },
+          {
+            type: "list",
+            items: [
+              "Why dimensions matter",
+              "Why operating conditions affect selection",
+              "Why test data requires context",
+              "Why different motors may require different structures",
+              "Why quality includes development, testing and validation costs",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "This knowledge helps the team communicate more accurately with customers and avoid unsupported performance claims.",
+          },
+          {
+            type: "heading",
+            text: "From Testing Data to Customer Application",
+          },
+          {
+            type: "paragraph",
+            text: "Before recommending a shaft grounding ring, VOLSUN normally needs information such as:",
+          },
+          {
+            type: "list",
+            items: [
+              "1. Shaft diameter and tolerance",
+              "2. Rated and maximum speed",
+              "3. Operating temperature",
+              "4. Dry, grease or oil environment",
+              "5. Installation position and available space",
+              "6. Shaft surface condition",
+              "7. Expected operating life",
+              "8. Shaft voltage or shaft-current information",
+              "9. Customer validation requirements",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "These inputs help engineers evaluate the preliminary product structure and the required verification plan.",
+          },
+          {
+            type: "heading",
+            text: "Conclusion",
+          },
+          {
+            type: "paragraph",
+            text: "Quality is not created by final inspection alone.",
+          },
+          {
+            type: "paragraph",
+            text: "It begins with material selection, continues through dimensional and process control, and must ultimately be evaluated under conditions that reflect the intended motor application.",
+          },
+          {
+            type: "paragraph",
+            text: "For VOLSUN, laboratory capability is not simply a collection of equipment. It supports product development, customer evaluation and motor-specific shaft grounding solutions.",
+          },
+          {
+            type: "paragraph",
+            text: "Quality requires investment. Reliability creates lasting value.",
+          },
+          {
+            type: "link",
+            intro: "Related reading:",
+            label: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+          },
+          {
+            type: "link",
+            label: "How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "Shaft Grounding Ring vs. Carbon Brush: An Engineering Comparison for VFD Motors",
+            href: "/knowledge-center/shaft-grounding-ring-vs-carbon-brush",
+          },
+          {
+            type: "link",
+            label: "Contact / RFQ",
+            href: "/contact?campaign=shaft-grounding-ring-quality-testing&source=technical_article&source_page=inside-volsun-testing-laboratories-shaft-grounding-ring-quality&cta_key=engineer&inquiry_type=technical_inquiry",
+          },
+          {
+            type: "heading",
+            text: "Need Application-Specific Shaft Grounding Ring Evaluation?",
+          },
+          {
+            type: "paragraph",
+            text: "Send us your shaft dimensions, motor speed, operating environment, installation space and validation requirements.",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN’s engineering team will review the application and recommend a preliminary product and evaluation plan.",
+          },
+          {
+            type: "link",
+            label: "Submit Motor Test Requirements",
+            href: "/contact?campaign=shaft-grounding-ring-quality-testing&source=technical_article&source_page=inside-volsun-testing-laboratories-shaft-grounding-ring-quality&cta_key=engineer&inquiry_type=technical_inquiry",
+          },
+        ],
+      },
+      zh: {
+        title: "[ZH-TODO] Inside VOLSUN’s Testing Laboratories: How We Evaluate Shaft Grounding Ring Quality",
+        excerpt:
+          "[ZH-TODO] See how material inspection, dimensional measurement, wear testing and performance evaluation support VOLSUN shaft grounding ring development and customer application review.",
+        metaDescription:
+          "[ZH-TODO] Go inside VOLSUN’s testing laboratories to see how material inspection, dimensional measurement, wear testing and performance evaluation support shaft grounding ring quality.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Customers usually see the finished product.",
+          },
+        ],
+      },
+    },
+  },
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 
@@ -4461,6 +4843,7 @@ export function getArticleForLocale(slug: string, locale: AppLocale): ArticleRes
     datePublished: r.datePublished,
     dateModified: r.dateModified,
     coverImagePublicPath: r.coverImagePublicPath ?? null,
+    coverImageAlt: r.coverImageAlt ?? null,
     ...block,
   };
 }

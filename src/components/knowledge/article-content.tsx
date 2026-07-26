@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ArticleContentBlock } from "@/data/mock/articles";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { sanitizeLargeSlotImageSrc } from "@/lib/utils/image-slot-guards";
+import { YouTubeShortEmbed } from "@/components/knowledge/youtube-short-embed";
 
 type Props = {
   blocks?: ArticleContentBlock[];
@@ -45,6 +46,7 @@ export function ArticleContent({ blocks, paragraphs, locale }: Props) {
             case "image": {
               const src = sanitizeLargeSlotImageSrc(block.src);
               if (!src) return null;
+              const caption = block.caption ?? block.alt;
               if (block.width && block.height) {
                 return (
                   <figure key={i} className="mt-6">
@@ -56,8 +58,8 @@ export function ArticleContent({ blocks, paragraphs, locale }: Props) {
                       className="h-auto w-full rounded-lg border border-slate-200 bg-slate-50 object-contain p-2"
                       sizes="(max-width: 768px) 100vw, 672px"
                     />
-                    {block.alt ? (
-                      <figcaption className="mt-2 text-center text-sm text-slate-500">{block.alt}</figcaption>
+                    {caption ? (
+                      <figcaption className="mt-2 text-center text-sm text-slate-500">{caption}</figcaption>
                     ) : null}
                   </figure>
                 );
@@ -73,12 +75,14 @@ export function ArticleContent({ blocks, paragraphs, locale }: Props) {
                       sizes="(max-width: 768px) 100vw, 672px"
                     />
                   </div>
-                  {block.alt ? (
-                    <figcaption className="mt-2 text-center text-sm text-slate-500">{block.alt}</figcaption>
+                  {caption ? (
+                    <figcaption className="mt-2 text-center text-sm text-slate-500">{caption}</figcaption>
                   ) : null}
                 </figure>
               );
             }
+            case "youtube":
+              return <YouTubeShortEmbed key={i} videoId={block.videoId} title={block.title} />;
             case "link":
               return (
                 <p key={i} className="mt-4 text-slate-700">

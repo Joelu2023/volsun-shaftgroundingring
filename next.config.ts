@@ -47,7 +47,7 @@ const nextConfig: NextConfig = {
       {
         source: "/",
         destination: "/en",
-        permanent: false,
+        permanent: true,
       },
       ...articleLegacyRedirects,
       ...categoryLegacyRedirects,

@@ -15,16 +15,10 @@ export function middleware(request: NextRequest) {
     return nextWithPathname(request);
   }
 
-  if (pathname === "/") {
+  // Root `/` → `/en` is handled by next.config redirects (permanent).
+  if (isRouteLocalizedPath(pathname) && pathname !== "/") {
     const url = request.nextUrl.clone();
-    url.pathname = "/en";
-    url.search = search;
-    return NextResponse.redirect(url, 301);
-  }
-
-  if (isRouteLocalizedPath(pathname)) {
-    const url = request.nextUrl.clone();
-    url.pathname = `/en${pathname === "/" ? "" : pathname}`;
+    url.pathname = `/en${pathname}`;
     url.search = search;
     return NextResponse.redirect(url, 301);
   }

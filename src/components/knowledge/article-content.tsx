@@ -92,6 +92,36 @@ export function ArticleContent({ blocks, paragraphs, locale }: Props) {
                   </Link>
                 </p>
               );
+            case "table":
+              return (
+                <figure key={i} className="mt-6 overflow-x-auto">
+                  <table className="w-full min-w-[32rem] border-collapse text-left text-sm text-slate-700">
+                    <thead>
+                      <tr className="border-b border-slate-300 bg-slate-50">
+                        {block.headers.map((header) => (
+                          <th key={header} scope="col" className="px-3 py-2 font-semibold text-brand-blue">
+                            {header}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {block.rows.map((row, rowIndex) => (
+                        <tr key={rowIndex} className="border-b border-slate-200 align-top">
+                          {row.map((cell, cellIndex) => (
+                            <td key={`${rowIndex}-${cellIndex}`} className="px-3 py-2">
+                              {cell}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {block.caption ? (
+                    <figcaption className="mt-2 text-center text-sm text-slate-500">{block.caption}</figcaption>
+                  ) : null}
+                </figure>
+              );
             default:
               return null;
           }

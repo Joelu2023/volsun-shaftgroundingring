@@ -53,6 +53,13 @@ function buildZhBlocks(enBlocks: ArticleContentBlock[]): ArticleContentBlock[] {
         };
       case "link":
         return b;
+      case "table":
+        return {
+          type: "table",
+          headers: b.headers.map((h) => `${ZH_TODO_PREFIX}${h}`),
+          rows: b.rows.map((row) => row.map((cell) => `${ZH_TODO_PREFIX}${cell}`)),
+          ...(b.caption ? { caption: `${ZH_TODO_PREFIX}${b.caption}` } : {}),
+        };
     }
   });
 }

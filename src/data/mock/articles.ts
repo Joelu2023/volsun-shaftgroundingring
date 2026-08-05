@@ -670,115 +670,219 @@ export const articles: ArticleRecord[] = [
     slug: "how-to-install-shaft-grounding-ring",
     category: "technical-articles",
     datePublished: "2026-05-26T08:00:00.000Z",
-    dateModified: "2026-05-26T08:00:00.000Z",
+    dateModified: "2026-08-05T03:02:47.818Z",
     coverImagePublicPath: "/images/articles/shaft-grounding-ring-installation-guide.webp",
+    coverImageAlt: "Shaft grounding ring installation guide for VFD motor bearing protection",
     locales: {
       en: {
-        title: "How to Install a Shaft Grounding Ring Correctly | VFD Motor Bearing Protection",
+        title: "How to Install a Shaft Grounding Ring Correctly: Five Critical Checks",
+        seoTitle: "How to Install a Shaft Grounding Ring Correctly | VOLSUN",
         excerpt:
-          "Step-by-step installation guide for shaft grounding rings, covering shaft cleaning, fiber contact, grounding, continuity testing, and common installation mistakes.",
+          "A practical installation guide covering shaft preparation, conductive-fiber contact, ring alignment, frame grounding, common installation errors, and post-installation verification.",
         metaDescription:
-          "Learn how to install a shaft grounding ring correctly, including shaft cleaning, fiber contact, grounding, continuity testing, and common installation mistakes.",
+          "Learn how to prepare the shaft surface, align conductive fibers, verify frame grounding, avoid common installation errors, and check shaft grounding performance after installation.",
         paragraphs: [],
         blocks: [
           {
-            type: "paragraph",
-            text: "Proper installation is critical to the performance of a shaft grounding ring.",
+            type: "heading",
+            text: "Why Installation Quality Matters",
           },
           {
             type: "paragraph",
-            text: "When installed correctly, the ring provides a reliable path for shaft current to discharge to ground, helping reduce the risk of bearing electrical erosion, abnormal noise, and premature motor failure in VFD-driven motor applications.",
-          },
-          { type: "paragraph", text: "Below are the key installation steps to follow." },
-          { type: "heading", text: "Step 1: Clean the Shaft Surface" },
-          { type: "paragraph", text: "Before installation, clean the shaft surface thoroughly." },
-          {
-            type: "paragraph",
-            text: "Remove oil, grease, dust, oxide layers, and metal particles from the contact area. A clean shaft surface helps ensure stable contact between the conductive fibers and the rotating shaft.",
-          },
-          { type: "heading", text: "Step 2: Check the Shaft Contact Area" },
-          {
-            type: "paragraph",
-            text: "Inspect the shaft area where the conductive fibers will touch.",
+            text: "A shaft grounding ring is intended to help provide a controlled low-impedance path from the rotating shaft to the grounded motor frame. Installation quality strongly influences whether that path remains stable in service. Poor surface preparation, uneven fiber contact, or an incomplete frame bond may leave bearings as an unintended discharge route, even when a ring is fitted.",
           },
           {
             type: "paragraph",
-            text: "The contact surface should be smooth, clean, and free from burrs, deep scratches, or heavy oxidation. If the shaft surface is rough or contaminated, contact resistance may become unstable.",
+            text: "This guide focuses on installation practice—not on a full explanation of VFD shaft-voltage theory. For diagnosis of repeated bearing damage, see our article on diagnosing repeated VFD motor bearing failure. For product family selection inputs, use the shaft grounding ring selection guide before mounting work begins.",
+          },
+          {
+            type: "link",
+            intro: "Related reading:",
+            label: "diagnosing repeated VFD motor bearing failure",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "link",
+            intro: "Before you mount a ring, review:",
+            label: "shaft grounding ring selection guide",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+          },
+          {
+            type: "heading",
+            text: "Before Installation: Confirm the Motor and Mounting Conditions",
+          },
+          {
+            type: "paragraph",
+            text: "Confirm the motor type, shaft diameter at the intended contact zone, available axial and radial space, access for tools, and whether the end shield or bearing housing can accept the approved mounting method. Record nameplate data, maximum speed, duty cycle, and the operating environment—dry industrial, dusty, oil-mist, or oil-cooled—because environment may change which structure is suitable.",
+          },
+          {
+            type: "paragraph",
+            text: "Also confirm grounding architecture: how the motor frame is bonded, whether insulated bearings are present, and whether couplings or driven equipment may create secondary paths. Mechanical clearance alone is not enough. Application-specific review may be required when drawings, photos, or access constraints leave uncertainty.",
+          },
+          {
+            type: "heading",
+            text: "Five Critical Installation Checks",
+          },
+          {
+            type: "paragraph",
+            text: "Use the following five checks as the core installation sequence. They apply to solid-ring mounting on many industrial VFD motors; constrained-access arc-shaped installations have additional packaging considerations covered in the arc-shaped shaft grounding ring installation guide.",
+          },
+          {
+            type: "link",
+            intro: "For ST/STW access-limited mounting, see:",
+            label: "arc-shaped shaft grounding ring installation guide",
+            href: "/knowledge-center/how-to-install-split-shaft-grounding-ring-without-full-motor-disassembly",
+          },
+          {
+            type: "paragraph",
+            text: "The overview image below shows three basic actions—cleaning the shaft, mounting the ring with fiber contact, and grounding the housing. It is a simplified three-step overview, not a complete five-check diagram, and it is not a precise engineering drawing. Continuity, interference, and operating checks should still follow after installation. Always follow the specific motor structure and approved installation requirements for the product in use.",
           },
           {
             type: "image",
-            src: "/images/articles/shaft-grounding-ring-installation-guide.webp",
-            alt: "Shaft grounding ring installation guide for VFD motor bearing protection",
+            src: "/images/articles/article-shaft-grounding-ring-installation-steps-v1.webp",
+            alt: "Three-step shaft grounding ring installation: clean shaft surface, mount ring with even fiber contact, and ground the housing",
+            caption:
+              "Installation overview: clean the shaft, mount the ring securely with fiber contact, then establish a reliable housing ground path. Continuity checks should follow after installation.",
+          },
+          {
+            type: "heading",
+            text: "1. Prepare a Clean Shaft Contact Zone",
           },
           {
             type: "paragraph",
-            text: "Correct shaft grounding ring installation helps ensure stable shaft current discharge and reduce bearing damage risk.",
-          },
-          { type: "heading", text: "Step 3: Mount the Shaft Grounding Ring Securely" },
-          {
-            type: "paragraph",
-            text: "Install the shaft grounding ring according to the motor structure and product design.",
+            text: "Remove paint, rust, oil, dust, and non-conductive contamination from the contact zone. Conductive fibers should contact a continuous and suitable shaft surface. A film of paint, oxide, grease, or process residue may raise impedance and make contact unstable. After cleaning, protect the prepared zone from recontamination until the ring is mounted.",
           },
           {
-            type: "paragraph",
-            text: "Common mounting methods include screw mounting, bracket mounting, adhesive mounting, or customized mechanical fixing. The ring should be firmly positioned and should not become loose during motor operation.",
-          },
-          { type: "heading", text: "Step 4: Ensure Proper Fiber Contact" },
-          {
-            type: "paragraph",
-            text: "The conductive fibers should lightly and evenly touch the shaft surface.",
+            type: "heading",
+            text: "2. Confirm the Correct Contact Position",
           },
           {
             type: "paragraph",
-            text: "The contact should not be too loose or too tight. Uneven contact may affect shaft current discharge, while excessive pressure may increase fiber wear.",
-          },
-          { type: "heading", text: "Step 5: Ground the Motor Housing Properly" },
-          {
-            type: "paragraph",
-            text: "The shaft grounding ring must be connected to a reliable ground path.",
+            text: "Locate the contact band where fibers can ride on a continuous cylindrical surface. Avoid keyways, threads, sharp shoulders, deep grooves, and discontinuous surfaces. If the only available band is interrupted, stop and request an application-specific installation review rather than forcing contact over an unsuitable geometry.",
           },
           {
-            type: "paragraph",
-            text: "Make sure the mounting bracket or grounding wire is properly connected to the motor housing or grounding point. Poor grounding may reduce the effectiveness of the shaft grounding ring, even if the ring itself is installed correctly.",
-          },
-          { type: "heading", text: "Step 6: Test Electrical Continuity" },
-          {
-            type: "paragraph",
-            text: "After installation, test the electrical continuity between the shaft grounding ring and ground.",
+            type: "heading",
+            text: "3. Maintain Even Fiber Contact and Alignment",
           },
           {
             type: "paragraph",
-            text: "Use a multimeter to check whether the discharge path is properly connected. A stable continuity reading helps confirm that shaft current has a reliable path to ground.",
+            text: "Ring alignment and fiber contact should be even around the circumference. Seat the ring so conductive fibers engage the shaft consistently without local gaps or crushing. Fasteners should be tightened evenly without distorting the ring body. Uneven pressure may cause intermittent transfer and accelerated local wear. Re-check concentricity after final torque.",
           },
-          { type: "heading", text: "Common Installation Mistakes" },
-          { type: "paragraph", text: "Avoid the following mistakes during installation:" },
+          {
+            type: "heading",
+            text: "4. Verify the Grounding Path to the Motor Frame",
+          },
+          {
+            type: "paragraph",
+            text: "The ring body or mounting bracket must have a reliable electrical connection to the grounded motor frame. Mechanical mounting alone does not prove electrical continuity. Confirm bonding through the bracket, fasteners, or dedicated ground lead as specified for the design. A ring that is mechanically secure but electrically isolated from frame ground cannot perform its intended function.",
+          },
+          {
+            type: "heading",
+            text: "5. Inspect and Verify After Installation",
+          },
+          {
+            type: "paragraph",
+            text: "After mounting, inspect fiber engagement, fastener security, and clearances. Check for interference while rotating the shaft according to an approved safe procedure. Where suitable equipment and procedures are available, compare shaft-voltage results using the same probe position, grounding reference, instrument bandwidth, load, speed, and operating condition. Verification helps reduce the risk of leaving an incomplete path in service; it does not prove that every operating condition is covered.",
+          },
+          {
+            type: "link",
+            intro: "Product family often reviewed for industrial VFD motors:",
+            label: "VOLSUN solid shaft grounding rings",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "Five Common Installation Errors",
+          },
+          {
+            type: "paragraph",
+            text: "The table below summarizes frequent field errors and corrective actions. Treat it as a practical checklist, not as a complete failure-mode catalog.",
+          },
+          {
+            type: "table",
+            caption: "Five common shaft grounding ring installation errors and corrective actions",
+            headers: ["Installation Error", "Possible Consequence", "Corrective Action"],
+            rows: [
+              [
+                "Installing over paint, rust, oil, or contamination",
+                "Unstable or high-impedance contact",
+                "Clean and prepare the shaft contact zone",
+              ],
+              [
+                "Uneven fiber contact or poor alignment",
+                "Intermittent current transfer and uneven wear",
+                "Recheck concentricity, alignment, and mounting position",
+              ],
+              [
+                "Ring body not electrically bonded to frame ground",
+                "Incomplete discharge path",
+                "Verify grounding continuity to the motor frame",
+              ],
+              [
+                "Contact over a keyway, thread, groove, or sharp edge",
+                "Interrupted contact or accelerated fiber wear",
+                "Move the contact zone to a continuous shaft surface",
+              ],
+              [
+                "Ignoring speed, temperature, or lubrication environment",
+                "Unsuitable material or mounting structure",
+                "Request an application-specific installation review",
+              ],
+            ],
+          },
+          {
+            type: "heading",
+            text: "Post-Installation Verification Checklist",
+          },
+          {
+            type: "paragraph",
+            text: "Complete these checks before returning the motor to unsupervised operation. Results depend on the application and available test methods.",
+          },
           {
             type: "list",
             items: [
-              "Installing the ring on a dirty shaft surface",
-              "Allowing uneven fiber contact",
-              "Mounting the ring in the wrong position",
-              "Failing to connect the ring to a reliable ground",
-              "Applying excessive pressure on the conductive fibers",
-              "Ignoring continuity testing after installation",
+              "Ring body and bracket remain secure",
+              "Conductive fibers contact the shaft evenly",
+              "No mechanical interference is observed",
+              "Grounding continuity to the motor frame is verified",
+              "Shaft-voltage measurements, when performed, use the same test setup before and after installation",
+              "Installation position, motor data, and photos are recorded for maintenance",
+              "Noise, vibration, and bearing condition are monitored during subsequent operation",
             ],
           },
           {
             type: "paragraph",
-            text: "These issues may reduce the performance of the shaft grounding ring and increase the risk of bearing damage.",
-          },
-          { type: "heading", text: "Conclusion" },
-          {
-            type: "paragraph",
-            text: "Correct installation is essential for shaft grounding ring performance.",
+            text: "Successful verification should not be described as eliminating all shaft current or guaranteeing zero bearing failure. It confirms that the installed path and mounting condition look acceptable under the checks that were actually performed.",
           },
           {
-            type: "paragraph",
-            text: "A properly installed shaft grounding ring helps discharge shaft current, reduce the risk of bearing electrical erosion, and support longer motor bearing life in VFD-driven motor applications.",
+            type: "heading",
+            text: "Industrial Dry Motors vs. Oil-Mist or Oil-Cooled Motors",
           },
           {
             type: "paragraph",
-            text: "For motors operating with variable frequency drives, proper installation and grounding should always be checked as part of the motor protection process.",
+            text: "Industrial dry motors usually emphasize shaft cleaning, dust control, mounting envelope, and maintenance access. Oil-mist or oil-cooled applications require a fresh review of materials, fiber structure, sealing, contamination, and lubricant exposure. Do not assume that the same conductive-ring structure is suitable for both dry and oil-cooled environments. Different environments may need different structures or an application-specific installation review.",
+          },
+          {
+            type: "link",
+            intro: "For industrial application context, see:",
+            label: "industrial motor shaft grounding applications",
+            href: "/applications/industrial-motors",
+          },
+          {
+            type: "heading",
+            text: "When to Request an Application-Specific Installation Review",
+          },
+          {
+            type: "paragraph",
+            text: "Request a review when shaft geometry is non-catalog, access prevents standard mounting, the environment includes oil mist or immersion, speed or thermal duty is unusual for the selected structure, insulated bearings or complex grounding already exist, or photos and drawings leave doubt about contact position. Provide motor drawings, shaft diameter, installation photos, maximum speed, operating environment, and available mounting space so engineers can assess fit before parts are ordered or remounted.",
+          },
+          {
+            type: "heading",
+            text: "Conclusion",
+          },
+          {
+            type: "paragraph",
+            text: "Correct installation helps provide a usable discharge path and helps reduce the risk of leaving bearings as the only route for shaft current. Focus on a clean continuous contact zone, even fiber engagement, reliable frame bonding, and verified post-installation checks. When conditions fall outside standard dry-motor mounting practice, stop and request an application-specific installation review rather than forcing a catalog fit.",
           },
         ],
       },

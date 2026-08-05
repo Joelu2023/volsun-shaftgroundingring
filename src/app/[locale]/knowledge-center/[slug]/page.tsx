@@ -32,6 +32,8 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=shaft-grounding-ring-quality-testing&source=technical_article&source_page=inside-volsun-testing-laboratories-shaft-grounding-ring-quality&cta_key=engineer&inquiry_type=technical_inquiry",
   "what-causes-vfd-bearing-failure":
     "campaign=vfd-bearing-failure-guide-update&source=knowledge-center&source_page=/en/knowledge-center/what-causes-vfd-bearing-failure",
+  "how-to-install-shaft-grounding-ring":
+    "campaign=shaft-grounding-ring-installation-guide-update&source=knowledge-center&source_page=/en/knowledge-center/how-to-install-shaft-grounding-ring",
 };
 
 const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
@@ -39,6 +41,7 @@ const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
   "why-ev-drive-motors-need-shaft-current-protection": "Submit EV Motor Requirements",
   "inside-volsun-testing-laboratories-shaft-grounding-ring-quality": "Submit Motor Test Requirements",
   "what-causes-vfd-bearing-failure": "Submit Motor Requirements",
+  "how-to-install-shaft-grounding-ring": "Request an Installation Review",
 };
 
 const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
@@ -49,6 +52,10 @@ const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
   "what-causes-vfd-bearing-failure": {
     title: "Need Help Diagnosing Repeated VFD Motor Bearing Failure?",
     body: "Send us your bearing inspection photos, shaft diameter, motor speed, VFD information, operating environment, and available installation space for a preliminary application review.",
+  },
+  "how-to-install-shaft-grounding-ring": {
+    title: "Need Help Reviewing Your Shaft Grounding Ring Installation?",
+    body: "Send us your motor drawing, shaft diameter, installation photos, maximum speed, operating environment, and available mounting space for a preliminary installation review.",
   },
 };
 

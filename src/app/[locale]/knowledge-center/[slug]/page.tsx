@@ -34,6 +34,8 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=vfd-bearing-failure-guide-update&source=knowledge-center&source_page=/en/knowledge-center/what-causes-vfd-bearing-failure",
   "how-to-install-shaft-grounding-ring":
     "campaign=shaft-grounding-ring-installation-guide-update&source=knowledge-center&source_page=/en/knowledge-center/how-to-install-shaft-grounding-ring",
+  "when-standard-shaft-grounding-rings-need-custom-design":
+    "campaign=custom-shaft-grounding-ring-design&source=knowledge-center&source_page=/en/knowledge-center/when-standard-shaft-grounding-rings-need-custom-design",
 };
 
 const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
@@ -42,6 +44,7 @@ const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
   "inside-volsun-testing-laboratories-shaft-grounding-ring-quality": "Submit Motor Test Requirements",
   "what-causes-vfd-bearing-failure": "Submit Motor Requirements",
   "how-to-install-shaft-grounding-ring": "Request an Installation Review",
+  "when-standard-shaft-grounding-rings-need-custom-design": "Submit Your Motor Requirements",
 };
 
 const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
@@ -56,6 +59,10 @@ const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
   "how-to-install-shaft-grounding-ring": {
     title: "Need Help Reviewing Your Shaft Grounding Ring Installation?",
     body: "Send us your motor drawing, shaft diameter, installation photos, maximum speed, operating environment, and available mounting space for a preliminary installation review.",
+  },
+  "when-standard-shaft-grounding-rings-need-custom-design": {
+    title: "Need a Shaft Grounding Ring for a Non-Standard Motor Design?",
+    body: "Send us your motor drawing, shaft dimensions, maximum speed, installation space, operating environment, and project requirements. Our engineering team can review whether a standard or customized shaft grounding solution is more suitable.",
   },
 };
 

@@ -8,6 +8,12 @@ type PageMetaInput = {
   path: string;
   locale?: AppLocale;
   absoluteTitle?: boolean;
+  /**
+   * When false on English pages, emit noindex,follow.
+   * Omitted/true keep existing localeRobots behavior.
+   * Chinese pages always remain noindex,follow regardless of this flag.
+   */
+  indexable?: boolean;
 };
 
 function pathWithLocale(locale: AppLocale, path: string): string {
@@ -33,7 +39,24 @@ export function localeRobots(locale: AppLocale | undefined): Metadata["robots"] 
   return { index: true, follow: true };
 }
 
-export function buildPageMetadata({ title, description, path, locale, absoluteTitle }: PageMetaInput): Metadata {
+function resolvePageRobots(locale: AppLocale | undefined, indexable?: boolean): Metadata["robots"] {
+  if (locale === "zh") {
+    return { index: false, follow: true };
+  }
+  if (indexable === false) {
+    return { index: false, follow: true };
+  }
+  return localeRobots(locale);
+}
+
+export function buildPageMetadata({
+  title,
+  description,
+  path,
+  locale,
+  absoluteTitle,
+  indexable,
+}: PageMetaInput): Metadata {
   const base = getCanonicalSiteOrigin();
   const canonicalPath = locale ? pathWithLocale(locale, path) : path.startsWith("/") ? path : `/${path}`;
   const canonicalUrl = `${base}${canonicalPath}`;
@@ -53,7 +76,7 @@ export function buildPageMetadata({ title, description, path, locale, absoluteTi
     ...(absoluteTitle ? { title: { absolute: title } } : { title }),
     description,
     alternates,
-    robots: localeRobots(locale),
+    robots: resolvePageRobots(locale, indexable),
     openGraph: {
       title: absoluteTitle ? title : undefined,
       description,

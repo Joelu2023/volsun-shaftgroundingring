@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
   const locale = raw as AppLocale;
+  const indexable = getApplicationBySlug(slug)?.isIndexable ?? true;
   if (slug === industrialMotorsApplicationPage.slug) {
     const industrial = getIndustrialMotorsContent(locale);
     return buildPageMetadata({
@@ -45,6 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: industrial.seoDescription,
       path: industrialMotorsApplicationPage.path,
       locale,
+      indexable,
     });
   }
   if (slug === electricVehiclesApplicationPage.slug) {
@@ -54,6 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: ev.seoDescription,
       path: electricVehiclesApplicationPage.path,
       locale,
+      indexable,
     });
   }
   const a = getApplicationForLocale(slug, locale);
@@ -63,6 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: a.metaDescription,
     path: `/applications/${a.slug}`,
     locale,
+    indexable,
   });
 }
 

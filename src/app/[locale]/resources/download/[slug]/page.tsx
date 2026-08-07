@@ -1,9 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { redirect } from "next/navigation";
 import { isAppLocale, type AppLocale } from "@/lib/i18n/locales";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import {
   recordResourceDownloadPageView,
   resolvePublishedDownloadResource,
@@ -15,6 +17,25 @@ type Props = {
   params: Promise<{ locale: string; slug: string }>;
   searchParams: Promise<{ error?: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale: rawLocale, slug } = await params;
+  if (!isAppLocale(rawLocale)) {
+    return {};
+  }
+  const locale = rawLocale as AppLocale;
+  const resource = await resolvePublishedDownloadResource(slug, locale);
+  if (!resource?.file_url) {
+    return {};
+  }
+  return buildPageMetadata({
+    title: `Download: ${resource.title}`,
+    description: `Submit your contact details to download ${resource.title}.`,
+    path: `/resources/download/${slug}`,
+    locale,
+    indexable: false,
+  });
+}
 
 export default async function ResourceDownloadLeadPage({ params, searchParams }: Props) {
   const { locale: rawLocale, slug } = await params;

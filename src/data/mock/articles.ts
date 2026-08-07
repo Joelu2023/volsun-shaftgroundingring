@@ -4994,6 +4994,294 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-19",
+    slug: "when-standard-shaft-grounding-rings-need-custom-design",
+    category: "technical-articles",
+    datePublished: "2026-08-07T14:07:15.516Z",
+    dateModified: "2026-08-07T14:07:15.516Z",
+    coverImagePublicPath:
+      "/images/articles/when-standard-shaft-grounding-rings-need-custom-design/custom-shaft-grounding-ring-design-hero.webp",
+    coverImageAlt:
+      "Industrial motor with solid shaft grounding rings on a display stand in a production environment",
+    locales: {
+      en: {
+        title:
+          "When Standard Shaft Grounding Rings Are Not Enough: 6 Cases That May Need Custom Design",
+        seoTitle: "Custom Shaft Grounding Ring Design: When Standard Rings Are Not Enough | VOLSUN",
+        excerpt:
+          "A practical review of when a standard shaft grounding ring may fit—and when shaft geometry, space, speed, oil exposure, mounting, or OEM validation may require a custom design review.",
+        metaDescription:
+          "Learn when a standard shaft grounding ring may fit and when motor speed, shaft geometry, installation space, oil exposure, or OEM validation may require a custom grounding design.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "heading",
+            text: "Standard Rings Work for Many Motors—But Not Every Application",
+          },
+          {
+            type: "paragraph",
+            text: "A standard shaft grounding ring can be a practical solution when shaft size, mounting space, speed, operating environment, and grounding architecture fall within the intended design window. In those cases, a standard solid or arc-shaped ring may help provide a controlled current path away from the motor bearings without a custom development program.",
+          },
+          {
+            type: "paragraph",
+            text: "Problems begin when a grounding ring is selected by shaft diameter alone. Diameter is a necessary input, but it does not describe tolerance at the contact zone, available contact width, runout, radial and axial clearance, mounting access, lubricant exposure, or OEM validation expectations. When those factors sit outside the intended standard design window, an application-specific review—and in some cases a custom shaft grounding ring design—should be evaluated.",
+          },
+          {
+            type: "paragraph",
+            text: "Customization is not automatically better. The useful sequence is standard solution → application review → custom design only when needed.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/when-standard-shaft-grounding-rings-need-custom-design/shaft-grounding-ring-conductive-fiber-structure.webp",
+            alt: "Solid shaft grounding ring with inward-facing conductive fiber bundles and mounting holes",
+            caption:
+              "Conductive fiber contact and mounting geometry must remain compatible with the shaft and housing—especially if any application-specific feature is added.",
+            width: 800,
+            height: 604,
+          },
+          {
+            type: "heading",
+            text: "Six Cases That May Require Custom Design",
+          },
+          {
+            type: "heading",
+            text: "Unusual Shaft Diameter or Tolerance",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft diameter is usually the first dimensional check, but it is rarely enough for a reliable fit review. Tolerance at the intended contact position, available contact width, shaft runout, and the exact contact location along the shaft all influence whether conductive fibers can maintain stable engagement under rotation.",
+          },
+          {
+            type: "paragraph",
+            text: "A ring matched only to a nominal diameter may still be unsuitable if the contact zone is too narrow, sits on a shoulder or damaged surface, or operates with runout that challenges continuous fiber contact. When drawings or measured data show non-standard geometry, the design should be reviewed before assuming a standard size is adequate. Diameter alone is not enough.",
+          },
+          {
+            type: "heading",
+            text: "Limited Radial or Axial Installation Space",
+          },
+          {
+            type: "paragraph",
+            text: "Installation envelope often decides whether a standard structure is realistic. Limited radial space, limited axial depth, nearby seals, or retrofit access constraints may prevent a continuous solid ring from seating correctly or from being fastened without distorting the housing.",
+          },
+          {
+            type: "paragraph",
+            text: "In constrained envelopes, a split shaft grounding ring (arc-shaped structure) may be more suitable because it can simplify mounting where full circumferential access is difficult. In other cases, a mounting bracket, revised fastening pattern, or a custom envelope may need review. The point is not that every tight motor requires custom tooling—it is that space and access should be evaluated before a standard part is ordered.",
+          },
+          {
+            type: "link",
+            intro: "Compare standard solid structures:",
+            label: "VOLSUN solid shaft grounding rings",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "When access is constrained, review an arc-shaped option:",
+            label: "split shaft grounding ring",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "For mounting checks, see the:",
+            label: "shaft grounding ring installation guide",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "High-Speed Motor Applications",
+          },
+          {
+            type: "paragraph",
+            text: "Higher rotational speed may change requirements for conductive fiber contact stability, concentricity, mounting rigidity, wear behavior, and validation. Peripheral speed, duty cycle, and how the ring is fixed to the housing can all affect whether contact remains consistent in service.",
+          },
+          {
+            type: "paragraph",
+            text: "That does not mean high-speed motors always require a custom ring. Many applications may still be served by a standard configuration after the speed profile and mounting conditions are reviewed. When speed, packaging, and duty sit outside typical standard assumptions, an application-specific review should be completed before design or production decisions are locked. No universal RPM boundary replaces that review.",
+          },
+          {
+            type: "heading",
+            text: "Oil-Mist or Oil-Cooled Environments",
+          },
+          {
+            type: "paragraph",
+            text: "A design suitable for a dry industrial motor should not automatically be assumed suitable for an oil-cooled motor. Lubricant exposure, oil mist, contamination, material compatibility, mounting structure, and conductive contact stability under oil film conditions may all require a fresh evaluation.",
+          },
+          {
+            type: "paragraph",
+            text: "Oil or lubricant films may change conductive contact behavior between the fibers and the shaft. Material compatibility, contamination, flow conditions, and contact stability should therefore be evaluated for the actual application. For oil-mist or oil-cooled duty, material choice, fiber arrangement, and mounting should be reviewed against the actual lubricant and flow conditions—and application-specific validation may be required. Suitability depends on the operating conditions; no single ring design should be claimed to work in all oils or to maintain contact under every oil condition.",
+          },
+          {
+            type: "link",
+            intro: "For broader application context, see:",
+            label: "industrial motor shaft grounding applications",
+            href: "/applications/industrial-motors",
+          },
+          {
+            type: "link",
+            intro: "For electrified drive packaging context, see:",
+            label: "EV motor shaft grounding applications",
+            href: "/applications/electric-vehicles",
+          },
+          {
+            type: "link",
+            intro: "For detailed electrical and mechanical selection inputs, see the:",
+            label: "shaft grounding ring selection guide",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+          },
+          {
+            type: "heading",
+            text: "Non-Standard Mounting or Motor Geometry",
+          },
+          {
+            type: "paragraph",
+            text: "End shields, bearing housings, shaft shoulders, seals, restricted fastening positions, and retrofit geometry can all push a project outside a standard mounting interface. In those cases, the question is not only “which size,” but whether the ring can be located on a suitable shaft contact zone and bonded to the intended ground path without conflicting with seals or other hardware.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/when-standard-shaft-grounding-rings-need-custom-design/custom-shaft-grounding-ring-with-sealing-layer.webp",
+            alt: "Custom shaft grounding rings with an added sealing layer shown in protective packaging",
+            caption:
+              "Example of an application-specific sealing or contamination-control feature reviewed together with conductive contact and installation constraints—not a universal oil-cooled solution.",
+            width: 800,
+            height: 700,
+          },
+          {
+            type: "paragraph",
+            text: "In one application-specific program, a customer needed a shaft grounding ring that also incorporated a sealing or contamination-control feature for a dusty operating environment. The request was not treated as a simple add-on: the sealing geometry had to be reviewed so it would not interfere with conductive fiber contact, and the combined structure had to match the available installation space. The path followed a design review, prototype samples, and installation evaluation before any production decision. That type of feature is an application-specific requirement—it should not be assumed transferable to unrelated motors or environments without a new review.",
+          },
+          {
+            type: "heading",
+            text: "OEM Projects Requiring Validation and Scalable Production",
+          },
+          {
+            type: "paragraph",
+            text: "OEM programs often need more than a one-off special dimension. When a custom shaft grounding ring is under consideration, a controlled sequence is usually more useful than an informal sample request:",
+          },
+          {
+            type: "list",
+            items: [
+              "Drawing review",
+              "Preliminary design",
+              "Prototype",
+              "Application validation",
+              "Design adjustment",
+              "Production review",
+            ],
+          },
+          {
+            type: "link",
+            intro: "When standard structures cannot meet the envelope or program needs, review a:",
+            label: "custom shaft grounding ring",
+            href: "/products/custom-shaft-grounding-ring",
+          },
+          {
+            type: "paragraph",
+            text: "Repeatability, drawing control, installation consistency, sample validation, and production scalability should be part of the discussion. A prototype that fits one motor is not the same as a design ready for volume supply. Custom work is justified when standard structures cannot meet geometry, environment, or program requirements—not because custom is assumed to be a better default.",
+          },
+          {
+            type: "heading",
+            text: "Standard vs. Custom Shaft Grounding Ring Review",
+          },
+          {
+            type: "table",
+            caption: "Standard vs. custom shaft grounding ring review",
+            headers: ["Factor", "Standard Solution May Fit", "Custom Review May Be Needed"],
+            rows: [
+              [
+                "Shaft geometry",
+                "Nominal diameter and contact zone fall within standard assumptions",
+                "Non-standard diameter, tolerance, runout, contact width, or contact position",
+              ],
+              [
+                "Installation space",
+                "Radial and axial clearance support a solid or arc-shaped standard mount",
+                "Envelope too tight, retrofit access limited, or bracket/integration required",
+              ],
+              [
+                "Rotational speed",
+                "Speed and duty align with the intended design window after review",
+                "High or unusual speed profiles that may affect contact stability and validation",
+              ],
+              [
+                "Operating environment",
+                "Dry industrial conditions consistent with the selected structure",
+                "Oil mist, oil cooling, heavy contamination, or other duty that should be re-evaluated",
+              ],
+              [
+                "Mounting interface",
+                "End shield / housing accepts the standard fastening layout",
+                "Non-standard housing, seals, shoulders, or restricted fastening positions",
+              ],
+              [
+                "OEM validation / production program",
+                "Standard part with normal sample confirmation",
+                "Drawing-controlled design, prototype validation, and scalable production review",
+              ],
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "In every row, the outcome depends on the application. A factor listed under “custom review” does not automatically require a new design; it means the case should be reviewed before a standard assumption is locked.",
+          },
+          {
+            type: "heading",
+            text: "What to Send VOLSUN for an Engineering Review",
+          },
+          {
+            type: "paragraph",
+            text: "Providing these inputs helps determine whether an existing standard configuration is suitable before a custom design is considered:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor type and application",
+              "Shaft diameter and tolerance",
+              "Maximum rotational speed",
+              "Installation drawing",
+              "Installation photos",
+              "Available radial space",
+              "Available axial space",
+              "Operating temperature",
+              "Dry / oil-mist / oil-cooled environment",
+              "Prototype quantity",
+              "Estimated annual quantity",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Incomplete inputs do not stop a preliminary discussion, but they do increase uncertainty. Clear geometry, space, speed, and environment data usually decide faster whether a standard ring may be suitable or whether a custom design path should be opened.",
+          },
+          {
+            type: "heading",
+            text: "Conclusion",
+          },
+          {
+            type: "paragraph",
+            text: "Standard shaft grounding rings remain a practical first path for many motors when geometry, space, speed, environment, and mounting fall inside the intended design window. Custom design should be considered when those conditions fall outside that window—or when an OEM program needs drawing control, validation, and scalable production—not because customization is automatically better.",
+          },
+          {
+            type: "paragraph",
+            text: "Start with the application facts. Review whether a standard solid or arc-shaped ring may fit. Move to custom design only when the review shows it is needed.",
+          },
+        ],
+      },
+      zh: {
+        title:
+          "[ZH-TODO] When Standard Shaft Grounding Rings Are Not Enough: 6 Cases That May Need Custom Design",
+        excerpt:
+          "[ZH-TODO] A practical review of when a standard shaft grounding ring may fit—and when shaft geometry, space, speed, oil exposure, mounting, or OEM validation may require a custom design review.",
+        metaDescription:
+          "[ZH-TODO] Learn when a standard shaft grounding ring may fit and when motor speed, shaft geometry, installation space, oil exposure, or OEM validation may require a custom grounding design.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] A standard shaft grounding ring can be a practical solution when shaft size, mounting space, speed, operating environment, and grounding architecture fall within the intended design window.",
+          },
+        ],
+      },
+    },
+  },
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 

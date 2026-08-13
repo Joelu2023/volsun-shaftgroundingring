@@ -36,6 +36,8 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=shaft-grounding-ring-installation-guide-update&source=knowledge-center&source_page=/en/knowledge-center/how-to-install-shaft-grounding-ring",
   "when-standard-shaft-grounding-rings-need-custom-design":
     "campaign=custom-shaft-grounding-ring-design&source=knowledge-center&source_page=/en/knowledge-center/when-standard-shaft-grounding-rings-need-custom-design",
+  "shaft-grounding-ring-vs-insulated-bearing":
+    "campaign=sgr-vs-insulated-bearing&source=knowledge-center&source_page=/en/knowledge-center/shaft-grounding-ring-vs-insulated-bearing&cta_key=engineer&inquiry_type=technical_inquiry",
 };
 
 const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
@@ -45,6 +47,7 @@ const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
   "what-causes-vfd-bearing-failure": "Submit Motor Requirements",
   "how-to-install-shaft-grounding-ring": "Request an Installation Review",
   "when-standard-shaft-grounding-rings-need-custom-design": "Submit Your Motor Requirements",
+  "shaft-grounding-ring-vs-insulated-bearing": "Submit Motor Data for Review",
 };
 
 const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
@@ -63,6 +66,10 @@ const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
   "when-standard-shaft-grounding-rings-need-custom-design": {
     title: "Need a Shaft Grounding Ring for a Non-Standard Motor Design?",
     body: "Send us your motor drawing, shaft dimensions, maximum speed, installation space, operating environment, and project requirements. Our engineering team can review whether a standard or customized shaft grounding solution is more suitable.",
+  },
+  "shaft-grounding-ring-vs-insulated-bearing": {
+    title: "Not Sure Whether Your VFD Motor Needs a Grounding Ring, an Insulated Bearing, or Both?",
+    body: "Send us your motor data: power rating, VFD model and carrier frequency, shaft diameter, bearing types, whether an insulated bearing is already fitted, and your operating environment. Our engineering team will review the application and suggest a suitable bearing-current protection approach.",
   },
 };
 

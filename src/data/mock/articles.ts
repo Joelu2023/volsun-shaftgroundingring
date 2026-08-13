@@ -1548,16 +1548,16 @@ export const articles: ArticleRecord[] = [
     slug: "what-causes-vfd-bearing-failure",
     category: "technical-articles",
     datePublished: "2026-06-22T10:00:00.000Z",
-    dateModified: "2026-07-30T08:00:00.000Z",
+    dateModified: "2026-08-13T11:30:00.000Z",
     coverImagePublicPath: "/images/articles/vfd-bearing-failure/vfd-motor-shaft-current-flow.jpg",
     locales: {
       en: {
         title: "What Causes VFD Bearing Failure? Electrical Erosion, Fluting, and Diagnosis",
         seoTitle: "What Causes VFD Bearing Failure? | VOLSUN",
         excerpt:
-          "Repeated bearing replacement, abnormal noise, vibration, and fluting on VFD motors may point to electrical erosion—but mechanical damage can look similar. Learn how to diagnose carefully and when shaft grounding may help.",
+          "Repeated bearing replacement, abnormal noise, vibration, and fluting on VFD motors may point to electrical erosion—but lubrication and mechanical damage can look similar. Learn how to diagnose carefully, approach shaft-voltage checks, and decide when shaft grounding may help.",
         metaDescription:
-          "Learn how shaft voltage can cause pitting, fluting and premature bearing failure in VFD motors, how to distinguish electrical erosion from mechanical damage, and what information is needed for diagnosis.",
+          "Learn what causes VFD bearing failure, how to separate electrical erosion from lubrication or mechanical faults, prepare for shaft-voltage checks, and choose corrective actions including shaft grounding rings.",
         paragraphs: [],
         blocks: [
           {
@@ -1607,47 +1607,55 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "heading",
-            text: "Electrical vs Mechanical Bearing Damage",
+            text: "Electrical Damage vs. Lubrication and Mechanical Faults",
           },
           {
             type: "paragraph",
-            text: "Comparing electrical and mechanical indicators side by side helps prevent automatic attribution of every failure to shaft current.",
+            text: "Comparing electrical, lubrication, and mechanical indicators side by side helps prevent automatic attribution of every failure to shaft current. Basic fluting appearance and symptom lists are covered in the companion resource guide; this section focuses on triage for root-cause decisions.",
           },
           {
             type: "table",
             caption: "Field clues only—final root cause requires application-specific evaluation.",
-            headers: ["Observation", "More suggestive of electrical erosion", "More suggestive of mechanical damage"],
+            headers: [
+              "Observation",
+              "More suggestive of electrical erosion",
+              "More suggestive of lubrication or mechanical damage",
+            ],
             rows: [
               [
                 "Raceway appearance",
                 "Discrete pits or periodic fluting consistent with discharge under rotation",
-                "Spalling, scoring, false brinelling, or wear bands tied to load zones",
+                "Spalling, scoring, false brinelling, adhesive wear, or wear bands tied to load zones",
               ],
               [
                 "Operating history",
                 "Repeated early failures on VFD-fed motors with similar duty",
-                "Failures after contamination, relubrication issues, or mechanical shock",
+                "Failures after contamination, relubrication issues, grease change, or mechanical shock",
               ],
               [
                 "Noise and vibration",
                 "Noise that grows with runtime and may correlate with inverter operation",
-                "Noise linked to speed, load swings, misalignment, or imbalance",
+                "Noise linked to speed, load swings, misalignment, imbalance, or soft foot",
               ],
               [
                 "Lubricant condition",
-                "Darkened grease with metallic debris after sparking is possible",
-                "Water, process contaminant, wrong grease, or starved lubrication",
+                "Darkened grease with metallic glitter after possible sparking can occur, but is not proof alone",
+                "Water, process contaminant, wrong grease, starved film, or over-greasing",
               ],
               [
                 "System clues",
                 "Elevated shaft voltage, long cables, high carrier frequency, weak grounding",
-                "Soft foot, coupling wear, belt tension, overhung load, improper fit",
+                "Coupling wear, belt tension, overhung load, improper fit, preload or end-play error",
               ],
             ],
           },
           {
             type: "paragraph",
-            text: "For a broader symptom and prevention overview, see the resource guide on bearing fluting in electric motors.",
+            text: "Do not attribute all bearing damage to shaft current. Lubrication film breakdown, wrong grease, water or process contamination, shaft misalignment, incorrect preload or end-play, improper mounting fits, and excessive mechanical load can all produce noise, vibration, pitting-like marks, or progressive raceway damage. Electrical and lubrication factors can also interact—for example, a thin or contaminated film may lower the voltage at which discharge begins—so diagnosis should collect both electrical and mechanical evidence.",
+          },
+          {
+            type: "paragraph",
+            text: "For a broader symptom-first overview of fluting appearance and prevention framing, see the resource guide on bearing fluting in electric motors.",
           },
           {
             type: "link",
@@ -1657,11 +1665,22 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "heading",
-            text: "Mechanical Causes That Can Look Similar",
+            text: "Field Diagnostic Workflow for Suspected Electrical Bearing Damage",
           },
           {
             type: "paragraph",
-            text: "Do not attribute all bearing damage to shaft current. Lubrication film breakdown, wrong grease, water or process contamination, shaft misalignment, incorrect preload or end-play, improper mounting fits, and excessive mechanical load can all produce noise, vibration, pitting-like marks, or progressive raceway damage. Electrical and mechanical factors can also interact—for example, a thin or contaminated film may lower the voltage threshold at which discharge begins—so diagnosis should collect both electrical and mechanical evidence.",
+            text: "Use a staged workflow so corrective hardware is not selected from a single photograph or a single vibration reading.",
+          },
+          {
+            type: "list",
+            items: [
+              "Document the failure pattern — hours to failure, which end failed, whether the motor is VFD-fed, and whether sister assets show the same history",
+              "Inspect the opened bearing — photograph raceways, rolling elements, cage, and grease condition from multiple angles before cleaning destroys evidence",
+              "Separate electrical clues from lubrication and mechanical clues using the comparison table above",
+              "Review the electrical system — drive type, cable length, bonding, existing insulated bearings or grounding devices, and coupling conductivity",
+              "Measure shaft voltage when safe and practical — after preparation steps below, not as a first improvisation on a running critical asset",
+              "Choose corrective actions only after the likely current path is understood — grounding ring, insulated bearing, common-mode mitigation, or a combination",
+            ],
           },
           {
             type: "heading",
@@ -1692,38 +1711,169 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "heading",
-            text: "How a Shaft Grounding Ring Helps Reduce Bearing Current Risk",
+            text: "How to Prepare for Shaft-Voltage Testing",
           },
           {
             type: "paragraph",
-            text: "A shaft grounding ring is designed to provide a controlled low-impedance path between the rotating shaft and the grounded motor frame (or another designated ground reference). Conductive microfibers maintain contact with the shaft so common-mode current has a preferred route that helps divert discharge energy away from the bearing raceway.",
+            text: "Shaft-voltage testing is a supporting measurement, not a stand-alone verdict. Preparation improves safety and makes results comparable between motors.",
+          },
+          {
+            type: "list",
+            items: [
+              "Confirm lockout/tagout, rotating-machinery clearance, and who may approach the shaft end while the drive is energized",
+              "Identify a clean, accessible shaft surface away from keyways, paint, rust, grease films, and coupling guards that prevent probe contact",
+              "Agree the ground reference — typically the motor frame or a bonded ground point documented in the test note",
+              "Select instrumentation suited to high-frequency content from PWM drives; ordinary low-bandwidth meters can miss the waveform shape of interest",
+              "Record operating condition — speed, load if known, VFD settings, cable arrangement, and whether any shaft grounding or insulated bearing is already fitted",
+              "Photograph probe placement and note drive-end versus non-drive-end access so later reviewers can interpret the reading",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Shaft-Voltage Measurement Cautions",
           },
           {
             type: "paragraph",
-            text: "This approach does not eliminate all shaft current, and it does not prevent all bearing failures. It helps reduce the risk of electrical erosion when the ring is correctly selected, mounted, and maintained for the application. Installation quality—shaft surface condition, concentric mounting, fiber engagement, and a clear discharge path—strongly influences results.",
+            text: "There is no single shaft-voltage number that applies to every motor, lubricant film, cable length, and drive setting. Treat readings as context for engineering review.",
+          },
+          {
+            type: "list",
+            items: [
+              "Do not invent or rely on a fixed universal threshold from marketing copy; interpret amplitude and waveform with motor construction and bearing condition together",
+              "A low reading at one speed or load does not prove the motor is safe under all operating points",
+              "Probe contact quality, brush bounce, painted shafts, and poor ground references can distort results",
+              "Frame grounding alone does not prove shaft-to-bearing discharge is controlled",
+              "If insulated bearings or a shaft grounding device are already installed, document that before comparing to an unprotected sister motor",
+              "Stop the test if contact cannot be made safely — request a planned outage rather than improvise around guards",
+            ],
+          },
+          {
+            type: "heading",
+            text: "Corrective-Action Decision Logic",
+          },
+          {
+            type: "paragraph",
+            text: "After electrical risk is plausible, choose actions by the likely current path—not by replacing bearings alone.",
+          },
+          {
+            type: "list",
+            items: [
+              "If lubrication or mechanical root causes dominate, correct those first; a grounding ring will not repair contamination, misalignment, or wrong grease",
+              "If shaft-to-ground capacitive discharge is the primary concern, a shaft grounding ring is often evaluated to provide a controlled low-impedance path from shaft to frame",
+              "If circulating bearing current is suspected—especially on larger machines—an insulated bearing on one end is often considered together with shaft grounding on the other",
+              "If common-mode voltage at the motor terminals is severe, review cable length, bonding, filters, or other drive-side mitigation in parallel with shaft-end devices",
+              "If both ends have failed electrically, or OEM guidance calls for a combined architecture, plan coordinated protection rather than a single device",
+            ],
+          },
+          {
+            type: "heading",
+            text: "When a Shaft Grounding Ring Is Appropriate",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring uses conductive microfibers that contact the rotating shaft and connect to the grounded motor frame. It is intended to divert shaft current away from the bearing lubricant film. It does not eliminate all shaft current, and it does not prevent every bearing failure.",
           },
           {
             type: "image",
-            src: "/images/articles/vfd-bearing-failure/shaft-grounding-ring-vfd-bearing-protection.jpg",
-            alt: "Shaft grounding ring designed to help protect VFD motor bearings from shaft current damage",
+            src: "/images/articles/vfd-bearing-failure/volsun-solid-shaft-grounding-ring-structure.webp",
+            alt: "VOLSUN solid shaft grounding ring showing metal housing and inward-facing conductive microfiber brushes",
+            caption:
+              "Product structure of a VOLSUN solid shaft grounding ring: metal ring housing with conductive microfiber brush bundles facing the shaft bore.",
+            width: 1200,
+            height: 906,
+          },
+          {
+            type: "list",
+            items: [
+              "The motor is VFD-fed and shaft-to-ground discharge is a credible mechanism based on history, inspection, or voltage checks",
+              "Bearing damage is consistent with electrical erosion after lubrication and mechanical causes have been reviewed",
+              "A clean shaft contact zone and a reliable path to the grounded frame are available",
+              "Retrofit is preferred without full bearing replacement—arc-shaped rings may be considered when coupling removal is difficult",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Mounting must follow the motor end shield, bearing arrangement, speed, environment, and available space. The ring should sit close to the bearing being protected, with conductive fibers maintaining stable contact on a clean shaft surface. Final mounting method is application-specific; this article does not invent a single end-cover geometry for all motors.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/volsun-shaft-grounding-rings-motor-application-context.webp",
+            alt: "VOLSUN shaft grounding rings displayed on a stand beside an industrial motor in a workshop",
+            caption:
+              "Product and motor application context: VOLSUN shaft grounding rings shown on a display stand beside an industrial motor—not an on-motor installation photo.",
+            width: 1200,
+            height: 972,
           },
           {
             type: "link",
-            intro: "For a solid-ring product family often reviewed on industrial VFD motors, see:",
+            intro: "Solid-ring product family:",
             label: "VS-RD/RDW solid shaft grounding ring",
             href: "/products/solid-shaft-grounding-ring",
           },
           {
             type: "link",
-            intro: "Selection inputs for EC and VFD motors are covered in:",
-            label: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
-            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+            intro: "Arc-shaped option for constrained retrofits:",
+            label: "VS-ST/STW arc-shaped shaft grounding ring",
+            href: "/products/split-shaft-grounding-ring",
           },
           {
             type: "link",
-            intro: "Mounting practice matters as much as product choice:",
+            intro: "Mounting practice:",
             label: "How to Install a Shaft Grounding Ring Correctly",
             href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "When Insulated Bearings or Common-Mode Mitigation May Also Be Needed",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring and an insulated bearing address different parts of the problem. The ring provides a preferred discharge path; an insulated bearing raises the impedance of a specific bearing path. Common-mode mitigation at the drive or cable system can reduce the voltage stress that reaches the motor in the first place. None of these measures is a universal substitute for the others.",
+          },
+          {
+            type: "list",
+            items: [
+              "Insulated bearing — useful when circulating current through the shaft–bearing–frame loop is a concern, or when OEM specifications require isolation on one end",
+              "Shaft grounding ring — useful when shaft voltage needs a controlled path to the grounded frame so discharge does not repeatedly traverse the raceway",
+              "Common-mode mitigation — filters, reactors, cable practice, and bonding improvements that reduce common-mode exposure before it appears as shaft voltage",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Insulating both bearings without providing a shaft discharge path does not remove shaft voltage; current may seek the coupling or driven equipment instead. For a structured comparison of grounding rings and insulated bearings, see the dedicated article.",
+          },
+          {
+            type: "link",
+            intro: "Compare protection strategies:",
+            label: "Shaft Grounding Ring vs. Insulated Bearing",
+            href: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
+          },
+          {
+            type: "heading",
+            text: "Engineering Information Required for Product Selection",
+          },
+          {
+            type: "paragraph",
+            text: "Catalog shaft diameter alone is not enough. Provide the following so engineering review can match ring type, contact design, and mounting approach to the duty:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor type, frame size, and power rating",
+              "Shaft diameter at the intended contact zone, and maximum RPM",
+              "VFD make/model, carrier or switching information, and approximate motor cable length",
+              "Operating environment — dry, dusty, oil mist, oil-cooled, washdown, or outdoor",
+              "Operating temperature range and available installation space at DE and NDE",
+              "Whether insulated bearings, ceramic hybrids, or existing shaft grounding devices are already fitted",
+              "Shaft-voltage observations, probe location, and any waveform notes",
+              "Bearing-damage symptoms and photographs when available",
+            ],
+          },
+          {
+            type: "link",
+            intro: "Selection input framework:",
+            label: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
           },
           {
             type: "heading",
@@ -1745,7 +1895,7 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "paragraph",
-            text: "VFD motors may develop shaft voltage that discharges through bearings and contributes to pitting, fluting, and premature failure. Treat electrical erosion as one plausible mechanism among several. Combine photographs, electrical measurements, grounding details, and mechanical history. When shaft current risk is confirmed or strongly suspected, a shaft grounding ring can provide a controlled path that helps reduce bearing current exposure—provided the design fits the motor’s environment and is installed correctly. If your team sees repeated VFD motor bearing failures, gather the checklist items above and request a preliminary application review before ordering from catalog diameter alone.",
+            text: "VFD motors may develop shaft voltage that discharges through bearings and contributes to pitting, fluting, and premature failure. Treat electrical erosion as one plausible mechanism among lubrication and mechanical causes. Follow a field diagnostic workflow, prepare carefully for shaft-voltage checks, and choose corrective actions by current path—shaft grounding ring, insulated bearing, common-mode mitigation, or a coordinated combination. If your team sees repeated VFD motor bearing failures, gather the engineering inputs above and request a preliminary application review before ordering from catalog diameter alone.",
           },
         ],
       },
@@ -5277,6 +5427,355 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "[ZH-TODO] A standard shaft grounding ring can be a practical solution when shaft size, mounting space, speed, operating environment, and grounding architecture fall within the intended design window.",
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "art-20",
+    slug: "shaft-grounding-ring-vs-insulated-bearing",
+    category: "technical-articles",
+    datePublished: "2026-08-13T11:30:00.000Z",
+    dateModified: "2026-08-13T11:30:00.000Z",
+    coverImagePublicPath:
+      "/images/articles/shaft-grounding-ring-vs-insulated-bearing/hero-volsun-solid-shaft-grounding-rings.webp",
+    coverImageAlt:
+      "Two VOLSUN solid shaft grounding rings with conductive microfiber brushes on a white background",
+    locales: {
+      en: {
+        title: "Shaft Grounding Ring vs. Insulated Bearing: Which Does Your VFD Motor Need?",
+        seoTitle: "Shaft Grounding Ring vs Insulated Bearing for VFD Motors | VOLSUN",
+        excerpt:
+          "Compare shaft grounding rings and insulated bearings for VFD motor protection. Learn how they address different bearing-current paths and when both may be required.",
+        metaDescription:
+          "Compare shaft grounding rings and insulated bearings for VFD motor protection. Learn how they address different bearing-current paths and when both may be required.",
+        paragraphs: [],
+        blocks: [
+          // ── Introduction ──────────────────────────────────────────────────
+          {
+            type: "paragraph",
+            text: "Variable frequency drives improve efficiency and speed control, but their high-frequency PWM switching introduces shaft voltage and bearing current that can damage motor bearings over time. Two protection strategies are commonly discussed: shaft grounding rings and insulated bearings. They are sometimes treated as interchangeable, but they address different aspects of the same problem. Choosing the wrong one—or using only one when both are needed—can leave a motor vulnerable.",
+          },
+          {
+            type: "paragraph",
+            text: "This article explains how each solution works, where each one is appropriate, and when a VFD motor may require both.",
+          },
+          // ── Quick Answer ─────────────────────────────────────────────────
+          {
+            type: "heading",
+            text: "Quick Answer",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring provides a controlled, low-impedance path that diverts shaft current from the shaft to the grounded motor frame, helping to prevent that current from discharging through the bearings. An insulated bearing blocks current from flowing through a specific bearing by isolating its raceway or housing from the current path. Neither solution is a universal fix: a grounding ring does not block current on its own; an insulated bearing does not discharge the voltage that has built up on the shaft. For many larger or more complex VFD motor installations, both are used together.",
+          },
+          // ── Why VFD Motors Develop Bearing Currents ───────────────────────
+          {
+            type: "heading",
+            text: "Why VFD Motors Develop Bearing Currents",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/01-vfd-motor-bearing-failure-mechanism.webp",
+            alt: "Comparison of VFD motor bearing current protection paths",
+            caption:
+              "PWM switching in a VFD creates common-mode voltage on the motor windings. Capacitive coupling between rotor and stator can charge the shaft relative to the motor frame.",
+            width: 900,
+            height: 600,
+          },
+          {
+            type: "paragraph",
+            text: "PWM switching in a VFD creates common-mode voltage on the motor windings. Through capacitive coupling between the rotor and stator, this voltage can appear on the rotating shaft. When the voltage exceeds the breakdown threshold of the bearing lubricant film, current discharges through the bearing. Repeated discharges cause electrical discharge machining (EDM) damage: pitting on the bearing raceway, a frosted surface finish, and eventually bearing fluting and premature failure.",
+          },
+          {
+            type: "paragraph",
+            text: "Two distinct current types are relevant. Shaft-to-ground voltage tends to affect smaller motors and causes capacitive discharge current through whichever bearing offers the lowest impedance path to ground. Circulating bearing current occurs in larger motors where the magnetic flux induces a voltage around the motor shaft axis; this drives current circulating through the shaft, bearings, and frame. For a more detailed explanation of the mechanisms, see the article on what causes VFD bearing failure.",
+          },
+          {
+            type: "link",
+            intro: "For background on these mechanisms:",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          // ── How a Shaft Grounding Ring Works ─────────────────────────────
+          {
+            type: "heading",
+            text: "How a Shaft Grounding Ring Works",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring uses conductive microfibers that make continuous contact with the rotating shaft and connect to the grounded motor frame. When shaft voltage builds up, the grounding ring provides a controlled, low-impedance path for that charge to flow to ground before it can discharge through the bearing lubricant film.",
+          },
+          {
+            type: "paragraph",
+            text: "The key characteristic is that the ring is active with the shaft: it reduces the voltage that remains on the shaft during operation. It does not block current; it redirects it. For this to work, the ring must be correctly positioned on a clean shaft surface, properly secured to the motor housing or end shield, and connected to a reliable ground path.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/03-shaft-grounding-ring-working-principle-before-after.webp",
+            alt: "VOLSUN shaft grounding ring installed on a motor shaft",
+            caption:
+              "A shaft grounding ring diverts shaft current to the motor frame before it can discharge through the bearing lubricant film.",
+            width: 900,
+            height: 600,
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN's solid shaft grounding ring (VS-RD/RDW) and arc-shaped shaft grounding ring (VS-ST/STW) both use metallized carbon fiber contact. They differ in installation approach: the solid ring is installed as a complete ring, while the arc-shaped version can be fitted without removing the shaft coupling—useful for retrofit work.",
+          },
+          {
+            type: "link",
+            intro: "Solid ring product family:",
+            label: "VS-RD / VS-RDW solid shaft grounding ring",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "Arc-shaped ring for retrofit or constrained installations:",
+            label: "VS-ST / VS-STW arc-shaped shaft grounding ring",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          // ── How an Insulated Bearing Works ───────────────────────────────
+          {
+            type: "heading",
+            text: "How an Insulated Bearing Works",
+          },
+          {
+            type: "paragraph",
+            text: "An insulated bearing has an electrically isolating layer—typically a ceramic or polymer coating on the outer ring, inner ring, or housing seat—that blocks current from flowing through that bearing. The insulation raises the impedance of that path so that current cannot use it as a route to ground.",
+          },
+          {
+            type: "paragraph",
+            text: "An important distinction: an insulated bearing does not reduce the shaft voltage itself. It blocks one current path. If only one bearing is insulated, the current that cannot pass through the insulated bearing may redirect to the non-insulated bearing on the other end, to the shaft coupling, or to connected equipment. An insulated bearing is most effective when combined with a complementary strategy that either grounds the shaft or insulates all remaining paths.",
+          },
+          // ── Key Differences Table ─────────────────────────────────────────
+          {
+            type: "heading",
+            text: "Shaft Grounding Ring vs. Insulated Bearing: Key Differences",
+          },
+          {
+            type: "table",
+            caption: "Comparison of shaft grounding ring and insulated bearing for VFD motor protection",
+            headers: ["Factor", "Shaft Grounding Ring", "Insulated Bearing"],
+            rows: [
+              [
+                "Working principle",
+                "Provides a controlled low-impedance path from shaft to ground frame",
+                "Blocks current flow through the bearing by electrical isolation",
+              ],
+              [
+                "Shaft-voltage discharge",
+                "Actively reduces shaft voltage by diverting charge to ground",
+                "Does not reduce shaft voltage; redirects or blocks the current path",
+              ],
+              [
+                "Contact with shaft",
+                "Continuous conductive-fiber contact with the rotating shaft",
+                "No contact with shaft surface; isolation is in the bearing itself",
+              ],
+              [
+                "Main function",
+                "Prevent shaft current from reaching the bearing by providing a preferred alternate path",
+                "Prevent current from passing through a specific bearing by isolating it",
+              ],
+              [
+                "Retrofit suitability",
+                "Arc-shaped (split) rings can be fitted without full disassembly; solid rings require shaft access",
+                "Typically requires bearing replacement; more disruptive for retrofit",
+              ],
+              [
+                "Maintenance considerations",
+                "Conductive fibers experience wear and should be inspected at defined intervals",
+                "Insulation layer can degrade under contamination, voltage spikes, or mechanical stress",
+              ],
+              [
+                "Limitations",
+                "Effectiveness depends on installation quality, shaft surface condition, and grounding path integrity",
+                "Insulating one bearing may redirect current to the other bearing or connected equipment if no complementary grounding is provided",
+              ],
+            ],
+          },
+          // ── When Shaft Grounding Ring Is Better ──────────────────────────
+          {
+            type: "heading",
+            text: "When Is a Shaft Grounding Ring the Better Choice?",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring is often the first measure considered for smaller and medium-sized VFD motors where shaft-to-ground capacitive discharge current is the primary concern. Because it diverts shaft voltage proactively, it reduces the electrical stress that reaches both bearings simultaneously.",
+          },
+          {
+            type: "list",
+            items: [
+              "The motor is driven by a VFD and shows elevated shaft voltage",
+              "Bearing failure has been diagnosed as EDM-related, with pitting or frosted raceways",
+              "Retrofit is required without bearing replacement",
+              "The motor is smaller and shaft-to-ground discharge current is more likely than circulating current",
+              "Installation space allows mounting a solid or arc-shaped ring on the drive end or non-drive end",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "The grounding ring must be installed correctly to be effective. A clean shaft contact zone, secure mounting to the grounded frame, and a verified grounding path are all necessary. For installation guidance, see the shaft grounding ring installation guide.",
+          },
+          {
+            type: "link",
+            intro: "Installation guidance:",
+            label: "How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          // ── When Insulated Bearing Is Required ───────────────────────────
+          {
+            type: "heading",
+            text: "When Is an Insulated Bearing Required?",
+          },
+          {
+            type: "paragraph",
+            text: "Insulated bearings are more commonly applied in motors where circulating bearing current is a significant risk in addition to shaft-to-ground discharge. In circulating-current situations, the current flows in a loop through the shaft, both bearings, and the motor frame; a grounding ring alone may not prevent this.",
+          },
+          {
+            type: "list",
+            items: [
+              "The motor is large and high-frequency circulating bearing current is a concern",
+              "Motor standards or OEM specifications call for insulated bearings",
+              "A grounding ring has already been installed but bearing damage on the non-drive end continues",
+              "The system design requires a specific bearing to be electrically isolated from the frame",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "An insulated bearing on the non-drive end (NDE) is a widely referenced arrangement where a shaft grounding ring on the drive end (DE) handles shaft-to-ground discharge, while the NDE insulated bearing interrupts the circulating current loop. This is a common protection architecture described in various motor protection guidelines. Larger motors and systems with circulating bearing-current risk may require a coordinated protection arrangement, such as a shaft grounding ring at one end and an insulated bearing at the other. Final selection should be based on the actual current path, motor construction, grounding, drive system and connected equipment—not motor power alone.",
+          },
+          // ── When Both Are Needed ──────────────────────────────────────────
+          {
+            type: "heading",
+            text: "When Might a VFD Motor Need Both?",
+          },
+          {
+            type: "paragraph",
+            text: "For larger VFD motors or high-frequency drive applications, a shaft grounding ring on the drive end combined with an insulated bearing on the non-drive end is a protection strategy that addresses both shaft-to-ground discharge and circulating current simultaneously. The grounding ring provides the low-impedance discharge path; the insulated bearing interrupts the circulating-current loop.",
+          },
+          {
+            type: "paragraph",
+            text: "Consider both measures when:",
+          },
+          {
+            type: "list",
+            items: [
+              "The motor is large (power level and circulating-current risk should be reviewed application by application)",
+              "Previous bearing failures have affected both the drive end and non-drive end",
+              "The VFD carrier frequency is elevated, increasing high-frequency current exposure",
+              "The motor is critical and protection redundancy is preferred",
+              "OEM or motor manufacturer guidance specifies a combined approach",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Note that insulating both bearings without providing a shaft grounding path does not resolve shaft voltage—it only blocks the discharge paths available. If both bearings are insulated and no grounding ring is fitted, shaft voltage may still accumulate and discharge through the shaft coupling or connected equipment.",
+          },
+          // ── Checklist ────────────────────────────────────────────────────
+          {
+            type: "heading",
+            text: "Motor Protection Selection Checklist",
+          },
+          {
+            type: "paragraph",
+            text: "Providing the following information makes it possible to review which protection strategy—grounding ring, insulated bearing, or a combination—may be appropriate for a specific motor and application:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor power rating and supply voltage",
+              "VFD make and model",
+              "VFD switching / carrier frequency",
+              "Shaft diameter and available mounting space (drive end and non-drive end)",
+              "Rated speed and maximum operating speed",
+              "Drive-end bearing type and designation",
+              "Non-drive-end bearing type and designation",
+              "Whether an insulated bearing is already installed (and on which end)",
+              "Connected equipment and shaft coupling type",
+              "Operating environment (dry, oil mist, oil cooled, dusty, washdown)",
+              "New design or retrofit situation",
+              "Measured shaft-voltage waveform or shaft-voltage peak value, if available",
+            ],
+          },
+          {
+            type: "link",
+            intro: "For the full selection input framework:",
+            label: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+          },
+          // ── FAQ ───────────────────────────────────────────────────────────
+          {
+            type: "heading",
+            text: "Frequently Asked Questions",
+          },
+          {
+            type: "heading",
+            text: "Can I use a shaft grounding ring instead of an insulated bearing?",
+          },
+          {
+            type: "paragraph",
+            text: "Not always. A shaft grounding ring addresses shaft-to-ground voltage discharge and may be sufficient when that is the dominant current mechanism. When circulating bearing current is also present—where current flows in a loop through the shaft, bearings, and frame—a grounding ring alone may not fully protect the non-drive-end bearing. Larger motors and systems with circulating bearing-current risk may require a coordinated protection arrangement, such as a shaft grounding ring at one end and an insulated bearing at the other. Final selection should be based on the actual current path, motor construction, grounding, drive system and connected equipment—not motor power alone.",
+          },
+          {
+            type: "heading",
+            text: "Does insulating both bearings eliminate bearing current problems?",
+          },
+          {
+            type: "paragraph",
+            text: "Insulating both bearings without providing a shaft grounding path does not resolve shaft voltage. With no discharge path to ground, shaft voltage continues to accumulate. The current may discharge through the shaft coupling or connected equipment instead, potentially causing damage elsewhere in the drivetrain.",
+          },
+          {
+            type: "heading",
+            text: "Where should the shaft grounding ring be mounted—drive end or non-drive end?",
+          },
+          {
+            type: "paragraph",
+            text: "Mounting position depends on the motor configuration, installation envelope, and grounding architecture. Drive-end mounting is common, but available space and the location of insulated bearings should both be considered. Review the installation drawing and motor end shield before specifying a position.",
+          },
+          {
+            type: "heading",
+            text: "What shaft-voltage level indicates a grounding ring is needed?",
+          },
+          {
+            type: "paragraph",
+            text: "There is no single threshold that applies to all motors and drives. Shaft-voltage measurement, interpreted alongside the motor size, VFD switching frequency, cable length, grounding arrangement, and observed bearing condition, gives a more complete picture. A measured shaft voltage alone is not sufficient to determine the right protection strategy without reviewing the full application context.",
+          },
+          // ── Conclusion ────────────────────────────────────────────────────
+          {
+            type: "heading",
+            text: "Conclusion",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft grounding rings and insulated bearings both have a role in VFD motor bearing protection, but they are not interchangeable. A shaft grounding ring diverts shaft voltage to ground before it reaches the bearing. An insulated bearing blocks a specific current path but does not reduce the voltage on the shaft. For many larger motors or high-frequency VFD applications, a combined approach—grounding ring on the drive end and insulated bearing on the non-drive end—addresses both discharge and circulating current mechanisms.",
+          },
+          {
+            type: "paragraph",
+            text: "The right choice depends on the motor size, VFD characteristics, bearing configuration, and operating environment. Reviewing the application inputs listed in the checklist above before selecting a protection strategy helps ensure the chosen solution matches the actual current mechanisms present.",
+          },
+          {
+            type: "link",
+            intro: "Explore grounding ring options:",
+            label: "VOLSUN shaft grounding ring products",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+        ],
+      },
+      zh: {
+        title:
+          "[ZH-TODO] Shaft Grounding Ring vs. Insulated Bearing: Which Does Your VFD Motor Need?",
+        excerpt:
+          "[ZH-TODO] Compare shaft grounding rings and insulated bearings for VFD motor protection. Learn how they address different bearing-current paths and when both may be required.",
+        metaDescription:
+          "[ZH-TODO] Compare shaft grounding rings and insulated bearings for VFD motor protection. Learn how they address different bearing-current paths and when both may be required.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Variable frequency drives improve efficiency and speed control, but their high-frequency PWM switching introduces shaft voltage and bearing current that can damage motor bearings over time.",
           },
         ],
       },

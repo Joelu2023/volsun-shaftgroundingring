@@ -29,6 +29,18 @@ export {
 } from "./mock/resources";
 export type { ResourceItem } from "./mock/resources";
 export {
+  resourcePageRegistry,
+  getResourcePageRegistryEntry,
+  BEARING_FLUTING_RESOURCE_SLUG,
+  SHAFT_GROUNDING_RESOURCE_SLUG,
+  BEARING_FLUTING_RESOURCE_PATH,
+  SHAFT_GROUNDING_RESOURCE_PATH,
+} from "./mock/resource-page-registry";
+export type {
+  ResourcePageRegistryEntry,
+  ResourcePageStatus,
+} from "./mock/resource-page-registry";
+export {
   homeContent,
   getHomeContent,
   HOME_EN_APPLICATION_SLOTS,
@@ -53,8 +65,6 @@ export type { IndustrialShaftGroundingSeoPageData } from "./mock/resource-indust
 export {
   bearingFlutingSeoPage,
   getBearingFlutingSeoContent,
-  SHAFT_GROUNDING_SEO_RESOURCE_PATH,
-  BEARING_FLUTING_SEO_RESOURCE_PATH,
 } from "./mock/resource-bearing-fluting-seo";
 export type { BearingFlutingSeoPageData } from "./mock/resource-bearing-fluting-seo";
 export { staticPageMeta, getPageMeta } from "./mock/page-meta";

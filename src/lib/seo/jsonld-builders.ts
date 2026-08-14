@@ -22,7 +22,14 @@ export function organizationJsonLd() {
   };
 }
 
-export function webPageJsonLd(params: { name: string; description: string; path: string; locale?: AppLocale }) {
+export function webPageJsonLd(params: {
+  name: string;
+  description: string;
+  path: string;
+  locale?: AppLocale;
+  datePublished?: string;
+  dateModified?: string | null;
+}) {
   const normalizedPath = params.path.startsWith("/") ? params.path : `/${params.path}`;
   const relativePath = params.locale ? absolutePathFromLocalePath(params.locale, params.path) : normalizedPath;
   const siteUrl = getCanonicalSiteOrigin();
@@ -35,6 +42,8 @@ export function webPageJsonLd(params: { name: string; description: string; path:
     url: pageUrl,
     name: params.name,
     description: params.description,
+    ...(params.datePublished ? { datePublished: params.datePublished } : {}),
+    ...(params.dateModified ? { dateModified: params.dateModified } : {}),
     isPartOf: {
       "@type": "WebSite",
       name: siteName,

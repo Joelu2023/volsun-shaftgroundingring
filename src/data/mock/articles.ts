@@ -5437,7 +5437,7 @@ export const articles: ArticleRecord[] = [
     slug: "shaft-grounding-ring-vs-insulated-bearing",
     category: "technical-articles",
     datePublished: "2026-08-13T11:30:00.000Z",
-    dateModified: "2026-08-13T11:30:00.000Z",
+    dateModified: "2026-08-14T05:00:00.000Z",
     coverImagePublicPath:
       "/images/articles/shaft-grounding-ring-vs-insulated-bearing/hero-volsun-solid-shaft-grounding-rings.webp",
     coverImageAlt:
@@ -5476,15 +5476,6 @@ export const articles: ArticleRecord[] = [
             text: "Why VFD Motors Develop Bearing Currents",
           },
           {
-            type: "image",
-            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/01-vfd-motor-bearing-failure-mechanism.webp",
-            alt: "Comparison of VFD motor bearing current protection paths",
-            caption:
-              "PWM switching in a VFD creates common-mode voltage on the motor windings. Capacitive coupling between rotor and stator can charge the shaft relative to the motor frame.",
-            width: 900,
-            height: 600,
-          },
-          {
             type: "paragraph",
             text: "PWM switching in a VFD creates common-mode voltage on the motor windings. Through capacitive coupling between the rotor and stator, this voltage can appear on the rotating shaft. When the voltage exceeds the breakdown threshold of the bearing lubricant film, current discharges through the bearing. Repeated discharges cause electrical discharge machining (EDM) damage: pitting on the bearing raceway, a frosted surface finish, and eventually bearing fluting and premature failure.",
           },
@@ -5497,6 +5488,12 @@ export const articles: ArticleRecord[] = [
             intro: "For background on these mechanisms:",
             label: "What Causes VFD Bearing Failure?",
             href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "link",
+            intro: "For a symptom-first overview of fluting appearance:",
+            label: "Bearing Fluting in Electric Motors",
+            href: "/resources/bearing-fluting-in-electric-motors",
           },
           // ── How a Shaft Grounding Ring Works ─────────────────────────────
           {
@@ -5512,17 +5509,17 @@ export const articles: ArticleRecord[] = [
             text: "The key characteristic is that the ring is active with the shaft: it reduces the voltage that remains on the shaft during operation. It does not block current; it redirects it. For this to work, the ring must be correctly positioned on a clean shaft surface, properly secured to the motor housing or end shield, and connected to a reliable ground path.",
           },
           {
-            type: "image",
-            src: "/images/articles/why-vfd-motors-need-shaft-grounding-rings/03-shaft-grounding-ring-working-principle-before-after.webp",
-            alt: "VOLSUN shaft grounding ring installed on a motor shaft",
-            caption:
-              "A shaft grounding ring diverts shaft current to the motor frame before it can discharge through the bearing lubricant film.",
-            width: 900,
-            height: 600,
-          },
-          {
             type: "paragraph",
             text: "VOLSUN's solid shaft grounding ring (VS-RD/RDW) and arc-shaped shaft grounding ring (VS-ST/STW) both use metallized carbon fiber contact. They differ in installation approach: the solid ring is installed as a complete ring, while the arc-shaped version can be fitted without removing the shaft coupling—useful for retrofit work.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/volsun-solid-shaft-grounding-ring-structure.webp",
+            alt: "VOLSUN solid shaft grounding ring showing metal housing and inward-facing conductive microfiber brushes",
+            caption:
+              "Product structure of a VOLSUN solid shaft grounding ring: metal ring housing with conductive microfiber brush bundles facing the shaft bore.",
+            width: 1200,
+            height: 906,
           },
           {
             type: "link",

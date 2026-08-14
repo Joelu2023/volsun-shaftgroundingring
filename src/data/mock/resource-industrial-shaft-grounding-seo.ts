@@ -1,6 +1,9 @@
 import type { AppLocale } from "@/lib/i18n/locales";
 import { getProductBySlug } from "./products";
-import { BEARING_FLUTING_SEO_RESOURCE_PATH } from "./resource-bearing-fluting-seo";
+import {
+  BEARING_FLUTING_RESOURCE_PATH,
+  SHAFT_GROUNDING_RESOURCE_PATH,
+} from "./resource-page-registry";
 
 /** Same primary images as the homepage product cards (`products[].primaryImagePublicPath`). */
 function productPrimaryImagePublicPath(slug: string): string | null {
@@ -78,7 +81,7 @@ export type IndustrialShaftGroundingSeoLocaleBlock = {
 };
 
 export type IndustrialShaftGroundingSeoPageData = {
-  path: "/resources/shaft-grounding-for-industrial-motors";
+  path: typeof SHAFT_GROUNDING_RESOURCE_PATH;
   heroImagePath: string | null;
   typicalApplications: { en: IndustrialShaftGroundingSeoTypicalCard[]; zh: IndustrialShaftGroundingSeoTypicalCard[] };
   checklistItems: { en: string[]; zh: string[] };
@@ -96,7 +99,7 @@ const SEO_IMG_COMPRESSOR = "/images/application-compressors.webp";
 const SEO_IMG_GENERAL = "/images/application-general-machinery.webp";
 
 export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageData = {
-  path: "/resources/shaft-grounding-for-industrial-motors",
+  path: SHAFT_GROUNDING_RESOURCE_PATH,
   heroImagePath: SEO_HERO,
   typicalApplications: {
     en: [
@@ -372,7 +375,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
       relatedFlutingBody:
         "If your team is troubleshooting fluting or repeat bearing failures, read the symptom-first guide—then return here for mitigation and product selection.",
       relatedFlutingCtaLabel: "Open bearing fluting guide",
-      relatedFlutingHref: BEARING_FLUTING_SEO_RESOURCE_PATH,
+      relatedFlutingHref: BEARING_FLUTING_RESOURCE_PATH,
     },
     zh: {
       seoTitle: "工业电机轴接地 | 变频轴承电气防护",
@@ -431,7 +434,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
       relatedFlutingBody:
         "可先阅读「症状优先」的轴承 fluting 专题建立共同语言，再回到本页做缓解与选型。",
       relatedFlutingCtaLabel: "查看轴承 fluting 专题",
-      relatedFlutingHref: BEARING_FLUTING_SEO_RESOURCE_PATH,
+      relatedFlutingHref: BEARING_FLUTING_RESOURCE_PATH,
     },
   },
 };

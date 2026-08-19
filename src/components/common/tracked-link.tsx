@@ -2,7 +2,7 @@
 
 import Link, { type LinkProps } from "next/link";
 import type { ReactNode } from "react";
-import { trackEvent } from "@/lib/analytics/events";
+import { trackContactClick, trackEvent } from "@/lib/analytics/events";
 
 type Props = LinkProps & {
   children: ReactNode;
@@ -21,10 +21,13 @@ export function TrackedLink({ children, className, eventName, payload, ...props 
       onClick={(e) => {
         props.onClick?.(e);
         trackEvent(eventName, payload ?? {});
+        if (eventName === "whatsapp_click") {
+          const location = typeof payload?.location === "string" ? payload.location : undefined;
+          trackContactClick({ channel: "whatsapp", location });
+        }
       }}
     >
       {children}
     </Link>
   );
 }
-

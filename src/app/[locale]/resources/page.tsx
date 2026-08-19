@@ -12,6 +12,7 @@ import { breadcrumbListJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
 import { categoryLabel, formatBytes, getDownloadLabel } from "@/lib/resource-center/helpers";
 import { listPublishedResourcesForResourcesPage } from "@/lib/resource-center/store";
 import { TrackedLink } from "@/components/common/tracked-link";
+import { CtaClickLink } from "@/components/analytics/cta-click-link";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -134,12 +135,15 @@ export default async function LocalizedResourcesPage({ params }: Props) {
               ) : (
                 <span className="rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">{t.resourcesDirectOff}</span>
               )}
-              <Link
+              <CtaClickLink
                 href={`/${locale}/contact?cta_key=${resource.category === "datasheet" ? "datasheet" : "catalog"}&resource=${encodeURIComponent(resource.slug)}`}
+                ctaId={`resource_rfq_${resource.slug}`}
+                pageSource="resources"
+                locale={locale}
                 className="text-sm text-slate-700 hover:underline"
               >
                 {t.contactRfq}
-              </Link>
+              </CtaClickLink>
             </div>
           </div>
         ))}

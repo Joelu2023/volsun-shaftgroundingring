@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/forms/inquiry-form";
 import type { AppLocale } from "@/lib/i18n/locales";
-import { trackEvent } from "@/lib/tracking/events";
+import { trackCtaClick, trackEvent } from "@/lib/tracking/events";
 import { cn } from "@/lib/utils/cn";
 import type {
   IndustrialShaftGroundingSeoCtaItem,
@@ -60,6 +60,12 @@ export function IndustrialShaftGroundingSeoClient({ locale, data }: Props) {
     href.startsWith("http://") || href.startsWith("https://") ? href : `/${locale}${href}`;
 
   const onCtaClick = (zone: "hero" | "midpage" | "bottom", cta: IndustrialShaftGroundingSeoCtaItem) => {
+    trackCtaClick({
+      cta_id: cta.id,
+      page_source: PAGE_SOURCE,
+      locale,
+      destination: "contact",
+    });
     if (zone === "hero") {
       trackEvent("hero_cta_click", { page_source: PAGE_SOURCE, locale, cta_id: cta.id, cta_label: cta.label });
       return;

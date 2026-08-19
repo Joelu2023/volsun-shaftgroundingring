@@ -7,8 +7,16 @@ import { InquiryTypeSelector } from "./inquiry-type-selector";
 import { cn } from "@/lib/utils/cn";
 import { getInquiryTypeOptions, publicContact } from "@/data";
 import type { AppLocale } from "@/lib/i18n/locales";
-import { trackEvent } from "@/lib/tracking/events";
-import { trackGoogleAdsInquiryFormConversion } from "@/lib/analytics/events";
+import {
+  mapInquiryApiErrorType,
+  trackFormError,
+  trackFormStart,
+  trackFormSubmit,
+  trackGenerateLead,
+  trackGoogleAdsInquiryFormConversion,
+} from "@/lib/analytics/events";
+import { createSyncSubmitLock, resolveInquiryEventId, shouldTrackGenerateLead } from "@/lib/analytics/submit-lock";
+import { getInquirySubmitButtonState } from "@/components/forms/inquiry-submit-button-state";
 
 const FORM_COPY = {
   en: {
@@ -37,6 +45,7 @@ const FORM_COPY = {
     labelMessage: "Message",
     submit: "Submit inquiry",
     submitting: "Submitting...",
+    submitted: "Submitted",
     successTitle: "Thank you. Your inquiry has been sent successfully.",
     successBody: "We will respond within 24 hours. If you need urgent attention, add WhatsApp in the next message.",
     devSuccessTitle: "Inquiry saved locally for development testing only.",
@@ -86,6 +95,7 @@ const FORM_COPY = {
     labelMessage: "留言",
     submit: "提交询盘",
     submitting: "提交中...",
+    submitted: "已提交",
     successTitle: "您的询盘已成功发送，谢谢。",
     successBody: "我们将在 24 小时内回复。如需加急，可在后续消息中留下 WhatsApp。",
     devSuccessTitle: "询盘已仅在本地开发环境保存。",
@@ -159,6 +169,15 @@ export function InquiryForm({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const successRef = useRef<HTMLDivElement>(null);
+  const submitLockRef = useRef(createSyncSubmitLock());
+  const formStartedRef = useRef(false);
+  const formId = aboutEnLeadForm ? "about_en_slim" : homeEnLeadForm ? "home_en_slim" : "inquiry_form";
+
+  function onFormStart() {
+    if (formStartedRef.current) return;
+    formStartedRef.current = true;
+    trackFormStart({ form_id: formId, page_source: pageSource, locale });
+  }
 
   useEffect(() => {
     setInquiryType(defaultInquiryType);
@@ -184,17 +203,35 @@ export function InquiryForm({
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!submitLockRef.current.tryAcquire()) return;
+
     setStatus("idle");
     const form = e.currentTarget;
     const fd = new FormData(form);
     const errors = validate(fd);
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) {
+      trackFormError({
+        form_id: formId,
+        error_type: "client_validation",
+        page_source: pageSource,
+        cta_source: ctaSource,
+        inquiry_type: enLeadSlim ? "rfq" : inquiryType,
+        locale,
+      });
+      submitLockRef.current.release();
       return;
     }
 
     setStatus("loading");
     setSubmitError(null);
+    trackFormSubmit({
+      form_id: formId,
+      page_source: pageSource,
+      cta_source: ctaSource,
+      inquiry_type: enLeadSlim ? "rfq" : inquiryType,
+      locale,
+    });
 
     const payload = enLeadSlim
       ? {
@@ -242,6 +279,7 @@ export function InquiryForm({
           ...attributionPayload(defaultCampaign, defaultSourcePage),
         };
 
+    let keepLock = false;
     try {
       const res = await fetch("/api/inquiries", {
         method: "POST",
@@ -256,6 +294,7 @@ export function InquiryForm({
         message?: string;
         error?: string;
         missing?: string[];
+        request_id?: string;
       } = {};
       try {
         data = (await res.json()) as typeof data;
@@ -263,20 +302,24 @@ export function InquiryForm({
         data = {};
       }
 
+      const eventId = resolveInquiryEventId(data.request_id);
+
       if (!res.ok || !data.ok) {
         setStatus("error");
         setSubmitError(messageForApiError(c, data.error, data.missing));
-        trackEvent("inquiry_submit_failed", {
+        trackFormError({
+          form_id: formId,
+          error_type: mapInquiryApiErrorType(data.error),
           page_source: pageSource,
           cta_source: ctaSource,
           inquiry_type: payload.inquiry_type,
-          product_interest: payload.product_interest ?? "",
-          application_interest: payload.application_interest ?? "",
+          locale,
+          event_id: eventId ?? undefined,
         });
         return;
       }
 
-      if (!data.delivered) {
+      if (!shouldTrackGenerateLead(data)) {
         if (data.devPersisted) {
           setStatus("dev-success");
           setFieldErrors({});
@@ -285,26 +328,33 @@ export function InquiryForm({
         }
         setStatus("error");
         setSubmitError(messageForApiError(c, "Inquiry delivery failed"));
-        trackEvent("inquiry_submit_failed", {
+        trackFormError({
+          form_id: formId,
+          error_type: data.delivered === false ? "not_delivered" : mapInquiryApiErrorType(data.error),
           page_source: pageSource,
           cta_source: ctaSource,
           inquiry_type: payload.inquiry_type,
-          product_interest: payload.product_interest ?? "",
-          application_interest: payload.application_interest ?? "",
+          locale,
+          event_id: eventId ?? undefined,
         });
         return;
       }
 
+      if (!eventId) {
+        console.warn("[analytics:generate_lead] API delivered true but request_id is missing; event_id omitted");
+      }
+
+      keepLock = true;
       setStatus("success");
       setFieldErrors({});
       setInquiryType(defaultInquiryType);
-      trackEvent("inquiry_submit_success", {
+      trackGenerateLead({
+        form_id: formId,
         page_source: pageSource,
         cta_source: ctaSource,
-        locale,
         inquiry_type: payload.inquiry_type,
-        product_interest: payload.product_interest ?? "",
-        application_interest: payload.application_interest ?? "",
+        locale,
+        event_id: eventId ?? undefined,
       });
       trackGoogleAdsInquiryFormConversion();
       form.reset();
@@ -312,19 +362,26 @@ export function InquiryForm({
     } catch {
       setStatus("error");
       setSubmitError(messageForApiError(c, undefined));
-      trackEvent("inquiry_submit_failed", {
+      trackFormError({
+        form_id: formId,
+        error_type: "network",
         page_source: pageSource,
         cta_source: ctaSource,
         inquiry_type: enLeadSlim ? "rfq" : inquiryType,
-        product_interest: String(fd.get("product_interest") ?? ""),
-        application_interest: String(fd.get("application_interest") ?? ""),
+        locale,
       });
+    } finally {
+      if (!keepLock) submitLockRef.current.release();
     }
   }
 
+  const submitButton = getInquirySubmitButtonState(status);
+  const submitLabel =
+    submitButton.labelKey === "submitting" ? c.submitting : submitButton.labelKey === "submitted" ? c.submitted : c.submit;
+
   if (enLeadSlim && locale === "en") {
     return (
-      <form onSubmit={onSubmit} className={cn("space-y-4", className)} noValidate>
+      <form onSubmit={onSubmit} onFocusCapture={onFormStart} className={cn("space-y-4", className)} noValidate>
         <div className="grid gap-3 sm:grid-cols-2">
           <Field label={c.labelName} name="name" required showRequiredAsterisk error={fieldErrors.name} />
           <Field label={c.labelCompany} name="company" hint={c.companyHint} error={fieldErrors.company} />
@@ -364,11 +421,11 @@ export function InquiryForm({
 
         <button
           type="submit"
-          disabled={status === "loading"}
+          disabled={submitButton.disabled}
           className="rounded bg-brand-orange px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 disabled:opacity-60"
           aria-busy={status === "loading"}
         >
-          {status === "loading" ? c.submitting : c.submit}
+          {submitLabel}
         </button>
 
         <div ref={successRef} id="inquiry-success" tabIndex={-1}>
@@ -396,7 +453,7 @@ export function InquiryForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className={cn("space-y-4", className)} noValidate>
+    <form onSubmit={onSubmit} onFocusCapture={onFormStart} className={cn("space-y-4", className)} noValidate>
       <p className="rounded border border-slate-100 bg-slate-50/80 px-3 py-2 text-sm text-slate-600">
         {inquiryFormAssist(c, inquiryType, defaultCtaKey)}
       </p>
@@ -456,11 +513,11 @@ export function InquiryForm({
 
       <button
         type="submit"
-        disabled={status === "loading"}
+        disabled={submitButton.disabled}
         className="rounded bg-brand-orange px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 disabled:opacity-60"
         aria-busy={status === "loading"}
       >
-        {status === "loading" ? c.submitting : c.submit}
+        {submitLabel}
       </button>
 
       <div ref={successRef} id="inquiry-success" tabIndex={-1}>

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { InquiryForm } from "@/components/forms/inquiry-form";
 import type { EvApplicationPageData, EvCtaItem } from "@/data/mock/application-ev";
 import type { AppLocale } from "@/lib/i18n/locales";
-import { trackEvent } from "@/lib/tracking/events";
+import { trackCtaClick, trackEvent } from "@/lib/tracking/events";
 import { cn } from "@/lib/utils/cn";
 
 type Props = {
@@ -115,6 +115,12 @@ export function EvApplicationPageClient({ locale, data }: Props) {
   };
 
   const onCtaClick = (zone: "hero" | "midpage" | "bottom", cta: EvCtaItem) => {
+    trackCtaClick({
+      cta_id: cta.id,
+      page_source: "applications_ev",
+      locale,
+      destination: "contact",
+    });
     if (zone === "hero") {
       trackEvent("hero_cta_click", { page_source: "applications_ev", locale, cta_id: cta.id, cta_label: cta.label });
     } else if (zone === "midpage") {
@@ -122,7 +128,6 @@ export function EvApplicationPageClient({ locale, data }: Props) {
     } else {
       trackEvent("bottom_cta_click", { page_source: "applications_ev", locale, cta_id: cta.id, cta_label: cta.label });
     }
-
   };
 
   return (

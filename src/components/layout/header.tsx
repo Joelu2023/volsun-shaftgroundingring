@@ -6,6 +6,7 @@ import { siteConfig, enHeaderLogoSrc, publicContact } from "@/data";
 import { cn } from "@/lib/utils/cn";
 import { localizeNavHref, switchLocalePath, type AppLocale } from "@/lib/i18n/locales";
 import { navLabel, ui } from "@/lib/i18n/ui-messages";
+import { trackContactClick } from "@/lib/analytics/events";
 
 type HeaderProps = {
   /** Server-resolved locale switch path (no query string). */
@@ -163,13 +164,25 @@ export function Header({ localeSwitchBasePath }: HeaderProps) {
       {locale === "en" && (
         <div className="border-b border-slate-100 bg-slate-50">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-x-5 gap-y-1 px-4 py-1 text-[11px] text-slate-500">
-            <a href={`tel:${publicContact.phoneCompany.replace(/[^\d+]/g, "")}`} className="hover:text-brand-orange">
+            <a
+              href={`tel:${publicContact.phoneCompany.replace(/[^\d+]/g, "")}`}
+              className="hover:text-brand-orange"
+              onClick={() => trackContactClick({ channel: "phone", location: "header_tel", locale: "en" })}
+            >
               {publicContact.phoneCompany}
             </a>
-            <a href={`tel:${publicContact.phoneMobile.replace(/[^\d+]/g, "")}`} className="hover:text-brand-orange">
+            <a
+              href={`tel:${publicContact.phoneMobile.replace(/[^\d+]/g, "")}`}
+              className="hover:text-brand-orange"
+              onClick={() => trackContactClick({ channel: "phone", location: "header_mobile", locale: "en" })}
+            >
               {publicContact.phoneMobile}
             </a>
-            <a href={`mailto:${publicContact.email}`} className="hover:text-brand-orange">
+            <a
+              href={`mailto:${publicContact.email}`}
+              className="hover:text-brand-orange"
+              onClick={() => trackContactClick({ channel: "email", location: "header_email", locale: "en" })}
+            >
               {publicContact.email}
             </a>
           </div>

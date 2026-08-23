@@ -2,6 +2,7 @@ import { publicContact } from "@/data";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { ui } from "@/lib/i18n/ui-messages";
 import { cn } from "@/lib/utils/cn";
+import { ContactChannelLink } from "@/components/analytics/contact-channel-link";
 
 function telHref(display: string) {
   return `tel:${display.replace(/[^\d+]/g, "")}`;
@@ -25,21 +26,39 @@ export function PublicContactCard({ locale, className }: { locale: AppLocale; cl
         <p className="font-semibold text-slate-900">{publicContact.companyName}</p>
         <p>
           <span className="font-semibold text-brand-blue">{t.contactLabelTel}: </span>
-          <a href={telHref(publicContact.phoneCompany)} className="text-brand-orange hover:underline">
+          <ContactChannelLink
+            href={telHref(publicContact.phoneCompany)}
+            channel="phone"
+            location="contact_card_tel"
+            locale={locale}
+            className="text-brand-orange hover:underline"
+          >
             {publicContact.phoneCompany}
-          </a>
+          </ContactChannelLink>
         </p>
         <p>
           <span className="font-semibold text-brand-blue">{t.contactLabelMobile}: </span>
-          <a href={telHref(publicContact.phoneMobile)} className="text-brand-orange hover:underline">
+          <ContactChannelLink
+            href={telHref(publicContact.phoneMobile)}
+            channel="phone"
+            location="contact_card_mobile"
+            locale={locale}
+            className="text-brand-orange hover:underline"
+          >
             {publicContact.phoneMobile}
-          </a>
+          </ContactChannelLink>
         </p>
         <p>
           <span className="font-semibold text-brand-blue">{t.contactLabelEmail}: </span>
-          <a href={`mailto:${publicContact.email}`} className="text-brand-orange hover:underline">
+          <ContactChannelLink
+            href={`mailto:${publicContact.email}`}
+            channel="email"
+            location="contact_card_email"
+            locale={locale}
+            className="text-brand-orange hover:underline"
+          >
             {publicContact.email}
-          </a>
+          </ContactChannelLink>
         </p>
         <p>
           <span className="font-semibold text-brand-blue">{t.contactLabelAddress}: </span>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { whatsappConfig } from "@/data";
-import { trackEvent } from "@/lib/analytics/events";
+import { trackContactClick, trackEvent } from "@/lib/analytics/events";
 
 function buildWhatsappUrl() {
   const number = whatsappConfig.whatsappNumber.replace(/\D/g, "");
@@ -30,7 +30,10 @@ export function WhatsAppFloatingButton() {
       href={buildWhatsappUrl()}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackEvent("whatsapp_click", { location: "floating_button" })}
+      onClick={() => {
+        trackContactClick({ channel: "whatsapp", location: "floating_button", locale: "en" });
+        trackEvent("whatsapp_click", { location: "floating_button" });
+      }}
       aria-label="Chat on WhatsApp"
       className={[
         "group fixed z-50 inline-flex items-center gap-2.5 text-white",

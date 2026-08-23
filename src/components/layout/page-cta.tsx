@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { ui } from "@/lib/i18n/ui-messages";
+import { CtaClickLink } from "@/components/analytics/cta-click-link";
 
 type Props = {
   className?: string;
@@ -19,12 +20,15 @@ export function PageCtaStrip({ className = "", locale }: Props) {
       <h2 className="text-lg font-semibold text-brand-blue">{t.readyDiscuss}</h2>
       <p className="mt-2 text-sm text-slate-600">{t.pageCtaBody}</p>
       <div className="mt-4 flex flex-wrap gap-3">
-        <Link
+        <CtaClickLink
           href={contactHref}
+          ctaId="page_cta_contact_rfq"
+          pageSource="page_cta_strip"
+          locale={locale}
           className="rounded bg-brand-orange px-4 py-2 text-sm font-medium text-white hover:opacity-90"
         >
           {t.contactRfq}
-        </Link>
+        </CtaClickLink>
         <Link href={resourcesHref} className="rounded border border-slate-300 px-4 py-2 text-sm text-slate-800 hover:bg-white">
           {t.browseResources}
         </Link>

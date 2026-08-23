@@ -13,7 +13,7 @@
     "factory:report": "tsx content-factory/cli.ts report",
     "factory:auto": "tsx content-factory/cli.ts auto",
     "factory:watch": "tsx content-factory/cli.ts watch",
-    "test": "tsx --test content-factory/inbox-paths.test.ts src/lib/i18n/locale-switch.test.ts src/lib/middleware/pathname-headers.test.ts src/lib/seo/zh-index-policy.test.ts src/components/sections/home/home-articles-locale.test.ts",
+    "test": "tsx --test content-factory/inbox-paths.test.ts src/lib/i18n/locale-switch.test.ts src/lib/middleware/pathname-headers.test.ts src/lib/seo/zh-index-policy.test.ts src/components/sections/home/home-articles-locale.test.ts src/lib/analytics/ga4-core-funnel.test.ts",
     "test:factory": "tsx --test content-factory/inbox-paths.test.ts",
     "test:i18n": "tsx --test src/lib/i18n/locale-switch.test.ts",
     "test:middleware": "tsx --test src/lib/middleware/pathname-headers.test.ts",

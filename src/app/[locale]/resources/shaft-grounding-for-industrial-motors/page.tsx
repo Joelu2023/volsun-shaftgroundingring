@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPageMeta, industrialShaftGroundingSeoPage, getIndustrialShaftGroundingSeoContent } from "@/data";
+import {
+  getPageMeta,
+  industrialShaftGroundingSeoPage,
+  getIndustrialShaftGroundingSeoContent,
+  getResourcePageRegistryEntry,
+  SHAFT_GROUNDING_RESOURCE_SLUG,
+} from "@/data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbListJsonLd, faqPageJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
@@ -20,11 +26,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isAppLocale(raw)) return {};
   const locale = raw as AppLocale;
   const t = getIndustrialShaftGroundingSeoContent(locale);
+  const resource = getResourcePageRegistryEntry(SHAFT_GROUNDING_RESOURCE_SLUG, locale);
+  if (!resource || resource.status !== "published") return {};
+
   return buildPageMetadata({
-    title: t.seoTitle,
+    title: resource.title,
     description: t.seoDescription,
-    path: industrialShaftGroundingSeoPage.path,
+    path: resource.path,
     locale,
+    indexable: resource.indexable,
   });
 }
 
@@ -34,6 +44,10 @@ export default async function IndustrialShaftGroundingSeoPage({ params }: Props)
     notFound();
   }
   const locale = raw as AppLocale;
+  const resource = getResourcePageRegistryEntry(SHAFT_GROUNDING_RESOURCE_SLUG, locale);
+  if (!resource || resource.status !== "published") {
+    notFound();
+  }
   const t = ui(locale);
   const content = getIndustrialShaftGroundingSeoContent(locale);
   const faqItems = industrialShaftGroundingSeoPage.faq[locale];
@@ -41,21 +55,23 @@ export default async function IndustrialShaftGroundingSeoPage({ params }: Props)
 
   const jsonLd = [
     webPageJsonLd({
-      name: content.seoTitle,
+      name: resource.title,
       description: content.seoDescription,
-      path: industrialShaftGroundingSeoPage.path,
+      path: resource.path,
       locale,
+      datePublished: resource.datePublished,
+      dateModified: resource.dateModified,
     }),
     faqPageJsonLd({
       items: faqItems.map((item) => ({ question: item.question, answer: item.answer })),
       locale,
-      path: industrialShaftGroundingSeoPage.path,
+      path: resource.path,
     }),
     breadcrumbListJsonLd(
       [
         { name: t.breadcrumbHome, path: "/" },
         { name: resourcesMeta.title, path: "/resources" },
-        { name: content.heroTitle, path: industrialShaftGroundingSeoPage.path },
+        { name: content.heroTitle, path: resource.path },
       ],
       locale,
     ),

@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { bearingFlutingSeoPage, getBearingFlutingSeoContent, getPageMeta } from "@/data";
+import {
+  bearingFlutingSeoPage,
+  getBearingFlutingSeoContent,
+  getPageMeta,
+  getResourcePageRegistryEntry,
+  BEARING_FLUTING_RESOURCE_SLUG,
+} from "@/data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbListJsonLd, webPageJsonLd } from "@/lib/seo/jsonld-builders";
@@ -20,11 +26,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isAppLocale(raw)) return {};
   const locale = raw as AppLocale;
   const t = getBearingFlutingSeoContent(locale);
+  const resource = getResourcePageRegistryEntry(BEARING_FLUTING_RESOURCE_SLUG, locale);
+  if (!resource || resource.status !== "published") return {};
+
   return buildPageMetadata({
-    title: t.seoTitle,
+    title: resource.title,
     description: t.seoDescription,
-    path: bearingFlutingSeoPage.path,
+    path: resource.path,
     locale,
+    indexable: resource.indexable,
   });
 }
 
@@ -34,22 +44,28 @@ export default async function BearingFlutingSeoPage({ params }: Props) {
     notFound();
   }
   const locale = raw as AppLocale;
+  const resource = getResourcePageRegistryEntry(BEARING_FLUTING_RESOURCE_SLUG, locale);
+  if (!resource || resource.status !== "published") {
+    notFound();
+  }
   const tUi = ui(locale);
   const content = getBearingFlutingSeoContent(locale);
   const resourcesMeta = getPageMeta("resources", locale);
 
   const jsonLd = [
     webPageJsonLd({
-      name: content.seoTitle,
+      name: resource.title,
       description: content.seoDescription,
-      path: bearingFlutingSeoPage.path,
+      path: resource.path,
       locale,
+      datePublished: resource.datePublished,
+      dateModified: resource.dateModified,
     }),
     breadcrumbListJsonLd(
       [
         { name: tUi.breadcrumbHome, path: "/" },
         { name: resourcesMeta.title, path: "/resources" },
-        { name: content.heroTitle, path: bearingFlutingSeoPage.path },
+        { name: content.heroTitle, path: resource.path },
       ],
       locale,
     ),

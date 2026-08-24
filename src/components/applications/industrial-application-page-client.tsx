@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/forms/inquiry-form";
 import type { AppLocale } from "@/lib/i18n/locales";
-import { trackEvent } from "@/lib/tracking/events";
+import { trackCtaClick, trackEvent } from "@/lib/tracking/events";
 import { cn } from "@/lib/utils/cn";
 import type { IndustrialApplicationPageData, IndustrialCtaItem } from "@/data/mock/application-industrial";
 
@@ -76,6 +76,12 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
   const ctaHref = (href: string) => (href.startsWith("http://") || href.startsWith("https://") ? href : `/${locale}${href}`);
 
   const onCtaClick = (zone: "hero" | "midpage" | "bottom", cta: IndustrialCtaItem) => {
+    trackCtaClick({
+      cta_id: cta.id,
+      page_source: "applications_industrial",
+      locale,
+      destination: "contact",
+    });
     if (zone === "hero") {
       trackEvent("hero_cta_click", { page_source: "applications_industrial", locale, cta_id: cta.id, cta_label: cta.label });
       return;

@@ -1,9 +1,8 @@
 import type { AppLocale } from "@/lib/i18n/locales";
-
-/** Keep in sync with `industrialShaftGroundingSeoPage.path` for internal links. */
-export const SHAFT_GROUNDING_SEO_RESOURCE_PATH = "/resources/shaft-grounding-for-industrial-motors" as const;
-
-export const BEARING_FLUTING_SEO_RESOURCE_PATH = "/resources/bearing-fluting-in-electric-motors" as const;
+import {
+  BEARING_FLUTING_RESOURCE_PATH,
+  SHAFT_GROUNDING_RESOURCE_PATH,
+} from "./resource-page-registry";
 
 export type BearingFlutingSeoCtaItem = { id: string; label: string; href: string; style: "primary" | "ghost" };
 
@@ -40,12 +39,20 @@ export type BearingFlutingSeoLocaleBlock = {
   relatedShaftGuideTitle: string;
   relatedShaftGuideBody: string;
   relatedShaftGuideCtaLabel: string;
-  /** Must match `SHAFT_GROUNDING_SEO_RESOURCE_PATH` in data. */
+  /** Registry-backed resource path. */
   relatedShaftGuideHref: string;
+  relatedDiagnosisTitle: string;
+  relatedDiagnosisBody: string;
+  relatedDiagnosisCtaLabel: string;
+  relatedDiagnosisHref: string;
+  relatedComparisonTitle: string;
+  relatedComparisonBody: string;
+  relatedComparisonCtaLabel: string;
+  relatedComparisonHref: string;
 };
 
 export type BearingFlutingSeoPageData = {
-  path: typeof BEARING_FLUTING_SEO_RESOURCE_PATH;
+  path: typeof BEARING_FLUTING_RESOURCE_PATH;
   heroImagePath: string | null;
   looksLikeImagePath: string | null;
   ctas: { en: BearingFlutingSeoCtaItem[]; zh: BearingFlutingSeoCtaItem[] };
@@ -56,7 +63,7 @@ const HERO_IMG = "/images/bearing-fluting-pit-damage.webp";
 const LOOKS_LIKE_IMG = "/images/placeholders/bearing-fluting-raceway-pattern-neutral.svg";
 
 export const bearingFlutingSeoPage: BearingFlutingSeoPageData = {
-  path: BEARING_FLUTING_SEO_RESOURCE_PATH,
+  path: BEARING_FLUTING_RESOURCE_PATH,
   heroImagePath: HERO_IMG,
   looksLikeImagePath: LOOKS_LIKE_IMG,
   ctas: {
@@ -70,7 +77,7 @@ export const bearingFlutingSeoPage: BearingFlutingSeoPageData = {
       {
         id: "cta-shaft-guide",
         label: "Read shaft grounding guide",
-        href: `${SHAFT_GROUNDING_SEO_RESOURCE_PATH}?from=bearing-fluting`,
+        href: `${SHAFT_GROUNDING_RESOURCE_PATH}?from=bearing-fluting`,
         style: "ghost",
       },
     ],
@@ -84,7 +91,7 @@ export const bearingFlutingSeoPage: BearingFlutingSeoPageData = {
       {
         id: "cta-shaft-guide",
         label: "阅读轴接地专题",
-        href: `${SHAFT_GROUNDING_SEO_RESOURCE_PATH}?from=bearing-fluting`,
+        href: `${SHAFT_GROUNDING_RESOURCE_PATH}?from=bearing-fluting`,
         style: "ghost",
       },
     ],
@@ -163,7 +170,17 @@ export const bearingFlutingSeoPage: BearingFlutingSeoPageData = {
       relatedShaftGuideBody:
         "This companion guide explains how shaft grounding reduces bearing current exposure in inverter-duty industrial motors—written for teams who already recognize fluting risk.",
       relatedShaftGuideCtaLabel: "Open the shaft grounding guide",
-      relatedShaftGuideHref: SHAFT_GROUNDING_SEO_RESOURCE_PATH,
+      relatedShaftGuideHref: SHAFT_GROUNDING_RESOURCE_PATH,
+      relatedDiagnosisTitle: "Diagnose VFD bearing failure carefully",
+      relatedDiagnosisBody:
+        "Move from fluting symptoms to electrical-vs-mechanical triage, shaft-voltage check preparation, and corrective-action logic.",
+      relatedDiagnosisCtaLabel: "Read: What Causes VFD Bearing Failure?",
+      relatedDiagnosisHref: "/knowledge-center/what-causes-vfd-bearing-failure",
+      relatedComparisonTitle: "Choose between grounding rings and insulated bearings",
+      relatedComparisonBody:
+        "When electrical erosion is confirmed or strongly suspected, compare how shaft grounding rings and insulated bearings address different current paths—and when both may be needed.",
+      relatedComparisonCtaLabel: "Read: Shaft Grounding Ring vs. Insulated Bearing",
+      relatedComparisonHref: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
     },
     zh: {
       seoTitle: "电机轴承搓衣板纹（Fluting）| 症状、变频成因与预防",
@@ -233,7 +250,16 @@ export const bearingFlutingSeoPage: BearingFlutingSeoPageData = {
       relatedShaftGuideBody:
         "姊妹专题说明轴接地如何降低变频工业电机的轴承电流暴露，适合已识别 fluting 风险的团队继续深入。",
       relatedShaftGuideCtaLabel: "打开轴接地教育专题",
-      relatedShaftGuideHref: SHAFT_GROUNDING_SEO_RESOURCE_PATH,
+      relatedShaftGuideHref: SHAFT_GROUNDING_RESOURCE_PATH,
+      relatedDiagnosisTitle: "审慎诊断变频轴承失效",
+      relatedDiagnosisBody: "从 fluting 症状进入电气与机械分流、轴电压测试准备与纠正措施逻辑。",
+      relatedDiagnosisCtaLabel: "阅读：变频电机轴承失效成因",
+      relatedDiagnosisHref: "/knowledge-center/what-causes-vfd-bearing-failure",
+      relatedComparisonTitle: "对比轴接地环与绝缘轴承",
+      relatedComparisonBody:
+        "在电气性损伤较明确时，比较轴接地环与绝缘轴承分别应对的电流路径，以及何时需要组合使用。",
+      relatedComparisonCtaLabel: "阅读：轴接地环 vs 绝缘轴承",
+      relatedComparisonHref: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
     },
   },
 };

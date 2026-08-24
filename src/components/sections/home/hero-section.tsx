@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils/cn";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { resolveHeroImageSrc } from "@/lib/images/locale-visuals";
 import { heroCtaLabel, ui } from "@/lib/i18n/ui-messages";
-import { trackEvent } from "@/lib/analytics/events";
+import { trackCtaClick, trackEvent } from "@/lib/analytics/events";
 
 export function HeroSection({ locale }: { locale: AppLocale }) {
   const t = ui(locale);
@@ -24,7 +24,10 @@ export function HeroSection({ locale }: { locale: AppLocale }) {
               <>
                 <Link
                   href={`/${locale}/contact?cta_key=quote`}
-                  onClick={() => trackEvent("cta_quote_click", { page: "home", cta: "hero_quote" })}
+                  onClick={() => {
+                    trackCtaClick({ cta_id: "hero_quote", page_source: "home", locale, destination: "contact" });
+                    trackEvent("cta_quote_click", { page: "home", cta: "hero_quote" });
+                  }}
                   className="inline-flex items-center justify-center rounded bg-brand-orange px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:opacity-90"
                 >
                   {heroCtaLabel("quote", locale)}
@@ -42,6 +45,14 @@ export function HeroSection({ locale }: { locale: AppLocale }) {
                 <Link
                   key={cta.cta_key}
                   href={`/${locale}${cta.href}?cta_key=${cta.cta_key}`}
+                  onClick={() =>
+                    trackCtaClick({
+                      cta_id: `hero_${cta.cta_key}`,
+                      page_source: "home",
+                      locale,
+                      destination: "contact",
+                    })
+                  }
                   className={cn(
                     "inline-flex items-center justify-center rounded px-4 py-2.5 text-sm font-medium transition",
                     cta.tier === "primary" && "bg-brand-orange text-white shadow-sm hover:opacity-90",

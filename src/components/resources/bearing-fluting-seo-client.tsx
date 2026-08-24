@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { InquiryForm } from "@/components/forms/inquiry-form";
 import type { AppLocale } from "@/lib/i18n/locales";
-import { trackEvent } from "@/lib/tracking/events";
+import { trackCtaClick, trackEvent } from "@/lib/tracking/events";
 import { cn } from "@/lib/utils/cn";
 import type { BearingFlutingSeoCtaItem, BearingFlutingSeoPageData } from "@/data/mock/resource-bearing-fluting-seo";
 
@@ -51,6 +51,12 @@ export function BearingFlutingSeoClient({ locale, data }: Props) {
     href.startsWith("http://") || href.startsWith("https://") ? href : `/${locale}${href}`;
 
   const onCtaClick = (zone: "hero" | "midpage" | "bottom", cta: BearingFlutingSeoCtaItem) => {
+    trackCtaClick({
+      cta_id: cta.id,
+      page_source: PAGE_SOURCE,
+      locale,
+      destination: "contact",
+    });
     if (zone === "hero") {
       trackEvent("hero_cta_click", { page_source: PAGE_SOURCE, locale, cta_id: cta.id, cta_label: cta.label });
       return;
@@ -141,15 +147,37 @@ export function BearingFlutingSeoClient({ locale, data }: Props) {
         </ul>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-slate-50 p-5">
-        <h2 className="text-lg font-semibold text-brand-blue">{t.relatedShaftGuideTitle}</h2>
-        <p className="mt-2 text-sm text-slate-600">{t.relatedShaftGuideBody}</p>
-        <Link
-          href={ctaHref(t.relatedShaftGuideHref)}
-          className="mt-4 inline-flex text-sm font-medium text-brand-orange hover:underline"
-        >
-          {t.relatedShaftGuideCtaLabel}
-        </Link>
+      <section className="space-y-4">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-5">
+          <h2 className="text-lg font-semibold text-brand-blue">{t.relatedShaftGuideTitle}</h2>
+          <p className="mt-2 text-sm text-slate-600">{t.relatedShaftGuideBody}</p>
+          <Link
+            href={ctaHref(t.relatedShaftGuideHref)}
+            className="mt-4 inline-flex text-sm font-medium text-brand-orange hover:underline"
+          >
+            {t.relatedShaftGuideCtaLabel}
+          </Link>
+        </div>
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-5">
+          <h2 className="text-lg font-semibold text-brand-blue">{t.relatedDiagnosisTitle}</h2>
+          <p className="mt-2 text-sm text-slate-600">{t.relatedDiagnosisBody}</p>
+          <Link
+            href={ctaHref(t.relatedDiagnosisHref)}
+            className="mt-4 inline-flex text-sm font-medium text-brand-orange hover:underline"
+          >
+            {t.relatedDiagnosisCtaLabel}
+          </Link>
+        </div>
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-5">
+          <h2 className="text-lg font-semibold text-brand-blue">{t.relatedComparisonTitle}</h2>
+          <p className="mt-2 text-sm text-slate-600">{t.relatedComparisonBody}</p>
+          <Link
+            href={ctaHref(t.relatedComparisonHref)}
+            className="mt-4 inline-flex text-sm font-medium text-brand-orange hover:underline"
+          >
+            {t.relatedComparisonCtaLabel}
+          </Link>
+        </div>
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-slate-50 p-6">

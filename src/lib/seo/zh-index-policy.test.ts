@@ -4,6 +4,32 @@ import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
 import { buildPageMetadata, localeRobots } from "@/lib/seo/metadata";
 import { getCanonicalSiteOrigin } from "@/config/site";
+import {
+  getZhIndexStrategy,
+  isZhIndexableLogicalPath,
+  isZhPhase1aIndexableLogicalPath,
+  PHASE1A_KC_ARTICLE_SLUGS,
+} from "@/lib/seo/zh-index-policy";
+
+const ENV_KEY = "ZH_INDEX_STRATEGY";
+
+function withZhIndexStrategy(strategy: string | undefined, fn: () => void): void {
+  const previous = process.env[ENV_KEY];
+  if (strategy === undefined) {
+    delete process.env[ENV_KEY];
+  } else {
+    process.env[ENV_KEY] = strategy;
+  }
+  try {
+    fn();
+  } finally {
+    if (previous === undefined) {
+      delete process.env[ENV_KEY];
+    } else {
+      process.env[ENV_KEY] = previous;
+    }
+  }
+}
 
 test("robots.txt allows crawl of /zh (no Disallow /zh)", () => {
   const doc = robots();
@@ -25,16 +51,68 @@ test("localeRobots: zh is noindex,follow; en is index,follow", () => {
   assert.deepEqual(localeRobots("en"), { index: true, follow: true });
 });
 
-test("buildPageMetadata: zh pages set noindex follow and zh canonical", () => {
-  const base = getCanonicalSiteOrigin();
-  const meta = buildPageMetadata({
-    title: "测试",
-    description: "desc",
-    path: "/contact",
-    locale: "zh",
+test("getZhIndexStrategy defaults to disabled", () => {
+  withZhIndexStrategy(undefined, () => {
+    assert.equal(getZhIndexStrategy(), "disabled");
   });
-  assert.deepEqual(meta.robots, { index: false, follow: true });
-  assert.equal(meta.alternates?.canonical, `${base}/zh/contact`);
+  withZhIndexStrategy("", () => {
+    assert.equal(getZhIndexStrategy(), "disabled");
+  });
+  withZhIndexStrategy("invalid", () => {
+    assert.equal(getZhIndexStrategy(), "disabled");
+  });
+});
+
+test("phase1a allowlist paths", () => {
+  assert.equal(isZhPhase1aIndexableLogicalPath("/knowledge-center"), true);
+  assert.equal(isZhPhase1aIndexableLogicalPath("/knowledge-center/what-causes-vfd-bearing-failure"), true);
+  assert.equal(isZhPhase1aIndexableLogicalPath("/products/solid-shaft-grounding-ring"), true);
+  assert.equal(isZhPhase1aIndexableLogicalPath("/applications/industrial-motors"), true);
+  assert.equal(isZhPhase1aIndexableLogicalPath("/contact"), false);
+  assert.equal(isZhPhase1aIndexableLogicalPath("/knowledge-center/volsun-at-easa-2026-orlando"), false);
+});
+
+test("buildPageMetadata: zh pages set noindex follow when strategy disabled", () => {
+  const base = getCanonicalSiteOrigin();
+  withZhIndexStrategy(undefined, () => {
+    const meta = buildPageMetadata({
+      title: "测试",
+      description: "desc",
+      path: "/contact",
+      locale: "zh",
+    });
+    assert.deepEqual(meta.robots, { index: false, follow: true });
+    assert.equal(meta.alternates?.canonical, `${base}/zh/contact`);
+  });
+});
+
+test("buildPageMetadata: phase1a zh allowlist pages are indexable", () => {
+  withZhIndexStrategy("phase1a", () => {
+    assert.equal(isZhIndexableLogicalPath("/knowledge-center"), true);
+    const hub = buildPageMetadata({
+      title: "知识中心",
+      description: "desc",
+      path: "/knowledge-center",
+      locale: "zh",
+    });
+    assert.deepEqual(hub.robots, { index: true, follow: true });
+
+    const art7 = buildPageMetadata({
+      title: "art-7",
+      description: "desc",
+      path: "/knowledge-center/why-shaft-grounding-ring-is-smarter-choice-for-vfd-motors",
+      locale: "zh",
+    });
+    assert.deepEqual(art7.robots, { index: true, follow: true });
+
+    const contact = buildPageMetadata({
+      title: "联系",
+      description: "desc",
+      path: "/contact",
+      locale: "zh",
+    });
+    assert.deepEqual(contact.robots, { index: false, follow: true });
+  });
 });
 
 test("buildPageMetadata: en pages stay indexable with en canonical", () => {
@@ -50,12 +128,46 @@ test("buildPageMetadata: en pages stay indexable with en canonical", () => {
   assert.notEqual(String(meta.alternates?.canonical), `${base}/zh/contact`);
 });
 
-test("sitemap.xml entries are English-only (no /zh/)", () => {
-  const entries = sitemap();
-  assert.ok(entries.length > 0);
-  for (const entry of entries) {
-    assert.ok(!entry.url.includes("/zh/"), entry.url);
-    assert.ok(!entry.url.endsWith("/zh"), entry.url);
-    assert.ok(entry.url.includes("/en"), entry.url);
-  }
+test("sitemap.xml is English-only when ZH_INDEX_STRATEGY is disabled", () => {
+  withZhIndexStrategy(undefined, () => {
+    const entries = sitemap();
+    assert.ok(entries.length > 0);
+    for (const entry of entries) {
+      assert.ok(!entry.url.includes("/zh/"), entry.url);
+      assert.ok(!entry.url.endsWith("/zh"), entry.url);
+      assert.ok(entry.url.includes("/en"), entry.url);
+    }
+  });
+});
+
+test("sitemap.xml includes phase1a zh URLs with matching EN priority", () => {
+  withZhIndexStrategy("phase1a", () => {
+    const entries = sitemap();
+    const base = getCanonicalSiteOrigin();
+    const byUrl = new Map(entries.map((e) => [e.url, e]));
+
+    assert.ok(byUrl.has(`${base}/zh/knowledge-center`));
+    assert.ok(byUrl.has(`${base}/zh/knowledge-center/what-causes-vfd-bearing-failure`));
+    assert.ok(!byUrl.has(`${base}/zh/contact`));
+    assert.ok(!byUrl.has(`${base}/zh/knowledge-center/volsun-at-easa-2026-orlando`));
+
+    const enHub = byUrl.get(`${base}/en/knowledge-center`);
+    const zhHub = byUrl.get(`${base}/zh/knowledge-center`);
+    assert.ok(enHub && zhHub);
+    assert.equal(enHub.priority, zhHub.priority);
+
+    const slug = PHASE1A_KC_ARTICLE_SLUGS[3];
+    const enArt = byUrl.get(`${base}/en/knowledge-center/${slug}`);
+    const zhArt = byUrl.get(`${base}/zh/knowledge-center/${slug}`);
+    assert.ok(enArt && zhArt);
+    assert.equal(enArt.priority, zhArt.priority);
+
+    const enProduct = byUrl.get(`${base}/en/products/solid-shaft-grounding-ring`);
+    const zhProduct = byUrl.get(`${base}/zh/products/solid-shaft-grounding-ring`);
+    assert.ok(enProduct && zhProduct);
+    assert.equal(enProduct.priority, zhProduct.priority);
+
+    assert.ok(byUrl.has(`${base}/en/applications/industrial-motors`));
+    assert.ok(byUrl.has(`${base}/zh/applications/industrial-motors`));
+  });
 });

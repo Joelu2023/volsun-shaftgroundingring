@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getCanonicalSiteOrigin } from "@/config/site";
 import type { AppLocale } from "@/lib/i18n/locales";
+import { isZhIndexableLogicalPath } from "@/lib/seo/zh-index-policy";
 
 type PageMetaInput = {
   title: string;
@@ -11,7 +12,7 @@ type PageMetaInput = {
   /**
    * When false on English pages, emit noindex,follow.
    * Omitted/true keep existing localeRobots behavior.
-   * Chinese pages always remain noindex,follow regardless of this flag.
+   * Chinese pages follow ZH_INDEX_STRATEGY allowlist; otherwise noindex,follow.
    */
   indexable?: boolean;
 };
@@ -39,8 +40,15 @@ export function localeRobots(locale: AppLocale | undefined): Metadata["robots"] 
   return { index: true, follow: true };
 }
 
-function resolvePageRobots(locale: AppLocale | undefined, indexable?: boolean): Metadata["robots"] {
+function resolvePageRobots(
+  locale: AppLocale | undefined,
+  indexable?: boolean,
+  logicalPath?: string,
+): Metadata["robots"] {
   if (locale === "zh") {
+    if (logicalPath && isZhIndexableLogicalPath(logicalPath)) {
+      return { index: true, follow: true };
+    }
     return { index: false, follow: true };
   }
   if (indexable === false) {
@@ -76,7 +84,7 @@ export function buildPageMetadata({
     ...(absoluteTitle ? { title: { absolute: title } } : { title }),
     description,
     alternates,
-    robots: resolvePageRobots(locale, indexable),
+    robots: resolvePageRobots(locale, indexable, path),
     openGraph: {
       title: absoluteTitle ? title : undefined,
       description,

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
+import { applications } from "@/data";
 import { buildPageMetadata, localeRobots } from "@/lib/seo/metadata";
 import { getCanonicalSiteOrigin } from "@/config/site";
 import {
@@ -169,5 +170,50 @@ test("sitemap.xml includes phase1a zh URLs with matching EN priority", () => {
 
     assert.ok(byUrl.has(`${base}/en/applications/industrial-motors`));
     assert.ok(byUrl.has(`${base}/zh/applications/industrial-motors`));
+  });
+});
+
+test("sitemap includes indexable EN applications and excludes noindex applications", () => {
+  withZhIndexStrategy(undefined, () => {
+    const entries = sitemap();
+    const base = getCanonicalSiteOrigin();
+    const urls = new Set(entries.map((e) => e.url));
+
+    for (const app of applications) {
+      const url = `${base}/en/applications/${app.slug}`;
+      if (app.isIndexable === false) {
+        assert.ok(!urls.has(url), `expected noindex app excluded: ${app.slug}`);
+      } else {
+        assert.ok(urls.has(url), `expected indexable app included: ${app.slug}`);
+      }
+    }
+
+    assert.ok(urls.has(`${base}/en/applications/electric-vehicles`));
+    assert.ok(urls.has(`${base}/en/applications/industrial-motors`));
+    assert.ok(urls.has(`${base}/en/applications/hvac-motors`));
+    assert.ok(urls.has(`${base}/en/applications/others`));
+    assert.ok(!urls.has(`${base}/en/applications/water-treatment`));
+
+    for (const url of urls) {
+      assert.ok(!url.includes("/resources/download/"), url);
+    }
+  });
+});
+
+test("sitemap still omits gated download URLs when phase1a is enabled", () => {
+  withZhIndexStrategy("phase1a", () => {
+    const entries = sitemap();
+    const base = getCanonicalSiteOrigin();
+    const urls = new Set(entries.map((e) => e.url));
+
+    assert.ok(urls.has(`${base}/en/applications/hvac-motors`));
+    assert.ok(urls.has(`${base}/en/applications/others`));
+    assert.ok(urls.has(`${base}/en/applications/industrial-motors`));
+    assert.ok(!urls.has(`${base}/en/applications/water-treatment`));
+    assert.ok(urls.has(`${base}/zh/applications/industrial-motors`));
+
+    for (const url of urls) {
+      assert.ok(!url.includes("/resources/download/"), url);
+    }
   });
 });

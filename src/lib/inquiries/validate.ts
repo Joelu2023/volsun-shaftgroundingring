@@ -1,10 +1,15 @@
 import type { CtaKey, InquirySubmission, InquiryType } from "@/types/inquiry";
+import {
+  containsHeaderBreak,
+  isSafeEmail,
+  mergeDrawingNoteIntoMessage,
+  normalizeDrawingFields,
+} from "@/lib/inquiries/field-sanitize";
 
 const INQUIRY_TYPES: InquiryType[] = ["rfq", "sample_request", "drawing_submission", "technical_inquiry"];
 
 const CTA_KEYS: CtaKey[] = ["quote", "drawing", "sample", "datasheet", "catalog", "fast_quote", "engineer"];
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ATTRIBUTION_MAX_LEN = 200;
 
 /** 可选字符串：仅接受 string / null / undefined；空串视为 null */
@@ -55,6 +60,26 @@ function applyAttributionFields(
   if (source_page) data.source_page = source_page;
 }
 
+function rejectUnsafeIdentity(name: string, email: string, company: string, country: string): ValidateFailure | null {
+  if (!isSafeEmail(email)) return { ok: false, error: "invalid_inquiry_payload" };
+  if (containsHeaderBreak(name) || containsHeaderBreak(company) || containsHeaderBreak(country)) {
+    return { ok: false, error: "invalid_inquiry_payload" };
+  }
+  return null;
+}
+
+function applyDrawingSanitization(data: InquirySubmission): void {
+  const drawing = normalizeDrawingFields({
+    drawing_file_url: data.drawing_file_url,
+    drawing_file_name: data.drawing_file_name,
+    email: data.email,
+    phone_or_whatsapp: data.phone_or_whatsapp,
+  });
+  data.drawing_file_url = drawing.drawing_file_url;
+  data.drawing_file_name = drawing.drawing_file_name;
+  data.message = mergeDrawingNoteIntoMessage(data.message, drawing.drawing_note);
+}
+
 /** 英文精简询盘（首页 / About）：用户必填仅 name、email、phone；其余文本空则记为「—」 */
 function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | ValidateFailure {
   const name = reqStr(o, "name");
@@ -81,9 +106,10 @@ function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | Validate
     return { ok: false, error: "invalid_inquiry_payload" };
   }
 
-  if (!EMAIL_RE.test(email)) {
-    return { ok: false, error: "invalid_inquiry_payload" };
-  }
+  const company = dashIfAbsent(reqStr(o, "company"));
+  const country = dashIfAbsent(reqStr(o, "country"));
+  const identityErr = rejectUnsafeIdentity(name, email, company, country);
+  if (identityErr) return identityErr;
 
   let cta_key: CtaKey | null = null;
   if (o.cta_key === null || o.cta_key === undefined) {
@@ -99,9 +125,6 @@ function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | Validate
   } else {
     return { ok: false, error: "invalid_inquiry_payload" };
   }
-
-  const company = dashIfAbsent(reqStr(o, "company"));
-  const country = dashIfAbsent(reqStr(o, "country"));
 
   const opt = [
     strOrNull(o.application_interest),
@@ -139,6 +162,8 @@ function parseEnLeadSlim(o: Record<string, unknown>): ValidateSuccess | Validate
     cta_key,
     submitted_at,
   };
+
+  applyDrawingSanitization(data);
 
   const attrErr = applyAttributionFields(data, o);
   if (attrErr) return attrErr;
@@ -179,10 +204,8 @@ export function parseInquirySubmission(raw: unknown): ValidateSuccess | Validate
 
   const company = dashIfAbsent(reqStr(o, "company"));
   const country = dashIfAbsent(reqStr(o, "country"));
-
-  if (!EMAIL_RE.test(email)) {
-    return { ok: false, error: "invalid_inquiry_payload" };
-  }
+  const identityErr = rejectUnsafeIdentity(name, email, company, country);
+  if (identityErr) return identityErr;
 
   if (!INQUIRY_TYPES.includes(inquiry_type as InquiryType)) {
     return { ok: false, error: "invalid_inquiry_payload" };
@@ -239,6 +262,8 @@ export function parseInquirySubmission(raw: unknown): ValidateSuccess | Validate
     cta_key,
     submitted_at,
   };
+
+  applyDrawingSanitization(data);
 
   const attrErr = applyAttributionFields(data, o);
   if (attrErr) return attrErr;

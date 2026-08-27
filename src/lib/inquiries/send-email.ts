@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { buildInquiryMailContent } from "@/lib/inquiries/email-content";
 import type { InquirySubmission } from "@/types/inquiry";
 
 const REQUIRED_ENV = ["SMTP_HOST", "SMTP_PORT", "SMTP_USER", "SMTP_PASS"] as const;
@@ -15,8 +16,9 @@ export function getInquiryToEmail(): string {
   return readEnv("INQUIRY_EMAIL_TO", "INQUIRY_TO_EMAIL");
 }
 
+/** Authorized SMTP From. Never use the visitor mailbox. Inquiry-specific env wins. */
 export function getInquiryFromEmail(): string {
-  return readEnv("INQUIRY_EMAIL_FROM", "INQUIRY_FROM_EMAIL");
+  return readEnv("INQUIRY_EMAIL_FROM", "INQUIRY_FROM_EMAIL", "MAIL_FROM", "SMTP_FROM");
 }
 
 /** Returns missing environment variable names (used at request time, not build time). */
@@ -33,35 +35,12 @@ export function getMissingSmtpEnv(): string[] {
   return [...new Set(missing)];
 }
 
-function buildSummary(data: InquirySubmission): string {
-  const lines = [
-    `Inquiry type: ${data.inquiry_type}`,
-    `Name: ${data.name}`,
-    `Company: ${data.company}`,
-    `Email: ${data.email}`,
-    `Country: ${data.country}`,
-    `Phone / WhatsApp: ${data.phone_or_whatsapp ?? "—"}`,
-    `Product interest: ${data.product_interest ?? "—"}`,
-    `Campaign: ${data.campaign ?? "—"}`,
-    `Source page: ${data.source_page ?? "—"}`,
-    `Application interest: ${data.application_interest ?? "—"}`,
-    `Motor type: ${data.motor_type ?? "—"}`,
-    `Power: ${data.power ?? "—"}`,
-    `Shaft diameter: ${data.shaft_diameter ?? "—"}`,
-    `Estimated quantity: ${data.estimated_quantity ?? "—"}`,
-    `CTA key: ${data.cta_key ?? "—"}`,
-    `Page source: ${data.page_source}`,
-    `CTA source: ${data.cta_source}`,
-    `Drawing file name: ${data.drawing_file_name ?? "—"}`,
-    `Drawing file URL: ${data.drawing_file_url ?? "—"}`,
-    `Source channel: ${data.source_channel_standard ?? "—"}`,
-    `Inquiry content: ${data.inquiry_content ?? "—"}`,
-    `Submitted at: ${data.submitted_at}`,
-    "",
-    "Message:",
-    data.message ?? "—",
-  ];
-  return lines.join("\n");
+export function buildInquiryMailOptions(data: InquirySubmission) {
+  return buildInquiryMailContent({
+    data,
+    fromRaw: getInquiryFromEmail(),
+    toRaw: getInquiryToEmail(),
+  });
 }
 
 export async function sendInquiryEmail(data: InquirySubmission): Promise<void> {
@@ -87,19 +66,13 @@ export async function sendInquiryEmail(data: InquirySubmission): Promise<void> {
     },
   });
 
-  const subject = `[Volsun Inquiry] ${data.inquiry_type} | ${data.company} | ${data.country}`;
-  const text = `${buildSummary(data)}
-
----
-
-Full InquirySubmission (JSON):
-${JSON.stringify(data, null, 2)}
-`;
+  const mail = buildInquiryMailOptions(data);
 
   await transporter.sendMail({
-    from: getInquiryFromEmail(),
-    to: getInquiryToEmail(),
-    subject,
-    text,
+    from: mail.from,
+    to: mail.to,
+    replyTo: mail.replyTo,
+    subject: mail.subject,
+    text: mail.text,
   });
 }

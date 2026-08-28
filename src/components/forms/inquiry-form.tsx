@@ -41,7 +41,7 @@ const FORM_COPY = {
     labelQty: "Estimated quantity",
     labelProduct: "Interested Product",
     labelDrawingFile: "Drawing details or link",
-    drawingHint: "Share your drawing by email or cloud link if a file cannot be attached here.",
+    drawingHint: "Optional cloud link or drawing reference. Do not enter your email in this field.",
     labelMessage: "Message",
     submit: "Submit inquiry",
     submitting: "Submitting...",
@@ -91,7 +91,7 @@ const FORM_COPY = {
     labelQty: "预估数量",
     labelProduct: "意向产品",
     labelDrawingFile: "图纸说明或链接",
-    drawingHint: "如需提交图纸，请填写说明，或提供邮件或网盘链接。",
+    drawingHint: "可选：网盘链接或图纸编号。请勿在此栏填写邮箱。",
     labelMessage: "留言",
     submit: "提交询盘",
     submitting: "提交中...",
@@ -244,7 +244,7 @@ export function InquiryForm({
           application_interest: null,
           motor_type: null,
           power: null,
-          shaft_diameter: null,
+          shaft_diameter: emptyToNull(fd.get("shaft_diameter")),
           estimated_quantity: null,
           product_interest: null,
           drawing_file_url: null,
@@ -501,7 +501,8 @@ export function InquiryForm({
         <input
           name="drawing_file_url"
           type="text"
-          placeholder="Email note, cloud link, or drawing reference"
+          autoComplete="off"
+          placeholder="Drawing link or drawing reference (optional)"
           className="mt-1 w-full rounded border border-slate-300 px-3 py-2 text-sm"
         />
       </div>

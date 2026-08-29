@@ -128,6 +128,39 @@ test("buildPageMetadata: en pages stay indexable with en canonical", () => {
   assert.notEqual(String(meta.alternates?.canonical), `${base}/zh/contact`);
 });
 
+test("shaft-voltage measurement article is EN-indexable and not in zh phase1a allowlist", () => {
+  const slug = "how-to-measure-shaft-voltage-vfd-motor";
+  const path = `/knowledge-center/${slug}`;
+  const base = getCanonicalSiteOrigin();
+
+  const enMeta = buildPageMetadata({
+    title: "How to Measure Shaft Voltage in VFD Motors | VOLSUN",
+    description: "desc",
+    path,
+    locale: "en",
+    absoluteTitle: true,
+  });
+  assert.deepEqual(enMeta.robots, { index: true, follow: true });
+  assert.equal(enMeta.alternates?.canonical, `${base}/en${path}`);
+
+  assert.equal(isZhPhase1aIndexableLogicalPath(path), false);
+  withZhIndexStrategy("phase1a", () => {
+    assert.equal(isZhIndexableLogicalPath(path), false);
+    const zhMeta = buildPageMetadata({
+      title: "测试",
+      description: "desc",
+      path,
+      locale: "zh",
+    });
+    assert.deepEqual(zhMeta.robots, { index: false, follow: true });
+
+    const entries = sitemap();
+    const byUrl = new Map(entries.map((e) => [e.url, e]));
+    assert.ok(byUrl.has(`${base}/en${path}`));
+    assert.ok(!byUrl.has(`${base}/zh${path}`));
+  });
+});
+
 test("sitemap.xml is English-only when ZH_INDEX_STRATEGY is disabled", () => {
   withZhIndexStrategy(undefined, () => {
     const entries = sitemap();

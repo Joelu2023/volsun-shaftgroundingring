@@ -16,7 +16,7 @@ import {
   HOME_EN_APPLICATION_SLOTS,
   HOME_CRAWL_FEATURED_PRODUCT_SLUGS,
   HOME_LATEST_NEWS_LIMIT,
-  HOME_FEATURED_TECHNICAL_LIMIT,
+  getHomeFeaturedTechnicalArticles,
   getPageMeta,
   EN_INSTALLATION_GUIDE_DOWNLOAD_SLUG,
 } from "@/data";
@@ -35,11 +35,7 @@ export function HomeSections({ locale }: { locale: AppLocale }) {
     .filter((r) => home.featuredResourceIds.includes(r.id))
     .map((r) => getResourceForLocale(r, locale));
   const latestNews = getLatestArticlesByCategory("news", HOME_LATEST_NEWS_LIMIT, locale);
-  const featuredTechnical = getLatestArticlesByCategory(
-    "technical-articles",
-    HOME_FEATURED_TECHNICAL_LIMIT,
-    locale,
-  );
+  const featuredTechnical = getHomeFeaturedTechnicalArticles(locale);
   const crawlProducts = HOME_CRAWL_FEATURED_PRODUCT_SLUGS.map((slug) => products.find((p) => p.slug === slug)).filter(
     (p): p is (typeof products)[number] => p !== undefined,
   );

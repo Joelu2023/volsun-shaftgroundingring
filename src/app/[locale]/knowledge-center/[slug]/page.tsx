@@ -38,6 +38,8 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=custom-shaft-grounding-ring-design&source=knowledge-center&source_page=/en/knowledge-center/when-standard-shaft-grounding-rings-need-custom-design",
   "shaft-grounding-ring-vs-insulated-bearing":
     "campaign=sgr-vs-insulated-bearing&source=knowledge-center&source_page=/en/knowledge-center/shaft-grounding-ring-vs-insulated-bearing&cta_key=engineer&inquiry_type=technical_inquiry",
+  "how-to-measure-shaft-voltage-vfd-motor":
+    "campaign=shaft-voltage-measurement-guide&source=knowledge-center&source_page=/en/knowledge-center/how-to-measure-shaft-voltage-vfd-motor&cta_key=engineer&inquiry_type=technical_inquiry",
 };
 
 const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
@@ -48,6 +50,7 @@ const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
   "how-to-install-shaft-grounding-ring": "Request an Installation Review",
   "when-standard-shaft-grounding-rings-need-custom-design": "Submit Your Motor Requirements",
   "shaft-grounding-ring-vs-insulated-bearing": "Submit Motor Data for Review",
+  "how-to-measure-shaft-voltage-vfd-motor": "Send Shaft-Voltage Data for Review",
 };
 
 const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
@@ -70,6 +73,10 @@ const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
   "shaft-grounding-ring-vs-insulated-bearing": {
     title: "Not Sure Whether Your VFD Motor Needs a Grounding Ring, an Insulated Bearing, or Both?",
     body: "Send us your motor data: power rating, VFD model and carrier frequency, shaft diameter, bearing types, whether an insulated bearing is already fitted, and your operating environment. Our engineering team will review the application and suggest a suitable bearing-current protection approach.",
+  },
+  "how-to-measure-shaft-voltage-vfd-motor": {
+    title: "Have a Shaft-Voltage Waveform?",
+    body: "Send us a waveform screenshot, motor nameplate data, shaft diameter, VFD information, bearing arrangement, probe position, and operating environment. VOLSUN’s engineering team will review the application. A high reading is not, by itself, an instruction to install a shaft grounding ring.",
   },
 };
 

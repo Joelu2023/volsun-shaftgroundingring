@@ -1,5 +1,5 @@
 import type { AppLocale } from "@/lib/i18n/locales";
-import { articles } from "./articles";
+import { articles, getArticlesByCategory } from "./articles";
 import { products } from "./products";
 import { applications } from "./applications";
 import { resources } from "./resources";
@@ -48,6 +48,23 @@ export const HOME_CRAWL_FEATURED_PRODUCT_SLUGS = [
 
 export const HOME_LATEST_NEWS_LIMIT = 5;
 export const HOME_FEATURED_TECHNICAL_LIMIT = 8;
+
+/**
+ * Homepage-only exclusion. Ranking remains datePublished descending.
+ * Drop the overlapping “why VFD motors need SGR” article so the 8-slot list
+ * can keep the newer measurement guide and the bearing-failure conversion article.
+ */
+export const HOME_FEATURED_TECHNICAL_EXCLUDE_SLUGS = [
+  "why-vfd-motors-need-shaft-grounding-rings",
+] as const;
+
+export function getHomeFeaturedTechnicalArticles(locale?: AppLocale) {
+  const excluded = new Set<string>(HOME_FEATURED_TECHNICAL_EXCLUDE_SLUGS);
+  return getArticlesByCategory("technical-articles", locale)
+    .filter((article) => !excluded.has(article.slug))
+    .sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime())
+    .slice(0, HOME_FEATURED_TECHNICAL_LIMIT);
+}
 
 const homeBase = {
   featuredProductSlugs: products.map((p) => p.slug),

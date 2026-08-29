@@ -184,6 +184,16 @@ export const articles: ArticleRecord[] = [
             type: "paragraph",
             text: "When shaft voltage discharges through motor bearings, it causes electrical erosion, fluting, noise, and premature bearing failure.",
           },
+          {
+            type: "paragraph",
+            text: "This article explains what shaft voltage is and why it can damage bearings. For the field procedure—probe placement, oscilloscope setup, waveform review, and before/after comparison—use the measurement guide.",
+          },
+          {
+            type: "link",
+            intro: "How to measure shaft voltage on a VFD motor:",
+            label: "How to Measure Shaft Voltage in VFD Motors",
+            href: "/knowledge-center/how-to-measure-shaft-voltage-vfd-motor",
+          },
           { type: "heading", text: "What Causes Shaft Voltage?" },
           {
             type: "paragraph",
@@ -783,6 +793,12 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "After mounting, inspect fiber engagement, fastener security, and clearances. Check for interference while rotating the shaft according to an approved safe procedure. Where suitable equipment and procedures are available, compare shaft-voltage results using the same probe position, grounding reference, instrument bandwidth, load, speed, and operating condition. Verification helps reduce the risk of leaving an incomplete path in service; it does not prove that every operating condition is covered.",
+          },
+          {
+            type: "link",
+            intro: "For the full measurement procedure, including probe placement, oscilloscope setup, and before/after comparison:",
+            label: "How to Measure Shaft Voltage in VFD Motors",
+            href: "/knowledge-center/how-to-measure-shaft-voltage-vfd-motor",
           },
           {
             type: "link",
@@ -4006,6 +4022,12 @@ export const articles: ArticleRecord[] = [
             text: "Shaft-voltage and shaft-current results should be reviewed together with the measurement method, probe position, grounding reference and instrument bandwidth. Where possible, provide a measurement setup description or waveform screenshot.",
           },
           {
+            type: "link",
+            intro: "For the test setup and waveform review procedure:",
+            label: "How to Measure Shaft Voltage in VFD Motors",
+            href: "/knowledge-center/how-to-measure-shaft-voltage-vfd-motor",
+          },
+          {
             type: "paragraph",
             text: "A shaft grounding ring is only one element in bearing current protection. An insulated bearing may change where current tries to flow. A weakly bonded frame or an alternate path through coupled equipment can move risk rather than remove it.",
           },
@@ -5864,6 +5886,462 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "[ZH-TODO] Variable frequency drives improve efficiency and speed control, but their high-frequency PWM switching introduces shaft voltage and bearing current that can damage motor bearings over time.",
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "art-21",
+    slug: "how-to-measure-shaft-voltage-vfd-motor",
+    category: "technical-articles",
+    datePublished: "2026-08-28T06:00:00.000Z",
+    dateModified: "2026-08-28T06:00:00.000Z",
+    coverImagePublicPath:
+      "/images/articles/how-to-measure-shaft-voltage-vfd-motor/hero-vfd-motor-shaft-voltage-measurement-setup.webp",
+    coverImageAlt: "Engineer measuring shaft voltage on a VFD motor with a probe and oscilloscope",
+    locales: {
+      en: {
+        title: "How to Measure Shaft Voltage in VFD Motors: Test Setup, Waveforms and Grounding Verification",
+        seoTitle: "How to Measure Shaft Voltage in VFD Motors | VOLSUN",
+        excerpt:
+          "A field procedure for measuring shaft voltage on VFD motors: probe placement, ground reference, waveform capture, before/after shaft-grounding checks, and the data needed for engineering review.",
+        metaDescription:
+          "How to measure shaft voltage on VFD motors: test setup, probe placement, waveform review, before/after grounding checks, and data for engineering review.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Shaft voltage measurement is the practical next step after you already understand what shaft voltage is. It answers a different question: under this motor, this drive, and this grounding arrangement, what voltage appears on the shaft, and how does that waveform change after a controlled shaft-to-frame path is installed?",
+          },
+          {
+            type: "paragraph",
+            text: "This guide is a measurement and interpretation procedure. It does not re-explain VFD shaft-voltage theory, and it does not select a shaft grounding ring from a single peak reading. For the mechanism, start with the shaft-voltage primer. For product family inputs, use the selection guide. For mounting practice, use the installation guide.",
+          },
+          {
+            type: "link",
+            intro: "If you need the mechanism first:",
+            label: "What Is Shaft Voltage",
+            href: "/knowledge-center/what-is-shaft-voltage",
+          },
+          {
+            type: "link",
+            intro: "If you already have a waveform and need product-family inputs:",
+            label: "How to Select a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+          },
+          {
+            type: "heading",
+            text: "Quick Answer",
+          },
+          {
+            type: "paragraph",
+            text: "Measure shaft voltage with a high-bandwidth instrument, a stable shaft contact, and a documented motor-frame ground reference. Record the operating condition. Capture waveform shape, not only a peak number. Repeat the same setup after installing a shaft grounding ring if you are checking that path. There is no single shaft-voltage threshold that applies to every motor and VFD system. Use the result as one input for engineering review, together with bearing arrangement, grounding, cable system, and actual bearing condition.",
+          },
+          {
+            type: "heading",
+            text: "Why Measure Shaft Voltage on a VFD Motor?",
+          },
+          {
+            type: "paragraph",
+            text: "A VFD’s PWM output can produce common-mode voltage at the motor. Capacitive coupling can then place voltage on the rotor and shaft. Shaft voltage is that electrical stress on the rotating shaft relative to a chosen reference, usually the motor frame. Bearing current is a different quantity: it is current that actually flows through a bearing path. Electrical discharge machining (EDM) is one possible result when voltage across the lubricant film breaks down and a brief discharge occurs.",
+          },
+          {
+            type: "paragraph",
+            text: "These four terms are related, but they are not interchangeable:",
+          },
+          {
+            type: "list",
+            items: [
+              "Common-mode voltage — drive-side electrical stress that can couple into the motor",
+              "Shaft voltage — voltage observed on the shaft relative to a documented reference",
+              "Bearing current — current through a bearing path, which a voltage probe does not measure directly",
+              "EDM discharge — a brief breakdown event that may appear as a spike on a shaft-voltage waveform",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Measurement is useful when you need a comparable record: a suspected electrical bearing problem, a before/after check after installing a shaft grounding ring, or application data for an engineering review. A waveform does not, by itself, prove that a ring must be fitted, and a low reading at one operating point does not prove the motor is electrically quiet under all conditions.",
+          },
+          {
+            type: "link",
+            intro: "For diagnosis of repeated bearing damage rather than the test method:",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "heading",
+            text: "What Equipment Is Needed?",
+          },
+          {
+            type: "paragraph",
+            text: "The goal is to capture high-frequency content from PWM switching and, where present, short discharge events. A handheld low-bandwidth meter can miss the waveform shape that matters for review.",
+          },
+          {
+            type: "list",
+            items: [
+              "Oscilloscope with enough bandwidth and sample rate to show PWM switching and brief spikes, not only a 50/60 Hz envelope",
+              "Shaft contact method — a purpose-built shaft-voltage probe, a conductive brush, or another approved contact that can ride a clean shaft surface without damaging it",
+              "Ground lead to a documented motor-frame or bonded-frame reference",
+              "Means to record operating condition — speed, load if known, VFD settings, and whether a grounding device or insulated bearing is already fitted",
+              "Camera or screen capture for the waveform and for probe position",
+              "Approved rotating-machinery safety controls — lockout/tagout, guards, and a procedure that allows shaft access only when the plant permits it",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Do not treat a specific bandwidth number, probe brand, or sampling setting as a universal VOLSUN laboratory specification. Instrument choice should match the switching content you expect and the safety rules of the site. If contact cannot be made safely, stop and plan a controlled outage rather than improvise around guards.",
+          },
+          {
+            type: "heading",
+            text: "Basic Shaft Voltage Measurement Setup",
+          },
+          {
+            type: "paragraph",
+            text: "The electrical chain is simple: shaft contact → probe or brush → oscilloscope channel → ground reference on the motor frame. The quality of that chain is not simple. Unstable shaft contact, a painted or greasy shaft, a long unsecured ground lead, or a reference taken from a distant cabinet can all change the displayed voltage without changing the motor.",
+          },
+          {
+            type: "paragraph",
+            text: "Before energizing, agree and write down:",
+          },
+          {
+            type: "list",
+            items: [
+              "Which shaft end is contacted — drive end or non-drive end",
+              "Where the probe or brush sits on the shaft",
+              "Which point is the ground reference",
+              "Oscilloscope coupling, time base, vertical scale, bandwidth limit, and sampling setup",
+              "Motor speed, load, and VFD operating mode for this run",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Treat the setup as a documented chain: shaft contact, instrument, and frame reference must all be written down before the first screenshot. Changing any link in that chain later makes the waveform hard to compare.",
+          },
+          {
+            type: "heading",
+            text: "Where Should the Probe and Ground Reference Be Connected?",
+          },
+          {
+            type: "paragraph",
+            text: "Contact a clean, continuous cylindrical shaft surface. Avoid paint, rust, grease films, keyways, threads, coupling guards, and damaged zones. Drive-end access is common, but non-drive-end access may be the only safe or mechanically possible point. Record which end you used; the two ends are not automatically equivalent when insulated bearings, couplings, or existing grounding devices are present.",
+          },
+          {
+            type: "paragraph",
+            text: "The ground reference should be the motor frame or another bonded point that represents the frame for this test. Do not silently change from frame to conduit, from frame to drive cabinet, or from one bolt to an unbonded cover between runs. A changed reference is a different measurement.",
+          },
+          {
+            type: "paragraph",
+            text: "Keep the ground lead short and mechanically secure where the site allows it. A long looping lead can pick up radiated switching noise that is not shaft voltage. Photograph the probe position and the reference clamp so a later reviewer can interpret the screenshot.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/how-to-measure-shaft-voltage-vfd-motor/schematic-shaft-probe-oscilloscope-frame-ground.webp",
+            alt: "Schematic of shaft contact, oscilloscope, and motor-frame ground reference",
+            caption:
+              "Simplified measurement concept. Actual probe and grounding arrangements depend on the instrument and test objective.",
+            width: 1535,
+            height: 1024,
+          },
+          {
+            type: "heading",
+            text: "Step-by-Step Shaft Voltage Measurement",
+          },
+          {
+            type: "paragraph",
+            text: "Use a staged procedure so later comparisons remain valid. The six steps below are a field sequence, not a substitute for the plant’s electrical-safety rules.",
+          },
+          {
+            type: "heading",
+            text: "Step 1. Record Motor / VFD Operating Conditions",
+          },
+          {
+            type: "paragraph",
+            text: "Write down motor type, power, rated and maximum speed, VFD model and relevant settings if known, cable arrangement if visible, bearing configuration if known, and existing grounding or insulation hardware. Note speed and load for this test. A waveform without operating context cannot be compared with a later test.",
+          },
+          {
+            type: "heading",
+            text: "Step 2. Prepare the Shaft Measurement Point",
+          },
+          {
+            type: "paragraph",
+            text: "Select a clean, accessible band. Remove only the contamination that prevents electrical contact, using a method approved for that shaft finish. Do not grind a new surface as a casual field fix. If the only exposed metal is a keyway edge or a painted shoulder, the contact is not a valid shaft-voltage point.",
+          },
+          {
+            type: "heading",
+            text: "Step 3. Connect the Measurement Setup",
+          },
+          {
+            type: "paragraph",
+            text: "Fit the probe or brush so contact is stable at the intended speed. Bond the instrument ground to the agreed frame reference. Set the oscilloscope so both switching-period content and brief spikes can be seen. Save the instrument setup or photograph the front panel. Do not change coupling, bandwidth, or scale later unless you document the change as a new test.",
+          },
+          {
+            type: "heading",
+            text: "Step 4. Run the Motor Under Defined Operating Conditions",
+          },
+          {
+            type: "paragraph",
+            text: "Bring the motor to the recorded speed and load. If the plant can only run unloaded, say so in the note. Do not compare an unloaded shop test with a loaded process condition as if they were the same measurement. If several speeds matter in service, treat each speed as its own run.",
+          },
+          {
+            type: "heading",
+            text: "Step 5. Capture Waveform / Peak Behavior",
+          },
+          {
+            type: "paragraph",
+            text: "Save at least one screenshot that shows the repetitive PWM-related shape and, if present, discharge spikes. Note peak or peak-to-peak values only as a supplement to the image. A single cursor reading without shape, time base, and operating condition is weak evidence. If spikes are intermittent, capture more than one event and say so.",
+          },
+          {
+            type: "heading",
+            text: "Step 6. Document the Measurement Setup",
+          },
+          {
+            type: "paragraph",
+            text: "Record probe position, ground-reference location, instrument settings, motor and VFD identity, operating condition, and whether a shaft grounding ring or insulated bearing was already fitted. Keep the waveform file with that note. A screenshot without setup data is difficult to review and easy to misread.",
+          },
+          {
+            type: "heading",
+            text: "Measure Before and After Installing a Shaft Grounding Ring",
+          },
+          {
+            type: "paragraph",
+            text: "A before/after pair is useful only when the two runs are the same test. After mounting a ring, keep all of the following unchanged:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor speed",
+              "Load condition",
+              "Probe position",
+              "Grounding reference",
+              "Oscilloscope settings",
+              "Bandwidth and sampling setup, where those controls apply",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/articles/how-to-measure-shaft-voltage-vfd-motor/before-after-shaft-grounding-measurement-workflow.webp",
+            alt: "Before and after shaft-voltage measurement workflow with unchanged test conditions",
+            caption:
+              "Baseline, then install or configure the shaft grounding ring, then repeat under the same speed, load, probe position, ground reference, and oscilloscope settings. Compare waveform behavior — do not treat the second run as proof that bearing current is eliminated.",
+            width: 1564,
+            height: 1006,
+          },
+          {
+            type: "paragraph",
+            text: "If any of those items change, you no longer have a before/after comparison; you have two different tests. Installation quality still matters: a ring that is mechanically fitted but not bonded to frame ground cannot be judged by a voltage screenshot. For mounting checks, use the installation guide rather than treating the waveform as a complete installation audit.",
+          },
+          {
+            type: "link",
+            intro: "Post-installation mechanical and bonding checks:",
+            label: "How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "paragraph",
+            text: "A lower shaft-voltage display after installation suggests that a lower-impedance shaft-to-frame path is present under that specific condition. It does not prove that every bearing current path is controlled, that circulating current is absent, or that bearings will not fail from lubrication or mechanical causes.",
+          },
+          {
+            type: "heading",
+            text: "How to Interpret a Shaft Voltage Waveform",
+          },
+          {
+            type: "paragraph",
+            text: "Do not judge the motor from one peak-voltage number. Read the waveform as a set of clues:",
+          },
+          {
+            type: "list",
+            items: [
+              "Waveform shape — switching-period content versus a slow envelope",
+              "Repetitive discharge spikes — possible EDM events, not proof by themselves",
+              "Switching behavior — alignment with VFD PWM rather than random pickup",
+              "Grounding reference — whether the displayed voltage is shaft-to-frame or something else",
+              "Instrument bandwidth — whether spikes could have been filtered out or exaggerated by poor probing",
+              "Motor operating condition — speed, load, and whether protection hardware was already fitted",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "A conceptual PWM envelope with occasional sharp spikes is often discussed as a signature of switching stress plus film breakdown. Treat published sketches as conceptual. They are not a substitute for the screenshot you captured on the actual motor.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/how-to-measure-shaft-voltage-vfd-motor/conceptual-pwm-discharge-spike-waveform.webp",
+            alt: "Conceptual PWM shaft-voltage waveform with illustrative discharge spikes",
+            caption:
+              "Conceptual illustration — not actual VOLSUN laboratory data. No voltage scale, pass/fail limit, or measured peak is shown.",
+            width: 1564,
+            height: 1006,
+          },
+          {
+            type: "paragraph",
+            text: "Shaft voltage is not bearing current. A high shaft voltage can exist with little bearing current if the film holds or another path dominates. A lower shaft voltage can still accompany damaging current if the path through a bearing remains the easiest route. Common-mode current in the cable system is a third measurement and should not be inferred from a shaft probe alone.",
+          },
+          {
+            type: "heading",
+            text: "Is There a Safe Shaft Voltage Threshold?",
+          },
+          {
+            type: "paragraph",
+            text: "There is no single shaft-voltage threshold that applies to every motor and VFD system. Lubricant-film breakdown depends on film thickness, speed, temperature, bearing design, and the high-frequency content of the voltage, not on a marketing number copied from one machine to another.",
+          },
+          {
+            type: "paragraph",
+            text: "Judgement should combine:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor construction",
+              "Bearing arrangement, including any insulated bearing",
+              "VFD topology and switching",
+              "Grounding of the motor and driven equipment",
+              "Cable system",
+              "Available shaft-current paths",
+              "Actual bearing condition — noise, vibration, grease, and raceway appearance when inspection is possible",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN does not publish a universal “safe volts” figure for all VFD motors, and this article does not invent IEC, IEEE, or NEMA limit values. If a project specification cites a numbered criterion, use that project’s document. Do not treat it as a global rule.",
+          },
+          {
+            type: "heading",
+            text: "Five Common Shaft Voltage Measurement Mistakes",
+          },
+          {
+            type: "table",
+            caption: "Five common shaft-voltage measurement mistakes and why they distort the result",
+            headers: ["Mistake", "What goes wrong", "What to do instead"],
+            rows: [
+              [
+                "Inconsistent grounding reference",
+                "The displayed voltage is no longer shaft-to-frame",
+                "Clamp the same bonded frame point for every run and photograph it",
+              ],
+              [
+                "Unstable shaft contact",
+                "Bounce, paint, or a keyway edge creates false spikes or dropouts",
+                "Use a clean continuous band and a contact method that stays seated at speed",
+              ],
+              [
+                "Changing test conditions",
+                "Speed, load, or VFD mode changes are mistaken for a grounding effect",
+                "Hold operating condition constant, especially for before/after pairs",
+              ],
+              [
+                "Insufficient instrument bandwidth",
+                "PWM edges and EDM spikes are filtered into a misleading envelope",
+                "Use an instrument and settings that can show switching and brief events",
+              ],
+              [
+                "Evaluating voltage without reviewing current paths",
+                "A peak number is treated as a complete diagnosis",
+                "Review bearings, couplings, frame bonding, cables, and existing protection with the waveform",
+              ],
+            ],
+          },
+          {
+            type: "heading",
+            text: "What Data Should You Send for Engineering Review?",
+          },
+          {
+            type: "paragraph",
+            text: "A waveform is more useful when the application around it is visible. Send as much of the following as you can:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor type",
+              "Motor power",
+              "Rated / maximum speed",
+              "Shaft diameter",
+              "VFD model if known",
+              "Bearing configuration",
+              "Grounding arrangement",
+              "Waveform screenshot",
+              "Probe position",
+              "Motor drawing / photo",
+              "Operating environment",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/articles/how-to-measure-shaft-voltage-vfd-motor/engineering-review-data-checklist.webp",
+            alt: "Checklist of motor and waveform data needed for shaft-voltage engineering review",
+            caption:
+              "Send your motor data and shaft-voltage waveform to VOLSUN for application review.",
+            width: 1564,
+            height: 1006,
+          },
+          {
+            type: "paragraph",
+            text: "Have a shaft-voltage waveform?",
+          },
+          {
+            type: "paragraph",
+            text: "Send us a waveform screenshot, motor nameplate data, shaft diameter, VFD information, and bearing arrangement for an application review. Incomplete packages still start a conversation; they only limit how specific the first comment can be.",
+          },
+          {
+            type: "link",
+            label: "Send shaft-voltage data for application review",
+            href: "/contact?campaign=shaft-voltage-measurement-guide&source=knowledge-center&source_page=/en/knowledge-center/how-to-measure-shaft-voltage-vfd-motor&cta_key=engineer&inquiry_type=technical_inquiry",
+          },
+          {
+            type: "heading",
+            text: "How Shaft Grounding Rings Fit Into the Diagnosis",
+          },
+          {
+            type: "paragraph",
+            text: "A high measured shaft voltage is not, by itself, an instruction to install a shaft grounding ring. A ring provides a controlled shaft-to-frame discharge path through conductive-fiber contact. Whether that path is the right next step depends on the rest of the current map: insulated bearings, couplings, driven equipment, cable common-mode paths, and whether circulating bearing current is also plausible.",
+          },
+          {
+            type: "paragraph",
+            text: "On many industrial VFD motors, a solid shaft grounding ring is reviewed as one way to offer that controlled path. It does not eliminate all bearing current, and it does not guarantee that bearings will not fail. Installation quality, shaft surface, and frame bonding still decide whether the intended path exists in service.",
+          },
+          {
+            type: "link",
+            intro: "Solid ring product family often reviewed for industrial VFD motors:",
+            label: "Solid Shaft Grounding Ring",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "When circulating current or an insulated bearing is also in play:",
+            label: "Shaft Grounding Ring vs Insulated Bearing",
+            href: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
+          },
+          {
+            type: "heading",
+            text: "Conclusion",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft-voltage testing is a documented procedure: same contact, same reference, same instrument settings, same operating condition. Read waveform shape and discharge behavior together with the motor’s current paths. Do not convert one peak reading into a universal safe limit, and do not treat a lower voltage after fitting a ring as proof that every bearing risk is gone.",
+          },
+          {
+            type: "paragraph",
+            text: "Send us your shaft-voltage waveform and motor data for an application review.",
+          },
+          {
+            type: "link",
+            label: "Request an application review",
+            href: "/contact?campaign=shaft-voltage-measurement-guide&source=knowledge-center&source_page=/en/knowledge-center/how-to-measure-shaft-voltage-vfd-motor&cta_key=engineer&inquiry_type=technical_inquiry",
+          },
+        ],
+      },
+      zh: {
+        title:
+          "[ZH-TODO] How to Measure Shaft Voltage in VFD Motors: Test Setup, Waveforms and Grounding Verification",
+        excerpt:
+          "[ZH-TODO] A field procedure for measuring shaft voltage on VFD motors: probe placement, ground reference, waveform capture, before/after shaft-grounding checks, and the data needed for engineering review.",
+        metaDescription:
+          "[ZH-TODO] How to measure shaft voltage on VFD motors: test setup, probe and ground reference, waveform review, before/after grounding checks, and data for engineering review.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Shaft voltage measurement is the practical next step after you already understand what shaft voltage is.",
           },
         ],
       },

@@ -47,6 +47,8 @@ export {
   HOME_CRAWL_FEATURED_PRODUCT_SLUGS,
   HOME_LATEST_NEWS_LIMIT,
   HOME_FEATURED_TECHNICAL_LIMIT,
+  HOME_FEATURED_TECHNICAL_EXCLUDE_SLUGS,
+  getHomeFeaturedTechnicalArticles,
 } from "./mock/home";
 export type { HomeEnApplicationSlot } from "./mock/home";
 export { inquiryTypeOptions, getInquiryTypeOptions } from "./mock/inquiry-types";

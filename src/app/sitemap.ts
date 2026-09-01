@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCanonicalSiteOrigin } from "@/config/site";
-import { products, articles, resourcePageRegistry } from "@/data";
+import { products, articles, resourcePageRegistry, applications } from "@/data";
+import type { ApplicationDetail } from "@/data";
 import { calculateScore } from "../../content-factory/scoring-engine";
 import {
   getCrawlPriority,
@@ -13,6 +14,18 @@ import {
 } from "@/lib/seo/zh-index-policy";
 
 const APPLICATION_SITEMAP_PRIORITY = getCrawlPriority("product");
+
+/** Align EN sitemap with application page robots: isIndexable !== false → include. */
+function isSitemapIndexableApplication(app: ApplicationDetail): boolean {
+  return app.isIndexable !== false;
+}
+
+function buildEnApplicationSitemapEntries(base: string): MetadataRoute.Sitemap {
+  return applications.filter(isSitemapIndexableApplication).map((app) => ({
+    url: `${base}/en/applications/${app.slug}`,
+    priority: APPLICATION_SITEMAP_PRIORITY,
+  }));
+}
 
 function buildPhase1aZhSitemapEntries(base: string): MetadataRoute.Sitemap {
   const phase1aArticles = articles.filter((article) => PHASE1A_KC_ARTICLE_SLUGS.includes(article.slug));
@@ -34,13 +47,6 @@ function buildPhase1aZhSitemapEntries(base: string): MetadataRoute.Sitemap {
       priority: APPLICATION_SITEMAP_PRIORITY,
     })),
   ];
-}
-
-function buildPhase1aEnApplicationEntries(base: string): MetadataRoute.Sitemap {
-  return PHASE1A_APPLICATION_PATHS.map((path) => ({
-    url: `${base}/en${path}`,
-    priority: APPLICATION_SITEMAP_PRIORITY,
-  }));
 }
 
 /**
@@ -105,6 +111,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ]),
     { url: `${base}/en/resources`, priority: 0.7 },
     ...resourceEntries,
+    // EN application details: reuse applications SoT (isIndexable !== false).
+    ...buildEnApplicationSitemapEntries(base),
   ];
 
   // Defensive: EN base list must never include /zh (even if a future edit adds a locale loop).
@@ -113,11 +121,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   if (zhStrategy === "phase1a") {
-    return dedupeByUrl([
-      ...englishEntries,
-      ...buildPhase1aEnApplicationEntries(base),
-      ...buildPhase1aZhSitemapEntries(base),
-    ]);
+    return dedupeByUrl([...englishEntries, ...buildPhase1aZhSitemapEntries(base)]);
   }
 
   return dedupeByUrl(englishEntries);

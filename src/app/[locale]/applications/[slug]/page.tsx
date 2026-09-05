@@ -10,6 +10,8 @@ import {
   getElectricVehiclesContent,
   getIndustrialMotorsContent,
   industrialMotorsApplicationPage,
+  getPumpSystemsContent,
+  pumpSystemsApplicationPage,
   getProductForLocale,
 } from "@/data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -22,6 +24,7 @@ import { isAppLocale, type AppLocale } from "@/lib/i18n/locales";
 import { ui } from "@/lib/i18n/ui-messages";
 import { EvApplicationPageClient } from "@/components/applications/ev-application-page-client";
 import { IndustrialApplicationPageClient } from "@/components/applications/industrial-application-page-client";
+import { PumpApplicationPageClient } from "@/components/applications/pump-application-page-client";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -45,6 +48,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: industrial.seoTitle,
       description: industrial.seoDescription,
       path: industrialMotorsApplicationPage.path,
+      locale,
+      indexable,
+    });
+  }
+  if (slug === pumpSystemsApplicationPage.slug) {
+    const pump = getPumpSystemsContent(locale);
+    return buildPageMetadata({
+      title: pump.seoTitle,
+      description: pump.seoDescription,
+      path: pumpSystemsApplicationPage.path,
       locale,
       indexable,
     });
@@ -156,6 +169,46 @@ export default async function LocalizedApplicationDetailPage({ params }: Props) 
         />
         <div className="mt-6">
           <EvApplicationPageClient locale={locale} data={electricVehiclesApplicationPage} />
+        </div>
+      </div>
+    );
+  }
+  if (slug === pumpSystemsApplicationPage.slug) {
+    const pump = getPumpSystemsContent(locale);
+    const pumpFaq = pumpSystemsApplicationPage.faq[locale];
+    const jsonLd = [
+      webPageJsonLd({
+        name: pump.seoTitle,
+        description: pump.seoDescription,
+        path: pumpSystemsApplicationPage.path,
+        locale,
+      }),
+      faqPageJsonLd({
+        items: pumpFaq.map((item) => ({ question: item.question, answer: item.answer })),
+        locale,
+        path: pumpSystemsApplicationPage.path,
+      }),
+      breadcrumbListJsonLd(
+        [
+          { name: t.breadcrumbHome, path: "/" },
+          { name: t.applicationListBreadcrumb, path: "/applications" },
+          { name: pump.heroTitle, path: pumpSystemsApplicationPage.path },
+        ],
+        locale,
+      ),
+    ];
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-12">
+        <JsonLd data={jsonLd} />
+        <Breadcrumbs
+          items={[
+            { label: t.breadcrumbHome, href: `/${locale}` },
+            { label: t.applicationListBreadcrumb, href: `/${locale}/applications` },
+            { label: pump.heroTitle, href: null },
+          ]}
+        />
+        <div className="mt-6">
+          <PumpApplicationPageClient locale={locale} data={pumpSystemsApplicationPage} />
         </div>
       </div>
     );

@@ -7,6 +7,8 @@ export { electricVehiclesApplicationPage, getElectricVehiclesContent } from "./m
 export type { EvApplicationPageData } from "./mock/application-ev";
 export { industrialMotorsApplicationPage, getIndustrialMotorsContent } from "./mock/application-industrial";
 export type { IndustrialApplicationPageData } from "./mock/application-industrial";
+export { pumpSystemsApplicationPage, getPumpSystemsContent } from "./mock/application-pump-systems";
+export type { PumpApplicationPageData } from "./mock/application-pump-systems";
 export { caseStudies, getCaseStudyBySlug } from "./mock/case-studies";
 export type { CaseStudy } from "./mock/case-studies";
 export {

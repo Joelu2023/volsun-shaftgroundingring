@@ -32,15 +32,15 @@ function localizedInternalHref(locale: AppLocale, href: string, articleSlug?: st
 }
 
 export function PumpApplicationPageClient({ locale, data }: Props) {
-  const t = data.locales[locale];
-  const warnings = data.warnings[locale];
-  const constraints = data.constraints[locale];
-  const steps = data.evaluateSteps[locale];
-  const resources = data.evaluateResources[locale];
-  const selection = data.productSelection[locale];
-  const checklist = data.checklist[locale];
-  const faqItems = data.faq[locale];
-  const ctas = data.ctas[locale];
+  const t = data.copy;
+  const warnings = data.warnings;
+  const constraints = data.constraints;
+  const steps = data.evaluateSteps;
+  const resources = data.evaluateResources;
+  const selection = data.productSelection;
+  const checklist = data.checklist;
+  const faqItems = data.faq;
+  const ctas = data.ctas;
 
   const [openFaqId, setOpenFaqId] = useState<string | null>(faqItems[0]?.id ?? null);
   const scrollReachedRef = useRef<Record<number, boolean>>({ 25: false, 50: false, 75: false, 100: false });

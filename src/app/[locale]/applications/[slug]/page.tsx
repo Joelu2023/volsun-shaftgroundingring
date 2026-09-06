@@ -12,6 +12,7 @@ import {
   industrialMotorsApplicationPage,
   getPumpSystemsContent,
   pumpSystemsApplicationPage,
+  shouldRenderPumpSolutionPage,
   getProductForLocale,
 } from "@/data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -52,8 +53,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       indexable,
     });
   }
-  if (slug === pumpSystemsApplicationPage.slug) {
-    const pump = getPumpSystemsContent(locale);
+  if (shouldRenderPumpSolutionPage(locale, slug)) {
+    const pump = getPumpSystemsContent();
     return buildPageMetadata({
       title: pump.seoTitle,
       description: pump.seoDescription,
@@ -173,9 +174,9 @@ export default async function LocalizedApplicationDetailPage({ params }: Props) 
       </div>
     );
   }
-  if (slug === pumpSystemsApplicationPage.slug) {
-    const pump = getPumpSystemsContent(locale);
-    const pumpFaq = pumpSystemsApplicationPage.faq[locale];
+  if (shouldRenderPumpSolutionPage(locale, slug)) {
+    const pump = getPumpSystemsContent();
+    const pumpFaq = pumpSystemsApplicationPage.faq;
     const jsonLd = [
       webPageJsonLd({
         name: pump.seoTitle,

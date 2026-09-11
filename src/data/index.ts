@@ -9,6 +9,12 @@ export { industrialMotorsApplicationPage, getIndustrialMotorsContent } from "./m
 export type { IndustrialApplicationPageData } from "./mock/application-industrial";
 export { pumpSystemsApplicationPage, getPumpSystemsContent, shouldRenderPumpSolutionPage } from "./mock/application-pump-systems";
 export type { PumpApplicationPageData } from "./mock/application-pump-systems";
+export {
+  hvacMotorsApplicationPage,
+  getHvacMotorsContent,
+  shouldRenderHvacSolutionPage,
+} from "./mock/application-hvac-motors";
+export type { HvacApplicationPageData } from "./mock/application-hvac-motors";
 export { caseStudies, getCaseStudyBySlug } from "./mock/case-studies";
 export type { CaseStudy } from "./mock/case-studies";
 export {

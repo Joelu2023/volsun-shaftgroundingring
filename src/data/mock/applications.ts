@@ -36,19 +36,31 @@ export const applications: ApplicationDetail[] = [
     id: "a-hvac",
     slug: "hvac-motors",
     name: "HVAC Motors",
-    summary: "Shaft voltage control for fans, compressors, and air handlers driven by VFDs.",
-    coverImagePublicPath: "/images/applications/industrial/industrial-app-fans-v1.png",
-    heroImagePublicPath: "/images/applications/industrial/industrial-app-fans-v1.png",
+    heroTitle: "HVAC Motor Bearing Protection for VFD-Driven Fans",
+    summary:
+      "For VFD-driven HVAC fan motors (AHU, cooling tower, ventilation) where shaft voltage and bearing current may contribute to repeated bearing damage after diagnosis.",
+    coverImagePublicPath: "/images/application-fans-blowers.webp",
+    heroImagePublicPath: "/images/application-fans-blowers.webp",
     phase: "p1",
+    seoTitle: "HVAC Motor Bearing Protection for VFD Fans | Shaft Grounding",
     metaDescription:
-      "HVAC motor bearing protection: why VFD-driven fans develop shaft voltage, and how shaft grounding rings reduce fluting and downtime.",
+      "Learn how shaft voltage and bearing current can contribute to repeated bearing damage in VFD-driven HVAC fan motors, and when shaft grounding may help.",
     problem:
       "HVAC systems frequently use VFDs for energy savings. PWM switching can elevate shaft voltage and drive bearing currents through the path of least resistance—often the motor bearings.",
     whyItMatters:
-      "Unplanned fan or compressor downtime affects comfort and production. Grounding the shaft gives current a controlled path, reducing electrical bearing damage risk.",
+      "Unplanned fan downtime affects comfort and cooling service. A shaft grounding ring should be reviewed only after diagnosis, shaft access, and mounting constraints are known.",
     typicalRisks: ["Bearing fluting over time", "Noise and vibration escalation", "Premature bearing replacement cycles"],
-    recommendedProducts: ["split-shaft-grounding-ring", "solid-shaft-grounding-ring"],
-    checklist: ["Confirm VFD carrier frequency range", "Record shaft diameter and motor frame", "Note maintenance access constraints"],
+    recommendedProducts: ["split-shaft-grounding-ring", "solid-shaft-grounding-ring", "custom-shaft-grounding-ring"],
+    checklist: [
+      "Motor power and shaft diameter",
+      "Fan type and VFD / drive type",
+      "Available mounting space and installation end",
+      "Bearing symptoms and photos if available",
+    ],
+    primaryCtaLabel: "Send HVAC Motor Data for Technical Review",
+    primaryCtaHref: "/contact?cta_key=engineer&application_interest=hvac-motors&inquiry_type=technical_inquiry",
+    secondaryCtaLabel: "Request SGR Selection Support",
+    secondaryCtaHref: "/contact?cta_key=engineer&application_interest=hvac-motors&inquiry_type=technical_inquiry",
   },
   {
     id: "a-ev",

@@ -2,11 +2,21 @@ import type { AppLocale } from "@/lib/i18n/locales";
 
 export type IndustrialCtaItem = { id: string; label: string; href: string; style: "primary" | "ghost" };
 export type IndustrialValueItem = { id: string; title: string; body: string };
-export type IndustrialApplicationCard = { id: string; title: string; body: string; imagePath: string | null; imageAlt: string };
+export type IndustrialApplicationCard = {
+  id: string;
+  title: string;
+  body: string;
+  imagePath: string | null;
+  imageAlt: string;
+  /** Optional card CTA; used on EN only for boundary links (e.g. Pump Systems). */
+  ctaLabel?: string;
+  ctaHref?: string;
+};
 export type IndustrialHowStep = { id: string; title: string; body: string };
 export type IndustrialSelectionItem = { id: string; title: string; body: string; productSlug: string };
 export type IndustrialComparisonRow = { id: string; metric: string; conventional: string; volsun: string };
 export type IndustrialFaqItem = { id: string; question: string; answer: string };
+export type IndustrialResourceLink = { id: string; label: string; href: string; articleSlug?: string };
 
 export type IndustrialLocaleContent = {
   seoTitle: string;
@@ -42,6 +52,11 @@ export type IndustrialLocaleContent = {
   bottomCtaBody: string;
   bottomCtaGuide: string;
   viewProductLabel: string;
+  /** EN-only small-optimization copy; omit on zh to keep Chinese unchanged. */
+  howItWorksLinksLead?: string;
+  relatedResourcesTitle?: string;
+  engineeringDataTitle?: string;
+  engineeringDataLead?: string;
 };
 
 const INDUSTRIAL_APP_IMG = "/images/applications/industrial";
@@ -53,6 +68,12 @@ export type IndustrialApplicationPageData = {
   values: { en: IndustrialValueItem[]; zh: IndustrialValueItem[] };
   typicalApplications: { en: IndustrialApplicationCard[]; zh: IndustrialApplicationCard[] };
   howItWorks: { en: IndustrialHowStep[]; zh: IndustrialHowStep[] };
+  /** EN-only compact Diagnose / Measure / Install entries under How It Works. */
+  howItWorksLinks: IndustrialResourceLink[];
+  /** EN-only related technical resources (diagnose → select → install). */
+  relatedResources: IndustrialResourceLink[];
+  /** EN-only preparation checklist shown before the inquiry CTA. */
+  engineeringDataItems: string[];
   oemRetrofitPoints: { en: string[]; zh: string[] };
   productSelection: { en: IndustrialSelectionItem[]; zh: IndustrialSelectionItem[] };
   comparisonRows: { en: IndustrialComparisonRow[]; zh: IndustrialComparisonRow[] };
@@ -109,11 +130,13 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
         body: "Keep circulation and process pumps reliable under continuous speed control—where a single bearing failure can stop an entire skid.",
         imagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-pump-v1.png`,
         imageAlt: "Industrial process pumps and motors on a skid in a plant environment",
+        ctaLabel: "Explore Pump Systems Application",
+        ctaHref: "/applications/pump-systems",
       },
       {
         id: "app-fans",
         title: "When airflow loads swing and fans ramp all day",
-        body: "Stabilize bearing health for HVAC and process fans that cycle frequently—where inverter stress shows up as premature wear.",
+        body: "Stabilize bearing health for industrial process fans and blowers that cycle frequently—where inverter stress shows up as premature wear.",
         imagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-fans-v1.png`,
         imageAlt: "Large industrial fan and motor assembly with ductwork in a mechanical space",
       },
@@ -175,6 +198,76 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       { id: "how-3", title: "轴承寿命表现更稳定", body: "电蚀事件下降，有助于提高长期可靠性和维护可预测性。"},
     ],
   },
+  howItWorksLinks: [
+    {
+      id: "how-link-diagnose",
+      label: "Diagnose",
+      href: "/knowledge-center/what-causes-vfd-bearing-failure",
+      articleSlug: "what-causes-vfd-bearing-failure",
+    },
+    {
+      id: "how-link-measure",
+      label: "Measure",
+      href: "/knowledge-center/how-to-measure-shaft-voltage-vfd-motor",
+      articleSlug: "how-to-measure-shaft-voltage-vfd-motor",
+    },
+    {
+      id: "how-link-install",
+      label: "Install",
+      href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+      articleSlug: "how-to-install-shaft-grounding-ring",
+    },
+  ],
+  relatedResources: [
+    {
+      id: "res-vfd-bearing-failure",
+      label: "What Causes VFD Motor Bearing Failure?",
+      href: "/knowledge-center/what-causes-vfd-bearing-failure",
+      articleSlug: "what-causes-vfd-bearing-failure",
+    },
+    {
+      id: "res-measure-shaft-voltage",
+      label: "How to Measure Shaft Voltage on a VFD Motor",
+      href: "/knowledge-center/how-to-measure-shaft-voltage-vfd-motor",
+      articleSlug: "how-to-measure-shaft-voltage-vfd-motor",
+    },
+    {
+      id: "res-select-sgr",
+      label: "How to Select a Shaft Grounding Ring",
+      href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+      articleSlug: "how-to-select-shaft-grounding-ring-ec-vfd-motors",
+    },
+    {
+      id: "res-install-sgr",
+      label: "How to Install a Shaft Grounding Ring",
+      href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+      articleSlug: "how-to-install-shaft-grounding-ring",
+    },
+    {
+      id: "res-vs-insulated",
+      label: "Shaft Grounding Ring vs Insulated Bearing",
+      href: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
+      articleSlug: "shaft-grounding-ring-vs-insulated-bearing",
+    },
+    {
+      id: "res-industrial-resource",
+      label: "Industrial Motor Shaft Grounding Resource",
+      href: "/resources/shaft-grounding-for-industrial-motors",
+    },
+  ],
+  engineeringDataItems: [
+    "Motor power",
+    "Rated / maximum speed",
+    "Shaft diameter",
+    "VFD / inverter type",
+    "Installation location",
+    "Available mounting space",
+    "Operating temperature",
+    "Environment / contamination conditions",
+    "Existing bearing damage symptoms",
+    "Photos or drawings, if available",
+    "Measured shaft voltage, if available",
+  ],
   oemRetrofitPoints: {
     en: [
       "Structure review across solid RD/RDW, arc-shaped ST/STW, and custom options.",
@@ -308,6 +401,11 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       bottomCtaBody: "Choose sample validation or direct engineering discussion to align your VFD motor protection plan.",
       bottomCtaGuide: "Prefer a written RFQ? Use the form below—include VFD model, duty cycle, and shaft diameter for a faster first response.",
       viewProductLabel: "View product option",
+      howItWorksLinksLead: "Next steps for site teams:",
+      relatedResourcesTitle: "Related Technical Resources",
+      engineeringDataTitle: "Engineering Data for SGR Review",
+      engineeringDataLead:
+        "Share what you already have—any of the items below help our engineers respond faster. Nothing is mandatory; include measured shaft voltage only if available.",
     },
     zh: {
       seoTitle: "工业电机轴接地环 | 变频轴承电流防护",

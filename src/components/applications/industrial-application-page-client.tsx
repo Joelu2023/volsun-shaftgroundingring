@@ -7,12 +7,23 @@ import { InquiryForm } from "@/components/forms/inquiry-form";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { trackCtaClick, trackEvent } from "@/lib/tracking/events";
 import { cn } from "@/lib/utils/cn";
+import { getArticleRecordBySlug, isArticleLocalePublished } from "@/data/mock/articles";
 import type { IndustrialApplicationPageData, IndustrialCtaItem } from "@/data/mock/application-industrial";
 
 type Props = {
   locale: AppLocale;
   data: IndustrialApplicationPageData;
 };
+
+function localizedInternalHref(locale: AppLocale, href: string, articleSlug?: string) {
+  if (href.startsWith("http://") || href.startsWith("https://")) return href;
+  if (articleSlug) {
+    const record = getArticleRecordBySlug(articleSlug);
+    const articleLocale = record && isArticleLocalePublished(record, locale) ? locale : "en";
+    return `/${articleLocale}/knowledge-center/${articleSlug}`;
+  }
+  return href.startsWith("/") ? `/${locale}${href}` : `/${locale}/${href}`;
+}
 
 export function IndustrialApplicationPageClient({ locale, data }: Props) {
   const t = data.locales[locale];
@@ -24,6 +35,10 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
   const rows = data.comparisonRows[locale];
   const faqItems = data.faq[locale];
   const ctas = data.ctas[locale];
+  const showEnLinkEnhancements = locale === "en";
+  const howItWorksLinks = showEnLinkEnhancements ? data.howItWorksLinks : [];
+  const relatedResources = showEnLinkEnhancements ? data.relatedResources : [];
+  const engineeringDataItems = showEnLinkEnhancements ? data.engineeringDataItems : [];
 
   const [openFaqId, setOpenFaqId] = useState<string | null>(faqItems[0]?.id ?? null);
   const scrollReachedRef = useRef<Record<number, boolean>>({ 25: false, 50: false, 75: false, 100: false });
@@ -73,7 +88,7 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
       style === "ghost" && "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50",
     );
 
-  const ctaHref = (href: string) => (href.startsWith("http://") || href.startsWith("https://") ? href : `/${locale}${href}`);
+  const ctaHref = (href: string) => localizedInternalHref(locale, href);
 
   const onCtaClick = (zone: "hero" | "midpage" | "bottom", cta: IndustrialCtaItem) => {
     trackCtaClick({
@@ -141,6 +156,14 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
               <MediaSlot imagePath={card.imagePath} alt={card.imageAlt} fallbackLabel={card.title} className="aspect-[16/9]" />
               <h3 className="mt-4 font-semibold text-slate-900">{card.title}</h3>
               <p className="mt-2 text-sm text-slate-600">{card.body}</p>
+              {showEnLinkEnhancements && card.ctaLabel && card.ctaHref ? (
+                <Link
+                  href={localizedInternalHref(locale, card.ctaHref)}
+                  className="mt-3 inline-block text-sm font-medium text-brand-orange hover:underline"
+                >
+                  {card.ctaLabel}
+                </Link>
+              ) : null}
             </article>
           ))}
         </div>
@@ -156,6 +179,20 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
             </article>
           ))}
         </div>
+        {howItWorksLinks.length > 0 && t.howItWorksLinksLead ? (
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+            <span className="text-slate-600">{t.howItWorksLinksLead}</span>
+            {howItWorksLinks.map((link) => (
+              <Link
+                key={link.id}
+                href={localizedInternalHref(locale, link.href, link.articleSlug)}
+                className="font-medium text-brand-orange hover:underline"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        ) : null}
       </section>
 
       <section>
@@ -262,6 +299,36 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
           })}
         </div>
       </section>
+
+      {relatedResources.length > 0 && t.relatedResourcesTitle ? (
+        <section>
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.relatedResourcesTitle}</h2>
+          <ul className="mt-4 space-y-2">
+            {relatedResources.map((resource) => (
+              <li key={resource.id}>
+                <Link
+                  href={localizedInternalHref(locale, resource.href, resource.articleSlug)}
+                  className="text-sm font-medium text-brand-orange hover:underline"
+                >
+                  {resource.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {engineeringDataItems.length > 0 && t.engineeringDataTitle ? (
+        <section className="rounded-lg border border-slate-200 bg-white p-5">
+          <h2 className="text-xl font-semibold text-brand-blue">{t.engineeringDataTitle}</h2>
+          {t.engineeringDataLead ? <p className="mt-3 max-w-3xl text-sm text-slate-600">{t.engineeringDataLead}</p> : null}
+          <ul className="mt-4 list-disc space-y-1.5 pl-5 text-sm text-slate-700">
+            {engineeringDataItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <section className="rounded-lg border border-slate-200 bg-slate-50 p-6">
         <h2 className="text-2xl font-semibold text-brand-blue">{t.bottomCtaTitle}</h2>

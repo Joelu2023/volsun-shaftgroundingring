@@ -24,34 +24,40 @@ test("zh homepage article lists only include published zh locales (no ZH-TODO)",
   }
 });
 
-test("en homepage featured list stays at original density and keeps conversion articles", () => {
+test("en homepage featured list follows density, publishability, exclude, and date ranking rules", () => {
   const featuredTechnicalEn = getHomeFeaturedTechnicalArticles("en");
   const featuredTechnicalZh = getHomeFeaturedTechnicalArticles("zh");
+  const excluded = new Set<string>(HOME_FEATURED_TECHNICAL_EXCLUDE_SLUGS);
 
   assert.equal(HOME_FEATURED_TECHNICAL_LIMIT, 8);
   assert.equal(featuredTechnicalEn.length, HOME_FEATURED_TECHNICAL_LIMIT);
   assert.ok(featuredTechnicalEn.length >= featuredTechnicalZh.length);
 
-  const keep = [
-    "how-to-measure-shaft-voltage-vfd-motor",
-    "why-ev-drive-motors-need-shaft-current-protection",
-    "how-to-select-shaft-grounding-ring-ec-vfd-motors",
-    "shaft-grounding-ring-vs-insulated-bearing",
-    "what-causes-vfd-bearing-failure",
-  ];
-  for (const slug of keep) {
-    assert.ok(
-      featuredTechnicalEn.some((a) => a.slug === slug),
-      `EN featured list should include ${slug}`,
-    );
+  for (const rec of featuredTechnicalEn) {
+    assert.equal(isArticleLocalePublished(rec, "en"), true);
+    assert.equal(excluded.has(rec.slug), false, `excluded slug leaked into EN featured: ${rec.slug}`);
+    assert.ok(!JSON.stringify(rec.locales.en).includes(ZH_TODO_MARKER));
   }
 
   for (const slug of HOME_FEATURED_TECHNICAL_EXCLUDE_SLUGS) {
     assert.equal(
       featuredTechnicalEn.some((a) => a.slug === slug),
       false,
-      `EN featured list should exclude overlapping article ${slug}`,
+      `EN featured list should exclude ${slug}`,
     );
+  }
+
+  // Ranking contract: datePublished descending (newest first). Newer articles may
+  // enter Top8 naturally; older ones may leave without a permanent keep list.
+  for (let i = 1; i < featuredTechnicalEn.length; i++) {
+    const newer = new Date(featuredTechnicalEn[i - 1]!.datePublished).getTime();
+    const older = new Date(featuredTechnicalEn[i]!.datePublished).getTime();
+    assert.ok(newer >= older, "EN featured technical articles must be sorted by datePublished desc");
+  }
+
+  for (const rec of featuredTechnicalZh) {
+    assert.equal(isArticleLocalePublished(rec, "zh"), true);
+    assert.ok(!JSON.stringify(rec.locales.zh).includes(ZH_TODO_MARKER));
   }
 
   assert.equal(

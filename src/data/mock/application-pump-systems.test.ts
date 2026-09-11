@@ -9,6 +9,7 @@ import {
   PUMP_INSTALLATION_ARTICLE_SLUG,
   PUMP_MEASUREMENT_ARTICLE_SLUG,
   PUMP_SELECTION_ARTICLE_SLUG,
+  PUMP_VFD_MOTOR_BEARING_FAILURE_ARTICLE_SLUG,
   PUMP_VS_INSULATED_ARTICLE_SLUG,
   getPumpSystemsContent,
   pumpSystemsApplicationPage,
@@ -114,6 +115,7 @@ test("pump systems page includes required internal links once each in the resour
   assert.ok(hrefs.includes("/applications/industrial-motors"));
   assert.ok(hrefs.includes(`/knowledge-center/${PUMP_MEASUREMENT_ARTICLE_SLUG}`));
   assert.ok(hrefs.includes(`/knowledge-center/${PUMP_BEARING_FAILURE_ARTICLE_SLUG}`));
+  assert.ok(hrefs.includes(`/knowledge-center/${PUMP_VFD_MOTOR_BEARING_FAILURE_ARTICLE_SLUG}`));
   assert.ok(hrefs.includes(`/knowledge-center/${PUMP_SELECTION_ARTICLE_SLUG}`));
   assert.ok(hrefs.includes(`/knowledge-center/${PUMP_INSTALLATION_ARTICLE_SLUG}`));
   assert.ok(hrefs.includes(`/knowledge-center/${PUMP_VS_INSULATED_ARTICLE_SLUG}`));
@@ -127,6 +129,7 @@ test("pump systems page includes required internal links once each in the resour
   for (const slug of [
     PUMP_MEASUREMENT_ARTICLE_SLUG,
     PUMP_BEARING_FAILURE_ARTICLE_SLUG,
+    PUMP_VFD_MOTOR_BEARING_FAILURE_ARTICLE_SLUG,
     PUMP_SELECTION_ARTICLE_SLUG,
     PUMP_INSTALLATION_ARTICLE_SLUG,
     PUMP_VS_INSULATED_ARTICLE_SLUG,

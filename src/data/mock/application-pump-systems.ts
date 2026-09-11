@@ -68,6 +68,8 @@ export type PumpApplicationPageData = {
 
 export const PUMP_MEASUREMENT_ARTICLE_SLUG = "how-to-measure-shaft-voltage-vfd-motor";
 export const PUMP_BEARING_FAILURE_ARTICLE_SLUG = "what-causes-vfd-bearing-failure";
+export const PUMP_VFD_MOTOR_BEARING_FAILURE_ARTICLE_SLUG =
+  "vfd-pump-motor-bearing-failure-shaft-voltage";
 export const PUMP_SELECTION_ARTICLE_SLUG = "how-to-select-shaft-grounding-ring-ec-vfd-motors";
 export const PUMP_INSTALLATION_ARTICLE_SLUG = "how-to-install-shaft-grounding-ring";
 export const PUMP_VS_INSULATED_ARTICLE_SLUG = "shaft-grounding-ring-vs-insulated-bearing";
@@ -207,6 +209,12 @@ export const pumpSystemsApplicationPage: PumpApplicationPageData = {
       label: "What Causes VFD Bearing Failure",
       href: `/knowledge-center/${PUMP_BEARING_FAILURE_ARTICLE_SLUG}`,
       articleSlug: PUMP_BEARING_FAILURE_ARTICLE_SLUG,
+    },
+    {
+      id: "res-pump-bearing-failure",
+      label: "VFD Pump Motor Bearing Failure: How to Diagnose Shaft Voltage and Bearing Current",
+      href: `/knowledge-center/${PUMP_VFD_MOTOR_BEARING_FAILURE_ARTICLE_SLUG}`,
+      articleSlug: PUMP_VFD_MOTOR_BEARING_FAILURE_ARTICLE_SLUG,
     },
     {
       id: "res-select",

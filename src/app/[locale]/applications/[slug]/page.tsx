@@ -13,6 +13,9 @@ import {
   getPumpSystemsContent,
   pumpSystemsApplicationPage,
   shouldRenderPumpSolutionPage,
+  getHvacMotorsContent,
+  hvacMotorsApplicationPage,
+  shouldRenderHvacSolutionPage,
   getProductForLocale,
 } from "@/data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -26,6 +29,7 @@ import { ui } from "@/lib/i18n/ui-messages";
 import { EvApplicationPageClient } from "@/components/applications/ev-application-page-client";
 import { IndustrialApplicationPageClient } from "@/components/applications/industrial-application-page-client";
 import { PumpApplicationPageClient } from "@/components/applications/pump-application-page-client";
+import { HvacApplicationPageClient } from "@/components/applications/hvac-application-page-client";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -59,6 +63,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: pump.seoTitle,
       description: pump.seoDescription,
       path: pumpSystemsApplicationPage.path,
+      locale,
+      indexable,
+    });
+  }
+  if (shouldRenderHvacSolutionPage(locale, slug)) {
+    const hvac = getHvacMotorsContent();
+    return buildPageMetadata({
+      title: hvac.seoTitle,
+      description: hvac.seoDescription,
+      path: hvacMotorsApplicationPage.path,
       locale,
       indexable,
     });
@@ -210,6 +224,46 @@ export default async function LocalizedApplicationDetailPage({ params }: Props) 
         />
         <div className="mt-6">
           <PumpApplicationPageClient locale={locale} data={pumpSystemsApplicationPage} />
+        </div>
+      </div>
+    );
+  }
+  if (shouldRenderHvacSolutionPage(locale, slug)) {
+    const hvac = getHvacMotorsContent();
+    const hvacFaq = hvacMotorsApplicationPage.faq;
+    const jsonLd = [
+      webPageJsonLd({
+        name: hvac.seoTitle,
+        description: hvac.seoDescription,
+        path: hvacMotorsApplicationPage.path,
+        locale,
+      }),
+      faqPageJsonLd({
+        items: hvacFaq.map((item) => ({ question: item.question, answer: item.answer })),
+        locale,
+        path: hvacMotorsApplicationPage.path,
+      }),
+      breadcrumbListJsonLd(
+        [
+          { name: t.breadcrumbHome, path: "/" },
+          { name: t.applicationListBreadcrumb, path: "/applications" },
+          { name: hvac.heroTitle, path: hvacMotorsApplicationPage.path },
+        ],
+        locale,
+      ),
+    ];
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-12">
+        <JsonLd data={jsonLd} />
+        <Breadcrumbs
+          items={[
+            { label: t.breadcrumbHome, href: `/${locale}` },
+            { label: t.applicationListBreadcrumb, href: `/${locale}/applications` },
+            { label: hvac.heroTitle, href: null },
+          ]}
+        />
+        <div className="mt-6">
+          <HvacApplicationPageClient locale={locale} data={hvacMotorsApplicationPage} />
         </div>
       </div>
     );

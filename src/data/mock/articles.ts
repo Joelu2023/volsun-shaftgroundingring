@@ -6347,6 +6347,457 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-22",
+    slug: "vfd-pump-motor-bearing-failure-shaft-voltage",
+    category: "technical-articles",
+    datePublished: "2026-09-11T08:00:00.000Z",
+    dateModified: "2026-09-11T08:00:00.000Z",
+    coverImagePublicPath: "/images/home/home-pump-systems-cover-en-v1.webp",
+    coverImageAlt:
+      "VFD-driven pump system application context for shaft voltage and bearing current diagnosis",
+    locales: {
+      en: {
+        title:
+          "VFD Pump Motor Bearing Failure: How to Diagnose Shaft Voltage and Bearing Current",
+        seoTitle: "VFD Pump Motor Bearing Failure: Shaft Voltage & Bearing Current",
+        excerpt:
+          "Diagnose repeated VFD pump motor bearing failure by separating mechanical causes from shaft voltage, bearing current, and EDM damage—and decide when shaft grounding is a reasonable mitigation option.",
+        metaDescription:
+          "Learn how shaft voltage and bearing current can contribute to repeated VFD pump motor bearing failure, how to diagnose the issue, and when shaft grounding may help.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "When a VFD-driven pump motor keeps losing bearings, the first explanations are often mechanical: lubrication, alignment, or “bearing quality.” Those causes are real and common. They are also incomplete. In a subset of inverter-fed pump trains, shaft voltage and bearing current produce electrical discharge machining (EDM) damage that looks like premature wear until the raceway pattern is examined carefully.",
+          },
+          {
+            type: "paragraph",
+            text: "This article is a diagnostic guide for pump OEM engineers, motor manufacturers, maintenance teams, water-treatment and HVAC operators, VFD integrators, and MRO shops. It separates mechanical and electrical hypotheses, outlines how to measure shaft voltage, and explains where a shaft grounding ring fits as one mitigation option—not a universal cure.",
+          },
+          {
+            type: "link",
+            intro: "Application context for VFD-driven pump motors:",
+            label: "Pump Systems shaft grounding application page",
+            href: "/applications/pump-systems",
+          },
+          {
+            type: "image",
+            src: "/images/applications/case-study-pump-motor-shaft-grounding.jpg",
+            alt: "Pump motor shaft end where a shaft grounding ring may be reviewed for VFD bearing-current risk",
+            caption:
+              "Pump motor shaft-end access varies widely. Close-coupled and packaged pumps often leave limited space for measurement probes or grounding hardware.",
+            width: 1200,
+            height: 800,
+          },
+          {
+            type: "heading",
+            text: "Typical Symptoms of Repeated Pump Motor Bearing Failure",
+          },
+          {
+            type: "paragraph",
+            text: "Electrical bearing damage rarely announces itself with a single unique symptom. What usually brings a site to investigation is a pattern: bearings that fail again after replacement, noise that returns quickly, or heat and vibration that do not track a clear mechanical root cause.",
+          },
+          {
+            type: "list",
+            items: [
+              "Repeated bearing failure on the same motor or sister pumps after lubricant, seal, or alignment work",
+              "Raceway fluting (washboarding) visible after bearing teardown",
+              "Frosting or dulling of the raceway surface instead of a polished track",
+              "Localized pitting consistent with electrical discharge events",
+              "Abnormal bearing noise that reappears shortly after rebuild",
+              "Unexplained bearing heating without a matching lubrication or overload explanation",
+              "Short bearing life relative to the duty the mechanical design should support",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "None of these items proves shaft current by itself. Fluting and frosting raise suspicion; confirmation still needs a structured mechanical-versus-electrical review and, where practical, shaft-voltage measurement and bearing inspection evidence.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/article-bearing-fluting-electrical-damage-v1.webp",
+            alt: "Bearing raceway fluting pattern associated with electrical discharge damage",
+            caption:
+              "Fluting and frosting are visual clues often associated with EDM-type electrical bearing damage. Confirm with inspection photos and application context—do not diagnose from one photograph alone.",
+            width: 1200,
+            height: 800,
+          },
+          {
+            type: "heading",
+            text: "Mechanical vs Electrical Diagnosis",
+          },
+          {
+            type: "paragraph",
+            text: "Mechanical problems and electrical problems must not be collapsed into one story. Misalignment can destroy bearings without any shaft voltage present. Shaft voltage can damage bearings on a well-aligned, well-lubricated pump. Treating every failure as “alignment” or every VFD motor as “shaft current” both waste time.",
+          },
+          {
+            type: "table",
+            caption:
+              "Compare common mechanical and electrical contributors before selecting mitigation",
+            headers: ["Hypothesis", "Typical clues", "What it does not prove"],
+            rows: [
+              [
+                "Misalignment",
+                "Coupling wear, uneven load marks, vibration signatures tied to offset/angular misalignment",
+                "Does not rule out concurrent shaft voltage on a VFD motor",
+              ],
+              [
+                "Lubrication",
+                "Wrong grease, over/under greasing, contamination of lubricant, dry running evidence",
+                "Does not explain classic fluting by itself",
+              ],
+              [
+                "Contamination",
+                "Particle scoring, seal failure, process fluid ingress, abrasive wear tracks",
+                "Does not exclude electrical pitting on a separate motor",
+              ],
+              [
+                "Mechanical vibration",
+                "Imbalance, soft foot, structural resonance, hydraulic cavitation or pipe strain",
+                "Does not automatically identify EDM damage",
+              ],
+              [
+                "Shaft voltage",
+                "Measurable potential between shaft and grounded frame under VFD operation",
+                "Does not by itself prove all bearing damage is electrical",
+              ],
+              [
+                "Bearing current",
+                "Current path through bearing lubricant film; may be inferred from damage pattern plus voltage and system layout",
+                "Hard to measure directly in many field pump packages",
+              ],
+              [
+                "EDM damage",
+                "Pitting, frosting, fluting on raceways after teardown inspection",
+                "Pattern supports electrical discharge; still review mechanical contributors in parallel",
+              ],
+            ],
+          },
+          {
+            type: "link",
+            intro: "Broader VFD bearing-failure mechanisms and diagnosis:",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "heading",
+            text: "Why VFD Pump Motors Are Vulnerable",
+          },
+          {
+            type: "paragraph",
+            text: "Not every VFD pump motor develops damaging bearing current. Vulnerability rises when drive switching, motor construction, cabling, and grounding leave a path where shaft potential discharges through the bearing lubricant film.",
+          },
+          {
+            type: "paragraph",
+            text: "PWM (pulse-width modulation) switching on a VFD creates a common-mode voltage component relative to ground. Parasitic capacitance between stator windings and the rotor can couple high-frequency voltage onto the shaft. When shaft-to-frame voltage exceeds the dielectric strength of the lubricant film, a discharge can occur through the bearing. Repeated discharges produce EDM pitting that may later coalesce into frosting or fluting.",
+          },
+          {
+            type: "list",
+            items: [
+              "PWM switching and common-mode voltage from the drive",
+              "Parasitic capacitance from stator to rotor",
+              "Rotor / shaft voltage relative to grounded frame",
+              "Discharge through the bearing when the lubricant film breaks down",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Pump duty adds practical risk factors without making failure inevitable: continuous or high annual operating hours, frequent speed changes, long cable runs on some skids, and limited access for inspection. Treat these as reasons to investigate—not as proof that every inverter-fed pump needs a grounding ring.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/vfd-motor-shaft-current-flow.jpg",
+            alt: "Diagram of VFD motor shaft voltage and bearing current flow path",
+            caption:
+              "Conceptual shaft-voltage / bearing-current path on a VFD motor. Actual current routes depend on motor construction, cabling, grounding, couplings, and connected equipment.",
+            width: 1200,
+            height: 800,
+          },
+          {
+            type: "link",
+            intro: "Foundational explanation of shaft voltage:",
+            label: "What Is Shaft Voltage?",
+            href: "/knowledge-center/what-is-shaft-voltage",
+          },
+          {
+            type: "heading",
+            text: "Shaft Voltage vs Bearing Current",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft voltage is an electrical potential—typically measured between the rotating shaft and a grounded reference such as the motor frame. Bearing current is charge that actually flows through a bearing (or another path). The first is a voltage measurement; the second is a current path and damage mechanism.",
+          },
+          {
+            type: "paragraph",
+            text: "A measurable shaft voltage does not automatically prove that all observed bearing damage came from shaft current. The lubricant film may hold; another path (coupling, driven equipment, cable common-mode current) may dominate; or mechanical damage may coexist. Conversely, a modest voltage reading does not prove bearings are safe if discharge still finds a bearing path under certain speeds or loads.",
+          },
+          {
+            type: "paragraph",
+            text: "Keep the distinction explicit in reports: “shaft voltage measured” is evidence of potential; “EDM pattern on raceways” is evidence of discharge damage; causal linkage requires both application context and consistent test conditions.",
+          },
+          {
+            type: "heading",
+            text: "How to Measure Shaft Voltage on a Pump Motor",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft-voltage measurement is an engineering procedure, not a single meter reading. On pump packages the hard part is often access: close-coupled designs, guards, and wet environments can limit safe contact points. Use plant electrical-safety rules first; the steps below are a technical sequence, not a substitute for lockout/tagout or site permits.",
+          },
+          {
+            type: "list",
+            items: [
+              "Measurement location: identify a clean, concentric shaft surface with safe rotating access—often a fan-end or exposed shaft section outside the coupling guard when permitted",
+              "Grounding reference: clamp the oscilloscope reference to a verified motor-frame ground bond; avoid long looping ground leads that pick up radiated switching noise",
+              "Oscilloscope use: capture waveform shape and peak behavior under defined speed and load; record instrument settings so the test can be repeated",
+              "Probe / contact considerations: use a suitable shaft contact method (probe, brush, or approved contact accessory); keep contact stable and document position with photos",
+              "Waveform observation: note PWM-related envelope behavior and any sharp discharge-like spikes; treat sketches in literature as conceptual, not as your motor’s data",
+              "Repeatability: hold speed, load, probe position, ground reference, and scope settings constant for before/after comparisons",
+              "Safety note: rotating machinery and live VFD systems present crush, entanglement, and electrical hazards—only qualified personnel should perform live measurements",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/articles/how-to-measure-shaft-voltage-vfd-motor/schematic-shaft-probe-oscilloscope-frame-ground.webp",
+            alt: "Schematic of shaft contact probe, oscilloscope, and motor-frame ground reference for shaft-voltage measurement",
+            caption:
+              "Simplified shaft-voltage measurement concept: shaft contact, oscilloscope, and frame ground reference. Adapt probe hardware and PPE to the site’s electrical-safety rules.",
+            width: 1535,
+            height: 1024,
+          },
+          {
+            type: "link",
+            intro: "Full field procedure for probe placement, waveform review, and before/after checks:",
+            label: "How to Measure Shaft Voltage on a VFD Motor",
+            href: "/knowledge-center/how-to-measure-shaft-voltage-vfd-motor",
+          },
+          {
+            type: "heading",
+            text: "When to Suspect Electrical Bearing Damage",
+          },
+          {
+            type: "paragraph",
+            text: "Suspect an electrical contribution when several of the following line up—not when one item appears in isolation:",
+          },
+          {
+            type: "list",
+            items: [
+              "Repeated bearing failure after lubrication, alignment, coupling, and contamination causes have been checked in good faith",
+              "Teardown shows fluting, frosting, or pitting consistent with EDM patterns",
+              "The motor is VFD-driven (or recently converted to VFD control)",
+              "Shaft voltage is measurable under representative operating conditions",
+              "Bearing discharge evidence is available from inspection photos, metallurgical notes, or documented prior failures on sister units",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Suspicion should drive measurement and review. It should not skip straight to hardware purchase without checking mechanical contributors and installation constraints on the pump package.",
+          },
+          {
+            type: "heading",
+            text: "Shaft Grounding Ring as One Mitigation Option",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring provides a controlled, low-impedance path from the rotating shaft to the grounded motor frame through conductive-fiber contact. The intent is to divert shaft charge away from the bearing lubricant film. It is one mitigation method among several.",
+          },
+          {
+            type: "paragraph",
+            text: "A grounding ring is not a universal cure. It does not replace proper motor grounding, cable grounding practice, or drive common-mode control. Insulated bearings, hybrid ceramic bearings, shaft grounding at a different location, improved bonding, filtered or common-mode-aware cabling, and drive settings may also matter depending on the current path. Installing a ring on a poorly bonded frame, or on a contaminated shaft surface with poor concentric contact, can leave the intended path incomplete.",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN shaft grounding rings (solid VS-RD/RDW and arc-shaped VS-ST/STW families) use metallized carbon fiber contact for continuous shaft-to-frame discharge paths. Selection still depends on shaft diameter, speed, environment, mounting space, and whether the pump layout allows reliable installation and inspection—not on brand claims alone.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/shaft-grounding-ring-installation-guide.webp",
+            alt: "Shaft grounding ring installation on a motor shaft end",
+            caption:
+              "Shaft grounding ring installation quality—clean contact zone, secure mounting, and verified frame bonding—determines whether the intended discharge path exists in service.",
+            width: 1200,
+            height: 800,
+          },
+          {
+            type: "link",
+            intro: "Solid ring options often reviewed for industrial VFD motors:",
+            label: "VOLSUN solid shaft grounding ring",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "Arc-shaped rings when coupling removal is difficult:",
+            label: "VOLSUN split / arc-shaped shaft grounding ring",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "Pump-Specific Installation Considerations",
+          },
+          {
+            type: "paragraph",
+            text: "Pump packages constrain grounding hardware more often than open-frame industrial motors. Review these points before specifying a ring:",
+          },
+          {
+            type: "list",
+            items: [
+              "Close-coupled pump motors may leave little shaft free length between the end shield and the pump adapter",
+              "Shaft accessibility can be blocked by couplings, guards, mechanical seals, or drip covers",
+              "Fan-end installation is sometimes the only practical contact zone—confirm cooling airflow and guard clearances",
+              "Limited installation space may favor a thinner profile or an arc-shaped ring that installs without full shaft removal",
+              "Enclosure and IP considerations: washdown, outdoor, or splash-exposed pumps need attention to sealing, corrosion, and contamination at the contact zone",
+              "Shaft diameter verification: measure the actual contact diameter; nameplate shaft size and coupling journals are not always the contact surface",
+              "Concentricity and contact quality: runout, keyways, coatings, or rust under the fibers reduce contact reliability",
+              "Contamination: process moisture, grease purge, and airborne dust can degrade fiber contact over time",
+              "Maintenance access: plan how technicians will inspect fiber wear without major pump disassembly",
+            ],
+          },
+          {
+            type: "link",
+            intro: "Installation sequence and common field errors:",
+            label: "How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "Selection Data Required for Technical Review",
+          },
+          {
+            type: "paragraph",
+            text: "If you need a preliminary product recommendation or application review, provide as many of the following as practical. Incomplete packages still start a conversation; they only limit how specific the first comment can be.",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor power",
+              "Rated speed and maximum operating speed",
+              "VFD type / make (and carrier frequency if known)",
+              "Shaft diameter at the intended contact location",
+              "Installation location (drive end, non-drive / fan end, adapter face, other)",
+              "Available mounting space and any interfering hardware",
+              "Operating temperature range",
+              "Environment (indoor dry, outdoor, washdown, chemical splash, abrasive dust)",
+              "Photos or drawings of the shaft end and mounting area",
+              "Measured shaft-voltage waveform or peak notes, if available",
+            ],
+          },
+          {
+            type: "link",
+            intro: "Selection framework for EC and VFD motors:",
+            label: "How to Select a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+          },
+          {
+            type: "heading",
+            text: "Before / After Verification",
+          },
+          {
+            type: "paragraph",
+            text: "Installation without retest is incomplete engineering. After fitting a shaft grounding ring—or after any grounding/bonding change—repeat shaft-voltage measurement under the same speed, load, probe position, ground reference, and instrument settings used for the baseline.",
+          },
+          {
+            type: "list",
+            items: [
+              "Shaft voltage: compare waveform shape and peak behavior under unchanged test conditions",
+              "Waveform: archive screenshots with settings and operating point noted",
+              "Bearing current evidence: if available from prior teardown or specialty tests, treat it as supporting context—not as something a single voltage screenshot replaces",
+              "Mechanical condition: confirm the ring is seated, bonded, and clear of rubs or coupling interference",
+              "Operating stability: listen and trend vibration/temperature during early run-in; a grounding ring does not correct misalignment or lubrication faults",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "A lower shaft voltage after installation suggests the controlled path is active under those conditions. It does not prove that every bearing risk is eliminated, and it does not certify long-term fiber contact without inspection planning.",
+          },
+          {
+            type: "heading",
+            text: "Frequently Asked Questions",
+          },
+          {
+            type: "heading",
+            text: "Can shaft voltage damage pump motor bearings?",
+          },
+          {
+            type: "paragraph",
+            text: "Yes—when shaft-to-frame voltage repeatedly discharges through the bearing lubricant film, EDM pitting can develop and may progress to frosting or fluting. Shaft voltage is a risk factor, not an automatic sentence: damage depends on voltage magnitude and waveform, film condition, current path, duty hours, and whether another path already diverts the charge.",
+          },
+          {
+            type: "heading",
+            text: "Does every VFD pump motor need a shaft grounding ring?",
+          },
+          {
+            type: "paragraph",
+            text: "No. Many VFD pump motors run without electrical bearing damage. A grounding ring is considered when diagnosis points to shaft voltage / bearing current as a contributor, or when OEM risk assessment for a specific drive and motor layout justifies proactive protection. Blanket installation on every inverter-fed pump is not required by the mechanisms alone.",
+          },
+          {
+            type: "heading",
+            text: "Where should the grounding ring be installed?",
+          },
+          {
+            type: "paragraph",
+            text: "Where a clean shaft contact zone and a reliable bond to frame ground can be achieved—often drive end or fan end depending on the pump package. Close-coupled designs may force fan-end mounting or an arc-shaped ring. Position must also respect insulated bearings, couplings, and guards. Review drawings and photos before locking a location.",
+          },
+          {
+            type: "heading",
+            text: "Can a grounding ring replace proper motor grounding?",
+          },
+          {
+            type: "paragraph",
+            text: "No. A shaft grounding ring is a shaft-to-frame discharge path for high-frequency shaft potential. It does not replace equipment grounding conductors, bonding jumpers, cable shield termination practice, or drive common-mode control. Weak frame grounding can undermine both safety and bearing-current mitigation.",
+          },
+          {
+            type: "heading",
+            text: "How do I know whether the problem is electrical or mechanical?",
+          },
+          {
+            type: "paragraph",
+            text: "Work both tracks. Complete a mechanical checklist (alignment, lubrication, contamination, vibration, piping strain) and an electrical checklist (VFD application, shaft-voltage measurement, raceway pattern). Classic EDM fluting plus measurable shaft voltage on a VFD pump strengthens the electrical hypothesis; uneven load marks and coupling wear strengthen the mechanical hypothesis. Mixed evidence is common—document both rather than forcing a single label.",
+          },
+          {
+            type: "heading",
+            text: "Next Step: Technical Review for Your Pump Motor",
+          },
+          {
+            type: "paragraph",
+            text: "If your VFD pump motor shows repeated bearing failure, fluting/frosting, or measurable shaft voltage, send the selection data listed above for an application review. The goal is to clarify whether shaft voltage and bearing current are plausible contributors for your layout—and whether a shaft grounding ring is a reasonable mitigation option alongside grounding, insulation, and mechanical corrections.",
+          },
+          {
+            type: "link",
+            intro: "Primary CTA — technical review of your pump motor data:",
+            label: "Send Your Pump Motor Data for Technical Review",
+            href: "/contact?product_interest=solid-shaft-grounding-ring&application_interest=pump-systems&campaign=vfd-pump-bearing-failure&source=knowledge-center&source_page=/en/knowledge-center/vfd-pump-motor-bearing-failure-shaft-voltage&cta_key=engineer&inquiry_type=technical_inquiry",
+          },
+          {
+            type: "link",
+            intro: "Secondary CTA — product selection support:",
+            label: "Request SGR Selection Support",
+            href: "/contact?product_interest=solid-shaft-grounding-ring&application_interest=pump-systems&campaign=vfd-pump-bearing-failure&source=knowledge-center&source_page=/en/knowledge-center/vfd-pump-motor-bearing-failure-shaft-voltage&cta_key=quote&inquiry_type=rfq",
+          },
+          {
+            type: "link",
+            intro: "Return to the pump application landing page:",
+            label: "Pump Systems application page",
+            href: "/applications/pump-systems",
+          },
+        ],
+      },
+      zh: {
+        title:
+          "[ZH-TODO] VFD Pump Motor Bearing Failure: How to Diagnose Shaft Voltage and Bearing Current",
+        excerpt:
+          "[ZH-TODO] Diagnose repeated VFD pump motor bearing failure by separating mechanical causes from shaft voltage, bearing current, and EDM damage.",
+        metaDescription:
+          "[ZH-TODO] Learn how shaft voltage and bearing current can contribute to repeated VFD pump motor bearing failure, how to diagnose the issue, and when shaft grounding may help.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] When a VFD-driven pump motor keeps losing bearings, the first explanations are often mechanical: lubrication, alignment, or bearing quality.",
+          },
+        ],
+      },
+    },
+  },
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 

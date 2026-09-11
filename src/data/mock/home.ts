@@ -51,11 +51,13 @@ export const HOME_FEATURED_TECHNICAL_LIMIT = 8;
 
 /**
  * Homepage-only exclusion. Ranking remains datePublished descending.
- * Drop the overlapping “why VFD motors need SGR” article so the 8-slot list
- * can keep the newer measurement guide and the bearing-failure conversion article.
+ * Drop overlapping / lower-priority slots so the 8-item list can keep the
+ * measurement guide, bearing-failure conversion article, and the pump
+ * motor diagnostic article.
  */
 export const HOME_FEATURED_TECHNICAL_EXCLUDE_SLUGS = [
   "why-vfd-motors-need-shaft-grounding-rings",
+  "oil-cooled-ev-motor-protection-high-efficiency",
 ] as const;
 
 export function getHomeFeaturedTechnicalArticles(locale?: AppLocale) {

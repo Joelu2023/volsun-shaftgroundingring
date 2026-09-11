@@ -40,6 +40,8 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=sgr-vs-insulated-bearing&source=knowledge-center&source_page=/en/knowledge-center/shaft-grounding-ring-vs-insulated-bearing&cta_key=engineer&inquiry_type=technical_inquiry",
   "how-to-measure-shaft-voltage-vfd-motor":
     "campaign=shaft-voltage-measurement-guide&source=knowledge-center&source_page=/en/knowledge-center/how-to-measure-shaft-voltage-vfd-motor&cta_key=engineer&inquiry_type=technical_inquiry",
+  "vfd-pump-motor-bearing-failure-shaft-voltage":
+    "product_interest=solid-shaft-grounding-ring&application_interest=pump-systems&campaign=vfd-pump-bearing-failure&source=knowledge-center&source_page=/en/knowledge-center/vfd-pump-motor-bearing-failure-shaft-voltage&cta_key=engineer&inquiry_type=technical_inquiry",
 };
 
 const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
@@ -51,6 +53,7 @@ const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
   "when-standard-shaft-grounding-rings-need-custom-design": "Submit Your Motor Requirements",
   "shaft-grounding-ring-vs-insulated-bearing": "Submit Motor Data for Review",
   "how-to-measure-shaft-voltage-vfd-motor": "Send Shaft-Voltage Data for Review",
+  "vfd-pump-motor-bearing-failure-shaft-voltage": "Send Your Pump Motor Data for Technical Review",
 };
 
 const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
@@ -77,6 +80,10 @@ const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
   "how-to-measure-shaft-voltage-vfd-motor": {
     title: "Have a Shaft-Voltage Waveform?",
     body: "Send us a waveform screenshot, motor nameplate data, shaft diameter, VFD information, bearing arrangement, probe position, and operating environment. VOLSUN’s engineering team will review the application. A high reading is not, by itself, an instruction to install a shaft grounding ring.",
+  },
+  "vfd-pump-motor-bearing-failure-shaft-voltage": {
+    title: "Need Help Diagnosing Repeated Pump Motor Bearing Failure?",
+    body: "Send us your pump motor data: power rating, shaft diameter, VFD information, installation photos or drawings, operating environment, and any shaft-voltage waveform you already have. VOLSUN’s engineering team can review whether shaft voltage and bearing current are plausible contributors—and whether a shaft grounding ring is a reasonable mitigation option for your layout.",
   },
 };
 

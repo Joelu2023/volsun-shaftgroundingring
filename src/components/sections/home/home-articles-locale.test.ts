@@ -33,6 +33,7 @@ test("en homepage featured list stays at original density and keeps conversion a
   assert.ok(featuredTechnicalEn.length >= featuredTechnicalZh.length);
 
   const keep = [
+    "vfd-pump-motor-bearing-failure-shaft-voltage",
     "how-to-measure-shaft-voltage-vfd-motor",
     "why-ev-drive-motors-need-shaft-current-protection",
     "how-to-select-shaft-grounding-ring-ec-vfd-motors",

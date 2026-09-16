@@ -62,6 +62,7 @@ export const navigationEn: NavItem[] = [
     children: [
       { label: "Electric Vehicles", href: "/applications/electric-vehicles" },
       { label: "Industrial Motors & Machinery", href: "/applications/industrial-motors" },
+      { label: "HVAC Motors", href: "/applications/hvac-motors" },
       { label: "Wind Power", href: "/applications/wind-power" },
       { label: "Transportation", href: "/applications/transportation" },
       { label: "Pump Systems", href: "/applications/pump-systems" },

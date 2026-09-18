@@ -6798,6 +6798,204 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-23",
+    slug: "volsun-named-to-kpmg-china-automotive-tech-50-2026",
+    category: "news",
+    datePublished: "2026-09-18T01:00:00.000Z",
+    dateModified: "2026-09-18T01:00:00.000Z",
+    coverImagePublicPath: "/images/news/kpmg-award-2026/kpmg-leading-tech-list-group.jpg",
+    locales: {
+      en: {
+        title: "VOLSUN Named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List",
+        excerpt:
+          "VOLSUN was named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List, recognizing its material solutions spanning insulation, sealing, electrical conductivity, and thermal management for automotive e-drive and motor applications.",
+        metaDescription:
+          "VOLSUN was named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List. The recognition highlights VOLSUN's material capabilities—insulation, sealing, electrical conductivity, and thermal management—supporting automotive e-drive, motor, and bearing-current protection applications such as Shaft Grounding Rings.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "heading",
+            text: "Recognition at the 2026 KPMG China Automotive Summit",
+          },
+          {
+            type: "paragraph",
+            text: "On September 17, 2026, at the 2026 KPMG China Automotive Industry Summit and the 9th Automotive Tech 50 List Release in Shanghai, VOLSUN (沃尔兴) was named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List. Selection for the list reflects KPMG China's own selection criteria and is not a certification of any specific VOLSUN product or a supplier recommendation.",
+          },
+          {
+            type: "image",
+            src: "/images/news/kpmg-award-2026/kpmg-summit-backdrop.jpg",
+            alt: "2026 KPMG China Automotive Industry Summit and 9th Automotive Technology 50 List launch event",
+            caption: "2026 KPMG China Automotive Industry Summit and the 9th Automotive Technology 50 List launch event.",
+            width: 1600,
+            height: 1066,
+          },
+          {
+            type: "heading",
+            text: "From Materials to Automotive Application Solutions",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN's work spans the material functions that electric and hybrid drivetrains increasingly depend on: insulation to manage high-voltage isolation, sealing to protect components in demanding environments, electrical conductivity for controlled current paths, and thermal management to support stable operation under load.",
+          },
+          {
+            type: "paragraph",
+            text: "Over recent years, VOLSUN has been moving from supplying individual materials and components toward delivering material solution capabilities for automotive e-drive, motor, and related applications—translating customer engineering problems into application-specific material choices.",
+          },
+          {
+            type: "heading",
+            text: "Addressing Motor Engineering Challenges",
+          },
+          {
+            type: "paragraph",
+            text: "Automotive motors and e-drive systems face recurring engineering problems: inverter switching can contribute to shaft voltage and bearing currents, while tighter packaging raises thermal and sealing demands. Material selection for conductive, insulating, and protective functions is increasingly treated as a core design decision rather than a secondary specification.",
+          },
+          {
+            type: "paragraph",
+            text: "For bearing-current protection, VOLSUN's Shaft Grounding Ring is designed to provide a controlled low-impedance path for shaft currents, helping divert electrical discharge away from motor bearings. The approach is typically reviewed alongside insulation and thermal management materials as part of a broader motor protection plan.",
+          },
+          {
+            type: "image",
+            src: "/images/news/kpmg-award-2026/kpmg-award-trophy.jpg",
+            alt: "VOLSUN recognition plaque for KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List",
+            caption: "VOLSUN was named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List.",
+            width: 1066,
+            height: 1600,
+          },
+          {
+            type: "heading",
+            text: "Material Innovation and Application for a Safer World",
+          },
+          {
+            type: "paragraph",
+            text: "Being named to the KPMG China list encourages VOLSUN to keep investing in application engineering and verification, grounded in its purpose: Material Innovation and Application for a Safer World.",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN continues to work with motor engineers, OEMs, and Tier-1 suppliers to review shaft diameter, installation constraints, operating environment, and validation requirements—so material solutions fit real automotive applications rather than generic specifications.",
+          },
+          {
+            type: "image",
+            src: "/images/news/kpmg-award-2026/kpmg-forum-scene.jpg",
+            alt: "Industry forum at the 2026 KPMG China Automotive Industry Summit",
+            caption: "Industry discussions at the 2026 KPMG China Automotive Industry Summit.",
+            width: 1080,
+            height: 719,
+          },
+          {
+            type: "link",
+            intro: "Related:",
+            label: "About VOLSUN",
+            href: "/about-us",
+          },
+          {
+            type: "link",
+            label: "Automotive & EV Applications",
+            href: "/applications/electric-vehicles",
+          },
+          {
+            type: "link",
+            label: "Shaft Grounding Ring (RD/RDW)",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+        ],
+      },
+      zh: {
+        title: '沃尔兴入选毕马威中国"领先·汽车科技企业50（第九届）"领先科技榜',
+        excerpt:
+          "沃尔兴入选毕马威中国“领先·汽车科技企业50（第九届）”领先科技榜，认可其在汽车电驱动与电机应用中的绝缘材料、密封、导电与导热解决方案。",
+        metaDescription:
+          "沃尔兴入选毕马威中国“领先·汽车科技企业50（第九届）”领先科技榜。这一入选体现了沃尔兴在绝缘、密封、导电与导热等材料能力上的积累，服务于汽车电驱动、电机及轴电流防护（如轴接地环）等应用。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "heading",
+            text: "毕马威中国峰会现场的认可",
+          },
+          {
+            type: "paragraph",
+            text: "2026年9月17日，在上海举行的“2026年毕马威中国汽车行业峰会暨第九届汽车科技50榜单发布会”上，沃尔兴（VOLSUN）入选毕马威中国“领先·汽车科技企业50（第九届）”—领先科技榜。入选该榜单，是沃尔兴进入毕马威中国第九届汽车科技50企业名单，属于外部对企业在汽车科技方向上的一种关注；该入选不构成对任一具体产品的认证或供应商推荐。",
+          },
+          {
+            type: "image",
+            src: "/images/news/kpmg-award-2026/kpmg-summit-backdrop.jpg",
+            alt: "2026年毕马威中国汽车行业峰会暨第九届汽车科技50榜单发布会现场",
+            caption: "2026年毕马威中国汽车行业峰会暨第九届汽车科技50榜单发布会现场。",
+            width: 1600,
+            height: 1066,
+          },
+          {
+            type: "heading",
+            text: "从材料走向汽车应用解决方案",
+          },
+          {
+            type: "paragraph",
+            text: "沃尔兴的工作覆盖电驱动与混动系统日益依赖的材料功能：绝缘用于高电压隔离，密封用于严苛环境下的部件保护，导电用于受控电流通路，导热用于负载下的稳定运行。",
+          },
+          {
+            type: "paragraph",
+            text: "近年来，沃尔兴正从供应单一材料与部件，向面向汽车电驱动、电机及相关应用的材料解决方案能力演进——将客户的工程问题转化为适配应用场景的材料选择。",
+          },
+          {
+            type: "heading",
+            text: "回应电机工程挑战",
+          },
+          {
+            type: "paragraph",
+            text: "汽车电机与电驱动系统面临反复出现的工程问题：逆变器开关可能带来轴电压与轴承电流，而更紧凑的布置又提高了导热与密封要求。导电、绝缘与防护材料的选型，越来越被视为核心设计环节，而非次要规格。",
+          },
+          {
+            type: "paragraph",
+            text: "在轴电流防护方面，沃尔兴的轴接地环（Shaft Grounding Ring）旨在为轴电流提供受控低阻抗通道，帮助将电蚀放电从电机轴承旁路。该方案通常与绝缘、导热等材料一并纳入更完整的电机防护规划中评审。",
+          },
+          {
+            type: "image",
+            src: "/images/news/kpmg-award-2026/kpmg-award-trophy.jpg",
+            alt: "沃尔兴入选毕马威中国领先·汽车科技企业50（第九届）领先科技榜奖牌",
+            caption: "沃尔兴入选毕马威中国“领先·汽车科技企业50（第九届）”领先科技榜。",
+            width: 1066,
+            height: 1600,
+          },
+          {
+            type: "heading",
+            text: "材料创新与应用让世界更安全",
+          },
+          {
+            type: "paragraph",
+            text: "入选毕马威中国榜单，鼓励沃尔兴继续投入应用工程与验证。公司的方向始终立足于自身使命：材料创新与应用让世界更安全。",
+          },
+          {
+            type: "paragraph",
+            text: "沃尔兴持续与电机工程师、OEM 及 Tier-1 供应商协作，评审轴径、安装约束、运行环境与验证需求，使材料方案贴合真实汽车应用，而非通用规格。",
+          },
+          {
+            type: "image",
+            src: "/images/news/kpmg-award-2026/kpmg-forum-scene.jpg",
+            alt: "2026年毕马威中国汽车行业峰会行业论坛现场",
+            caption: "2026年毕马威中国汽车行业峰会现场围绕汽车科技产业发展展开交流。",
+            width: 1080,
+            height: 719,
+          },
+          {
+            type: "link",
+            intro: "相关页面：",
+            label: "关于沃尔兴",
+            href: "/about-us",
+          },
+          {
+            type: "link",
+            label: "汽车与电驱动应用",
+            href: "/applications/electric-vehicles",
+          },
+          {
+            type: "link",
+            label: "轴接地环（RD/RDW）",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+        ],
+      },
+    },
+  },
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 

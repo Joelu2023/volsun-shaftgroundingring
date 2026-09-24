@@ -65,30 +65,472 @@ export const articles: ArticleRecord[] = [
     slug: "what-causes-shaft-voltage-in-vfd-motors",
     category: "technical-articles",
     datePublished: "2026-03-01T08:00:00.000Z",
-    dateModified: "2026-03-15T10:00:00.000Z",
+    dateModified: "2026-09-21T12:00:00.000Z",
     locales: {
       en: {
         title: "What Causes Shaft Voltage in VFD Motors?",
-        excerpt: "Foundational article on shaft voltage and bearing currents in inverter-fed motors.",
-        metaDescription:
-          "Learn what causes shaft voltage in VFD motors, how bearing currents form, and why grounding the motor shaft matters for bearing life.",
-        paragraphs: [
-          "Variable frequency drives improve efficiency, but their switched output can capacitively couple voltage onto the motor shaft. The resulting shaft voltage may discharge through the lowest-impedance path—often across motor bearings.",
-          "When discharge events occur repeatedly, they can create pitting and fluting patterns on bearing races. Over time this increases noise, vibration, and the risk of unexpected failure.",
-          "Mitigation strategies include breaking the current path (insulated bearings), providing a controlled discharge path (shaft grounding devices), or a combination depending on system design.",
-          "For many industrial users, a shaft grounding ring offers a practical path to divert current away from bearings while keeping maintenance straightforward.",
+        seoTitle: "What Causes Shaft Voltage in VFD Motors? | VOLSUN",
+        excerpt: "VFD-driven motors can develop shaft voltage through PWM switching, common-mode voltage, high dv/dt, and parasitic capacitance. Understand the electrical mechanism from DC bus to bearing discharge.",
+        metaDescription: "What causes shaft voltage in VFD motors? Trace the mechanism from PWM switching and common-mode voltage to parasitic capacitance, rotor potential, shaft voltage, and bearing discharge.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A variable frequency drive does not output a perfect sine wave. It synthesizes motor voltage through fast semiconductor switching, and that switching is the origin of shaft voltage in VFD motors. The path runs from the DC bus, through pulse-width modulation, to a common-mode voltage on the motor, then through parasitic capacitance to a rotor and shaft potential, and finally to a discharge across the bearing lubricant film. This article explains each step of that mechanism. It is not a buying guide; for protection options, follow the solution links at the end.",
+          },
+          {
+            type: "heading",
+            text: "1. PWM Switching Creates Common-Mode Voltage",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-shaft-voltage-mechanism.webp",
+            alt: "Diagram of how VFD PWM switching creates common-mode voltage that couples through motor parasitic capacitance to a shaft potential and discharges across the bearing",
+            caption: "The shaft-voltage path in a VFD-fed motor, from DC bus to bearing discharge",
+            width: 1600,
+            height: 900,
+          },
+          {
+            type: "paragraph",
+            text: "A VFD first rectifies incoming AC to a DC bus, then uses insulated-gate switches, typically IGBTs, to chop that DC into a PWM waveform that approximates the desired motor voltage. The three phase legs do not switch symmetrically at every instant, so the average of the three terminal voltages relative to the DC midpoint, the common-mode voltage, carries high-frequency content. The motor windings and frame sit on top of this common-mode potential.",
+          },
+          {
+            type: "paragraph",
+            text: "The practical consequence for a motor or maintenance engineer is not the switching math but the result: fast voltage edges appear between the windings, the frame, and everything capacitively tied to them. Those edges are what later couple onto the shaft.",
+          },
+          {
+            type: "heading",
+            text: "2. High dv/dt Increases Capacitive Coupling",
+          },
+          {
+            type: "paragraph",
+            text: "Each switching transition is a voltage step divided by a very short time, expressed as dv/dt. Because capacitive current through any capacitance C is approximately C multiplied by dv/dt, a steeper edge drives larger instantaneous capacitive current through every parasitic capacitance in the motor system.",
+          },
+          {
+            type: "paragraph",
+            text: "This raises the electrical conditions that can drive high-frequency shaft and bearing currents. It does not by itself guarantee bearing damage, because whether discharge becomes harmful depends on the bearing film, the actual waveform, and the motor construction. The mechanism is permissive, not deterministic.",
+          },
+          {
+            type: "heading",
+            text: "3. Parasitic Capacitance Couples Voltage to the Rotor",
+          },
+          {
+            type: "paragraph",
+            text: "Inside a motor, capacitance is not something installed; it is the geometry of the machine. The stator winding sits close to the rotor across a thin air gap and insulation, forming a stator-to-rotor capacitance, often written Csr. The rotor sits close to the grounded frame, forming a rotor-to-frame capacitance, Crf. The bearing, with its thin lubricant film, forms a small bearing capacitance, Cb. Together these act as a capacitive divider across the common-mode voltage.",
+          },
+          {
+            type: "paragraph",
+            text: "Because the rotor is coupled to the frame through Crf and to the shaft through its own conductor, the common-mode voltage divides among these paths. The key step is that the rotor, and therefore the shaft, rises to a potential relative to the grounded frame. The shaft is not isolated; it is charged through distributed capacitance that exists whether or not anyone drew it on a schematic.",
+          },
+          {
+            type: "list",
+            items: [
+              "Stator winding to rotor (Csr)",
+              "Rotor to frame (Crf)",
+              "Bearing lubricant film (Cb)",
+            ],
+          },
+          {
+            type: "heading",
+            text: "4. How Rotor Voltage Becomes Shaft Voltage",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-motor-parasitic-capacitance-model.webp",
+            alt: "Equivalent circuit of motor parasitic capacitances: Csr couples the stator winding in series to the rotor/shaft node, while Crf and Cb are parallel paths from that node to the grounded frame",
+            caption: "Csr is the series coupling element; Crf and Cb form a parallel path to frame (corrected topology)",
+            width: 1280,
+            height: 960,
+          },
+          {
+            type: "paragraph",
+            text: "Shaft voltage is the electrical potential difference between the rotating shaft and the grounded motor frame. Because the rotor and shaft are the same conductor, the rotor potential appears on the shaft. The stator-to-rotor capacitance Csr couples the winding to the rotor/shaft node, while the rotor-to-frame capacitance Crf and the bearing capacitance Cb are parallel paths from that node to the motor frame; both are part of the network that sets how much of the common-mode voltage reaches the shaft.",
+          },
+          {
+            type: "paragraph",
+            text: "The distinction that matters for diagnosis is that shaft voltage is not bearing current. Shaft voltage is a standing potential; bearing current is what flows when that potential finds a discharge path. A motor can show shaft voltage without yet sustaining bearing current, and the two are measured and interpreted differently.",
+          },
+          {
+            type: "link",
+            intro: "For the definition and the difference from bearing current:",
+            label: "What Is Shaft Voltage?",
+            href: "/knowledge-center/what-is-shaft-voltage",
+          },
+          {
+            type: "heading",
+            text: "5. When Shaft Voltage Becomes Bearing Current",
+          },
+          {
+            type: "paragraph",
+            text: "In normal operation the rolling elements are separated from the raceways by a thin lubricant film that behaves electrically like an insulator until it does not. As the shaft-to-frame voltage rises, the film across the bearing can exceed its withstand at a point, and a micro-discharge passes through the contact. Repeated discharges across the raceway are the mechanism behind pitting and fluting.",
+          },
+          {
+            type: "paragraph",
+            text: "There is no single voltage value above which every bearing will fail. The withstand of the film depends on film thickness, speed, temperature, load, lubricant condition, and the waveform shape, not on a fixed threshold. Claiming a universal rule such as install a grounding ring above X volts would be technically unsound; the correct approach evaluates the motor, the drive, and the measured waveform together.",
+          },
+          {
+            type: "heading",
+            text: "6. EDM Bearing Current vs Circulating Bearing Current",
+          },
+          {
+            type: "image",
+            src: "/images/articles/edm-vs-circulating-bearing-current.webp",
+            alt: "Comparison of EDM (shaft-to-frame discharge addressed by a shaft grounding ring) versus circulating bearing current (loop through both bearings, addressed by insulated bearing); mitigation depends on mechanism",
+            caption: "Two bearing-current paths, two different mitigations. A grounding ring is not a universal fix.",
+            width: 1600,
+            height: 900,
+          },
+          {
+            type: "paragraph",
+            text: "Bearing current is not one phenomenon. Two paths are commonly distinguished:",
+          },
+          {
+            type: "list",
+            items: [
+              "Capacitive, or EDM, discharge current: the shaft-to-frame discharge described above, where shaft voltage breaks down the bearing film and current jumps the raceway.",
+              "Circulating bearing current: a loop current through the shaft, one bearing, the frame, the other bearing, and back, driven by asymmetry in the magnetic or capacitive circuit rather than only by the shaft-to-frame potential.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "These have different dominant causes and different preferred mitigations. A grounding ring addresses the shaft-to-frame discharge path; an insulated bearing on one end addresses the circulating loop. Correct mitigation depends on identifying the dominant current path before selecting hardware.",
+          },
+          {
+            type: "heading",
+            text: "7. What Makes Shaft Voltage Problems More Likely?",
+          },
+          {
+            type: "image",
+            src: "/images/articles/electrical-bearing-damage-progression.webp",
+            alt: "Progression from electrical discharge through micropitting, frosting and fluting to noise, vibration and premature bearing failure",
+            caption: "Repeated discharge progresses from micro-pits to fluting",
+            width: 1600,
+            height: 900,
+          },
+          {
+            type: "paragraph",
+            text: "Risk is elevated, not guaranteed, by several factors:",
+          },
+          {
+            type: "list",
+            items: [
+              "Fast switching edges and high carrier or switching frequency",
+              "Long motor cable runs, which can increase reflected-wave and common-mode effects",
+              "Motor frame grounding and bonding quality",
+              "Motor size and frame configuration, because larger machines can present different capacitive and loop paths",
+              "Bearing arrangement and whether insulated bearings are already present",
+              "Coupling and driven equipment that may provide secondary discharge paths",
+              "Drive topology and the overall system grounding architecture",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "None of these alone determines the outcome. They raise the probability that shaft voltage reaches a level and path where bearing discharge becomes a reliability concern.",
+          },
+          {
+            type: "heading",
+            text: "8. How to Confirm Whether Shaft Voltage Is the Problem",
+          },
+          {
+            type: "paragraph",
+            text: "Shaft voltage is confirmed by measurement, not assumption. Probe placement, oscilloscope setup, waveform review, and before-and-after comparison are covered in the dedicated measurement guide. This article does not repeat that procedure; the point is to confirm the mechanism before acting on it.",
+          },
+          {
+            type: "link",
+            intro: "For the field procedure:",
+            label: "How to Measure Shaft Voltage in VFD Motors",
+            href: "/knowledge-center/how-to-measure-shaft-voltage-vfd-motor",
+          },
+          {
+            type: "heading",
+            text: "9. How Shaft Voltage Is Mitigated",
+          },
+          {
+            type: "paragraph",
+            text: "Once shaft voltage and its discharge path are understood, mitigation is a system decision:",
+          },
+          {
+            type: "list",
+            items: [
+              "Shaft grounding: provide a controlled low-impedance path from shaft to grounded frame so discharge does not traverse the bearing, typically with a shaft grounding ring.",
+              "Insulated bearing: raise the impedance of a specific bearing path, often used for circulating-current control.",
+              "Grounding and bonding improvement: reduce common-mode exposure through better frame bonding and cable practice.",
+              "Common-mode mitigation at the drive: filters, reactors, or cable measures that reduce the voltage stress reaching the motor.",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "The choice depends on the dominant current path. For the justification of why a grounding ring is used, see the dedicated article; for a direct comparison with insulated bearings, see the comparison guide.",
+          },
+          {
+            type: "link",
+            intro: "Why a controlled path is used:",
+            label: "Why VFD Motors Need Shaft Grounding Rings",
+            href: "/knowledge-center/why-vfd-motors-need-shaft-grounding-rings",
+          },
+          {
+            type: "link",
+            intro: "Ring or insulated bearing:",
+            label: "Shaft Grounding Ring vs. Insulated Bearing",
+            href: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
+          },
+          {
+            type: "heading",
+            text: "Frequently Asked Questions",
+          },
+          {
+            type: "paragraph",
+            text: "What causes shaft voltage in VFD motors? VFD switching creates a high-frequency common-mode voltage; parasitic capacitance inside the motor couples part of that voltage onto the rotor and shaft, producing a shaft-to-frame potential that can discharge through the bearings.",
+          },
+          {
+            type: "paragraph",
+            text: "Is shaft voltage the same as bearing current? No. Shaft voltage is a potential difference between the shaft and the grounded frame; bearing current is the current that flows when that potential discharges, usually across the bearing lubricant film.",
+          },
+          {
+            type: "paragraph",
+            text: "What is common-mode voltage in a VFD motor? It is the high-frequency voltage that appears between the motor phase terminals on average and the DC bus midpoint, produced by the drive PWM switching. The motor structure sits on top of it.",
+          },
+          {
+            type: "paragraph",
+            text: "How can shaft voltage be measured? With a high-bandwidth probe referenced to the motor frame and an oscilloscope set to capture the PWM-related waveform; see the measurement guide for probe placement and before-and-after comparison.",
+          },
+          {
+            type: "paragraph",
+            text: "Does every VFD motor need a shaft grounding ring? No. Whether protection is needed depends on the current mechanism, bearing arrangement, grounding, the measured waveform, and the motor and VFD system architecture, not on motor power, shaft diameter, or a fixed voltage threshold alone.",
+          },
         ],
       },
       zh: {
         title: "变频电机中的轴电压是如何产生的？",
-        excerpt: "面向工程维护人员：逆变器供电电机上的轴电压与轴承电流基础说明。",
-        metaDescription:
-          "了解变频电机轴电压的成因、轴承电流如何形成，以及为何轴接地有助于延长轴承寿命。",
-        paragraphs: [
-          "变频器可显著提升能效，但其 PWM 输出会通过容性耦合在电机轴上感应出电压。轴电压往往沿阻抗最低路径泄放——许多情况下即穿过电机轴承。",
-          "反复放电会在滚道表面形成点蚀与搓板纹（电蚀沟槽），长期将表现为噪声、振动增大及非计划停机风险上升。",
-          "抑制手段包括切断电流路径（如绝缘轴承）、提供可控泄放通道（轴接地装置等），或按系统设计组合使用。",
-          "对大量工业用户而言，轴接地环是在维护成本可控前提下，将电流从轴承旁路出去的实用方案。",
+        seoTitle: "变频电机中的轴电压是如何产生的？ | VOLSUN",
+        excerpt: "变频驱动电机中的轴电压源于 PWM 开关、共模电压、高 dv/dt 与寄生电容。了解从直流母线到轴承放电的完整电气机理。",
+        metaDescription: "变频电机轴电压由何产生？沿 PWM 开关、共模电压、寄生电容、转子电位、轴电压到轴承放电的完整机理逐一拆解。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "变频器输出的并非理想正弦波，而是通过半导体快速开关合成电机电压，而这一开关过程正是变频电机轴电压的起源。其路径为：直流母线，经脉宽调制，到电机上的共模电压，再经电机内部寄生电容，到转子与轴电位，最终穿过轴承润滑膜放电。本文逐步解释这一机理，并非采购指南；防护方案请见文末相关链接。",
+          },
+          {
+            type: "heading",
+            text: "1. PWM 开关产生共模电压",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-shaft-voltage-mechanism.webp",
+            alt: "示意图：变频驱动器 PWM 开关如何产生共模电压，经电机寄生电容耦合形成轴电位，并穿过轴承放电",
+            caption: "变频供电电机中从直流母线到轴承放电的轴电压形成路径",
+            width: 1600,
+            height: 900,
+          },
+          {
+            type: "paragraph",
+            text: "变频器先将输入交流电整流为直流母线，再用绝缘栅开关（通常为 IGBT）将直流斩波为近似目标电机电压的 PWM 波形。三相桥臂并非在每一瞬间都对称开关，因此三相端电压相对直流中点的平均值（即共模电压）带有高频分量。电机绕组与机座就建立在这一共模电位之上。",
+          },
+          {
+            type: "paragraph",
+            text: "对电机或运维工程师而言，关键不在于开关的数学，而在于结果：绕组、机座以及所有与之容性相连的结构之间，会出现快速的电压边沿。正是这些边沿随后耦合到轴上。",
+          },
+          {
+            type: "heading",
+            text: "2. 高 dv/dt 增强容性耦合",
+          },
+          {
+            type: "paragraph",
+            text: "每一次开关跳变都是电压阶跃除以极短时间，即 dv/dt。由于任意电容 C 上的容性电流约等于 C 乘以 dv/dt，边沿越陡，流过电机系统内每一处寄生电容的瞬时容性电流越大。",
+          },
+          {
+            type: "paragraph",
+            text: "这提高了可能驱动高频轴电流与轴承电流的电条件。但它本身并不必然导致轴承损伤，放电是否具有危害性，取决于轴承油膜、实际波形与电机结构。该机理是可能促成，而非必然发生。",
+          },
+          {
+            type: "heading",
+            text: "3. 寄生电容将电压耦合到转子",
+          },
+          {
+            type: "paragraph",
+            text: "电机内部的电容并非外加元件，而是机器本身的几何结构。定子绕组经气隙与绝缘贴近转子，形成定子到转子电容（常记为 Csr）；转子贴近接地机座，形成转子到机座电容（Crf）；轴承连同其薄润滑膜形成很小的轴承电容（Cb）。三者共同构成跨共模电压的分压网络。",
+          },
+          {
+            type: "paragraph",
+            text: "由于转子经 Crf 与机座耦合、又经自身导体与轴相连，共模电压在这些路径间分配。关键一步是：转子、进而轴，相对接地机座抬升至某一电位。轴并非孤立，而是经分布电容被充电，无论是否有人把它画进原理图。",
+          },
+          {
+            type: "list",
+            items: [
+              "定子绕组到转子（Csr）",
+              "转子到机座（Crf）",
+              "轴承润滑膜（Cb）",
+            ],
+          },
+          {
+            type: "heading",
+            text: "4. 转子电压如何成为轴电压",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-motor-parasitic-capacitance-model.webp",
+            alt: "电机寄生电容等效电路：Csr 将定子绕组串联耦合到转子/轴节点，Crf 与 Cb 则是从该节点到接地机座的并联路径",
+            caption: "Csr 为串联耦合元件，Crf 与 Cb 构成到机座的并联路径（已修正拓扑）",
+            width: 1280,
+            height: 960,
+          },
+          {
+            type: "paragraph",
+            text: "轴电压即旋转轴与接地机座之间的电位差。由于转子与轴是同一导体，转子电位即体现在轴上。在共模等效电路中，Csr 表示定子绕组与转子之间的寄生电容，而 Crf 与轴承电容 Cb 构成从转子/轴到电机机座的并联电容路径。这些寄生电容共同形成电容分压网络，从而影响轴相对于机座的电压。",
+          },
+          {
+            type: "paragraph",
+            text: "诊断中必须区分：轴电压不等于轴承电流。轴电压是一种静态电位；轴承电流是当该电位找到放电通路（通常穿越轴承润滑膜）时流过的电流。电机可以存在轴电压而尚未产生轴承电流，二者测量与判读方式也不同。",
+          },
+          {
+            type: "link",
+            intro: "关于定义及其与轴承电流的区别：",
+            label: "什么是轴电压？",
+            href: "/knowledge-center/what-is-shaft-voltage",
+          },
+          {
+            type: "heading",
+            text: "5. 轴电压何时演变为轴承电流",
+          },
+          {
+            type: "paragraph",
+            text: "正常运转时，滚动体经薄润滑膜与滚道分隔，该油膜在电气上近似绝缘，直到某一时刻不再绝缘。随着轴到机座电压升高，轴承处油膜可能在某点被击穿，微小放电穿过接触处。滚道上反复放电，正是点蚀与搓板纹的形成机理。",
+          },
+          {
+            type: "paragraph",
+            text: "不存在一个统一的电压阈值，超过它轴承就必然失效。油膜的耐受能力取决于油膜厚度、转速、温度、载荷、润滑状态与波形形状，而非某个固定数值。宣称超过 X 伏就必须安装接地环这类普适规则在技术上站不住脚；正确做法是将电机、变频器与实际测得波形一并评估。",
+          },
+          {
+            type: "heading",
+            text: "6. EDM 轴承电流与环流轴承电流",
+          },
+          {
+            type: "image",
+            src: "/images/articles/edm-vs-circulating-bearing-current.webp",
+            alt: "EDM 放电电流（轴到机座，由轴接地环应对）与环流轴承电流（经两端轴承成环，由绝缘轴承应对）对比；抑制取决于机理",
+            caption: "两类轴承电流路径，两种不同抑制手段；接地环并非万能方案",
+            width: 1600,
+            height: 900,
+          },
+          {
+            type: "paragraph",
+            text: "轴承电流并非单一现象，通常区分两条路径：",
+          },
+          {
+            type: "list",
+            items: [
+              "容性 / EDM 放电电流：即前述轴到机座放电，轴电压击穿轴承油膜，电流跨滚道跳跃。",
+              "环流轴承电流：经轴、一端轴承、机座、另一端轴承再返回的环路电流，由磁路或电容回路的不对称驱动，而非仅由轴到机座电位驱动。",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "二者主导成因不同，优先抑制手段也不同。接地环针对轴到机座放电通路；一端绝缘轴承针对环流通路。正确的抑制取决于先识别主导电流路径，再选硬件。",
+          },
+          {
+            type: "heading",
+            text: "7. 哪些因素会提高轴电压风险",
+          },
+          {
+            type: "image",
+            src: "/images/articles/electrical-bearing-damage-progression.webp",
+            alt: "从轴承放电经微点蚀、霜化、搓板纹到噪声振动及过早失效的演进",
+            caption: "反复放电由微点蚀逐步发展为搓板纹",
+            width: 1600,
+            height: 900,
+          },
+          {
+            type: "paragraph",
+            text: "以下因素会提高，而非保证，风险：",
+          },
+          {
+            type: "list",
+            items: [
+              "快速的开关边沿与较高的载波或开关频率",
+              "较长的电机电缆，可能加剧反射波与共模效应",
+              "电机机座接地与跨接质量",
+              "电机规格与机座结构，因为较大电机可能呈现不同的容性与环路通路",
+              "轴承布置，以及是否已采用绝缘轴承",
+              "联轴器与从动设备可能提供的二次放电通路",
+              "变频器拓扑与整体系统接地架构",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "这些因素单独都不能决定结果，它们只是提高了轴电压达到某一水平与通路、从而使轴承放电成为可靠性隐患的概率。",
+          },
+          {
+            type: "heading",
+            text: "8. 如何确认轴电压就是问题所在",
+          },
+          {
+            type: "paragraph",
+            text: "轴电压须经测量确认，而非凭假设。探针布置、示波器设置、波形判读与前后对比，在专门的测量指南中说明。本文不重复该流程，重点在于先确认机理，再据此行动。",
+          },
+          {
+            type: "link",
+            intro: "现场测量流程：",
+            label: "如何测量变频电机轴电压",
+            href: "/knowledge-center/how-to-measure-shaft-voltage-vfd-motor",
+          },
+          {
+            type: "heading",
+            text: "9. 轴电压的抑制方式",
+          },
+          {
+            type: "paragraph",
+            text: "理解轴电压及其放电通路后，抑制是一项系统决策：",
+          },
+          {
+            type: "list",
+            items: [
+              "轴接地：提供从轴到接地机座的受控低阻抗通路，使放电不穿越轴承，通常采用轴接地环。",
+              "绝缘轴承：提高特定轴承通路的阻抗，常用于环流控制。",
+              "改善接地与跨接：通过更好的机座跨接与电缆敷设，降低共模暴露。",
+              "变频器侧共模抑制：滤波器、电抗器或电缆措施，降低到达电机的电压应力。",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "选择取决于主导电流路径。关于为何采用受控通路，请参阅专门文章；与绝缘轴承的直接对比，请参阅对比指南。",
+          },
+          {
+            type: "link",
+            intro: "为何采用受控通路：",
+            label: "为什么变频电机需要轴接地环",
+            href: "/knowledge-center/why-vfd-motors-need-shaft-grounding-rings",
+          },
+          {
+            type: "link",
+            intro: "接地环还是绝缘轴承：",
+            label: "轴接地环 vs 绝缘轴承",
+            href: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
+          },
+          {
+            type: "heading",
+            text: "常见问题",
+          },
+          {
+            type: "paragraph",
+            text: "变频电机轴电压由何产生？变频器开关产生高频共模电压；电机内部寄生电容将该电压的一部分耦合到转子与轴上，形成相对接地机座的轴电位，并可经轴承放电。",
+          },
+          {
+            type: "paragraph",
+            text: "轴电压与轴承电流是一回事吗？不是。轴电压是轴与接地机座之间的电位差；轴承电流是该电位放电（通常穿越轴承润滑膜）时流过的电流。",
+          },
+          {
+            type: "paragraph",
+            text: "什么是变频电机中的共模电压？它是电机三相端电压平均值相对直流母线中点出现的高频电压，由变频器 PWM 开关产生，电机结构即建立在此电位之上。",
+          },
+          {
+            type: "paragraph",
+            text: "如何测量轴电压？使用以电机机座为参考的高带宽探针，并配合能捕获 PWM 相关波形的示波器；探针布置与前后对比见测量指南。",
+          },
+          {
+            type: "paragraph",
+            text: "是否每台变频电机都需要轴接地环？不是。是否需要防护，取决于电流机理、轴承布置、接地、实测波形以及电机与变频器系统架构，而非仅看电机功率、轴径或某个固定电压阈值。",
+          },
         ],
       },
     },

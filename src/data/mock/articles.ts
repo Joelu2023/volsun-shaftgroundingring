@@ -171,8 +171,8 @@ export const articles: ArticleRecord[] = [
           {
             type: "image",
             src: "/images/articles/electrical-bearing-damage-progression.webp",
-            alt: "Possible bearing damage patterns from repeated electrical discharge: surface damage such as micropitting, frosting, or fluting, which can lead to noise, vibration, and premature bearing failure",
-            caption: "Possible damage patterns from repeated electrical discharge — micropitting, frosting, and fluting are alternative patterns, not a mandatory sequence.",
+            alt: "Possible bearing damage appearances from repeated electrical discharge: micro-cratering / electrical pitting, frosted running tracks, or fluting / washboarding, which can lead to noise, vibration, and premature bearing failure",
+            caption: "Repeated electrical discharge can produce micro-cratering; frosted tracks and fluting may develop depending on exposure and operating conditions.",
             width: 1600,
             height: 900,
           },
@@ -404,8 +404,8 @@ export const articles: ArticleRecord[] = [
           {
             type: "image",
             src: "/images/articles/electrical-bearing-damage-progression.webp",
-            alt: "反复电气放电可能造成的轴承损伤形态：微点蚀、霜化或搓板纹等表面损伤，并可能导致噪声、振动与轴承过早失效",
-            caption: "反复放电可能造成的损伤形态——微点蚀、霜化、搓板纹为可选形态，并非必然的先后顺序。",
+            alt: "反复电气放电可能造成的轴承损伤外观：微坑蚀/电气点蚀、霜化运行轨道或搓板纹，并可能导致噪声、振动与轴承过早失效",
+            caption: "反复电气放电可能产生微坑蚀（电气点蚀）；霜化运行轨道与搓板纹是否出现，取决于暴露程度与运行工况。",
             width: 1600,
             height: 900,
           },

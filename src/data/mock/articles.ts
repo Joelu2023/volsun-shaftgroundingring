@@ -86,7 +86,7 @@ export const articles: ArticleRecord[] = [
             type: "image",
             src: "/images/articles/vfd-shaft-voltage-mechanism.webp",
             alt: "Diagram of how VFD PWM switching creates common-mode voltage that couples through motor parasitic capacitance to a shaft potential and discharges across the bearing",
-            caption: "The shaft-voltage path in a VFD-fed motor, from DC bus to bearing discharge",
+            caption: "How PWM switching in a VFD can create shaft voltage and electrical bearing discharge.",
             width: 1600,
             height: 900,
           },
@@ -137,8 +137,8 @@ export const articles: ArticleRecord[] = [
           {
             type: "image",
             src: "/images/articles/vfd-motor-parasitic-capacitance-model.webp",
-            alt: "Equivalent circuit of motor parasitic capacitances: Csr couples the stator winding in series to the rotor/shaft node, while Crf and Cb are parallel paths from that node to the grounded frame",
-            caption: "Csr is the series coupling element; Crf and Cb form a parallel path to frame (corrected topology)",
+            alt: "Equivalent circuit of motor parasitic capacitances: Csr (stator-winding-to-rotor) couples the winding to the rotor/shaft node, while Crf (rotor-to-frame) and Cb (bearing) are parallel paths from that node to the grounded frame",
+            caption: "Csr (stator-winding-to-rotor), with Crf and Cb as parallel paths to frame. Vshaft = Vcom × Csr / (Csr + Crf + Cb).",
             width: 1280,
             height: 960,
           },
@@ -167,6 +167,14 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "There is no single voltage value above which every bearing will fail. The withstand of the film depends on film thickness, speed, temperature, load, lubricant condition, and the waveform shape, not on a fixed threshold. Claiming a universal rule such as install a grounding ring above X volts would be technically unsound; the correct approach evaluates the motor, the drive, and the measured waveform together.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/electrical-bearing-damage-progression.webp",
+            alt: "Possible bearing damage patterns from repeated electrical discharge: surface damage such as micropitting, frosting, or fluting, which can lead to noise, vibration, and premature bearing failure",
+            caption: "Possible damage patterns from repeated electrical discharge — micropitting, frosting, and fluting are alternative patterns, not a mandatory sequence.",
+            width: 1600,
+            height: 900,
           },
           {
             type: "heading",
@@ -198,14 +206,6 @@ export const articles: ArticleRecord[] = [
           {
             type: "heading",
             text: "7. What Makes Shaft Voltage Problems More Likely?",
-          },
-          {
-            type: "image",
-            src: "/images/articles/electrical-bearing-damage-progression.webp",
-            alt: "Progression from electrical discharge through micropitting, frosting and fluting to noise, vibration and premature bearing failure",
-            caption: "Repeated discharge progresses from micro-pits to fluting",
-            width: 1600,
-            height: 900,
           },
           {
             type: "paragraph",
@@ -319,7 +319,7 @@ export const articles: ArticleRecord[] = [
             type: "image",
             src: "/images/articles/vfd-shaft-voltage-mechanism.webp",
             alt: "示意图：变频驱动器 PWM 开关如何产生共模电压，经电机寄生电容耦合形成轴电位，并穿过轴承放电",
-            caption: "变频供电电机中从直流母线到轴承放电的轴电压形成路径",
+            caption: "变频器 PWM 开关如何产生轴电压并引发轴承放电。",
             width: 1600,
             height: 900,
           },
@@ -370,8 +370,8 @@ export const articles: ArticleRecord[] = [
           {
             type: "image",
             src: "/images/articles/vfd-motor-parasitic-capacitance-model.webp",
-            alt: "电机寄生电容等效电路：Csr 将定子绕组串联耦合到转子/轴节点，Crf 与 Cb 则是从该节点到接地机座的并联路径",
-            caption: "Csr 为串联耦合元件，Crf 与 Cb 构成到机座的并联路径（已修正拓扑）",
+            alt: "电机寄生电容等效电路：Csr（定子绕组到转子）将绕组耦合至转子/轴节点，Crf（转子到机座）与 Cb（轴承）为该节点到接地机座的并联路径",
+            caption: "Csr（定子绕组到转子），Crf 与 Cb 为到机座的并联路径。Vshaft = Vcom × Csr / (Csr + Crf + Cb)。",
             width: 1280,
             height: 960,
           },
@@ -400,6 +400,14 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "不存在一个统一的电压阈值，超过它轴承就必然失效。油膜的耐受能力取决于油膜厚度、转速、温度、载荷、润滑状态与波形形状，而非某个固定数值。宣称超过 X 伏就必须安装接地环这类普适规则在技术上站不住脚；正确做法是将电机、变频器与实际测得波形一并评估。",
+          },
+          {
+            type: "image",
+            src: "/images/articles/electrical-bearing-damage-progression.webp",
+            alt: "反复电气放电可能造成的轴承损伤形态：微点蚀、霜化或搓板纹等表面损伤，并可能导致噪声、振动与轴承过早失效",
+            caption: "反复放电可能造成的损伤形态——微点蚀、霜化、搓板纹为可选形态，并非必然的先后顺序。",
+            width: 1600,
+            height: 900,
           },
           {
             type: "heading",
@@ -431,14 +439,6 @@ export const articles: ArticleRecord[] = [
           {
             type: "heading",
             text: "7. 哪些因素会提高轴电压风险",
-          },
-          {
-            type: "image",
-            src: "/images/articles/electrical-bearing-damage-progression.webp",
-            alt: "从轴承放电经微点蚀、霜化、搓板纹到噪声振动及过早失效的演进",
-            caption: "反复放电由微点蚀逐步发展为搓板纹",
-            width: 1600,
-            height: 900,
           },
           {
             type: "paragraph",

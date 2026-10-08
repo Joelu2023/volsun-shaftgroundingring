@@ -275,6 +275,12 @@ export const articles: ArticleRecord[] = [
             href: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
           },
           {
+            type: "link",
+            intro: "When a ring is the chosen path:",
+            label: "how to install a shaft grounding ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
             type: "heading",
             text: "Frequently Asked Questions",
           },
@@ -718,8 +724,11 @@ export const articles: ArticleRecord[] = [
           },
           { type: "heading", text: "Conclusion" },
           {
-            type: "paragraph",
-            text: "If your motors are driven by VFDs, shaft voltage is a serious reliability risk. Installing a shaft grounding ring is one of the most effective and economical solutions.",
+            type: "link",
+            intro:
+              "If your motors are driven by VFDs, shaft voltage is a serious reliability risk. Installing a shaft grounding ring is one of the most effective and economical solutions. See the",
+            label: "installation guide.",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
           },
           {
             type: "paragraph",
@@ -988,8 +997,14 @@ export const articles: ArticleRecord[] = [
             text: "Installation Affects Grounding Performance",
           },
           {
+            type: "link",
+            intro: "Both methods depend on",
+            label: "proper shaft grounding ring installation.",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
             type: "paragraph",
-            text: "Both methods depend on installation quality. The shaft contact zone should be clean, the ground connection verified, and continuity checked after assembly. For conductive-fiber rings, fiber contact should be even and the mount secured against vibration.",
+            text: "The shaft contact zone should be clean, the ground connection verified, and continuity checked after assembly. For conductive-fiber rings, fiber contact should be even and the mount secured against vibration.",
           },
           {
             type: "image",
@@ -3652,6 +3667,12 @@ export const articles: ArticleRecord[] = [
             href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
           },
           {
+            type: "link",
+            intro: "After the ring is specified, follow the",
+            label: "installation steps.",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
             type: "paragraph",
             text: "For project evaluation, provide the shaft diameter and tolerance, rated and maximum speed, available installation space, operating environment, and motor drawings or photos.",
           },
@@ -5148,8 +5169,14 @@ export const articles: ArticleRecord[] = [
             text: "A Practical Approach: Shaft Grounding Rings",
           },
           {
+            type: "link",
+            intro: "A widely used approach to reduce bearing discharge risk is to",
+            label: "install a shaft grounding ring.",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
             type: "paragraph",
-            text: "A widely used approach to reduce bearing discharge risk is to install a shaft grounding ring. Instead of allowing current to discharge through the bearings, the ring is intended to create a controlled current path that transfers shaft current from the rotating shaft to the grounded motor housing.",
+            text: "Instead of allowing current to discharge through the bearings, the ring is intended to create a controlled current path that transfers shaft current from the rotating shaft to the grounded motor housing.",
           },
           {
             type: "paragraph",

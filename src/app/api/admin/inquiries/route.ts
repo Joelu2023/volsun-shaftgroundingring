@@ -11,6 +11,8 @@ function adminInquiryView(row: InquiryRecordRow) {
     smtpOutcome: row.smtpOutcome,
     smtpErrorCode: row.smtpErrorCode,
     attemptCount: row.attemptCount,
+    handledBy: row.handledBy,
+    handledAt: row.handledAt,
     name: row.payload.name,
     company: row.payload.company,
     email: row.payload.email,

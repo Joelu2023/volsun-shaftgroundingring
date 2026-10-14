@@ -17,6 +17,8 @@ export type InquiryRecordRow = {
   attemptStartedAt: string | null;
   notifiedAt: string | null;
   retainUntil: string | null;
+  handledBy: string | null;
+  handledAt: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -38,6 +40,7 @@ export type InquiryStore = {
   retryFromUncertain(id: string, at: Date): Promise<InquiryRecordRow | null>;
   listForAdmin(limit: number): Promise<InquiryRecordRow[]>;
   purgeExpired(now: Date): Promise<number>;
+  recordHandler(id: string, username: string, at: Date): Promise<InquiryRecordRow | null>;
 };
 
 type DbRow = {
@@ -53,13 +56,16 @@ type DbRow = {
   attempt_started_at: Date | null;
   notified_at: Date | null;
   retain_until: Date | null;
+  handled_by: string | null;
+  handled_at: Date | null;
   created_at: Date;
   updated_at: Date;
 };
 
 const RETURNING = `
   id, public_number, idempotency_key, status, smtp_outcome, payload, latest_request_id,
-  smtp_error_sanitized, attempt_count, attempt_started_at, notified_at, retain_until, created_at, updated_at
+  smtp_error_sanitized, attempt_count, attempt_started_at, notified_at, retain_until,
+  handled_by, handled_at, created_at, updated_at
 `;
 
 export function isInquiryDurableStorageEnabled(): boolean {
@@ -108,6 +114,8 @@ function mapRow(row: DbRow): InquiryRecordRow {
     attemptStartedAt: iso(row.attempt_started_at),
     notifiedAt: iso(row.notified_at),
     retainUntil: iso(row.retain_until),
+    handledBy: row.handled_by,
+    handledAt: iso(row.handled_at),
     createdAt: row.created_at.toISOString(),
     updatedAt: row.updated_at.toISOString(),
   };
@@ -256,6 +264,17 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
         [now],
       );
       return result.rowCount ?? 0;
+    },
+
+    recordHandler(id, username, at) {
+      const safeName = username.trim().slice(0, 64);
+      return one(
+        `update inquiry_records
+         set handled_by = $2, handled_at = $3, updated_at = $3
+         where id = $1
+         returning ${RETURNING}`,
+        [id, safeName, at],
+      );
     },
   };
 }

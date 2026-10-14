@@ -12,6 +12,7 @@ export type AcceptInquiryDeps = {
   getMissingSmtpEnv?: () => string[];
   now?: () => Date;
   log?: (event: string, fields: InquiryLogFields) => void;
+  actorUsername?: string;
 };
 
 export type AcceptInquirySuccess = {
@@ -267,6 +268,11 @@ async function markSendUncertain(
   }
 }
 
+async function noteHandler(deps: AcceptInquiryDeps, id: string, at: Date): Promise<void> {
+  if (!deps.actorUsername) return;
+  await deps.store.recordHandler(id, deps.actorUsername, at);
+}
+
 export async function retryDurableInquiryNotification(
   id: string,
   confirmUncertain: boolean,
@@ -290,6 +296,7 @@ export async function retryDurableInquiryNotification(
     row.smtpOutcome === "uncertain" || (row.status === "notification_pending" && row.attemptCount > 0);
   try {
     if (row.status === "notification_failed") {
+      await noteHandler(deps, row.id, at);
       const pending = await deps.store.retryFromFailed(row.id, at);
       if (!pending) return { ok: false, error: "retry_not_allowed", httpStatus: 409 };
       const sent = await attemptSend(pending, pending.payload, pending.latestRequestId, deps, at, log, false);
@@ -299,12 +306,14 @@ export async function retryDurableInquiryNotification(
       if (!confirmUncertain) {
         return { ok: false, error: "uncertain_requires_confirmation", httpStatus: 409 };
       }
+      await noteHandler(deps, row.id, at);
       const pending = await deps.store.retryFromUncertain(row.id, at);
       if (!pending) return { ok: false, error: "retry_not_allowed", httpStatus: 409 };
       const sent = await attemptSend(pending, pending.payload, pending.latestRequestId, deps, at, log, false);
       return sent.ok ? { ...sent, resent: sent.delivered } : { ok: false, error: "inquiry_storage_failed", httpStatus: 503 };
     }
     if (row.status === "received" && row.attemptCount === 0) {
+      await noteHandler(deps, row.id, at);
       const sent = await attemptInitialNotification(row, row.payload, row.latestRequestId, deps, at, log, false);
       return sent.ok ? { ...sent, resent: sent.delivered } : { ok: false, error: "inquiry_storage_failed", httpStatus: 503 };
     }

@@ -32,7 +32,10 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
   let result;
   try {
-    result = await retryDurableInquiryNotification(id, confirmUncertain, { store: getInquiryStore() });
+    result = await retryDurableInquiryNotification(id, confirmUncertain, {
+      store: getInquiryStore(),
+      actorUsername: session.username,
+    });
   } catch {
     console.error("[inquiry] admin retry failed", { inquiryId: id });
     result = { ok: false as const, error: "inquiry_storage_failed" as const, httpStatus: 503 as const };

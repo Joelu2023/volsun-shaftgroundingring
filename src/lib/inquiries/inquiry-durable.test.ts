@@ -4,6 +4,7 @@ import test from "node:test";
 import { NextRequest } from "next/server";
 import { Pool } from "pg";
 import { GET as listAdminInquiries } from "../../app/api/admin/inquiries/route";
+import { POST as retryAdminInquiry } from "../../app/api/admin/inquiries/[id]/retry/route";
 import { createResourceSessionCookieValue, RESOURCE_CENTER_SESSION_COOKIE } from "../resource-center/auth";
 import { acceptDurableInquiry, classifySmtpFailure, retryDurableInquiryNotification } from "./accept-inquiry";
 import {
@@ -70,6 +71,8 @@ function createMemoryStore(options?: { failInsert?: boolean; failMarkNotified?: 
         attemptStartedAt: null,
         notifiedAt: null,
         retainUntil: null,
+        handledBy: null,
+        handledAt: null,
         createdAt: now.toISOString(),
         updatedAt: now.toISOString(),
       };
@@ -145,6 +148,14 @@ function createMemoryStore(options?: { failInsert?: boolean; failMarkNotified?: 
     },
     async listForAdmin() {
       return rows.map(cloneRow);
+    },
+    async recordHandler(id, username, at) {
+      const row = find(id);
+      if (!row) return null;
+      row.handledBy = username;
+      row.handledAt = at.toISOString();
+      row.updatedAt = at.toISOString();
+      return cloneRow(row);
     },
     async purgeExpired(now) {
       const before = rows.length;
@@ -296,15 +307,19 @@ test("admin retry of a failed notification records the new status", async () => 
   assert.equal(failed.ok, true);
   if (!failed.ok) return;
   assert.equal(failed.notificationStatus, "notification_failed");
-  const retried = await retryDurableInquiryNotification(failed.inquiryId, false, deps(store, async () => {
-    sent += 1;
-  }));
+  const retried = await retryDurableInquiryNotification(failed.inquiryId, false, {
+    ...deps(store, async () => {
+      sent += 1;
+    }),
+    actorUsername: "sales-admin",
+  });
   assert.equal(retried.ok, true);
   if (!retried.ok) return;
   assert.equal(retried.notificationStatus, "notified");
   assert.equal(retried.delivered, true);
   assert.equal(sent, 2);
   assert.equal(store.rows.length, 1);
+  assert.equal(store.rows[0]?.handledBy, "sales-admin");
 });
 
 test("unauthorized and non-admin callers cannot read inquiries", async () => {
@@ -335,6 +350,25 @@ test("unauthorized and non-admin callers cannot read inquiries", async () => {
     }),
   );
   assert.equal(editor.status, 403);
+
+  const anonymousRetry = await retryAdminInquiry(
+    new NextRequest("http://127.0.0.1/api/admin/inquiries/missing/retry", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ confirmUncertain: false }),
+    }),
+    { params: Promise.resolve({ id: "missing" }) },
+  );
+  assert.equal(anonymousRetry.status, 401);
+  const editorRetry = await retryAdminInquiry(
+    new NextRequest("http://127.0.0.1/api/admin/inquiries/missing/retry", {
+      method: "POST",
+      headers: { "content-type": "application/json", cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${editorCookie}` },
+      body: JSON.stringify({ confirmUncertain: true }),
+    }),
+    { params: Promise.resolve({ id: "missing" }) },
+  );
+  assert.equal(editorRetry.status, 403);
 
   if (previousDb === undefined) delete process.env.INQUIRY_DB_ENABLED;
   else process.env.INQUIRY_DB_ENABLED = previousDb;

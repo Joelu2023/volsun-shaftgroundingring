@@ -210,6 +210,8 @@ model InquiryRecord {
   attemptStartedAt    DateTime?            @map("attempt_started_at") @db.Timestamptz(6)
   notifiedAt          DateTime?            @map("notified_at") @db.Timestamptz(6)
   retainUntil         DateTime?            @map("retain_until") @db.Timestamptz(6)
+  handledBy           String?              @map("handled_by") @db.VarChar(64)
+  handledAt           DateTime?            @map("handled_at") @db.Timestamptz(6)
   createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt           DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
 

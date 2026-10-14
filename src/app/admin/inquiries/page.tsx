@@ -49,6 +49,7 @@ export default async function AdminInquiriesPage({
             <tr>
               <th className="px-4 py-3 font-medium">Number</th>
               <th className="px-4 py-3 font-medium">Status</th>
+              <th className="px-4 py-3 font-medium">Handler</th>
               <th className="px-4 py-3 font-medium">Company</th>
               <th className="px-4 py-3 font-medium">Contact</th>
               <th className="px-4 py-3 font-medium">Saved</th>
@@ -67,6 +68,7 @@ export default async function AdminInquiriesPage({
                     {inquiry.status}
                     {inquiry.smtpErrorCode ? ` (${inquiry.smtpErrorCode})` : ""}
                   </td>
+                  <td className="px-4 py-3 align-top text-slate-700">{inquiry.handledBy ?? "—"}</td>
                   <td className="px-4 py-3 align-top text-slate-700">{inquiry.payload.company || "—"}</td>
                   <td className="px-4 py-3 align-top text-slate-700">
                     <div>{inquiry.payload.name}</div>

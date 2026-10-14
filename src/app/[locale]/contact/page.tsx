@@ -91,7 +91,6 @@ export default async function LocalizedContactPage({ params, searchParams }: Pro
       <div className="mt-10 grid gap-10 lg:grid-cols-2">
         <div>
           <h2 className="text-lg font-semibold text-brand-blue">{t.contactInquiryFormTitle}</h2>
-          <p className="mt-2 text-sm text-slate-500">{t.contactInquiryFormDevNote}</p>
           {locale === "en" ? (
             <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
               <p className="text-sm font-semibold text-emerald-900">Need a faster response?</p>

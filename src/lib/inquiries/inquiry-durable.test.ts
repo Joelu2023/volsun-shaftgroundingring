@@ -4,6 +4,9 @@ import test from "node:test";
 import { NextRequest } from "next/server";
 import { Pool } from "pg";
 import { GET as listAdminInquiries } from "../../app/api/admin/inquiries/route";
+import { POST as assignInquiry } from "../../app/api/admin/inquiries/[id]/assign/route";
+import { POST as followUpInquiry } from "../../app/api/admin/inquiries/[id]/follow-up/route";
+import { POST as cleanupInquiries } from "../../app/api/admin/inquiries/retention-cleanup/route";
 import { POST as retryAdminInquiry } from "../../app/api/admin/inquiries/[id]/retry/route";
 import { createResourceSessionCookieValue, RESOURCE_CENTER_SESSION_COOKIE } from "../resource-center/auth";
 import { acceptDurableInquiry, classifySmtpFailure, retryDurableInquiryNotification } from "./accept-inquiry";
@@ -12,9 +15,13 @@ import {
   createPgInquiryStore,
   getInquiryRetentionDays,
   isInquiryDurableStorageEnabled,
+  setInquiryStoreForTests,
+  type InquiryAuditEvent,
   type InquiryRecordRow,
   type InquiryStore,
 } from "./durable-store";
+import { INQUIRY_COPY_RETENTION, isInquiryExpired, retentionDeadline } from "./retention-policy";
+import { runInquiryRetentionCleanup } from "./retention-cleanup";
 import { parseInquirySubmission } from "./validate";
 import type { InquirySubmission } from "@/types/inquiry";
 
@@ -46,14 +53,22 @@ function cloneRow(row: InquiryRecordRow): InquiryRecordRow {
   return { ...row, payload: { ...row.payload } };
 }
 
-function createMemoryStore(options?: { failInsert?: boolean; failMarkNotified?: boolean; failMarkUncertain?: boolean }): InquiryStore & {
+function createMemoryStore(options?: {
+  failInsert?: boolean;
+  failMarkNotified?: boolean;
+  failMarkUncertain?: boolean;
+  failPurgeOnce?: boolean;
+}): InquiryStore & {
   rows: InquiryRecordRow[];
+  audits: InquiryAuditEvent[];
 } {
   const rows: InquiryRecordRow[] = [];
+  const audits: InquiryAuditEvent[] = [];
   const find = (id: string) => rows.find((row) => row.id === id) ?? null;
 
   return {
     rows,
+    audits,
     async insertReceived({ submission: payload, requestId, idempotencyKey, now }) {
       if (options?.failInsert) throw new Error("db down");
       const existing = rows.find((row) => row.idempotencyKey === idempotencyKey);
@@ -70,9 +85,13 @@ function createMemoryStore(options?: { failInsert?: boolean; failMarkNotified?: 
         attemptCount: 0,
         attemptStartedAt: null,
         notifiedAt: null,
-        retainUntil: null,
+        retainUntil: retentionDeadline(now).toISOString(),
         handledBy: null,
         handledAt: null,
+        assignedUsername: null,
+        assignedUserId: null,
+        assignedAt: null,
+        followUpStatus: "unassigned",
         createdAt: now.toISOString(),
         updatedAt: now.toISOString(),
       };
@@ -149,6 +168,40 @@ function createMemoryStore(options?: { failInsert?: boolean; failMarkNotified?: 
     async listForAdmin() {
       return rows.map(cloneRow);
     },
+    async listForAssignee(username) {
+      return rows.filter((row) => row.assignedUsername === username).map(cloneRow);
+    },
+    async assignTo(id, assignee, at) {
+      const row = find(id);
+      if (!row) return null;
+      row.assignedUsername = assignee.username;
+      row.assignedUserId = assignee.userId;
+      row.assignedAt = at.toISOString();
+      if (row.followUpStatus === "unassigned") row.followUpStatus = "open";
+      row.updatedAt = at.toISOString();
+      return cloneRow(row);
+    },
+    async updateFollowUp(id, status, at) {
+      const row = find(id);
+      if (!row) return null;
+      row.followUpStatus = status;
+      row.updatedAt = at.toISOString();
+      return cloneRow(row);
+    },
+    async appendAudit(input) {
+      audits.push({
+        id: randomUUID(),
+        inquiryId: input.inquiryId,
+        action: input.action,
+        actorUsername: input.actorUsername,
+        actorRole: input.actorRole,
+        detail: input.detail,
+        createdAt: input.at.toISOString(),
+      });
+    },
+    async listAudit() {
+      return audits.map((event) => ({ ...event, detail: { ...event.detail } }));
+    },
     async recordHandler(id, username, at) {
       const row = find(id);
       if (!row) return null;
@@ -158,12 +211,26 @@ function createMemoryStore(options?: { failInsert?: boolean; failMarkNotified?: 
       return cloneRow(row);
     },
     async purgeExpired(now) {
-      const before = rows.length;
-      for (let index = rows.length - 1; index >= 0; index -= 1) {
-        const retainUntil = rows[index]?.retainUntil;
-        if (retainUntil && new Date(retainUntil).getTime() < now.getTime()) rows.splice(index, 1);
+      if (options?.failPurgeOnce) {
+        options.failPurgeOnce = false;
+        throw new Error("cleanup failed");
       }
-      return before - rows.length;
+      const doomed = rows.filter((row) => isInquiryExpired(row.retainUntil, now));
+      for (const row of doomed) {
+        audits.push({
+          id: randomUUID(),
+          inquiryId: row.id,
+          action: "retention_purge",
+          actorUsername: "retention-task",
+          actorRole: "system",
+          detail: { publicNumber: row.publicNumber, retainUntil: row.retainUntil },
+          createdAt: now.toISOString(),
+        });
+      }
+      for (let index = rows.length - 1; index >= 0; index -= 1) {
+        if (isInquiryExpired(rows[index]?.retainUntil ?? null, now)) rows.splice(index, 1);
+      }
+      return doomed.length;
     },
   };
 }
@@ -194,9 +261,9 @@ test("durable storage stays off unless INQUIRY_DB_ENABLED is true", () => {
     process.env.INQUIRY_DB_ENABLED = "true";
     assert.equal(isInquiryDurableStorageEnabled(), true);
     delete process.env.INQUIRY_RETENTION_DAYS;
-    assert.equal(getInquiryRetentionDays(), null);
+    assert.equal(getInquiryRetentionDays(), 365);
     process.env.INQUIRY_RETENTION_DAYS = "0";
-    assert.equal(getInquiryRetentionDays(), null);
+    assert.throws(() => getInquiryRetentionDays(), /inquiry_retention_unconfigured/);
     process.env.INQUIRY_RETENTION_DAYS = "365";
     assert.equal(getInquiryRetentionDays(), 365);
   } finally {
@@ -325,7 +392,9 @@ test("admin retry of a failed notification records the new status", async () => 
 test("unauthorized and non-admin callers cannot read inquiries", async () => {
   const previousDb = process.env.INQUIRY_DB_ENABLED;
   const previousAuth = process.env.RC_AUTH_DB_ENABLED;
+  const previousSales = process.env.INQUIRY_DESIGNATED_SALES;
   process.env.RC_AUTH_DB_ENABLED = "false";
+  delete process.env.INQUIRY_DESIGNATED_SALES;
   const store = createMemoryStore();
   const saved = await acceptDurableInquiry(submission(), "req-admin", KEY_2, deps(store, async () => {
     throw new Error("550 mailbox unavailable");
@@ -374,7 +443,276 @@ test("unauthorized and non-admin callers cannot read inquiries", async () => {
   else process.env.INQUIRY_DB_ENABLED = previousDb;
   if (previousAuth === undefined) delete process.env.RC_AUTH_DB_ENABLED;
   else process.env.RC_AUTH_DB_ENABLED = previousAuth;
+  if (previousSales === undefined) delete process.env.INQUIRY_DESIGNATED_SALES;
+  else process.env.INQUIRY_DESIGNATED_SALES = previousSales;
   assert.equal(store.rows[0]?.status, "notification_failed");
+});
+
+function cookieFor(username: string, role: "admin" | "editor") {
+  return createResourceSessionCookieValue({
+    username,
+    role,
+    authMode: "env",
+    expiresAt: Date.now() + 60_000,
+  });
+}
+
+function withSalesEnv(run: () => Promise<void>) {
+  const previousUsers = process.env.RESOURCE_CENTER_USERS;
+  const previousSales = process.env.INQUIRY_DESIGNATED_SALES;
+  const previousAuth = process.env.RC_AUTH_DB_ENABLED;
+  const previousCleanup = process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
+  process.env.RC_AUTH_DB_ENABLED = "false";
+  process.env.INQUIRY_DESIGNATED_SALES = "sales-a,sales-b";
+  process.env.RESOURCE_CENTER_USERS = JSON.stringify([
+    { username: "sales-a", password: "test-only", role: "editor" },
+    { username: "sales-b", password: "test-only", role: "editor" },
+    { username: "admin", password: "test-only", role: "admin" },
+  ]);
+  return run().finally(() => {
+    if (previousUsers === undefined) delete process.env.RESOURCE_CENTER_USERS;
+    else process.env.RESOURCE_CENTER_USERS = previousUsers;
+    if (previousSales === undefined) delete process.env.INQUIRY_DESIGNATED_SALES;
+    else process.env.INQUIRY_DESIGNATED_SALES = previousSales;
+    if (previousAuth === undefined) delete process.env.RC_AUTH_DB_ENABLED;
+    else process.env.RC_AUTH_DB_ENABLED = previousAuth;
+    if (previousCleanup === undefined) delete process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
+    else process.env.INQUIRY_RETENTION_CLEANUP_ENABLED = previousCleanup;
+    setInquiryStoreForTests(undefined);
+  });
+}
+
+test("copy retention limits stay at 365 days and cleanup stays off", () => {
+  assert.equal(INQUIRY_COPY_RETENTION.databaseRecordsDays, 365);
+  assert.equal(INQUIRY_COPY_RETENTION.applicationEmailArchive, "not_stored");
+  assert.equal(INQUIRY_COPY_RETENTION.smtpMailboxCopies, "operator_limit_365_days_not_deleted_by_app");
+  assert.equal(INQUIRY_COPY_RETENTION.databaseBackups, "operator_limit_365_days_rerun_cleanup_after_restore");
+  assert.equal(INQUIRY_COPY_RETENTION.cleanupEnabledByDefault, false);
+});
+
+test("day 364 keeps the inquiry and day 365 deletes it without moving the deadline", async () => {
+  const previous = process.env.INQUIRY_RETENTION_DAYS;
+  delete process.env.INQUIRY_RETENTION_DAYS;
+  const store = createMemoryStore();
+  const savedAt = new Date("2026-01-01T00:00:00.000Z");
+  try {
+    const saved = await acceptDurableInquiry(submission(), "req-retain", KEY, {
+      ...deps(store, async () => undefined),
+      now: () => savedAt,
+    });
+    assert.equal(saved.ok, true);
+    const deadline = store.rows[0]?.retainUntil;
+    assert.equal(deadline, new Date("2027-01-01T00:00:00.000Z").toISOString());
+    const beforeRetry = deadline;
+    if (!saved.ok) return;
+    await retryDurableInquiryNotification(saved.inquiryId, false, deps(store, async () => undefined));
+    assert.equal(store.rows[0]?.retainUntil, beforeRetry);
+    const day364 = new Date(savedAt.getTime() + 364 * 24 * 60 * 60 * 1000);
+    const day365 = new Date(savedAt.getTime() + 365 * 24 * 60 * 60 * 1000);
+    assert.equal(await store.purgeExpired(day364), 0);
+    assert.equal(store.rows.length, 1);
+    delete process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
+    const blocked = await runInquiryRetentionCleanup({ now: day365, store });
+    assert.equal(blocked.ok, false);
+    if (blocked.ok) return;
+    assert.equal(blocked.error, "cleanup_disabled");
+    assert.equal(store.rows.length, 1);
+    const failed = await runInquiryRetentionCleanup({
+      now: day365,
+      store: createMemoryStore({ failPurgeOnce: true }),
+      enabled: true,
+    });
+    assert.equal(failed.ok, false);
+    const expired = createMemoryStore({ failPurgeOnce: true });
+    expired.rows.push(store.rows[0]!);
+    const first = await runInquiryRetentionCleanup({ now: day365, store: expired, enabled: true });
+    assert.equal(first.ok, false);
+    assert.equal(expired.rows.length, 1);
+    assert.equal(expired.audits.some((event) => event.action === "retention_purge_failed"), true);
+    const second = await runInquiryRetentionCleanup({ now: day365, store: expired, enabled: true });
+    assert.equal(second.ok, true);
+    if (!second.ok) return;
+    assert.equal(second.deletedCount, 1);
+    assert.equal(expired.rows.length, 0);
+    assert.equal(expired.audits.some((event) => event.action === "retention_purge"), true);
+  } finally {
+    if (previous === undefined) delete process.env.INQUIRY_RETENTION_DAYS;
+    else process.env.INQUIRY_RETENTION_DAYS = previous;
+  }
+});
+
+test("missing retention does not save forever and a changed idempotency payload is rejected", async () => {
+  const previous = process.env.INQUIRY_RETENTION_DAYS;
+  process.env.INQUIRY_RETENTION_DAYS = "0";
+  const store = createMemoryStore();
+  let sent = 0;
+  try {
+    const refused = await acceptDurableInquiry(submission(), "req-no-retention", KEY, deps(store, async () => {
+      sent += 1;
+    }));
+    assert.equal(refused.ok, false);
+    if (refused.ok) return;
+    assert.equal(refused.error, "inquiry_retention_unconfigured");
+    assert.equal(store.rows.length, 0);
+    assert.equal(sent, 0);
+    delete process.env.INQUIRY_RETENTION_DAYS;
+    const saved = await acceptDurableInquiry(submission(), "req-conflict", KEY, deps(store, async () => {
+      sent += 1;
+    }));
+    const changed = submission();
+    changed.company = "Different Company";
+    const conflict = await acceptDurableInquiry(changed, "req-conflict-2", KEY, deps(store, async () => {
+      sent += 1;
+    }));
+    assert.equal(saved.ok, true);
+    assert.equal(conflict.ok, false);
+    if (conflict.ok) return;
+    assert.equal(conflict.error, "idempotency_conflict");
+    assert.equal(sent, 1);
+    assert.equal(store.rows.length, 1);
+  } finally {
+    if (previous === undefined) delete process.env.INQUIRY_RETENTION_DAYS;
+    else process.env.INQUIRY_RETENTION_DAYS = previous;
+  }
+});
+
+test("admin sees every inquiry and designated sales cannot cross users", async () => {
+  await withSalesEnv(async () => {
+    const store = createMemoryStore();
+    setInquiryStoreForTests(store);
+    const first = await acceptDurableInquiry(submission(), "req-a", KEY, deps(store, async () => {
+      throw new Error("550 mailbox unavailable");
+    }));
+    const secondPayload = submission();
+    secondPayload.email = "other-sales@example.com";
+    const second = await acceptDurableInquiry(secondPayload, "req-b", KEY_2, deps(store, async () => {
+      throw new Error("550 mailbox unavailable");
+    }));
+    assert.equal(first.ok, true);
+    assert.equal(second.ok, true);
+    if (!first.ok || !second.ok) return;
+    const third = await acceptDurableInquiry(
+      { ...submission(), company: "Unassigned Co" },
+      "req-c",
+      "33333333-3333-4333-8333-333333333333",
+      deps(store, async () => {
+        throw new Error("550 mailbox unavailable");
+      }),
+    );
+    assert.equal(third.ok, true);
+    if (!third.ok) return;
+
+    const retainBeforeAssign = store.rows.find((row) => row.id === first.inquiryId)?.retainUntil;
+    const adminCookie = cookieFor("admin", "admin");
+    const salesA = cookieFor("sales-a", "editor");
+    const salesB = cookieFor("sales-b", "editor");
+    const stranger = cookieFor("editor", "editor");
+    const assignedA = await assignInquiry(
+      new NextRequest(`http://127.0.0.1/api/admin/inquiries/${first.inquiryId}/assign`, {
+        method: "POST",
+        headers: { "content-type": "application/json", cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${adminCookie}` },
+        body: JSON.stringify({ assigneeUsername: "sales-a" }),
+      }),
+      { params: Promise.resolve({ id: first.inquiryId }) },
+    );
+    assert.equal(assignedA.status, 200);
+    const assignedB = await assignInquiry(
+      new NextRequest(`http://127.0.0.1/api/admin/inquiries/${second.inquiryId}/assign`, {
+        method: "POST",
+        headers: { "content-type": "application/json", cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${adminCookie}` },
+        body: JSON.stringify({ assigneeUsername: "sales-b" }),
+      }),
+      { params: Promise.resolve({ id: second.inquiryId }) },
+    );
+    assert.equal(assignedB.status, 200);
+    const unnamed = await assignInquiry(
+      new NextRequest(`http://127.0.0.1/api/admin/inquiries/${third.inquiryId}/assign`, {
+        method: "POST",
+        headers: { "content-type": "application/json", cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${adminCookie}` },
+        body: JSON.stringify({ assigneeUsername: "not-confirmed" }),
+      }),
+      { params: Promise.resolve({ id: third.inquiryId }) },
+    );
+    assert.equal(unnamed.status, 400);
+    assert.equal(store.rows.find((row) => row.id === first.inquiryId)?.retainUntil, retainBeforeAssign);
+    assert.equal(store.rows.find((row) => row.id === first.inquiryId)?.followUpStatus, "open");
+
+    const adminList = await listAdminInquiries(
+      new NextRequest("http://127.0.0.1/api/admin/inquiries", {
+        headers: { cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${adminCookie}` },
+      }),
+    );
+    assert.equal(adminList.status, 200);
+    const adminBody = (await adminList.json()) as { inquiries: Array<{ id: string }>; unassigned: Array<{ id: string }> };
+    assert.equal(adminBody.inquiries.length, 3);
+    assert.equal(adminBody.unassigned.length, 1);
+    assert.equal(adminBody.unassigned[0]?.id, third.inquiryId);
+
+    const ownList = await listAdminInquiries(
+      new NextRequest("http://127.0.0.1/api/admin/inquiries", {
+        headers: { cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${salesA}` },
+      }),
+    );
+    assert.equal(ownList.status, 200);
+    const ownBody = (await ownList.json()) as { inquiries: Array<{ id: string; email: string }> };
+    assert.equal(ownBody.inquiries.length, 1);
+    assert.equal(ownBody.inquiries[0]?.id, first.inquiryId);
+    assert.equal(JSON.stringify(ownBody).includes("other-sales@example.com"), false);
+
+    const cross = await followUpInquiry(
+      new NextRequest(`http://127.0.0.1/api/admin/inquiries/${second.inquiryId}/follow-up`, {
+        method: "POST",
+        headers: { "content-type": "application/json", cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${salesA}` },
+        body: JSON.stringify({ followUpStatus: "in_progress" }),
+      }),
+      { params: Promise.resolve({ id: second.inquiryId }) },
+    );
+    assert.equal(cross.status, 403);
+    const ownFollow = await followUpInquiry(
+      new NextRequest(`http://127.0.0.1/api/admin/inquiries/${first.inquiryId}/follow-up`, {
+        method: "POST",
+        headers: { "content-type": "application/json", cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${salesA}` },
+        body: JSON.stringify({ followUpStatus: "in_progress" }),
+      }),
+      { params: Promise.resolve({ id: first.inquiryId }) },
+    );
+    assert.equal(ownFollow.status, 200);
+    assert.equal(store.rows.find((row) => row.id === first.inquiryId)?.followUpStatus, "in_progress");
+    const salesRetry = await retryAdminInquiry(
+      new NextRequest(`http://127.0.0.1/api/admin/inquiries/${first.inquiryId}/retry`, {
+        method: "POST",
+        headers: { "content-type": "application/json", cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${salesA}` },
+        body: JSON.stringify({ confirmUncertain: false }),
+      }),
+      { params: Promise.resolve({ id: first.inquiryId }) },
+    );
+    assert.equal(salesRetry.status, 403);
+    const strangerList = await listAdminInquiries(
+      new NextRequest("http://127.0.0.1/api/admin/inquiries", {
+        headers: { cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${stranger}` },
+      }),
+    );
+    assert.equal(strangerList.status, 403);
+    const salesBList = await listAdminInquiries(
+      new NextRequest("http://127.0.0.1/api/admin/inquiries", {
+        headers: { cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${salesB}` },
+      }),
+    );
+    const salesBBody = (await salesBList.json()) as { inquiries: Array<{ id: string }> };
+    assert.equal(salesBBody.inquiries.length, 1);
+    assert.equal(salesBBody.inquiries[0]?.id, second.inquiryId);
+    const audits = await store.listAudit();
+    assert.equal(audits.some((event) => event.action === "assign" && event.detail.to === "sales-a"), true);
+    assert.equal(audits.some((event) => event.action === "follow_up" && event.detail.followUpStatus === "in_progress"), true);
+    assert.equal(JSON.stringify(audits).includes("@"), false);
+    const cleanup = await cleanupInquiries(
+      new NextRequest("http://127.0.0.1/api/admin/inquiries/retention-cleanup", {
+        method: "POST",
+        headers: { cookie: `${RESOURCE_CENTER_SESSION_COOKIE}=${salesA}` },
+      }),
+    );
+    assert.equal(cleanup.status, 403);
+  });
 });
 
 const rehearsalUrl = process.env.INQUIRY_TEST_DATABASE_URL?.trim();
@@ -385,7 +723,7 @@ test("isolated postgres stores, dedupes, and lets an admin read a failed inquiry
   const previousRetention = process.env.INQUIRY_RETENTION_DAYS;
   process.env.INQUIRY_RETENTION_DAYS = "30";
   try {
-    await pool.query("truncate inquiry_records");
+    await pool.query("truncate inquiry_records, inquiry_audit_events");
     let sent = 0;
     const failed = await acceptDurableInquiry(submission(), "req-pg", KEY, deps(store, async () => {
       sent += 1;

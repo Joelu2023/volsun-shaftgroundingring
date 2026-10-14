@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { isDesignatedSalesUsername } from "@/lib/inquiries/inquiry-access";
 import { getResourceSession } from "@/lib/resource-center/auth";
 
 export const metadata: Metadata = {
@@ -38,7 +39,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <Link href="/admin/resources/leads" className="text-brand-orange hover:underline">
               Leads
             </Link>
-            {session?.role === "admin" ? (
+            {session && (session.role === "admin" || isDesignatedSalesUsername(session.username)) ? (
               <Link href="/admin/inquiries" className="text-brand-orange hover:underline">
                 Inquiries
               </Link>

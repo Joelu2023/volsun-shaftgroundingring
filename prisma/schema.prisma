@@ -212,10 +212,31 @@ model InquiryRecord {
   retainUntil         DateTime?            @map("retain_until") @db.Timestamptz(6)
   handledBy           String?              @map("handled_by") @db.VarChar(64)
   handledAt           DateTime?            @map("handled_at") @db.Timestamptz(6)
+  assignedUsername    String?              @map("assigned_username") @db.VarChar(64)
+  assignedUserId      String?              @map("assigned_user_id") @db.Uuid
+  assignedAt          DateTime?            @map("assigned_at") @db.Timestamptz(6)
+  followUpStatus      String               @default("unassigned") @map("follow_up_status") @db.VarChar(32)
   createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt           DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@index([status, createdAt])
   @@index([retainUntil])
+  @@index([assignedUsername])
+  @@index([assignedUserId])
+  @@index([followUpStatus])
   @@map("inquiry_records")
+}
+
+model InquiryAuditEvent {
+  id            String   @id @default(uuid()) @db.Uuid
+  inquiryId     String?  @map("inquiry_id") @db.Uuid
+  action        String   @db.VarChar(64)
+  actorUsername String   @map("actor_username") @db.VarChar(64)
+  actorRole     String   @map("actor_role") @db.VarChar(32)
+  detail        Json
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([inquiryId])
+  @@index([action, createdAt])
+  @@map("inquiry_audit_events")
 }

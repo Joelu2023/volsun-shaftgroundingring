@@ -1,4 +1,5 @@
 import type { InquiryRecordRow, InquiryStore } from "@/lib/inquiries/durable-store";
+import { InquiryRetentionError } from "@/lib/inquiries/retention-policy";
 import { getMissingSmtpEnv, sendInquiryEmail } from "@/lib/inquiries/send-email";
 import type { InquiryNotificationStatus, InquirySubmission } from "@/types/inquiry";
 
@@ -31,8 +32,8 @@ export type AcceptInquiryFailure = {
   ok: false;
   received: false;
   delivered: false;
-  error: "invalid_idempotency_key" | "inquiry_storage_failed";
-  httpStatus: 400 | 503;
+  error: "invalid_idempotency_key" | "inquiry_storage_failed" | "idempotency_conflict" | "inquiry_retention_unconfigured";
+  httpStatus: 400 | 409 | 503;
 };
 
 export type AcceptInquiryResult = AcceptInquirySuccess | AcceptInquiryFailure;
@@ -115,6 +116,8 @@ export async function acceptDurableInquiry(
   try {
     const existing = await deps.store.findByIdempotencyKey(idempotencyKey);
     if (existing) {
+      const conflict = contentConflict(existing, submission);
+      if (conflict) return conflict;
       if (existing.status === "received" && existing.attemptCount === 0) {
         return attemptInitialNotification(existing, submission, requestId, deps, now(), log, true);
       }
@@ -128,6 +131,8 @@ export async function acceptDurableInquiry(
       now: now(),
     });
     if (!inserted.created) {
+      const conflict = contentConflict(inserted.row, submission);
+      if (conflict) return conflict;
       if (inserted.row.status === "received" && inserted.row.attemptCount === 0) {
         return attemptInitialNotification(inserted.row, submission, requestId, deps, now(), log, true);
       }
@@ -140,10 +145,28 @@ export async function acceptDurableInquiry(
       status: inserted.row.status,
     });
     return attemptInitialNotification(inserted.row, submission, requestId, deps, now(), log, false);
-  } catch {
+  } catch (error) {
+    if (error instanceof InquiryRetentionError) {
+      log("inquiry_retention_unconfigured", { requestId, status: "received" });
+      return { ok: false, received: false, delivered: false, error: "inquiry_retention_unconfigured", httpStatus: 503 };
+    }
     log("inquiry_storage_failed", { requestId, status: "received" });
     return { ok: false, received: false, delivered: false, error: "inquiry_storage_failed", httpStatus: 503 };
   }
+}
+
+function contentConflict(existing: InquiryRecordRow, submission: InquirySubmission): AcceptInquiryFailure | null {
+  if (inquiryContentKey(existing.payload) === inquiryContentKey(submission)) return null;
+  return { ok: false, received: false, delivered: false, error: "idempotency_conflict", httpStatus: 409 };
+}
+
+function inquiryContentKey(submission: InquirySubmission): string {
+  const normalized: Record<string, unknown> = {};
+  for (const key of Object.keys(submission).sort()) {
+    const value = submission[key as keyof InquirySubmission];
+    normalized[key] = value === undefined ? null : value;
+  }
+  return JSON.stringify(normalized);
 }
 
 async function attemptInitialNotification(

@@ -20,6 +20,8 @@ import {
   type InquiryRecordRow,
   type InquiryStore,
 } from "./durable-store";
+import { findConfiguredSalesAccount } from "./inquiry-access";
+import { assignInquiryToSales } from "./inquiry-workflow";
 import { INQUIRY_COPY_RETENTION, isInquiryExpired, retentionDeadline } from "./retention-policy";
 import { runInquiryRetentionCleanup } from "./retention-cleanup";
 import { parseInquirySubmission } from "./validate";
@@ -713,6 +715,68 @@ test("admin sees every inquiry and designated sales cannot cross users", async (
     );
     assert.equal(cleanup.status, 403);
   });
+});
+
+test("database auth can assign an active editor and still rejects admins", async () => {
+  const previousAuth = process.env.RC_AUTH_DB_ENABLED;
+  const previousSales = process.env.INQUIRY_DESIGNATED_SALES;
+  const previousUsers = process.env.RESOURCE_CENTER_USERS;
+  process.env.RC_AUTH_DB_ENABLED = "true";
+  process.env.INQUIRY_DESIGNATED_SALES = "sales-db,admin-db";
+  delete process.env.RESOURCE_CENTER_USERS;
+  const directory = new Map([
+    ["sales-db", { username: "sales-db", userId: "11111111-1111-4111-8111-111111111111", role: "editor" as const }],
+    ["admin-db", { username: "admin-db", userId: "22222222-2222-4222-8222-222222222222", role: "admin" as const }],
+    ["disabled-db", { username: "disabled-db", userId: "33333333-3333-4333-8333-333333333333", role: "editor" as const }],
+  ]);
+  const lookup = async (username: string) => (username === "disabled-db" ? null : directory.get(username) ?? null);
+  try {
+    const sales = await findConfiguredSalesAccount("sales-db", lookup);
+    const admin = await findConfiguredSalesAccount("admin-db", lookup);
+    const disabled = await findConfiguredSalesAccount("disabled-db", lookup);
+    const unknown = await findConfiguredSalesAccount("missing-db", lookup);
+    assert.deepEqual(sales, { username: "sales-db", userId: "11111111-1111-4111-8111-111111111111" });
+    assert.equal(admin, null);
+    assert.equal(disabled, null);
+    assert.equal(unknown, null);
+
+    const store = createMemoryStore();
+    const saved = await acceptDurableInquiry(submission(), "req-db-sales", KEY, deps(store, async () => undefined));
+    assert.equal(saved.ok, true);
+    if (!saved.ok) return;
+    const retainUntil = store.rows[0]?.retainUntil;
+    const assigned = await assignInquiryToSales(
+      saved.inquiryId,
+      "sales-db",
+      { kind: "admin", username: "admin", userId: null, role: "admin" },
+      store,
+      new Date("2026-10-14T00:00:00.000Z"),
+      lookup,
+    );
+    assert.equal(assigned.ok, true);
+    assert.equal(store.rows[0]?.assignedUsername, "sales-db");
+    assert.equal(store.rows[0]?.assignedUserId, "11111111-1111-4111-8111-111111111111");
+    assert.equal(store.rows[0]?.retainUntil, retainUntil);
+    const rejected = await assignInquiryToSales(
+      saved.inquiryId,
+      "admin-db",
+      { kind: "admin", username: "admin", userId: null, role: "admin" },
+      store,
+      new Date("2026-10-14T00:00:00.000Z"),
+      lookup,
+    );
+    assert.equal(rejected.ok, false);
+    if (rejected.ok) return;
+    assert.equal(rejected.error, "assignee_not_designated");
+    assert.equal(store.rows[0]?.assignedUsername, "sales-db");
+  } finally {
+    if (previousAuth === undefined) delete process.env.RC_AUTH_DB_ENABLED;
+    else process.env.RC_AUTH_DB_ENABLED = previousAuth;
+    if (previousSales === undefined) delete process.env.INQUIRY_DESIGNATED_SALES;
+    else process.env.INQUIRY_DESIGNATED_SALES = previousSales;
+    if (previousUsers === undefined) delete process.env.RESOURCE_CENTER_USERS;
+    else process.env.RESOURCE_CENTER_USERS = previousUsers;
+  }
 });
 
 const rehearsalUrl = process.env.INQUIRY_TEST_DATABASE_URL?.trim();

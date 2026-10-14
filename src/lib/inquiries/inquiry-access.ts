@@ -1,5 +1,12 @@
-import { getResourceCenterUsers } from "@/lib/resource-center/auth";
-import type { ResourceSession } from "@/types/resource-center";
+import { getResourceCenterUsers, isResourceCenterDbAuthEnabled } from "@/lib/resource-center/auth";
+import { findActiveResourceUserByUsername } from "@/lib/resource-center/services/auth-users";
+import type { ResourceAdminRole, ResourceSession } from "@/types/resource-center";
+
+export type SalesDirectoryUser = {
+  username: string;
+  userId: string;
+  role: ResourceAdminRole;
+};
 
 const SALES_USERNAME_RE = /^[A-Za-z0-9._-]{1,64}$/;
 
@@ -43,9 +50,23 @@ export function resolveInquiryActor(session: ResourceSession | null): InquiryAct
   return { kind: "forbidden" };
 }
 
+async function defaultDbSalesLookup(username: string): Promise<SalesDirectoryUser | null> {
+  const user = await findActiveResourceUserByUsername(username);
+  if (!user) return null;
+  return { username: user.username, userId: user.userId, role: user.role };
+}
+
 /** A sales assignee must be an existing non-admin Resource Center account named by Owner configuration. */
-export function findConfiguredSalesAccount(username: string): { username: string; userId: null } | null {
+export async function findConfiguredSalesAccount(
+  username: string,
+  lookupDbUser: (username: string) => Promise<SalesDirectoryUser | null> = defaultDbSalesLookup,
+): Promise<{ username: string; userId: string | null } | null> {
   if (!isDesignatedSalesUsername(username)) return null;
+  if (isResourceCenterDbAuthEnabled()) {
+    const user = await lookupDbUser(username);
+    if (!user || user.role !== "editor" || user.username !== username) return null;
+    return { username: user.username, userId: user.userId };
+  }
   const user = getResourceCenterUsers().find((item) => item.username === username);
   if (!user || user.role !== "editor") return null;
   return { username: user.username, userId: null };

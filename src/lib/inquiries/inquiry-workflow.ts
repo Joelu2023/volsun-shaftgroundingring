@@ -1,4 +1,8 @@
-import { findConfiguredSalesAccount, type InquiryActor } from "@/lib/inquiries/inquiry-access";
+import {
+  findConfiguredSalesAccount,
+  type InquiryActor,
+  type SalesDirectoryUser,
+} from "@/lib/inquiries/inquiry-access";
 import type { InquiryFollowUpStatus, InquiryRecordRow, InquiryStore } from "@/lib/inquiries/durable-store";
 
 export type InquiryWorkflowFailure = {
@@ -19,9 +23,10 @@ export async function assignInquiryToSales(
   actor: InquiryActor,
   store: InquiryStore,
   at: Date,
+  lookupDbUser?: (username: string) => Promise<SalesDirectoryUser | null>,
 ): Promise<{ ok: true; inquiry: InquiryRecordRow } | InquiryWorkflowFailure> {
   if (actor.kind !== "admin") return { ok: false, error: "forbidden", httpStatus: 403 };
-  const account = findConfiguredSalesAccount(assigneeUsername);
+  const account = await findConfiguredSalesAccount(assigneeUsername, lookupDbUser);
   if (!account) return { ok: false, error: "assignee_not_designated", httpStatus: 400 };
   try {
     const current = await store.findById(id);

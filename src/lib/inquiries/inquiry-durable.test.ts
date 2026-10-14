@@ -797,10 +797,12 @@ test("database auth can assign an active editor and still rejects admins", async
 });
 
 test("scheduled cleanup rejects missing keys and deletes only expired rows once", async () => {
-  const previousSecret = process.env.INQUIRY_RETENTION_CRON_SECRET;
+  const previousSecret = process.env.CRON_SECRET;
+  const previousDedicated = process.env.INQUIRY_RETENTION_CRON_SECRET;
   const previousEnabled = process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
   const previousRetention = process.env.INQUIRY_RETENTION_DAYS;
-  process.env.INQUIRY_RETENTION_CRON_SECRET = "cron-test-secret";
+  process.env.CRON_SECRET = "cron-test-secret";
+  delete process.env.INQUIRY_RETENTION_CRON_SECRET;
   delete process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
   delete process.env.INQUIRY_RETENTION_DAYS;
   const store = createMemoryStore();
@@ -822,6 +824,18 @@ test("scheduled cleanup rejects missing keys and deletes only expired rows once"
     assert.equal(unauthorized.httpStatus, 401);
     assert.equal(JSON.stringify(unauthorized.body).includes("@"), false);
     assert.equal(store.rows.length, 2);
+    delete process.env.CRON_SECRET;
+    process.env.INQUIRY_RETENTION_CRON_SECRET = "cron-test-secret";
+    const legacyOnly = await runScheduledRetentionCleanup({
+      now,
+      authorization: "Bearer cron-test-secret",
+      store,
+      enabled: true,
+    });
+    assert.equal(legacyOnly.httpStatus, 401);
+    assert.equal(store.rows.length, 2);
+    process.env.CRON_SECRET = "cron-test-secret";
+    delete process.env.INQUIRY_RETENTION_CRON_SECRET;
     const disabled = await runScheduledRetentionCleanup({
       now,
       authorization: "Bearer cron-test-secret",
@@ -894,8 +908,10 @@ test("scheduled cleanup rejects missing keys and deletes only expired rows once"
     assert.equal(retried.httpStatus, 200);
     assert.equal(failing.rows.length, 0);
   } finally {
-    if (previousSecret === undefined) delete process.env.INQUIRY_RETENTION_CRON_SECRET;
-    else process.env.INQUIRY_RETENTION_CRON_SECRET = previousSecret;
+    if (previousSecret === undefined) delete process.env.CRON_SECRET;
+    else process.env.CRON_SECRET = previousSecret;
+    if (previousDedicated === undefined) delete process.env.INQUIRY_RETENTION_CRON_SECRET;
+    else process.env.INQUIRY_RETENTION_CRON_SECRET = previousDedicated;
     if (previousEnabled === undefined) delete process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
     else process.env.INQUIRY_RETENTION_CLEANUP_ENABLED = previousEnabled;
     if (previousRetention === undefined) delete process.env.INQUIRY_RETENTION_DAYS;

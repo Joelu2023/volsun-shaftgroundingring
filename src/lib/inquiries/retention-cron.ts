@@ -7,7 +7,7 @@ export function retentionCronDateKey(now: Date): string {
 }
 
 export function isRetentionCronAuthorized(authorization: string | null): boolean {
-  const secret = process.env.INQUIRY_RETENTION_CRON_SECRET?.trim();
+  const secret = process.env.CRON_SECRET;
   if (!secret || !authorization?.startsWith("Bearer ")) return false;
   const expected = Buffer.from(`Bearer ${secret}`);
   const received = Buffer.from(authorization);

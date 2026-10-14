@@ -187,3 +187,33 @@ model RcResourceDownloadVisit {
   @@index([createdAt])
   @@map("rc_resource_download_visits")
 }
+
+enum InquiryRecordStatus {
+  received
+  notification_pending
+  notified
+  notification_failed
+
+  @@map("inquiry_record_status")
+}
+
+model InquiryRecord {
+  id                  String               @id @default(uuid()) @db.Uuid
+  publicNumber        String               @unique @map("public_number") @db.VarChar(32)
+  idempotencyKey      String               @unique @map("idempotency_key") @db.VarChar(80)
+  status              InquiryRecordStatus
+  smtpOutcome         String?              @map("smtp_outcome") @db.VarChar(32)
+  payload             Json
+  latestRequestId     String               @map("latest_request_id") @db.VarChar(64)
+  smtpErrorSanitized  String?              @map("smtp_error_sanitized") @db.VarChar(500)
+  attemptCount        Int                  @default(0) @map("attempt_count")
+  attemptStartedAt    DateTime?            @map("attempt_started_at") @db.Timestamptz(6)
+  notifiedAt          DateTime?            @map("notified_at") @db.Timestamptz(6)
+  retainUntil         DateTime?            @map("retain_until") @db.Timestamptz(6)
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([status, createdAt])
+  @@index([retainUntil])
+  @@map("inquiry_records")
+}

@@ -49,6 +49,14 @@ export type InquirySubmission = {
   submitted_at: string;
 };
 
+export type InquiryNotificationStatus =
+  | "received"
+  | "notification_pending"
+  | "notified"
+  | "notification_failed";
+
+export type InquirySmtpOutcome = "accepted" | "failed" | "uncertain" | null;
+
 export type InquiryDeliveryStatus = "pending" | "smtp_success" | "smtp_failed" | "smtp_skipped";
 
 export type InquiryPersistRecord = {

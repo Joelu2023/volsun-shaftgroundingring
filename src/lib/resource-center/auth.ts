@@ -7,6 +7,7 @@ import { getDbResourceUserSessionById } from "@/lib/resource-center/services/aut
 import type { ResourceAdminRole, ResourceAdminUser, ResourceSession } from "@/types/resource-center";
 
 const SESSION_COOKIE = "resource_center_session";
+export const RESOURCE_CENTER_SESSION_COOKIE = SESSION_COOKIE;
 const SESSION_TTL_MS = 1000 * 60 * 60 * 12;
 
 export function isResourceCenterDbAuthEnabled() {
@@ -38,6 +39,10 @@ export function getResourceCenterUsers(): ResourceAdminUser[] {
 
 function sign(value: string) {
   return createHmac("sha256", getResourceCenterSessionSecret()).update(value).digest("hex");
+}
+
+export function createResourceSessionCookieValue(session: ResourceSession): string {
+  return encodeSession(session);
 }
 
 function encodeSession(session: ResourceSession) {

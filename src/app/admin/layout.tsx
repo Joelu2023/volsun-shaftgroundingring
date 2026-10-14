@@ -38,6 +38,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <Link href="/admin/resources/leads" className="text-brand-orange hover:underline">
               Leads
             </Link>
+            {session?.role === "admin" ? (
+              <Link href="/admin/inquiries" className="text-brand-orange hover:underline">
+                Inquiries
+              </Link>
+            ) : null}
             {session ? (
               <form action="/api/admin/auth/logout" method="post">
                 <button type="submit" className="rounded border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-50">

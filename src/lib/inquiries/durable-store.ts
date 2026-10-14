@@ -68,6 +68,8 @@ export type InquiryStore = {
   listForAdmin(limit: number): Promise<InquiryRecordRow[]>;
   listForAssignee(username: string, limit: number): Promise<InquiryRecordRow[]>;
   purgeExpired(now: Date): Promise<number>;
+  claimRetentionRun(dateKey: string, now: Date): Promise<"claimed" | "already_succeeded" | "in_progress">;
+  finishRetentionRun(dateKey: string, status: "succeeded" | "failed", deletedCount: number, now: Date): Promise<void>;
   recordHandler(id: string, username: string, at: Date): Promise<InquiryRecordRow | null>;
   assignTo(
     id: string,
@@ -414,6 +416,58 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
         detail: sanitizeAuditDetail(row.detail ?? {}),
         createdAt: row.created_at.toISOString(),
       }));
+    },
+
+    async claimRetentionRun(dateKey, now) {
+      const client = await pool.connect();
+      const staleMs = 20 * 60 * 1000;
+      try {
+        await client.query("begin");
+        const existing = await client.query<{ status: string; started_at: Date }>(
+          "select status, started_at from inquiry_retention_runs where run_date = $1::date for update",
+          [dateKey],
+        );
+        const row = existing.rows[0];
+        if (!row) {
+          await client.query(
+            "insert into inquiry_retention_runs (run_date, status, started_at) values ($1::date, 'running', $2)",
+            [dateKey, now],
+          );
+          await client.query("commit");
+          return "claimed" as const;
+        }
+        if (row.status === "succeeded") {
+          await client.query("commit");
+          return "already_succeeded" as const;
+        }
+        const stale = now.getTime() - row.started_at.getTime() > staleMs;
+        if (row.status === "running" && !stale) {
+          await client.query("commit");
+          return "in_progress" as const;
+        }
+        await client.query(
+          `update inquiry_retention_runs
+           set status = 'running', started_at = $2, finished_at = null, deleted_count = null
+           where run_date = $1::date`,
+          [dateKey, now],
+        );
+        await client.query("commit");
+        return "claimed" as const;
+      } catch (error) {
+        await client.query("rollback");
+        throw error;
+      } finally {
+        client.release();
+      }
+    },
+
+    async finishRetentionRun(dateKey, status, deletedCount, now) {
+      await pool.query(
+        `update inquiry_retention_runs
+         set status = $2, finished_at = $3, deleted_count = $4
+         where run_date = $1::date`,
+        [dateKey, status, now, deletedCount],
+      );
     },
 
     recordHandler(id, username, at) {

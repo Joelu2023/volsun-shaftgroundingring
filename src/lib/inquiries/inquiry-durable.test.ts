@@ -24,6 +24,7 @@ import { findConfiguredSalesAccount } from "./inquiry-access";
 import { assignInquiryToSales } from "./inquiry-workflow";
 import { INQUIRY_COPY_RETENTION, isInquiryExpired, retentionDeadline } from "./retention-policy";
 import { runInquiryRetentionCleanup } from "./retention-cleanup";
+import { runScheduledRetentionCleanup } from "./retention-cron";
 import { parseInquirySubmission } from "./validate";
 import type { InquirySubmission } from "@/types/inquiry";
 
@@ -66,6 +67,7 @@ function createMemoryStore(options?: {
 } {
   const rows: InquiryRecordRow[] = [];
   const audits: InquiryAuditEvent[] = [];
+  const retentionRuns = new Map<string, { status: "running" | "succeeded" | "failed"; startedAt: number }>();
   const find = (id: string) => rows.find((row) => row.id === id) ?? null;
 
   return {
@@ -211,6 +213,21 @@ function createMemoryStore(options?: {
       row.handledAt = at.toISOString();
       row.updatedAt = at.toISOString();
       return cloneRow(row);
+    },
+    async claimRetentionRun(dateKey, now) {
+      const current = retentionRuns.get(dateKey);
+      if (!current) {
+        retentionRuns.set(dateKey, { status: "running", startedAt: now.getTime() });
+        return "claimed";
+      }
+      if (current.status === "succeeded") return "already_succeeded";
+      const stale = now.getTime() - current.startedAt > 20 * 60 * 1000;
+      if (current.status === "running" && !stale) return "in_progress";
+      retentionRuns.set(dateKey, { status: "running", startedAt: now.getTime() });
+      return "claimed";
+    },
+    async finishRetentionRun(dateKey, status, _deletedCount, now) {
+      retentionRuns.set(dateKey, { status, startedAt: now.getTime() });
     },
     async purgeExpired(now) {
       if (options?.failPurgeOnce) {
@@ -776,6 +793,113 @@ test("database auth can assign an active editor and still rejects admins", async
     else process.env.INQUIRY_DESIGNATED_SALES = previousSales;
     if (previousUsers === undefined) delete process.env.RESOURCE_CENTER_USERS;
     else process.env.RESOURCE_CENTER_USERS = previousUsers;
+  }
+});
+
+test("scheduled cleanup rejects missing keys and deletes only expired rows once", async () => {
+  const previousSecret = process.env.INQUIRY_RETENTION_CRON_SECRET;
+  const previousEnabled = process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
+  const previousRetention = process.env.INQUIRY_RETENTION_DAYS;
+  process.env.INQUIRY_RETENTION_CRON_SECRET = "cron-test-secret";
+  delete process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
+  delete process.env.INQUIRY_RETENTION_DAYS;
+  const store = createMemoryStore();
+  const now = new Date("2026-10-14T00:00:00.000Z");
+  try {
+    const kept = await acceptDurableInquiry(submission(), "req-cron-keep", KEY, {
+      ...deps(store, async () => undefined),
+      now: () => new Date("2026-10-13T00:00:00.000Z"),
+    });
+    const expiredPayload = submission();
+    expiredPayload.company = "Expired Co";
+    const expired = await acceptDurableInquiry(expiredPayload, "req-cron-old", KEY_2, {
+      ...deps(store, async () => undefined),
+      now: () => new Date("2025-10-14T00:00:00.000Z"),
+    });
+    assert.equal(kept.ok, true);
+    assert.equal(expired.ok, true);
+    const unauthorized = await runScheduledRetentionCleanup({ now, authorization: null, store, enabled: true });
+    assert.equal(unauthorized.httpStatus, 401);
+    assert.equal(JSON.stringify(unauthorized.body).includes("@"), false);
+    assert.equal(store.rows.length, 2);
+    const disabled = await runScheduledRetentionCleanup({
+      now,
+      authorization: "Bearer cron-test-secret",
+      store,
+    });
+    assert.equal(disabled.httpStatus, 409);
+    if (disabled.httpStatus !== 409) return;
+    assert.equal(disabled.body.error, "cleanup_disabled");
+    assert.equal(store.rows.length, 2);
+
+    let purges = 0;
+    const originalPurge = store.purgeExpired.bind(store);
+    store.purgeExpired = async (at) => {
+      purges += 1;
+      return originalPurge(at);
+    };
+    const first = await runScheduledRetentionCleanup({
+      now,
+      authorization: "Bearer cron-test-secret",
+      store,
+      enabled: true,
+    });
+    assert.equal(first.httpStatus, 200);
+    assert.equal(first.body.deletedCount, 1);
+    assert.equal(first.body.duplicate, false);
+    assert.equal(store.rows.length, 1);
+    assert.equal(store.rows[0]?.payload.company, "Volsun Internal Test");
+    const second = await runScheduledRetentionCleanup({
+      now,
+      authorization: "Bearer cron-test-secret",
+      store,
+      enabled: true,
+    });
+    assert.equal(second.httpStatus, 200);
+    assert.equal(second.body.duplicate, true);
+    assert.equal(second.body.deletedCount, 0);
+    assert.equal(purges, 1);
+    assert.equal(store.rows.length, 1);
+
+    const failing = createMemoryStore({ failPurgeOnce: true });
+    await acceptDurableInquiry(expiredPayload, "req-cron-fail", "33333333-3333-4333-8333-333333333333", {
+      ...deps(failing, async () => undefined),
+      now: () => new Date("2025-10-14T00:00:00.000Z"),
+    });
+    const failed = await runScheduledRetentionCleanup({
+      now,
+      authorization: "Bearer wrong-secret",
+      store: failing,
+      enabled: true,
+    });
+    assert.equal(failed.httpStatus, 401);
+    const failedRun = await runScheduledRetentionCleanup({
+      now,
+      authorization: "Bearer cron-test-secret",
+      store: failing,
+      enabled: true,
+    });
+    assert.equal(failedRun.httpStatus, 503);
+    assert.equal(failedRun.body.retryable, true);
+    const audits = await failing.listAudit();
+    assert.equal(audits.some((event) => event.action === "retention_purge_failed"), true);
+    assert.equal(JSON.stringify(audits).includes("@"), false);
+    assert.equal(failing.rows.length, 1);
+    const retried = await runScheduledRetentionCleanup({
+      now,
+      authorization: "Bearer cron-test-secret",
+      store: failing,
+      enabled: true,
+    });
+    assert.equal(retried.httpStatus, 200);
+    assert.equal(failing.rows.length, 0);
+  } finally {
+    if (previousSecret === undefined) delete process.env.INQUIRY_RETENTION_CRON_SECRET;
+    else process.env.INQUIRY_RETENTION_CRON_SECRET = previousSecret;
+    if (previousEnabled === undefined) delete process.env.INQUIRY_RETENTION_CLEANUP_ENABLED;
+    else process.env.INQUIRY_RETENTION_CLEANUP_ENABLED = previousEnabled;
+    if (previousRetention === undefined) delete process.env.INQUIRY_RETENTION_DAYS;
+    else process.env.INQUIRY_RETENTION_DAYS = previousRetention;
   }
 });
 

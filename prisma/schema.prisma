@@ -227,6 +227,16 @@ model InquiryRecord {
   @@map("inquiry_records")
 }
 
+model InquiryRetentionRun {
+  runDate      DateTime  @id @map("run_date") @db.Date
+  status       String    @db.VarChar(32)
+  startedAt    DateTime  @map("started_at") @db.Timestamptz(6)
+  finishedAt   DateTime? @map("finished_at") @db.Timestamptz(6)
+  deletedCount Int?      @map("deleted_count")
+
+  @@map("inquiry_retention_runs")
+}
+
 model InquiryAuditEvent {
   id            String   @id @default(uuid()) @db.Uuid
   inquiryId     String?  @map("inquiry_id") @db.Uuid

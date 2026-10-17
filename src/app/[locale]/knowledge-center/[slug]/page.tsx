@@ -42,6 +42,8 @@ const EN_ATTRIBUTED_CONTACT_QUERY: Record<string, string> = {
     "campaign=shaft-voltage-measurement-guide&source=knowledge-center&source_page=/en/knowledge-center/how-to-measure-shaft-voltage-vfd-motor&cta_key=engineer&inquiry_type=technical_inquiry",
   "vfd-pump-motor-bearing-failure-shaft-voltage":
     "product_interest=solid-shaft-grounding-ring&application_interest=pump-systems&campaign=vfd-pump-bearing-failure&source=knowledge-center&source_page=/en/knowledge-center/vfd-pump-motor-bearing-failure-shaft-voltage&cta_key=engineer&inquiry_type=technical_inquiry",
+  "paper-mill-motor-split-shaft-grounding-ring-spotlight":
+    "product_interest=split-shaft-grounding-ring&campaign=paper-mill-split-sgr-spotlight&source=news&source_page=paper-mill-motor-split-shaft-grounding-ring-spotlight&cta_key=engineer&inquiry_type=technical_inquiry",
 };
 
 const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
@@ -54,6 +56,7 @@ const EN_ARTICLE_CTA_LABEL: Record<string, string> = {
   "shaft-grounding-ring-vs-insulated-bearing": "Submit Motor Data for Review",
   "how-to-measure-shaft-voltage-vfd-motor": "Send Shaft-Voltage Data for Review",
   "vfd-pump-motor-bearing-failure-shaft-voltage": "Send Your Pump Motor Data for Technical Review",
+  "paper-mill-motor-split-shaft-grounding-ring-spotlight": "Submit Your Motor Application Data",
 };
 
 const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
@@ -84,6 +87,10 @@ const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
   "vfd-pump-motor-bearing-failure-shaft-voltage": {
     title: "Need Help Diagnosing Repeated Pump Motor Bearing Failure?",
     body: "Send us your pump motor data: power rating, shaft diameter, VFD information, installation photos or drawings, operating environment, and any shaft-voltage waveform you already have. VOLSUN’s engineering team can review whether shaft voltage and bearing current are plausible contributors—and whether a shaft grounding ring is a reasonable mitigation option for your layout.",
+  },
+  "paper-mill-motor-split-shaft-grounding-ring-spotlight": {
+    title: "Facing Bearing-Current Issues Without the Option of Teardown?",
+    body: "Send us your motor data: power rating, shaft diameter, rotational speed, VFD information, installation envelope, and operating environment. VOLSUN's engineering team can review whether a split shaft grounding ring suits your layout and outline the validation steps involved.",
   },
 };
 

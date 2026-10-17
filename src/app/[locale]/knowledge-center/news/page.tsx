@@ -30,7 +30,10 @@ export default async function KnowledgeCenterNewsPage({ params }: Props) {
   const m = getPageMeta("knowledgeCenterNews", locale);
   const kc = getPageMeta("knowledgeCenter", locale);
   const t = ui(locale);
-  const newsArticles = getArticlesByCategory("news", locale);
+  // News list shows newest first (datePublished desc), matching the homepage Latest News ordering.
+  const newsArticles = getArticlesByCategory("news", locale).sort(
+    (a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime(),
+  );
   const emptyMessage =
     locale === "zh"
       ? "暂无新闻内容。公司新闻与产品动态将在此发布。"

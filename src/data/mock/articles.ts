@@ -7472,7 +7472,7 @@ export const articles: ArticleRecord[] = [
     datePublished: "2026-10-17T08:00:00.000Z",
     dateModified: "2026-10-17T08:00:00.000Z",
     coverImagePublicPath: "/images/products/product-split-shaft-grounding-ring-home-card-v1.webp",
-    coverImageAlt: "VOLSUN split (arc-shaped) shaft grounding ring product image",
+    coverImageAlt: "VOLSUN split (arc-shaped) shaft grounding ring halves shown with an industrial motor (product image)",
     locales: {
       en: {
         title: "Customer Application Spotlight: VOLSUN Split Shaft Grounding Ring for a Paper Mill Motor",
@@ -7485,7 +7485,7 @@ export const articles: ArticleRecord[] = [
         blocks: [
           {
             type: "paragraph",
-            text: "VOLSUN has completed delivery and on-site installation of a custom split shaft grounding ring for a large industrial motor at a paper mill. The project is a useful example of how bearing-current protection can be retrofitted where equipment teardown is not an option. This spotlight covers the customer's original problem, the engineering selection behind the split design, the installation work already completed, and the field validation still in progress.",
+            text: "In August 2026, VOLSUN completed delivery and on-site installation of a custom split shaft grounding ring for a large industrial motor at a paper mill. The project is a useful example of how bearing-current protection can be retrofitted where equipment teardown is not an option. This spotlight covers the customer's original problem, the engineering selection behind the split design, the installation work already completed, and the field validation still in progress.",
           },
           { type: "heading", text: "The Customer Challenge" },
           {
@@ -7512,9 +7512,9 @@ export const articles: ArticleRecord[] = [
           {
             type: "image",
             src: "/images/products/product-split-shaft-grounding-ring-installation-reference-v1.webp",
-            alt: "VOLSUN split shaft grounding ring installation reference showing split ring halves with adjustable mounting brackets and bolts",
+            alt: "Close-up of a VOLSUN split shaft grounding ring half showing the conductive carbon fiber contact segments (product image)",
             caption:
-              "VOLSUN split shaft grounding ring — split construction with adjustable mounting brackets (product image).",
+              "VOLSUN split shaft grounding ring half with conductive carbon fiber contact segments (product image).",
             width: 800,
             height: 800,
           },
@@ -7570,7 +7570,7 @@ export const articles: ArticleRecord[] = [
         blocks: [
           {
             type: "paragraph",
-            text: "[ZH-TODO] VOLSUN has completed delivery and on-site installation of a custom split shaft grounding ring for a large industrial motor at a paper mill. The project is a useful example of how bearing-current protection can be retrofitted where equipment teardown is not an option. This spotlight covers the customer's original problem, the engineering selection behind the split design, the installation work already completed, and the field validation still in progress.",
+            text: "[ZH-TODO] In August 2026, VOLSUN completed delivery and on-site installation of a custom split shaft grounding ring for a large industrial motor at a paper mill. The project is a useful example of how bearing-current protection can be retrofitted where equipment teardown is not an option. This spotlight covers the customer's original problem, the engineering selection behind the split design, the installation work already completed, and the field validation still in progress.",
           },
           { type: "heading", text: "[ZH-TODO] The Customer Challenge" },
           {
@@ -7597,9 +7597,9 @@ export const articles: ArticleRecord[] = [
           {
             type: "image",
             src: "/images/products/product-split-shaft-grounding-ring-installation-reference-v1.webp",
-            alt: "[ZH-TODO] VOLSUN split shaft grounding ring installation reference showing split ring halves with adjustable mounting brackets and bolts",
+            alt: "[ZH-TODO] Close-up of a VOLSUN split shaft grounding ring half showing the conductive carbon fiber contact segments (product image)",
             caption:
-              "[ZH-TODO] VOLSUN split shaft grounding ring — split construction with adjustable mounting brackets (product image).",
+              "[ZH-TODO] VOLSUN split shaft grounding ring half with conductive carbon fiber contact segments (product image).",
             width: 800,
             height: 800,
           },

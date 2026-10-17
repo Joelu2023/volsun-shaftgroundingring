@@ -7476,7 +7476,7 @@ export const articles: ArticleRecord[] = [
     locales: {
       en: {
         title: "Customer Application Spotlight: VOLSUN Split Shaft Grounding Ring for a Paper Mill Motor",
-        seoTitle: "Customer Application Spotlight: VOLSUN Split Shaft Grounding Ring for a Paper Mill Motor | VOLSUN",
+        seoTitle: "Split Shaft Grounding Ring for Paper Mill Motor | VOLSUN",
         excerpt:
           "How VOLSUN engineered a split shaft grounding ring for a high-power, low-speed paper mill motor — installed without teardown, now in live field validation.",
         metaDescription:
@@ -7490,7 +7490,7 @@ export const articles: ArticleRecord[] = [
           { type: "heading", text: "The Customer Challenge" },
           {
             type: "paragraph",
-            text: "The customer operates a paper mill where production lines run 24 hours a day, seven days a week. The motor in question drives heavy-duty equipment and combines high power with low rotational speed. When the plant's equipment engineers contacted VOLSUN, the machine was already fully assembled. Dismantling the equipment to fit a conventional solid-ring grounding device was not practical: the downtime and labor cost of teardown would have outweighed the benefit. The plant's engineers needed a solution that could be retrofitted onto the existing shaft while keeping protection continuous and reliable.",
+            text: "The customer operates a paper mill where production lines run 24 hours a day, seven days a week. The motor in question drives heavy-duty equipment and combines high power with low rotational speed. When the plant's equipment engineers contacted VOLSUN, the machine was already fully assembled. Dismantling the equipment to fit a conventional solid-ring grounding device was not practical: the plant's engineers judged that the downtime and labor cost of a full teardown were not justified for this retrofit. The plant's engineers needed a solution that could be retrofitted onto the existing shaft while keeping protection continuous and reliable.",
           },
           {
             type: "paragraph",
@@ -7505,7 +7505,7 @@ export const articles: ArticleRecord[] = [
             type: "list",
             items: [
               "Split construction: the two-piece design allows the ring halves to be fitted around the shaft in place, with no shaft extraction and no major teardown.",
-              "Direct-contact conductive fiber: high-density conductive carbon fiber strands maintain contact with the rotating shaft surface, providing a controlled path for shaft current away from the bearings.",
+              "Direct-contact conductive fiber: high-density conductive carbon fiber strands are designed to maintain contact with the rotating shaft surface and provide a controlled path for shaft current away from the bearings.",
               "Complete mounting kit: tailor-made adjustable brackets and bolts fix the ring to the motor housing and hold alignment with the shaft.",
             ],
           },
@@ -7575,7 +7575,7 @@ export const articles: ArticleRecord[] = [
           { type: "heading", text: "[ZH-TODO] The Customer Challenge" },
           {
             type: "paragraph",
-            text: "[ZH-TODO] The customer operates a paper mill where production lines run 24 hours a day, seven days a week. The motor in question drives heavy-duty equipment and combines high power with low rotational speed. When the plant's equipment engineers contacted VOLSUN, the machine was already fully assembled. Dismantling the equipment to fit a conventional solid-ring grounding device was not practical: the downtime and labor cost of teardown would have outweighed the benefit. The plant's engineers needed a solution that could be retrofitted onto the existing shaft while keeping protection continuous and reliable.",
+            text: "[ZH-TODO] The customer operates a paper mill where production lines run 24 hours a day, seven days a week. The motor in question drives heavy-duty equipment and combines high power with low rotational speed. When the plant's equipment engineers contacted VOLSUN, the machine was already fully assembled. Dismantling the equipment to fit a conventional solid-ring grounding device was not practical: the plant's engineers judged that the downtime and labor cost of a full teardown were not justified for this retrofit. The plant's engineers needed a solution that could be retrofitted onto the existing shaft while keeping protection continuous and reliable.",
           },
           {
             type: "paragraph",
@@ -7590,7 +7590,7 @@ export const articles: ArticleRecord[] = [
             type: "list",
             items: [
               "[ZH-TODO] Split construction: the two-piece design allows the ring halves to be fitted around the shaft in place, with no shaft extraction and no major teardown.",
-              "[ZH-TODO] Direct-contact conductive fiber: high-density conductive carbon fiber strands maintain contact with the rotating shaft surface, providing a controlled path for shaft current away from the bearings.",
+              "[ZH-TODO] Direct-contact conductive fiber: high-density conductive carbon fiber strands are designed to maintain contact with the rotating shaft surface and provide a controlled path for shaft current away from the bearings.",
               "[ZH-TODO] Complete mounting kit: tailor-made adjustable brackets and bolts fix the ring to the motor housing and hold alignment with the shaft.",
             ],
           },

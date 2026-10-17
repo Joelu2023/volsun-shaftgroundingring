@@ -86,7 +86,7 @@ const EN_ARTICLE_CTA_COPY: Record<string, { title: string; body: string }> = {
   },
   "vfd-pump-motor-bearing-failure-shaft-voltage": {
     title: "Need Help Diagnosing Repeated Pump Motor Bearing Failure?",
-    body: "Send us your pump motor data: power rating, shaft diameter, VFD information, installation photos or drawings, operating environment, and any shaft-voltage waveform you already have. VOLSUN's engineering team can review whether shaft voltage and bearing current are plausible contributors—and whether a shaft grounding ring is a reasonable mitigation option for your layout.",
+    body: "Send us your pump motor data: power rating, shaft diameter, VFD information, installation photos or drawings, operating environment, and any shaft-voltage waveform you already have. VOLSUN’s engineering team can review whether shaft voltage and bearing current are plausible contributors—and whether a shaft grounding ring is a reasonable mitigation option for your layout.",
   },
   "paper-mill-motor-split-shaft-grounding-ring-spotlight": {
     title: "Facing Bearing-Current Issues Without the Option of Teardown?",

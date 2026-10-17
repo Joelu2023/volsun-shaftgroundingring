@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "crypto";
+import { acceptDurableInquiry } from "@/lib/inquiries/accept-inquiry";
 import { deliverInquirySubmission } from "@/lib/inquiries/deliver-inquiry";
+import { getInquiryStore, isInquiryDurableStorageEnabled } from "@/lib/inquiries/durable-store";
 import { parseInquirySubmission } from "@/lib/inquiries/validate";
 import { consumeRateLimit, getClientIpFromHeaders } from "@/lib/security/rate-limit";
 
@@ -47,6 +49,58 @@ export async function POST(req: Request) {
       { ok: false as const, delivered: false as const, error: parsed.error, request_id: requestId },
       { status: 400 },
     );
+  }
+
+  if (isInquiryDurableStorageEnabled()) {
+    let store;
+    try {
+      store = getInquiryStore();
+    } catch {
+      console.error("[inquiry] storage unavailable", { requestId });
+      return NextResponse.json(
+        {
+          ok: false as const,
+          received: false as const,
+          delivered: false as const,
+          error: "inquiry_storage_failed",
+          request_id: requestId,
+        },
+        { status: 503 },
+      );
+    }
+
+    const rawRecord = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
+    const accepted = await acceptDurableInquiry(parsed.data, requestId, rawRecord.idempotency_key, { store });
+    if (!accepted.ok) {
+      return NextResponse.json(
+        {
+          ok: false as const,
+          received: false as const,
+          delivered: false as const,
+          error: accepted.error,
+          request_id: requestId,
+        },
+        { status: accepted.httpStatus },
+      );
+    }
+
+    console.log("[inquiry] received", {
+      requestId,
+      inquiryId: accepted.inquiryId,
+      publicNumber: accepted.inquiryNumber,
+      status: accepted.notificationStatus,
+      delivered: accepted.delivered,
+    });
+    return NextResponse.json({
+      ok: true as const,
+      received: true as const,
+      delivered: accepted.delivered,
+      channel: accepted.channel,
+      request_id: requestId,
+      inquiry_number: accepted.inquiryNumber,
+      notification_status: accepted.notificationStatus,
+      notification_uncertain: accepted.notificationUncertain,
+    });
   }
 
   const delivery = await deliverInquirySubmission(parsed.data, requestId);

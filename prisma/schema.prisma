@@ -187,3 +187,66 @@ model RcResourceDownloadVisit {
   @@index([createdAt])
   @@map("rc_resource_download_visits")
 }
+
+enum InquiryRecordStatus {
+  received
+  notification_pending
+  notified
+  notification_failed
+
+  @@map("inquiry_record_status")
+}
+
+model InquiryRecord {
+  id                  String               @id @default(uuid()) @db.Uuid
+  publicNumber        String               @unique @map("public_number") @db.VarChar(32)
+  idempotencyKey      String               @unique @map("idempotency_key") @db.VarChar(80)
+  status              InquiryRecordStatus
+  smtpOutcome         String?              @map("smtp_outcome") @db.VarChar(32)
+  payload             Json
+  latestRequestId     String               @map("latest_request_id") @db.VarChar(64)
+  smtpErrorSanitized  String?              @map("smtp_error_sanitized") @db.VarChar(500)
+  attemptCount        Int                  @default(0) @map("attempt_count")
+  attemptStartedAt    DateTime?            @map("attempt_started_at") @db.Timestamptz(6)
+  notifiedAt          DateTime?            @map("notified_at") @db.Timestamptz(6)
+  retainUntil         DateTime?            @map("retain_until") @db.Timestamptz(6)
+  handledBy           String?              @map("handled_by") @db.VarChar(64)
+  handledAt           DateTime?            @map("handled_at") @db.Timestamptz(6)
+  assignedUsername    String?              @map("assigned_username") @db.VarChar(64)
+  assignedUserId      String?              @map("assigned_user_id") @db.Uuid
+  assignedAt          DateTime?            @map("assigned_at") @db.Timestamptz(6)
+  followUpStatus      String               @default("unassigned") @map("follow_up_status") @db.VarChar(32)
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([status, createdAt])
+  @@index([retainUntil])
+  @@index([assignedUsername])
+  @@index([assignedUserId])
+  @@index([followUpStatus])
+  @@map("inquiry_records")
+}
+
+model InquiryRetentionRun {
+  runDate      DateTime  @id @map("run_date") @db.Date
+  status       String    @db.VarChar(32)
+  startedAt    DateTime  @map("started_at") @db.Timestamptz(6)
+  finishedAt   DateTime? @map("finished_at") @db.Timestamptz(6)
+  deletedCount Int?      @map("deleted_count")
+
+  @@map("inquiry_retention_runs")
+}
+
+model InquiryAuditEvent {
+  id            String   @id @default(uuid()) @db.Uuid
+  inquiryId     String?  @map("inquiry_id") @db.Uuid
+  action        String   @db.VarChar(64)
+  actorUsername String   @map("actor_username") @db.VarChar(64)
+  actorRole     String   @map("actor_role") @db.VarChar(32)
+  detail        Json
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([inquiryId])
+  @@index([action, createdAt])
+  @@map("inquiry_audit_events")
+}

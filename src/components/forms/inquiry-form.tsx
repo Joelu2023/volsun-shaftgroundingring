@@ -48,6 +48,10 @@ const FORM_COPY = {
     submitted: "Submitted",
     successTitle: "Thank you. Your inquiry has been sent successfully.",
     successBody: "We will respond within 24 hours. If you need urgent attention, add WhatsApp in the next message.",
+    savedTitle: "Your inquiry has been saved.",
+    savedBody: (inquiryNumber: string) =>
+      `Reference ${inquiryNumber}. Email notification is not confirmed yet. You can also write to ${publicContact.email}.`,
+    referenceLabel: (inquiryNumber: string) => `Reference ${inquiryNumber}`,
     devSuccessTitle: "Inquiry saved locally for development testing only.",
     devSuccessBody: "SMTP delivery was skipped in development mode. Do not treat this as a production lead delivery.",
     errName: "Name is required.",
@@ -70,6 +74,7 @@ const FORM_COPY = {
       `Sorry, your inquiry could not be sent. Please email us directly at ${publicContact.email} or try again later.`,
     apiDelivery:
       `Sorry, your inquiry could not be sent. Please email us directly at ${publicContact.email} or try again later.`,
+    apiStorage: `We could not save your inquiry, so it was not sent. Please try again or email us directly at ${publicContact.email}.`,
     apiDefault: `Submission failed. Please try again or email us directly at ${publicContact.email} from your mail client.`,
   },
   zh: {
@@ -98,6 +103,10 @@ const FORM_COPY = {
     submitted: "已提交",
     successTitle: "您的询盘已成功发送，谢谢。",
     successBody: "我们将在 24 小时内回复。如需加急，可在后续消息中留下 WhatsApp。",
+    savedTitle: "询盘已保存。",
+    savedBody: (inquiryNumber: string) =>
+      `编号 ${inquiryNumber}。邮件通知尚未确认。您也可以直接发邮件至 ${publicContact.email}。`,
+    referenceLabel: (inquiryNumber: string) => `编号 ${inquiryNumber}`,
     devSuccessTitle: "询盘已仅在本地开发环境保存。",
     devSuccessBody: "当前为开发模式，未通过 SMTP 发送邮件，请勿视为生产环境线索已送达。",
     errName: "请填写姓名。",
@@ -118,6 +127,7 @@ const FORM_COPY = {
       `服务器邮件配置不完整，缺少：${m}。修复前请直接发送邮件至 ${publicContact.email} 联系我们。`,
     apiSmtp: `抱歉，询盘未能发送。请直接发送邮件至 ${publicContact.email}，或稍后重试。`,
     apiDelivery: `抱歉，询盘未能发送。请直接发送邮件至 ${publicContact.email}，或稍后重试。`,
+    apiStorage: `询盘未能保存，因此没有发送。请重试，或直接发邮件至 ${publicContact.email}。`,
     apiDefault: `提交失败，请重试，或改用邮件客户端直接发送至 ${publicContact.email}。`,
   },
 } as const;
@@ -144,6 +154,28 @@ export type InquiryFormProps = {
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const IDEMPOTENCY_STORAGE_KEY = "volsun_inquiry_idempotency_key";
+const IDEMPOTENCY_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+function readOrCreateIdempotencyKey(): string {
+  try {
+    const existing = sessionStorage.getItem(IDEMPOTENCY_STORAGE_KEY);
+    if (existing && IDEMPOTENCY_RE.test(existing)) return existing;
+    const created = crypto.randomUUID();
+    sessionStorage.setItem(IDEMPOTENCY_STORAGE_KEY, created);
+    return created;
+  } catch {
+    return crypto.randomUUID();
+  }
+}
+
+function clearIdempotencyKey() {
+  try {
+    sessionStorage.removeItem(IDEMPOTENCY_STORAGE_KEY);
+  } catch {
+    // Ignore storage failures; the server still dedupes a key that was already sent.
+  }
+}
 
 export function InquiryForm({
   pageSource,
@@ -165,7 +197,8 @@ export function InquiryForm({
   const c = FORM_COPY[locale];
   const typeOptions = getInquiryTypeOptions(locale);
   const [inquiryType, setInquiryType] = useState<InquiryType>(defaultInquiryType);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "dev-success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "saved" | "dev-success" | "error">("idle");
+  const [inquiryNumber, setInquiryNumber] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const successRef = useRef<HTMLDivElement>(null);
@@ -233,6 +266,7 @@ export function InquiryForm({
       locale,
     });
 
+    const idempotencyKey = readOrCreateIdempotencyKey();
     const payload = enLeadSlim
       ? {
           form_variant: aboutEnLeadForm ? ("about_en_slim" as const) : ("home_en_slim" as const),
@@ -255,6 +289,7 @@ export function InquiryForm({
           cta_source: ctaSource,
           cta_key: null,
           submitted_at: new Date().toISOString(),
+          idempotency_key: idempotencyKey,
         }
       : {
           name: String(fd.get("name") ?? "").trim(),
@@ -276,6 +311,7 @@ export function InquiryForm({
           cta_source: ctaSource,
           cta_key: defaultCtaKey,
           submitted_at: new Date().toISOString(),
+          idempotency_key: idempotencyKey,
           ...attributionPayload(defaultCampaign, defaultSourcePage),
         };
 
@@ -289,12 +325,14 @@ export function InquiryForm({
 
       let data: {
         ok?: boolean;
+        received?: boolean;
         delivered?: boolean;
         devPersisted?: boolean;
         message?: string;
         error?: string;
         missing?: string[];
         request_id?: string;
+        inquiry_number?: string;
       } = {};
       try {
         data = (await res.json()) as typeof data;
@@ -316,6 +354,15 @@ export function InquiryForm({
           locale,
           event_id: eventId ?? undefined,
         });
+        return;
+      }
+
+      if (data.received && !data.delivered) {
+        setStatus("saved");
+        setInquiryNumber(data.inquiry_number ?? null);
+        setFieldErrors({});
+        clearIdempotencyKey();
+        form.reset();
         return;
       }
 
@@ -346,6 +393,8 @@ export function InquiryForm({
 
       keepLock = true;
       setStatus("success");
+      setInquiryNumber(data.inquiry_number ?? null);
+      clearIdempotencyKey();
       setFieldErrors({});
       setInquiryType(defaultInquiryType);
       trackGenerateLead({
@@ -526,6 +575,13 @@ export function InquiryForm({
           <div className="rounded border border-green-200 bg-green-50 p-4 text-sm text-green-900" role="status">
             <p className="font-medium">{c.successTitle}</p>
             <p className="mt-1">{c.successBody}</p>
+            {inquiryNumber ? <p className="mt-1">{c.referenceLabel(inquiryNumber)}</p> : null}
+          </div>
+        )}
+        {status === "saved" && (
+          <div className="rounded border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950" role="status">
+            <p className="font-medium">{c.savedTitle}</p>
+            <p className="mt-1">{inquiryNumber ? c.savedBody(inquiryNumber) : c.apiDelivery}</p>
           </div>
         )}
         {status === "dev-success" && (
@@ -630,6 +686,8 @@ function messageForApiError(c: FormCopy, code: string | undefined, missing?: str
     case "Inquiry delivery failed":
     case "email_delivery_failed":
       return c.apiDelivery;
+    case "inquiry_storage_failed":
+      return c.apiStorage;
     default:
       return c.apiDefault;
   }

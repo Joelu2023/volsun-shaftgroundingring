@@ -63,6 +63,16 @@ export async function authenticateDbResourceUser(
   return buildSessionCandidateForActiveUser(user);
 }
 
+export async function findActiveResourceUserByUsername(
+  username: string,
+): Promise<DbResourceUserSessionCandidate | null> {
+  const normalizedUsername = username.trim();
+  if (!normalizedUsername) return null;
+  const user = await findUserByUsername(normalizedUsername);
+  if (!user) return null;
+  return buildSessionCandidateForActiveUser(user);
+}
+
 export async function getDbResourceUserSessionById(
   userId: string,
 ): Promise<DbResourceUserSessionCandidate | null> {

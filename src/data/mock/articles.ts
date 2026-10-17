@@ -7465,6 +7465,187 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-24",
+    slug: "paper-mill-motor-split-shaft-grounding-ring-spotlight",
+    category: "news",
+    datePublished: "2026-10-17T08:00:00.000Z",
+    dateModified: "2026-10-17T08:00:00.000Z",
+    coverImagePublicPath: "/images/products/product-split-shaft-grounding-ring-home-card-v1.webp",
+    coverImageAlt: "VOLSUN split (arc-shaped) shaft grounding ring product image",
+    locales: {
+      en: {
+        title: "Customer Application Spotlight: VOLSUN Split Shaft Grounding Ring for a Paper Mill Motor",
+        seoTitle: "Customer Application Spotlight: VOLSUN Split Shaft Grounding Ring for a Paper Mill Motor | VOLSUN",
+        excerpt:
+          "How VOLSUN engineered a split shaft grounding ring for a high-power, low-speed paper mill motor — installed without teardown, now in live field validation.",
+        metaDescription:
+          "A paper mill motor that could not be dismantled received a VOLSUN split shaft grounding ring. See the engineering selection, completed installation, and live validation status.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "VOLSUN has completed delivery and on-site installation of a custom split shaft grounding ring for a large industrial motor at a paper mill. The project is a useful example of how bearing-current protection can be retrofitted where equipment teardown is not an option. This spotlight covers the customer's original problem, the engineering selection behind the split design, the installation work already completed, and the field validation still in progress.",
+          },
+          { type: "heading", text: "The Customer Challenge" },
+          {
+            type: "paragraph",
+            text: "The customer operates a paper mill where production lines run 24 hours a day, seven days a week. The motor in question drives heavy-duty equipment and combines high power with low rotational speed. When the plant's equipment engineers contacted VOLSUN, the machine was already fully assembled. Dismantling the equipment to fit a conventional solid-ring grounding device was not practical: the downtime and labor cost of teardown would have outweighed the benefit. The plant's engineers needed a solution that could be retrofitted onto the existing shaft while keeping protection continuous and reliable.",
+          },
+          {
+            type: "paragraph",
+            text: "Inverter-driven motors of this size and speed class can develop shaft voltage that discharges across the bearings. Without a controlled discharge path, repeated discharge may contribute to raceway damage and unplanned bearing replacement — a costly event on a continuous production line. Whether discharge becomes harmful depends on the actual waveform, bearing condition, and motor construction, so the review focused on a practical mitigation path rather than a theoretical fix.",
+          },
+          { type: "heading", text: "Engineering Selection: Why a Split Ring" },
+          {
+            type: "paragraph",
+            text: "After several rounds of online technical discussions with the plant's equipment engineers, VOLSUN's engineering team proposed a split-type shaft grounding ring built around conductive carbon fiber contact. The selection was driven by the installation constraint rather than a catalog default: the ring had to mount around an assembled shaft without extraction.",
+          },
+          {
+            type: "list",
+            items: [
+              "Split construction: the two-piece design allows the ring halves to be fitted around the shaft in place, with no shaft extraction and no major teardown.",
+              "Direct-contact conductive fiber: high-density conductive carbon fiber strands maintain contact with the rotating shaft surface, providing a controlled path for shaft current away from the bearings.",
+              "Complete mounting kit: tailor-made adjustable brackets and bolts fix the ring to the motor housing and hold alignment with the shaft.",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/products/product-split-shaft-grounding-ring-installation-reference-v1.webp",
+            alt: "VOLSUN split shaft grounding ring installation reference showing split ring halves with adjustable mounting brackets and bolts",
+            caption:
+              "VOLSUN split shaft grounding ring — split construction with adjustable mounting brackets (product image).",
+            width: 800,
+            height: 800,
+          },
+          { type: "heading", text: "Installation Completed; Validation Still Running" },
+          {
+            type: "paragraph",
+            text: "The custom sample was manufactured, delivered, and installed on site at the paper mill. From a hardware scope perspective, the project is complete: the ring is mounted, aligned, and secured to the motor housing.",
+          },
+          {
+            type: "paragraph",
+            text: "What is not complete is the performance verdict. The ring is currently undergoing live testing on the customer's heavy-duty motor, and final performance feedback from the plant is still pending. No service-life, durability, or bearing-protection figures are claimed at this stage, and none should be inferred from this report.",
+          },
+          {
+            type: "paragraph",
+            text: "The customer has acknowledged the pace and quality of the cooperation — response time from first inquiry to engineering proposal, technical discussions on VFD-induced bearing currents, and delivery reliability — and has indicated interest in follow-up volume orders once the trial phase concludes. Any volume decision remains subject to trial outcomes.",
+          },
+          { type: "heading", text: "Applicability Beyond This Project" },
+          {
+            type: "paragraph",
+            text: "The constraints in this project — continuous operation, fully assembled equipment, and limited shaft access — are common in pulp and paper and other heavy-industry plants running large, low-speed motors. A split ring is not a universal answer: suitability depends on shaft diameter, rotational speed, mounting envelope, and the electrical environment. VOLSUN reviews these inputs with the customer's engineers before recommending a structure.",
+          },
+          {
+            type: "link",
+            intro: "Related resources:",
+            label: "Arc-Shaped (ST/STW) Shaft Grounding Ring — Product Overview",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "What Causes Shaft Voltage in VFD Motors?",
+            href: "/knowledge-center/what-causes-shaft-voltage-in-vfd-motors",
+          },
+          {
+            type: "link",
+            label: "Volsun at TMC2026: E-Drive Material Solutions",
+            href: "/knowledge-center/volsun-at-tmc2026-e-drive-material-solutions",
+          },
+          { type: "heading", text: "Conclusion" },
+          {
+            type: "paragraph",
+            text: "This spotlight reflects a working principle at VOLSUN: bearing-current protection has to fit the plant, not the other way around. If your facility faces bearing-current concerns without the option of equipment teardown, send your motor data to the VOLSUN engineering team for a preliminary application review.",
+          },
+        ],
+      },
+      zh: {
+        title:
+          "[ZH-TODO] Customer Application Spotlight: VOLSUN Split Shaft Grounding Ring for a Paper Mill Motor",
+        excerpt:
+          "[ZH-TODO] How VOLSUN engineered a split shaft grounding ring for a high-power, low-speed paper mill motor — installed without teardown, now in live field validation.",
+        metaDescription:
+          "[ZH-TODO] A paper mill motor that could not be dismantled received a VOLSUN split shaft grounding ring. See the engineering selection, completed installation, and live validation status.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] VOLSUN has completed delivery and on-site installation of a custom split shaft grounding ring for a large industrial motor at a paper mill. The project is a useful example of how bearing-current protection can be retrofitted where equipment teardown is not an option. This spotlight covers the customer's original problem, the engineering selection behind the split design, the installation work already completed, and the field validation still in progress.",
+          },
+          { type: "heading", text: "[ZH-TODO] The Customer Challenge" },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] The customer operates a paper mill where production lines run 24 hours a day, seven days a week. The motor in question drives heavy-duty equipment and combines high power with low rotational speed. When the plant's equipment engineers contacted VOLSUN, the machine was already fully assembled. Dismantling the equipment to fit a conventional solid-ring grounding device was not practical: the downtime and labor cost of teardown would have outweighed the benefit. The plant's engineers needed a solution that could be retrofitted onto the existing shaft while keeping protection continuous and reliable.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] Inverter-driven motors of this size and speed class can develop shaft voltage that discharges across the bearings. Without a controlled discharge path, repeated discharge may contribute to raceway damage and unplanned bearing replacement — a costly event on a continuous production line. Whether discharge becomes harmful depends on the actual waveform, bearing condition, and motor construction, so the review focused on a practical mitigation path rather than a theoretical fix.",
+          },
+          { type: "heading", text: "[ZH-TODO] Engineering Selection: Why a Split Ring" },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] After several rounds of online technical discussions with the plant's equipment engineers, VOLSUN's engineering team proposed a split-type shaft grounding ring built around conductive carbon fiber contact. The selection was driven by the installation constraint rather than a catalog default: the ring had to mount around an assembled shaft without extraction.",
+          },
+          {
+            type: "list",
+            items: [
+              "[ZH-TODO] Split construction: the two-piece design allows the ring halves to be fitted around the shaft in place, with no shaft extraction and no major teardown.",
+              "[ZH-TODO] Direct-contact conductive fiber: high-density conductive carbon fiber strands maintain contact with the rotating shaft surface, providing a controlled path for shaft current away from the bearings.",
+              "[ZH-TODO] Complete mounting kit: tailor-made adjustable brackets and bolts fix the ring to the motor housing and hold alignment with the shaft.",
+            ],
+          },
+          {
+            type: "image",
+            src: "/images/products/product-split-shaft-grounding-ring-installation-reference-v1.webp",
+            alt: "[ZH-TODO] VOLSUN split shaft grounding ring installation reference showing split ring halves with adjustable mounting brackets and bolts",
+            caption:
+              "[ZH-TODO] VOLSUN split shaft grounding ring — split construction with adjustable mounting brackets (product image).",
+            width: 800,
+            height: 800,
+          },
+          { type: "heading", text: "[ZH-TODO] Installation Completed; Validation Still Running" },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] The custom sample was manufactured, delivered, and installed on site at the paper mill. From a hardware scope perspective, the project is complete: the ring is mounted, aligned, and secured to the motor housing.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] What is not complete is the performance verdict. The ring is currently undergoing live testing on the customer's heavy-duty motor, and final performance feedback from the plant is still pending. No service-life, durability, or bearing-protection figures are claimed at this stage, and none should be inferred from this report.",
+          },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] The customer has acknowledged the pace and quality of the cooperation — response time from first inquiry to engineering proposal, technical discussions on VFD-induced bearing currents, and delivery reliability — and has indicated interest in follow-up volume orders once the trial phase concludes. Any volume decision remains subject to trial outcomes.",
+          },
+          { type: "heading", text: "[ZH-TODO] Applicability Beyond This Project" },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] The constraints in this project — continuous operation, fully assembled equipment, and limited shaft access — are common in pulp and paper and other heavy-industry plants running large, low-speed motors. A split ring is not a universal answer: suitability depends on shaft diameter, rotational speed, mounting envelope, and the electrical environment. VOLSUN reviews these inputs with the customer's engineers before recommending a structure.",
+          },
+          {
+            type: "link",
+            intro: "[ZH-TODO] Related resources:",
+            label: "[ZH-TODO] Arc-Shaped (ST/STW) Shaft Grounding Ring — Product Overview",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            label: "[ZH-TODO] What Causes Shaft Voltage in VFD Motors?",
+            href: "/knowledge-center/what-causes-shaft-voltage-in-vfd-motors",
+          },
+          {
+            type: "link",
+            label: "[ZH-TODO] Volsun at TMC2026: E-Drive Material Solutions",
+            href: "/knowledge-center/volsun-at-tmc2026-e-drive-material-solutions",
+          },
+          { type: "heading", text: "[ZH-TODO] Conclusion" },
+          {
+            type: "paragraph",
+            text: "[ZH-TODO] This spotlight reflects a working principle at VOLSUN: bearing-current protection has to fit the plant, not the other way around. If your facility faces bearing-current concerns without the option of equipment teardown, send your motor data to the VOLSUN engineering team for a preliminary application review.",
+          },
+        ],
+      },
+    },
+  },
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 

@@ -7469,8 +7469,8 @@ export const articles: ArticleRecord[] = [
     id: "art-24",
     slug: "paper-mill-motor-split-shaft-grounding-ring-spotlight",
     category: "news",
-    datePublished: "2026-10-17T08:00:00.000Z",
-    dateModified: "2026-10-17T05:30:00.000Z",
+    datePublished: "2026-10-17T05:30:00.000Z",
+    dateModified: "2026-10-17T06:00:00.000Z",
     coverImagePublicPath: "/images/products/product-split-shaft-grounding-ring-home-card-v1.webp",
     coverImageAlt: "VOLSUN split (arc-shaped) shaft grounding ring halves shown with an industrial motor (product image)",
     locales: {

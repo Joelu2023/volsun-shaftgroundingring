@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { PageCtaStrip } from "@/components/layout/page-cta";
 import { isAppLocale, type AppLocale } from "@/lib/i18n/locales";
 import { ui } from "@/lib/i18n/ui-messages";
+import { sortNewsByPublishedDesc } from "@/lib/articles/news-order";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -31,9 +32,8 @@ export default async function KnowledgeCenterNewsPage({ params }: Props) {
   const kc = getPageMeta("knowledgeCenter", locale);
   const t = ui(locale);
   // News list shows newest first (datePublished desc), matching the homepage Latest News ordering.
-  const newsArticles = getArticlesByCategory("news", locale).sort(
-    (a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime(),
-  );
+  // `getArticlesByCategory` returns raw array order (oldest-first), so the explicit sort is required.
+  const newsArticles = sortNewsByPublishedDesc(getArticlesByCategory("news", locale));
   const emptyMessage =
     locale === "zh"
       ? "暂无新闻内容。公司新闻与产品动态将在此发布。"

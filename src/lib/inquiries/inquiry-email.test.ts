@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { deliverInquirySubmission } from "./deliver-inquiry";
 import { buildInquiryMailContent, buildInquirySubject } from "./email-content";
 import { normalizeDrawingFields } from "./field-sanitize";
 import { parseInquirySubmission } from "./validate";
@@ -329,4 +330,84 @@ test("INQUIRY_EMAIL_FROM wins over MAIL_FROM and SMTP_FROM", () => {
       else process.env[key] = value;
     }
   }
+});
+
+test("SMTP failure is not reported as delivered and does not leak the secret", async () => {
+  const parsed = parseInquirySubmission(samplePayload());
+  assert.equal(parsed.ok, true);
+  if (!parsed.ok) throw new Error("payload");
+  const secret = "smtp-test-secret-value";
+  const logs: string[] = [];
+  const persisted: Array<{ delivery_status: string; smtp_error: string | null }> = [];
+  const originalError = console.error;
+  console.error = (...args: unknown[]) => {
+    logs.push(args.map((item) => (typeof item === "string" ? item : JSON.stringify(item))).join(" "));
+  };
+  try {
+    const result = await deliverInquirySubmission(parsed.data, "req-smtp-fail", {
+      getMissingSmtpEnv: () => [],
+      sendInquiryEmail: async () => {
+        throw new Error(`535 auth failed password=${secret}`);
+      },
+      appendLog: async (record) => {
+        persisted.push({ delivery_status: record.delivery_status, smtp_error: record.smtp_error });
+      },
+    });
+    assert.equal(result.ok, false);
+    assert.equal(result.delivered, false);
+    if (result.ok) throw new Error("expected failure");
+    assert.equal(result.error, "Inquiry delivery failed");
+    assert.equal(result.httpStatus, 502);
+    const phone = parsed.data.phone_or_whatsapp ?? "";
+    assert.equal(phone.length > 0, true);
+    const body = JSON.stringify(result);
+    assert.equal(body.includes(secret), false);
+    assert.equal(body.includes(parsed.data.email), false);
+    assert.equal(body.includes(phone), false);
+    const logText = logs.join("\n");
+    assert.equal(logText.includes(secret), false);
+    assert.equal(logText.includes(parsed.data.email), false);
+    assert.equal(logText.includes(phone), false);
+    assert.equal(persisted.length, 1);
+    assert.equal(persisted[0]?.delivery_status, "smtp_failed");
+    assert.equal(persisted[0]?.smtp_error?.includes(secret) ?? true, false);
+    assert.equal(persisted[0]?.smtp_error?.includes(parsed.data.email) ?? true, false);
+  } finally {
+    console.error = originalError;
+  }
+});
+
+test("missing SMTP config is a configuration failure, not a delivered inquiry", async () => {
+  const parsed = parseInquirySubmission(samplePayload());
+  assert.equal(parsed.ok, true);
+  if (!parsed.ok) throw new Error("payload");
+  let sent = false;
+  const result = await deliverInquirySubmission(parsed.data, "req-smtp-missing", {
+    getMissingSmtpEnv: () => ["SMTP_HOST"],
+    sendInquiryEmail: async () => {
+      sent = true;
+    },
+    appendLog: async () => {},
+  });
+  assert.equal(sent, false);
+  assert.equal(result.ok, false);
+  assert.equal(result.delivered, false);
+  if (result.ok) throw new Error("expected failure");
+  assert.equal(result.error, "Inquiry delivery is not configured");
+  assert.equal(result.httpStatus, 503);
+});
+
+test("contact copy hides internal tracking names and matches the optional company rule", () => {
+  const form = fs.readFileSync(path.resolve(process.cwd(), "src/components/forms/inquiry-form.tsx"), "utf8");
+  const messages = fs.readFileSync(path.resolve(process.cwd(), "src/lib/i18n/ui-messages.ts"), "utf8");
+  const contact = fs.readFileSync(path.resolve(process.cwd(), "src/app/[locale]/contact/page.tsx"), "utf8");
+  assert.match(form, /companyHint: "optional; helps us prepare your quotation"/);
+  assert.match(form, /companyHint: "可选；有助于准备报价"/);
+  assert.doesNotMatch(form, /companyHint: "required for quotation"/);
+  assert.match(form, /page_source: pageSource/);
+  assert.match(form, /cta_source: ctaSource/);
+  assert.match(form, /product_interest: emptyToNull\(fd\.get\("product_interest"\)\)/);
+  assert.doesNotMatch(messages, /Fields align with Volsun lead tracking/);
+  assert.doesNotMatch(messages, /字段与沃尔兴线索追踪对齐/);
+  assert.doesNotMatch(contact, /contactInquiryFormDevNote/);
 });

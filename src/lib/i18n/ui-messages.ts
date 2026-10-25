@@ -144,8 +144,6 @@ export const uiMessages = {
     contactPageCtaBlurbAfter: "and",
     contactPageCtaBlurbZhShort: "Use unified sitewide CTAs for sample requests, quotes, drawings, engineering questions, and contact forms.",
     contactInquiryFormTitle: "Inquiry form",
-    contactInquiryFormDevNote:
-      "Fields align with Volsun lead tracking: page_source, cta_source, product_interest, application_interest.",
     contactAsideImgAlt: "Factory response and support context",
     contactAsideTitle: "Before you submit",
     contactAsideLi1: "Motor nameplate photo (if available)",
@@ -312,7 +310,6 @@ export const uiMessages = {
     contactPageCtaBlurbAfter: "以及",
     contactPageCtaBlurbZhShort: "全站可统一使用：样品申请、索取报价、发送图纸、咨询工程师与联系询盘等入口。",
     contactInquiryFormTitle: "询盘表单",
-    contactInquiryFormDevNote: "字段与沃尔兴线索追踪对齐：page_source、cta_source、product_interest、application_interest。",
     contactAsideImgAlt: "工厂响应与支持场景",
     contactAsideTitle: "提交前建议准备",
     contactAsideLi1: "电机铭牌照片（如有）",

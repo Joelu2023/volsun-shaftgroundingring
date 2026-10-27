@@ -7272,15 +7272,15 @@ export const articles: ArticleRecord[] = [
     slug: "volsun-named-to-kpmg-china-automotive-tech-50-2026",
     category: "news",
     datePublished: "2026-09-18T01:00:00.000Z",
-    dateModified: "2026-09-18T01:00:00.000Z",
+    dateModified: "2026-10-27T13:00:00.000Z",
     coverImagePublicPath: "/images/news/kpmg-award-2026/kpmg-leading-tech-list-group.jpg",
     locales: {
       en: {
-        title: "VOLSUN Named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List",
+        title: "VOLSUN Named to KPMG China's 9th Auto Tech 50 – Leading Technology List",
         excerpt:
-          "VOLSUN was named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List, recognizing its material solutions spanning insulation, sealing, electrical conductivity, and thermal management for automotive e-drive and motor applications.",
+          "VOLSUN was named to KPMG China's 9th Auto Tech 50 – Leading Technology List, recognizing its material solutions spanning insulation, sealing, electrical conductivity, and thermal management for automotive e-drive and motor applications.",
         metaDescription:
-          "VOLSUN was named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List. The recognition highlights VOLSUN's material capabilities—insulation, sealing, electrical conductivity, and thermal management—supporting automotive e-drive, motor, and bearing-current protection applications such as Shaft Grounding Rings.",
+          "VOLSUN was named to KPMG China's 9th Auto Tech 50 – Leading Technology List. The recognition highlights VOLSUN's material capabilities—insulation, sealing, electrical conductivity, and thermal management—supporting automotive e-drive, motor, and bearing-current protection applications such as Shaft Grounding Rings.",
         paragraphs: [],
         blocks: [
           {
@@ -7289,13 +7289,13 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "paragraph",
-            text: "On September 17, 2026, at the 2026 KPMG China Automotive Industry Summit and the 9th Automotive Tech 50 List Release in Shanghai, VOLSUN (沃尔兴) was named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List. Selection for the list reflects KPMG China's own selection criteria and is not a certification of any specific VOLSUN product or a supplier recommendation.",
+            text: "On September 17, 2026, at the 2026 KPMG China Automotive Industry Summit and the 9th Auto Tech 50 List Release in Shanghai, VOLSUN (沃尔兴) was named to KPMG China's 9th Auto Tech 50 – Leading Technology List. Selection for the list reflects KPMG China's own selection criteria and is not a certification of any specific VOLSUN product or a supplier recommendation.",
           },
           {
             type: "image",
             src: "/images/news/kpmg-award-2026/kpmg-summit-backdrop.jpg",
-            alt: "2026 KPMG China Automotive Industry Summit and 9th Automotive Technology 50 List launch event",
-            caption: "2026 KPMG China Automotive Industry Summit and the 9th Automotive Technology 50 List launch event.",
+            alt: "2026 KPMG China Automotive Industry Summit and 9th Auto Tech 50 List launch event",
+            caption: "2026 KPMG China Automotive Industry Summit and the 9th Auto Tech 50 List launch event.",
             width: 1600,
             height: 1066,
           },
@@ -7326,8 +7326,8 @@ export const articles: ArticleRecord[] = [
           {
             type: "image",
             src: "/images/news/kpmg-award-2026/kpmg-award-trophy.jpg",
-            alt: "VOLSUN recognition plaque for KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List",
-            caption: "VOLSUN was named to KPMG China's 9th Leading Automotive Technology Enterprises 50 – Leading Technology List.",
+            alt: "VOLSUN recognition plaque for KPMG China's 9th Auto Tech 50 – Leading Technology List",
+            caption: "VOLSUN was named to KPMG China's 9th Auto Tech 50 – Leading Technology List.",
             width: 1066,
             height: 1600,
           },
@@ -7370,11 +7370,11 @@ export const articles: ArticleRecord[] = [
         ],
       },
       zh: {
-        title: '沃尔兴入选毕马威中国"领先·汽车科技企业50（第九届）"领先科技榜',
+        title: '沃尔兴入选毕马威中国"第九届汽车科技50"领先科技榜',
         excerpt:
-          "沃尔兴入选毕马威中国“领先·汽车科技企业50（第九届）”领先科技榜，认可其在汽车电驱动与电机应用中的绝缘材料、密封、导电与导热解决方案。",
+          "沃尔兴入选毕马威中国“第九届汽车科技50”领先科技榜，认可其在汽车电驱动与电机应用中的绝缘材料、密封、导电与导热解决方案。",
         metaDescription:
-          "沃尔兴入选毕马威中国“领先·汽车科技企业50（第九届）”领先科技榜。这一入选体现了沃尔兴在绝缘、密封、导电与导热等材料能力上的积累，服务于汽车电驱动、电机及轴电流防护（如轴接地环）等应用。",
+          "沃尔兴入选毕马威中国“第九届汽车科技50”领先科技榜。这一入选体现了沃尔兴在绝缘、密封、导电与导热等材料能力上的积累，服务于汽车电驱动、电机及轴电流防护（如轴接地环）等应用。",
         paragraphs: [],
         blocks: [
           {
@@ -7383,7 +7383,7 @@ export const articles: ArticleRecord[] = [
           },
           {
             type: "paragraph",
-            text: "2026年9月17日，在上海举行的“2026年毕马威中国汽车行业峰会暨第九届汽车科技50榜单发布会”上，沃尔兴（VOLSUN）入选毕马威中国“领先·汽车科技企业50（第九届）”—领先科技榜。入选该榜单，是沃尔兴进入毕马威中国第九届汽车科技50企业名单，属于外部对企业在汽车科技方向上的一种关注；该入选不构成对任一具体产品的认证或供应商推荐。",
+            text: "2026年9月17日，在上海举行的“2026年毕马威中国汽车行业峰会暨第九届汽车科技50榜单发布会”上，沃尔兴（VOLSUN）入选毕马威中国“第九届汽车科技50”—领先科技榜。入选该榜单，是沃尔兴进入毕马威中国第九届汽车科技50企业名单，属于外部对企业在汽车科技方向上的一种关注；该入选不构成对任一具体产品的认证或供应商推荐。",
           },
           {
             type: "image",
@@ -7420,8 +7420,8 @@ export const articles: ArticleRecord[] = [
           {
             type: "image",
             src: "/images/news/kpmg-award-2026/kpmg-award-trophy.jpg",
-            alt: "沃尔兴入选毕马威中国领先·汽车科技企业50（第九届）领先科技榜奖牌",
-            caption: "沃尔兴入选毕马威中国“领先·汽车科技企业50（第九届）”领先科技榜。",
+            alt: "沃尔兴入选毕马威中国第九届汽车科技50领先科技榜奖牌",
+            caption: "沃尔兴入选毕马威中国“第九届汽车科技50”领先科技榜。",
             width: 1066,
             height: 1600,
           },

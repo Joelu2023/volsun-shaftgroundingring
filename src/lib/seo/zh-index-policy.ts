@@ -6,7 +6,8 @@ export type ZhIndexStrategy = "disabled" | "phase1a";
 const VALID_STRATEGIES: ReadonlySet<string> = new Set(["disabled", "phase1a"]);
 
 /**
- * Phase 1-A: core KC hub + conversion articles (art-5, art-6, art-7, art-9).
+ * Phase 1-A: core KC hub, conversion articles (art-5, art-6, art-7, art-9),
+ * and the approved KPMG news article (art-23).
  * Future phases add entries here or new strategy branches.
  */
 export const PHASE1A_KC_HUB_PATH = "/knowledge-center";
@@ -16,6 +17,7 @@ export const PHASE1A_KC_ARTICLE_SLUGS: readonly string[] = [
   "how-to-install-shaft-grounding-ring", // art-6
   "why-shaft-grounding-ring-is-smarter-choice-for-vfd-motors", // art-7
   "what-causes-vfd-bearing-failure", // art-9
+  "volsun-named-to-kpmg-china-automotive-tech-50-2026", // art-23
 ];
 
 export const PHASE1A_APPLICATION_PATHS: readonly string[] = [

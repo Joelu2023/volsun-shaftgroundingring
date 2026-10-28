@@ -3,6 +3,7 @@ import test from "node:test";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
 import { applications } from "@/data";
+import { getArticleForLocale } from "@/data/mock/articles";
 import { buildPageMetadata, localeRobots } from "@/lib/seo/metadata";
 import { getCanonicalSiteOrigin } from "@/config/site";
 import {
@@ -69,8 +70,106 @@ test("phase1a allowlist paths", () => {
   assert.equal(isZhPhase1aIndexableLogicalPath("/knowledge-center/what-causes-vfd-bearing-failure"), true);
   assert.equal(isZhPhase1aIndexableLogicalPath("/products/solid-shaft-grounding-ring"), true);
   assert.equal(isZhPhase1aIndexableLogicalPath("/applications/industrial-motors"), true);
+  assert.equal(
+    isZhPhase1aIndexableLogicalPath(
+      "/knowledge-center/volsun-named-to-kpmg-china-automotive-tech-50-2026",
+    ),
+    true,
+  );
   assert.equal(isZhPhase1aIndexableLogicalPath("/contact"), false);
   assert.equal(isZhPhase1aIndexableLogicalPath("/knowledge-center/volsun-at-easa-2026-orlando"), false);
+  assert.equal(
+    isZhPhase1aIndexableLogicalPath("/knowledge-center/why-vfd-motors-need-shaft-grounding-rings"),
+    false,
+  );
+});
+
+test("KPMG zh news is indexable only under phase1a and keeps PR 29 copy", () => {
+  const slug = "volsun-named-to-kpmg-china-automotive-tech-50-2026";
+  const path = `/knowledge-center/${slug}`;
+  const base = getCanonicalSiteOrigin();
+  const en = getArticleForLocale(slug, "en");
+  const zh = getArticleForLocale(slug, "zh");
+  assert.equal(en?.title, "VOLSUN Named to KPMG China's 9th Autotech 50 – Leading Technology List");
+  assert.equal(zh?.title, "沃尔兴入选毕马威中国《领先汽车科技企业50》（第九届）领先科技榜");
+  assert.match(
+    JSON.stringify(en),
+    /not a certification of any specific VOLSUN product or a supplier recommendation/,
+  );
+  assert.match(JSON.stringify(zh), /不构成对任一具体产品的认证或供应商推荐/);
+
+  withZhIndexStrategy(undefined, () => {
+    const zhMeta = buildPageMetadata({
+      title: zh?.title ?? "kpmg",
+      description: zh?.metaDescription ?? "desc",
+      path,
+      locale: "zh",
+    });
+    assert.deepEqual(zhMeta.robots, { index: false, follow: true });
+    assert.equal(zhMeta.alternates?.canonical, `${base}/zh${path}`);
+  });
+
+  withZhIndexStrategy("phase1a", () => {
+    const zhMeta = buildPageMetadata({
+      title: zh?.title ?? "kpmg",
+      description: zh?.metaDescription ?? "desc",
+      path,
+      locale: "zh",
+    });
+    const enMeta = buildPageMetadata({
+      title: en?.title ?? "kpmg",
+      description: en?.metaDescription ?? "desc",
+      path,
+      locale: "en",
+    });
+    assert.deepEqual(zhMeta.robots, { index: true, follow: true });
+    assert.deepEqual(enMeta.robots, { index: true, follow: true });
+    assert.equal(zhMeta.alternates?.canonical, `${base}/zh${path}`);
+    assert.equal(enMeta.alternates?.canonical, `${base}/en${path}`);
+    const zhLangs = zhMeta.alternates?.languages as Record<string, string>;
+    const enLangs = enMeta.alternates?.languages as Record<string, string>;
+    assert.equal(zhLangs.en, `${base}/en${path}`);
+    assert.equal(zhLangs["zh-CN"], `${base}/zh${path}`);
+    assert.equal(zhLangs["x-default"], `${base}/en${path}`);
+    assert.equal(enLangs.en, `${base}/en${path}`);
+    assert.equal(enLangs["zh-CN"], `${base}/zh${path}`);
+    assert.equal(enLangs["x-default"], `${base}/en${path}`);
+
+    const entries = sitemap();
+    const enUrls = entries.filter((entry) => /\/en(\/|$)/.test(entry.url));
+    const zhUrls = entries.filter((entry) => /\/zh(\/|$)/.test(entry.url));
+    const disabledEn = new Set<string>();
+    withZhIndexStrategy(undefined, () => {
+      for (const entry of sitemap()) {
+        if (/\/en(\/|$)/.test(entry.url)) disabledEn.add(entry.url);
+      }
+    });
+    assert.equal(enUrls.length, disabledEn.size);
+    assert.deepEqual(new Set(enUrls.map((entry) => entry.url)), disabledEn);
+    assert.equal(zhUrls.length, 12);
+    const zhSet = new Set(zhUrls.map((entry) => entry.url));
+    for (const suffix of [
+      "/zh/knowledge-center",
+      "/zh/knowledge-center/shaft-grounding-ring-vs-carbon-brush",
+      "/zh/knowledge-center/how-to-install-shaft-grounding-ring",
+      "/zh/knowledge-center/why-shaft-grounding-ring-is-smarter-choice-for-vfd-motors",
+      "/zh/knowledge-center/what-causes-vfd-bearing-failure",
+      "/zh/products",
+      "/zh/products/solid-shaft-grounding-ring",
+      "/zh/products/split-shaft-grounding-ring",
+      "/zh/products/custom-shaft-grounding-ring",
+      "/zh/applications/electric-vehicles",
+      "/zh/applications/industrial-motors",
+      `/zh${path}`,
+    ]) {
+      assert.ok(zhSet.has(`${base}${suffix}`), suffix);
+    }
+    assert.ok(zhUrls.some((entry) => entry.url === `${base}/zh${path}`));
+    assert.ok(enUrls.some((entry) => entry.url === `${base}/en${path}`));
+    assert.ok(!zhUrls.some((entry) => entry.url.includes("why-vfd-motors-need-shaft-grounding-rings")));
+    assert.ok(!zhUrls.some((entry) => entry.url.includes("volsun-at-easa-2026-orlando")));
+    assert.ok(!zhUrls.some((entry) => entry.url.endsWith("/zh/contact")));
+  });
 });
 
 test("buildPageMetadata: zh pages set noindex follow when strategy disabled", () => {

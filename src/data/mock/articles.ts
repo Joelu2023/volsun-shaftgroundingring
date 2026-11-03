@@ -7647,6 +7647,680 @@ export const articles: ArticleRecord[] = [
       },
     },
   },
+  {
+    id: "art-25",
+    slug: "shaft-grounding-ring-vs-dvdt-filter",
+    category: "technical-articles",
+    datePublished: "2026-11-03T09:00:00.000Z",
+    dateModified: "2026-11-03T09:00:00.000Z",
+    coverImagePublicPath:
+      "/images/articles/vfd-bearing-failure/volsun-shaft-grounding-rings-motor-application-context.webp",
+    coverImageAlt:
+      "VOLSUN shaft grounding rings installed on an AC motor in an industrial VFD drive application",
+    locales: {
+      en: {
+        title:
+          "Shaft Grounding Ring vs. dV/dt Filter and Common-Mode Reactor: Which Protects VFD Motor Bearings?",
+        seoTitle:
+          "Shaft Grounding Ring vs dV/dt Filter for VFD Motors | VOLSUN",
+        excerpt:
+          "Compare a shaft grounding ring with a dV/dt filter and common-mode reactor for VFD motor bearing protection. Learn what each reduces and when a motor may need more than one.",
+        metaDescription:
+          "Compare a shaft grounding ring with a dV/dt filter and common-mode reactor for VFD motor bearing protection. Learn what each reduces and when a motor may need more than one.",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Variable frequency drives improve efficiency and speed control, but their high-frequency PWM switching can produce shaft voltage and bearing current that damage motor bearings over time. Several mitigation options are commonly discussed: shaft grounding rings, dV/dt output filters, and common-mode reactors. (Insulated bearings are a related but separate option, covered in a dedicated comparison.) These solutions are often treated as interchangeable, but they address different parts of the same problem. Choosing the wrong one—or using only one when a combined approach is needed—can leave a motor vulnerable.",
+          },
+          {
+            type: "paragraph",
+            text: "This article explains how each solution works, what it actually reduces, and when a VFD motor may require more than one. It is a comparison of protection mechanisms, not a buying guide; for product selection and mounting practice, use the linked guides.",
+          },
+          {
+            type: "heading",
+            text: "Quick Answer",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring provides a controlled, low-impedance path that diverts shaft current to the grounded motor frame, reducing the voltage that remains on the shaft. A dV/dt filter sits at the VFD output and reduces the voltage rise rate and overshoot of the PWM waveform, which lowers the capacitive coupling that drives shaft voltage. A common-mode reactor is a series inductor on all phases that reduces common-mode current flowing in the motor cable and therefore the common-mode voltage at the motor terminals. None of these is universally sufficient alone: the ring acts on the shaft after voltage has built up; filters and reactors reduce the source magnitude but do not directly discharge the shaft. Many installations combine a ring with source-side filtering.",
+          },
+          {
+            type: "heading",
+            text: "Why VFDs Stress Motor Bearings",
+          },
+          {
+            type: "paragraph",
+            text: "PWM switching in a VFD creates common-mode voltage on the motor windings. The steep voltage edges of each switching transition—expressed as high dv/dt—drive larger instantaneous capacitive current through every parasitic capacitance in the motor system. Through capacitive coupling between the stator and rotor, this voltage can appear on the rotating shaft. When the shaft-to-frame voltage exceeds the breakdown threshold of the bearing lubricant film, current discharges through the bearing. Repeated discharges cause electrical discharge machining (EDM) damage: pitting on the bearing raceway, a frosted surface finish, and eventually bearing fluting and premature failure.",
+          },
+          {
+            type: "paragraph",
+            text: "Two distinctions matter for choosing protection. Shaft voltage is not the same as bearing current: shaft voltage is the electrical stress on the rotating shaft relative to a reference, while bearing current is what actually flows through a bearing path. And there is no single safe shaft-voltage threshold that applies to every motor and drive; the right judgment depends on VFD topology, switching frequency, frame size, cable length, grounding arrangement, bearing configuration, insulation, coupling, speed, lubrication, the actual waveform, and the bearing-current mechanism.",
+          },
+          {
+            type: "link",
+            intro: "For the mechanism in detail:",
+            label: "What Causes Shaft Voltage in VFD Motors?",
+            href: "/knowledge-center/what-causes-shaft-voltage-in-vfd-motors",
+          },
+          {
+            type: "link",
+            intro: "For a symptom-first diagnosis:",
+            label: "What Causes VFD Bearing Failure?",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "heading",
+            text: "How a Shaft Grounding Ring Works",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring uses conductive microfibers that make continuous contact with the rotating shaft and connect to the grounded motor frame. When shaft voltage builds up, the ring provides a controlled, low-impedance path for that charge to flow to ground before it can discharge through the bearing lubricant film.",
+          },
+          {
+            type: "paragraph",
+            text: "The key characteristic is that the ring is active with the shaft: it reduces the voltage that remains on the shaft during operation. It does not block current; it redirects it. For this to work, the ring must be correctly positioned on a clean shaft surface, properly secured to the motor housing or end shield, and connected to a reliable ground path.",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN's solid shaft grounding ring (VS-RD/RDW) and arc-shaped shaft grounding ring (VS-ST/STW) both use metallized carbon-fiber contact. They differ in installation approach: the solid ring is installed as a complete ring, while the arc-shaped version can be fitted without removing the shaft coupling—useful for retrofit work.",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/volsun-solid-shaft-grounding-ring-structure.webp",
+            alt: "VOLSUN solid shaft grounding ring showing metal housing and inward-facing conductive microfiber brushes",
+            caption:
+              "Product structure of a VOLSUN solid shaft grounding ring: metal ring housing with conductive microfiber brush bundles facing the shaft bore.",
+            width: 1200,
+            height: 906,
+          },
+          {
+            type: "link",
+            intro: "Solid ring product family:",
+            label: "VS-RD / VS-RDW solid shaft grounding ring",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "Arc-shaped ring for retrofit or constrained installations:",
+            label: "VS-ST / VS-STW arc-shaped shaft grounding ring",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "Why the ring is used at all:",
+            label: "Why VFD Motors Need Shaft Grounding Rings",
+            href: "/knowledge-center/why-vfd-motors-need-shaft-grounding-rings",
+          },
+          {
+            type: "heading",
+            text: "How a dV/dt Filter Works",
+          },
+          {
+            type: "paragraph",
+            text: "A dV/dt filter is installed at the VFD output, between the drive and the motor cable. It reduces the rate of voltage change (dv/dt) and the overshoot or reflection of the PWM pulses. By slowing the steepness of the waveform, it reduces the capacitive current that couples into the motor and therefore lowers the shaft-voltage drive.",
+          },
+          {
+            type: "paragraph",
+            text: "The filter does not connect to the shaft; it acts on the source waveform. Its effectiveness depends on the switching frequency, cable length, motor size, and drive design. It reduces the magnitude of the shaft-voltage drive but does not guarantee elimination of shaft voltage, and it does not provide a shaft-to-ground discharge path.",
+          },
+          {
+            type: "paragraph",
+            text: "A dV/dt filter is most often considered where long motor cables cause reflected waves and high dv/dt, or where waveform control at the motor terminals is a design goal. It is a cable- and drive-side measure, complementary to a shaft-side measure such as a grounding ring.",
+          },
+          {
+            type: "heading",
+            text: "How a Common-Mode Reactor Works",
+          },
+          {
+            type: "paragraph",
+            text: "A common-mode reactor is a series inductor inserted in all three phases at the VFD output. It opposes common-mode current flowing in the motor cable and reduces the common-mode voltage present at the motor terminals. Because the shaft voltage is driven by that terminal common-mode voltage through the motor's internal capacitances, lowering it reduces the voltage available to couple onto the shaft.",
+          },
+          {
+            type: "paragraph",
+            text: "Like the dV/dt filter, a common-mode reactor is a source-side measure. It reduces the magnitude of the common-mode drive but does not provide a shaft-to-ground discharge path, so residual shaft voltage can remain. A reactor and a dV/dt filter are related but distinct: the reactor limits common-mode current, while the dV/dt filter shapes the voltage edges. They are often combined in output-filtering packages.",
+          },
+          {
+            type: "heading",
+            text: "Shaft Grounding Ring vs. dV/dt Filter vs. Common-Mode Reactor",
+          },
+          {
+            type: "table",
+            caption:
+              "Comparison of shaft grounding ring, dV/dt filter, and common-mode reactor for VFD motor bearing protection",
+            headers: [
+              "Factor",
+              "Shaft Grounding Ring",
+              "dV/dt Filter",
+              "Common-Mode Reactor",
+            ],
+            rows: [
+              [
+                "Working principle",
+                "Provides a controlled low-impedance path from shaft to grounded frame",
+                "Reduces dv/dt and overshoot of the PWM waveform at the VFD output",
+                "Series inductance limits common-mode current in the motor cable",
+              ],
+              [
+                "What it reduces",
+                "Shaft voltage, by diverting charge to ground",
+                "Capacitive coupling, by slowing voltage edges",
+                "Common-mode current and terminal common-mode voltage",
+              ],
+              [
+                "Where placed",
+                "On the motor shaft (drive end or non-drive end)",
+                "At the VFD output, before the motor cable",
+                "At the VFD output, in series with the phases",
+              ],
+              [
+                "Acts on",
+                "The shaft-to-frame path after voltage builds up",
+                "The PWM source waveform",
+                "The cable common-mode current",
+              ],
+              [
+                "Shaft-voltage discharge",
+                "Actively reduces it by diverting to ground",
+                "Reduces the drive; does not discharge the shaft",
+                "Reduces the drive; does not discharge the shaft",
+              ],
+              [
+                "Retrofit effort",
+                "Ring mounts without bearing change; split ring needs no full teardown",
+                "Filter added at the drive cabinet",
+                "Reactor added at the drive cabinet",
+              ],
+              [
+                "Main limitation",
+                "Does not block current on its own; depends on install quality and ground path",
+                "Source-side only; does not eliminate shaft voltage alone",
+                "Source-side only; does not eliminate shaft voltage alone",
+              ],
+              [
+                "Typical use",
+                "Smaller and medium motors with shaft-to-ground discharge",
+                "Long cable runs, high dv/dt, waveform control",
+                "Common-mode current reduction, terminal-voltage control",
+              ],
+            ],
+          },
+          {
+            type: "heading",
+            text: "When a Shaft Grounding Ring Is the Primary Measure",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring is often the first measure considered for smaller and medium-sized VFD motors where shaft-to-ground capacitive discharge current is the primary concern. Because it diverts shaft voltage proactively, it reduces the electrical stress that reaches both bearings simultaneously.",
+          },
+          {
+            type: "list",
+            items: [
+              "The motor is driven by a VFD and shows elevated shaft voltage",
+              "Bearing failure has been diagnosed as EDM-related, with pitting or a frosted raceway",
+              "Retrofit is required without bearing replacement",
+              "The motor is smaller and shaft-to-ground discharge current is more likely than circulating current",
+              "Installation space allows mounting a solid or arc-shaped ring on the drive or non-drive end",
+            ],
+          },
+          {
+            type: "link",
+            intro: "Installation guidance:",
+            label: "How to Install a Shaft Grounding Ring",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "When a dV/dt Filter or Common-Mode Reactor Is Warranted",
+          },
+          {
+            type: "paragraph",
+            text: "Source-side filtering is worth considering when long motor cables cause reflected-wave high dv/dt, or when common-mode current and terminal voltage must be reduced at the source. These are drive- and cable-side controls that complement, rather than replace, a shaft-side measure.",
+          },
+          {
+            type: "list",
+            items: [
+              "Long motor cable runs where reflected waves raise dv/dt at the motor",
+              "High VFD switching or carrier frequency",
+              "Multiple motors fed from one drive output",
+              "Motor terminals measured with high common-mode voltage",
+              "A design goal of controlling the PWM waveform before it reaches the motor",
+            ],
+          },
+          {
+            type: "heading",
+            text: "When a VFD Motor May Need Both",
+          },
+          {
+            type: "paragraph",
+            text: "For larger VFD motors, high carrier frequency, long cables, or where circulating bearing current is also present, a ring on the shaft plus source-side filtering addresses both the shaft discharge and the source magnitude. Neither alone may be enough; a coordinated approach is often specified by OEM or motor manufacturer guidelines.",
+          },
+          {
+            type: "paragraph",
+            text: "An important note: filtering that only reduces the source magnitude may still leave residual shaft voltage, so a grounding ring remains useful to provide the discharge path. Conversely, a ring alone does not reduce the source waveform. The two are complementary, not redundant.",
+          },
+          {
+            type: "heading",
+            text: "Motor Protection Selection Checklist",
+          },
+          {
+            type: "paragraph",
+            text: "Providing the following information makes it possible to review which protection strategy—grounding ring, dV/dt filter, common-mode reactor, or a combination—may be appropriate for a specific motor and application:",
+          },
+          {
+            type: "list",
+            items: [
+              "Motor power rating and supply voltage",
+              "VFD make and model",
+              "VFD switching or carrier frequency",
+              "Motor cable length between drive and motor",
+              "Shaft diameter and available mounting space (drive end and non-drive end)",
+              "Rated speed and maximum operating speed",
+              "Drive-end and non-drive-end bearing types and designations",
+              "Whether an insulated bearing is already installed (and on which end)",
+              "Connected equipment and shaft coupling type",
+              "Operating environment (dry, oil mist, oil cooled, dusty, washdown)",
+              "New design or retrofit situation",
+              "Measured shaft-voltage waveform or peak value, if available",
+            ],
+          },
+          {
+            type: "link",
+            intro: "For the full selection input framework:",
+            label: "How to Select a Shaft Grounding Ring for EC and VFD Motors",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+          },
+          {
+            type: "heading",
+            text: "Frequently Asked Questions",
+          },
+          {
+            type: "heading",
+            text: "Can a dV/dt filter replace a shaft grounding ring?",
+          },
+          {
+            type: "paragraph",
+            text: "Not always. A filter reduces the source magnitude but does not provide a shaft-to-ground discharge path. If residual shaft voltage still exceeds the bearing threshold, a grounding ring may still be needed. They address different parts of the problem and are often complementary rather than interchangeable.",
+          },
+          {
+            type: "heading",
+            text: "Does a common-mode reactor eliminate shaft voltage?",
+          },
+          {
+            type: "paragraph",
+            text: "It reduces the common-mode drive at the motor terminals, which lowers shaft voltage, but it does not eliminate it and does not discharge the shaft. A ring may still be required depending on the residual level and the bearing arrangement.",
+          },
+          {
+            type: "heading",
+            text: "Should the filter or reactor be installed at the VFD or at the motor?",
+          },
+          {
+            type: "paragraph",
+            text: "These are typically installed at the VFD output, between the drive and the motor cable, because they act on the PWM waveform and cable common-mode current. A shaft grounding ring is mounted on the motor shaft. They operate at different points in the system, which is why they are often used together.",
+          },
+          {
+            type: "heading",
+            text: "What shaft-voltage level means a ring or filter is needed?",
+          },
+          {
+            type: "paragraph",
+            text: "There is no single threshold that applies to all motors and drives. Shaft-voltage measurement, interpreted alongside motor size, VFD switching frequency, cable length, grounding arrangement, and observed bearing condition, gives a more complete picture. A single peak reading is not sufficient to choose a strategy without the application context.",
+          },
+          {
+            type: "heading",
+            text: "Conclusion",
+          },
+          {
+            type: "paragraph",
+            text: "A shaft grounding ring, a dV/dt filter, and a common-mode reactor each protect VFD motor bearings from a different angle. The ring diverts shaft current to ground; filters and reactors reduce the source magnitude. They are not interchangeable, and many installations use more than one. The right combination depends on motor size, VFD characteristics, cable system, bearing configuration, and operating environment.",
+          },
+          {
+            type: "paragraph",
+            text: "Review the inputs in the checklist above before specifying a protection strategy. For a different comparison perspective, see the shaft grounding ring versus insulated bearing article, and for product options explore the VOLSUN shaft grounding ring families.",
+          },
+          {
+            type: "link",
+            intro: "Another comparison angle:",
+            label: "Shaft Grounding Ring vs. Insulated Bearing",
+            href: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
+          },
+          {
+            type: "link",
+            intro: "Explore grounding ring options:",
+            label: "VOLSUN shaft grounding ring products",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+        ],
+      },
+      zh: {
+        title:
+          "轴接地环 vs dV/dt 滤波器与共模电抗器：谁能保护变频电机轴承？",
+        seoTitle: "轴接地环 vs dV/dt 滤波器：变频电机防护对比 | VOLSUN",
+        excerpt:
+          "对比轴接地环、dV/dt 滤波器与共模电抗器在变频电机轴承防护中的作用。了解各自降低什么，以及何时需要组合使用。",
+        metaDescription:
+          "对比轴接地环、dV/dt 滤波器与共模电抗器在变频电机轴承防护中的作用。了解各自降低什么，以及何时需要组合使用。",
+        paragraphs: [],
+        blocks: [
+          {
+            type: "paragraph",
+            text: "变频驱动器能提升效率与调速性能，但其高频 PWM 开关可能产生轴电压与轴承电流，长期损伤电机轴承。常见的抑制手段有几种：轴接地环、dV/dt 输出滤波器与共模电抗器。（绝缘轴承是相关但独立的方案，另有专文对比。）这些方案常被当作可互换，但实际上解决的是同一问题的不同环节。选错方案，或在需要组合时只采用一种，都可能让电机仍处于风险中。",
+          },
+          {
+            type: "paragraph",
+            text: "本文说明每种方案的工作原理、实际降低的是什么，以及何时可能需要多种方案并用。这是对防护机理的对比，并非采购指南；产品选型与安装方法请参阅文中的链接指南。",
+          },
+          {
+            type: "heading",
+            text: "快速结论",
+          },
+          {
+            type: "paragraph",
+            text: "轴接地环提供一条受控的低阻抗通路，将轴电流引向接地的电机机壳，从而降低轴上残余电压。dV/dt 滤波器位于变频器输出端，降低 PWM 波形的电压上升率与过冲，从而减弱驱动轴电压的容性耦合。共模电抗器是串接在三相上的串联电感，减小电机电缆中的共模电流，进而降低电机端子的共模电压。三者都不是万能的：接地环作用于电压已经建立之后的轴；滤波器与电抗器降低的是源头幅值，并不直接释放轴电流。许多现场方案会将接地环与源端滤波组合使用。",
+          },
+          {
+            type: "heading",
+            text: "为什么变频器会损伤电机轴承",
+          },
+          {
+            type: "paragraph",
+            text: "变频器的 PWM 开关会在电机绕组上产生共模电压。每次开关跳变都是电压阶跃除以极短时间，即高 dv/dt，它会驱动更大的瞬时容性电流流过电机系统内每一处寄生电容。通过定子与转子之间的容性耦合，这一电压会转移到旋转轴上。当轴对机壳电压超过润滑油膜的击穿阈值时，电流便通过轴承放电。反复放电造成电火花放电加工（EDM）损伤：轴承滚道点蚀、表面呈磨砂状，最终出现搓板纹与早期失效。",
+          },
+          {
+            type: "paragraph",
+            text: "选型时有两点区分很关键。轴电压不等于轴承电流：轴电压是旋转轴相对于参考点的电气应力，轴承电流才是实际流过轴承通路的电流。也不存在适用于所有电机与驱动器的单一安全轴电压阈值；正确判断需综合变频器拓扑、开关频率、机座尺寸、电缆长度、接地方式、轴承结构、绝缘、联轴器、转速、润滑、实际波形以及轴承电流机理。",
+          },
+          {
+            type: "link",
+            intro: "了解完整机理：",
+            label: "变频电机轴电压的成因",
+            href: "/knowledge-center/what-causes-shaft-voltage-in-vfd-motors",
+          },
+          {
+            type: "link",
+            intro: "从症状角度诊断：",
+            label: "变频电机轴承失效的原因",
+            href: "/knowledge-center/what-causes-vfd-bearing-failure",
+          },
+          {
+            type: "heading",
+            text: "轴接地环的工作原理",
+          },
+          {
+            type: "paragraph",
+            text: "轴接地环采用导电微纤维，与旋转轴持续接触并连接到接地的电机机壳。当轴电压建立时，接地环提供一条受控的低阻抗通路，让电荷在通过轴承油膜放电之前流向大地。",
+          },
+          {
+            type: "paragraph",
+            text: "其核心特点是随轴工作：它在运行期间降低轴上的残余电压。它不阻断电流，而是将电流重定向。为此，接地环必须正确安装在洁净的轴面上，可靠固定在电机机壳或端盖上，并连接到可靠的接地通路。",
+          },
+          {
+            type: "paragraph",
+            text: "VOLSUN 实心轴接地环（VS-RD/RDW）与弧形轴接地环（VS-ST/STW）均采用金属化碳纤维接触。二者安装方式不同：实心环作为完整环安装，弧形版本可在不拆卸轴端联轴器的情况下安装，适合改造场景。",
+          },
+          {
+            type: "image",
+            src: "/images/articles/vfd-bearing-failure/volsun-solid-shaft-grounding-ring-structure.webp",
+            alt: "VOLSUN 实心轴接地环，显示金属外壳与朝向轴孔的导电微纤维刷束",
+            caption:
+              "VOLSUN 实心轴接地环的产品结构：金属环外壳，导电微纤维刷束朝向轴孔。",
+            width: 1200,
+            height: 906,
+          },
+          {
+            type: "link",
+            intro: "实心环产品系列：",
+            label: "VS-RD / VS-RDW 实心轴接地环",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "适合改造或空间受限的弧形环：",
+            label: "VS-ST / VS-STW 弧形轴接地环",
+            href: "/products/split-shaft-grounding-ring",
+          },
+          {
+            type: "link",
+            intro: "为何需要使用接地环：",
+            label: "变频电机为何需要轴接地环",
+            href: "/knowledge-center/why-vfd-motors-need-shaft-grounding-rings",
+          },
+          {
+            type: "heading",
+            text: "dV/dt 滤波器的工作原理",
+          },
+          {
+            type: "paragraph",
+            text: "dV/dt 滤波器安装在变频器输出端、驱动器与电机电缆之间。它降低电压变化率（dv/dt）以及 PWM 脉冲的过冲或反射。通过减缓波形的陡峭程度，它减小了耦合进电机的容性电流，从而降低轴电压的驱动。",
+          },
+          {
+            type: "paragraph",
+            text: "滤波器不连接轴，而是作用于源端波形。其效果取决于开关频率、电缆长度、电机尺寸与驱动器设计。它降低轴电压驱动的幅值，但不能保证消除轴电压，也不提供轴对地的放电通路。",
+          },
+          {
+            type: "paragraph",
+            text: "当长电机电缆引起反射波与高 dv/dt，或以控制电机端子波形为设计目标时，最常考虑 dV/dt 滤波器。它属于电缆与驱动侧的举措，与轴接地环等轴侧举措互补。",
+          },
+          {
+            type: "heading",
+            text: "共模电抗器的工作原理",
+          },
+          {
+            type: "paragraph",
+            text: "共模电抗器是串接在三相上的串联电感，安装在变频器输出端。它抑制流过电机电缆的共模电流，降低电机端子上的共模电压。由于轴电压正是由该端子共模电压经电机内部电容耦合驱动，降低它也就减少了可耦合到轴上的电压。",
+          },
+          {
+            type: "paragraph",
+            text: "与 dV/dt 滤波器一样，共模电抗器也是源端举措。它降低共模驱动的幅值，但不提供轴对地的放电通路，因此轴上仍可能残留电压。电抗器与 dV/dt 滤波器相关但不同：电抗器限制共模电流，dV/dt 滤波器塑造电压边沿。二者常组合在输出滤波方案中。",
+          },
+          {
+            type: "heading",
+            text: "轴接地环 vs dV/dt 滤波器 vs 共模电抗器",
+          },
+          {
+            type: "table",
+            caption: "轴接地环、dV/dt 滤波器与共模电抗器在变频电机轴承防护中的对比",
+            headers: ["对比项", "轴接地环", "dV/dt 滤波器", "共模电抗器"],
+            rows: [
+              [
+                "工作原理",
+                "提供轴到接地机壳的受控低阻抗通路",
+                "降低变频器输出端 PWM 波形的 dv/dt 与过冲",
+                "串联电感限制电机电缆中的共模电流",
+              ],
+              [
+                "降低对象",
+                "轴电压（将电荷引向大地）",
+                "容性耦合（减缓电压边沿）",
+                "共模电流与端子共模电压",
+              ],
+              [
+                "安装位置",
+                "电机轴上（驱动端或非驱动端）",
+                "变频器输出端、电机电缆之前",
+                "变频器输出端、串联在相线中",
+              ],
+              [
+                "作用环节",
+                "电压建立后的轴—机壳通路",
+                "PWM 源端波形",
+                "电缆共模电流",
+              ],
+              [
+                "轴电压释放",
+                "主动引向大地从而降低",
+                "降低驱动，不直接释放轴",
+                "降低驱动，不直接释放轴",
+              ],
+              [
+                "改造工作量",
+                "无需更换轴承即可安装；弧形环无需完全拆机",
+                "在驱动柜侧加装",
+                "在驱动柜侧加装",
+              ],
+              [
+                "主要局限",
+                "本身不阻断电流；取决于安装质量与接地",
+                "仅源端；不能单独消除轴电压",
+                "仅源端；不能单独消除轴电压",
+              ],
+              [
+                "典型用途",
+                "中小型、以轴对地放电为主的电机",
+                "长电缆、高 dv/dt、波形控制",
+                "共模电流抑制、端子电压控制",
+              ],
+            ],
+          },
+          {
+            type: "heading",
+            text: "何时以轴接地环为主方案",
+          },
+          {
+            type: "paragraph",
+            text: "对于中小型变频电机，若主要风险是轴对地容性放电电流，轴接地环常作为首选举措。由于它主动引走轴电压，能同时降低两端轴承所受的电气应力。",
+          },
+          {
+            type: "list",
+            items: [
+              "电机由变频器驱动且轴电压偏高",
+              "轴承失效已诊断为 EDM 相关，出现点蚀或磨砂状滚道",
+              "要求改造且不能更换轴承",
+              "电机较小，轴对地放电电流比环流更可能出现",
+              "驱动端或非驱动端有空间安装实心或弧形环",
+            ],
+          },
+          {
+            type: "link",
+            intro: "安装指南：",
+            label: "如何正确安装轴接地环",
+            href: "/knowledge-center/how-to-install-shaft-grounding-ring",
+          },
+          {
+            type: "heading",
+            text: "何时需要 dV/dt 滤波器或共模电抗器",
+          },
+          {
+            type: "paragraph",
+            text: "当长电机电缆引起反射波式高 dv/dt，或必须从源头降低共模电流与端子电压时，源端滤波值得考虑。这些是驱动与电缆侧的举措，补充而非替代轴侧举措。",
+          },
+          {
+            type: "list",
+            items: [
+              "电机电缆较长，电机端出现反射波导致高 dv/dt",
+              "变频器开关或载波频率较高",
+              "一台驱动器带多台电机",
+              "测得电机端子共模电压偏高",
+              "设计目标是在到达电机前控制 PWM 波形",
+            ],
+          },
+          {
+            type: "heading",
+            text: "何时可能需要组合方案",
+          },
+          {
+            type: "paragraph",
+            text: "对于大型变频电机、高载波频率、长电缆，或同时存在环流型轴承电流的情况，轴上的接地环加上源端滤波可同时解决轴放电与源头幅值问题。单独一种可能都不够；成套方案常由 OEM 或电机制造商规范指定。",
+          },
+          {
+            type: "paragraph",
+            text: "重要说明：仅降低源头幅值的滤波仍可能残留轴电压，因此接地环对提供放电通路依然有用。反之，单靠接地环并不降低源端波形。二者是互补而非冗余。",
+          },
+          {
+            type: "heading",
+            text: "电机防护选型清单",
+          },
+          {
+            type: "paragraph",
+            text: "提供以下信息，便于评估某台具体电机与应用应采用哪种防护策略——接地环、dV/dt 滤波器、共模电抗器或组合：",
+          },
+          {
+            type: "list",
+            items: [
+              "电机功率与供电电压",
+              "变频器品牌与型号",
+              "变频器开关或载波频率",
+              "驱动器到电机的电缆长度",
+              "轴径与可用安装空间（驱动端与非驱动端）",
+              "额定转速与最高运行转速",
+              "驱动端与非驱动端轴承型号",
+              "是否已安装绝缘轴承（以及安装在哪一端）",
+              "相连设备与联轴器类型",
+              "运行环境（干燥、油雾、油冷、粉尘、冲洗）",
+              "新设计还是改造场景",
+              "如有，提供实测轴电压波形或峰值",
+            ],
+          },
+          {
+            type: "link",
+            intro: "完整选型输入框架：",
+            label: "如何为 EC 与变频电机选型轴接地环",
+            href: "/knowledge-center/how-to-select-shaft-grounding-ring-ec-vfd-motors",
+          },
+          {
+            type: "heading",
+            text: "常见问题",
+          },
+          {
+            type: "heading",
+            text: "dV/dt 滤波器能替代轴接地环吗？",
+          },
+          {
+            type: "paragraph",
+            text: "不一定。滤波器降低源头幅值，但不提供轴对地的放电通路。若残留轴电压仍超过轴承阈值，可能仍需要接地环。二者解决的是问题的不同环节，通常互补而非可互换。",
+          },
+          {
+            type: "heading",
+            text: "共模电抗器能消除轴电压吗？",
+          },
+          {
+            type: "paragraph",
+            text: "它降低电机端的共模驱动，从而减小轴电压，但不能消除，也不释放轴电流。根据残留水平与轴承结构，可能仍需要接地环。",
+          },
+          {
+            type: "heading",
+            text: "滤波器或电抗器应装在变频器侧还是电机侧？",
+          },
+          {
+            type: "paragraph",
+            text: "它们通常安装在变频器输出端、驱动器与电机电缆之间，因为作用于 PWM 波形与电缆共模电流。轴接地环则安装在电机轴上。二者作用于系统的不同位置，因此常被组合使用。",
+          },
+          {
+            type: "heading",
+            text: "轴电压达到多少就需要接地环或滤波器？",
+          },
+          {
+            type: "paragraph",
+            text: "不存在适用于所有电机与驱动器的单一阈值。轴电压实测值需结合电机尺寸、变频器开关频率、电缆长度、接地方式与实际轴承状况来综合判断。仅凭一个峰值读数不足以在缺乏应用背景时选定策略。",
+          },
+          {
+            type: "heading",
+            text: "结论",
+          },
+          {
+            type: "paragraph",
+            text: "轴接地环、dV/dt 滤波器与共模电抗器各自从不同的角度保护变频电机轴承。接地环将轴电流引向大地；滤波器与电抗器降低源头幅值。它们不可互换，许多现场方案会并用多种。正确的组合取决于电机尺寸、变频器特性、电缆系统、轴承结构与运行环境。",
+          },
+          {
+            type: "paragraph",
+            text: "在指定防护策略前，请先核对上文清单中的输入项。如需另一视角的对比，请参阅轴接地环与绝缘轴承的对比文章；产品选型可浏览 VOLSUN 轴接地环系列。",
+          },
+          {
+            type: "link",
+            intro: "另一对比视角：",
+            label: "轴接地环 vs 绝缘轴承",
+            href: "/knowledge-center/shaft-grounding-ring-vs-insulated-bearing",
+          },
+          {
+            type: "link",
+            intro: "浏览接地环产品：",
+            label: "VOLSUN 轴接地环产品",
+            href: "/products/solid-shaft-grounding-ring",
+          },
+        ],
+      },
+    },
+  },
   // __CONTENT_FACTORY_INSERT__ — content-factory 自动发布插入点，请勿删除此注释
 ];
 

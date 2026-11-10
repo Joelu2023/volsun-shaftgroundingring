@@ -160,6 +160,26 @@ export function IndustrialShaftGroundingSeoClient({ locale, data }: Props) {
       </section>
 
       <section>
+        <h2 className="text-2xl font-semibold text-brand-blue">{t.mechanismReferenceTitle}</h2>
+        <ul className="mt-4 space-y-2 text-sm text-slate-600">
+          {t.mechanismReferenceItems.map((ref) => (
+            <li key={ref.url}>
+              <a
+                href={ref.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-brand-orange hover:underline"
+              >
+                {ref.title}
+              </a>
+              {ref.meta ? <span className="ml-2 text-slate-500">{ref.meta}</span> : null}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-xs text-slate-500">{t.mechanismReferenceDisclaimer}</p>
+      </section>
+
+      <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.checklistTitle}</h2>
         <p className="mt-3 text-slate-600">{t.checklistIntro}</p>
         <ul className="mt-4 list-disc space-y-2 pl-5 text-slate-600">
@@ -167,6 +187,35 @@ export function IndustrialShaftGroundingSeoClient({ locale, data }: Props) {
             <li key={line}>{line}</li>
           ))}
         </ul>
+        {t.selectionTable ? (
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold text-brand-blue">{t.selectionTableTitle}</h3>
+            <div className="mt-4 overflow-x-auto">
+              <table className="w-full min-w-[48rem] border-collapse text-left text-sm text-slate-700">
+                <thead>
+                  <tr className="border-b border-slate-300 bg-slate-50">
+                    {t.selectionTable.headers.map((h) => (
+                      <th key={h} scope="col" className="px-3 py-2 font-semibold text-brand-blue">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {t.selectionTable.rows.map((row, ri) => (
+                    <tr key={ri} className="border-b border-slate-200 align-top">
+                      {row.map((cell, ci) => (
+                        <td key={ci} className="px-3 py-2">
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : null}
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">

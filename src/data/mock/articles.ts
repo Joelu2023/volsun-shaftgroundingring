@@ -2461,6 +2461,12 @@ export const articles: ArticleRecord[] = [
             type: "paragraph",
             text: "VFD motors may develop shaft voltage that discharges through bearings and contributes to pitting, fluting, and premature failure. Treat electrical erosion as one plausible mechanism among lubrication and mechanical causes. Follow a field diagnostic workflow, prepare carefully for shaft-voltage checks, and choose corrective actions by current path—shaft grounding ring, insulated bearing, common-mode mitigation, or a coordinated combination. If your team sees repeated VFD motor bearing failures, gather the engineering inputs above and request a preliminary application review before ordering from catalog diameter alone.",
           },
+          {
+            type: "link",
+            intro: "For an educational overview of shaft grounding for industrial motors:",
+            label: "Shaft Grounding for Industrial Motors",
+            href: "/resources/shaft-grounding-for-industrial-motors",
+          },
         ],
       },
       zh: {
@@ -2559,6 +2565,12 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "对运行变频驱动电机的设施而言，理解轴电压与轴承电流是可靠性规划的重要环节。在应用条件允许时实施轴接地防护，有助于延长轴承寿命、降低维护需求，并改善泵、压缩机、暖通、可再生能源及工业自动化等场景的可用率。",
+          },
+          {
+            type: "link",
+            intro: "工业电机轴接地的系统性科普，请参阅：",
+            label: "工业电机的轴接地",
+            href: "/resources/shaft-grounding-for-industrial-motors",
           },
         ],
       },
@@ -6334,6 +6346,12 @@ export const articles: ArticleRecord[] = [
           {
             type: "paragraph",
             text: "The right choice depends on the motor size, VFD characteristics, bearing configuration, and operating environment. Reviewing the application inputs listed in the checklist above before selecting a protection strategy helps ensure the chosen solution matches the actual current mechanisms present.",
+          },
+          {
+            type: "link",
+            intro: "For an educational overview of shaft grounding for industrial motors:",
+            label: "Shaft Grounding for Industrial Motors",
+            href: "/resources/shaft-grounding-for-industrial-motors",
           },
           {
             type: "link",

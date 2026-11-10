@@ -78,6 +78,13 @@ export type IndustrialShaftGroundingSeoLocaleBlock = {
   relatedFlutingBody: string;
   relatedFlutingCtaLabel: string;
   relatedFlutingHref: string;
+  /** E1: third-party OEM mechanism reference (drive-manufacturer literature, cited for the electrical mechanism only). */
+  mechanismReferenceTitle: string;
+  mechanismReferenceItems: { title: string; meta: string; url: string }[];
+  mechanismReferenceDisclaimer: string;
+  /** E2: Industrial Motor 8-Point Buyer Checklist (structured table). */
+  selectionTableTitle: string;
+  selectionTable: { headers: string[]; rows: string[][] };
 };
 
 export type IndustrialShaftGroundingSeoPageData = {
@@ -338,6 +345,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         "PWM edges and cable–motor capacitances couple high-frequency energy onto the rotor assembly, including the shaft surface you can access at the drive end.",
         "When shaft-to-frame voltage exceeds the lubricant film withstand threshold, micro-discharges pit the raceway—often long before broadband vibration alarms trend upward.",
         "Shaft grounding adds a preferred, low-inductance route to frame ground; it complements—but does not replace—sound bonding, cable practices, and drive settings.",
+        "Drive-manufacturer application literature documents this PWM/common-mode mechanism as the origin of shaft voltage and bearing currents in inverter-fed motors—for example Yaskawa AN.G7.02, 'Motor Bearing Current Phenomenon and 3-Level Inverter Technology.'",
       ],
       signsTitle: "Common signs of electrical bearing damage",
       signsLead:
@@ -376,6 +384,30 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         "If your team is troubleshooting fluting or repeat bearing failures, read the symptom-first guide—then return here for mitigation and product selection.",
       relatedFlutingCtaLabel: "Open bearing fluting guide",
       relatedFlutingHref: BEARING_FLUTING_RESOURCE_PATH,
+      mechanismReferenceTitle: "Technical reference",
+      mechanismReferenceItems: [
+        {
+          title: "Motor Bearing Current Phenomenon and 3-Level Inverter Technology",
+          meta: "Yaskawa Electric America, Application Note AN.G7.02 (Rev 05-06, © 2005)",
+          url: "https://www.yaskawa.com/downloads/search-index/details?docnum=AN.G7.02&showType=details",
+        },
+      ],
+      mechanismReferenceDisclaimer:
+        "Cited for the shaft-voltage / bearing-current mechanism only; this reference is not an endorsement of any product by its publisher.",
+      selectionTableTitle: "Industrial Motor 8-Point Buyer Checklist",
+      selectionTable: {
+        headers: ["Dimension", "Why it matters", "What to specify"],
+        rows: [
+          ["Shaft diameter & tolerance", "Determines ring size, fit, and fiber contact geometry", "Nominal diameter, tolerance (if any), contact location"],
+          ["Motor duty & VFD type", "Drives discharge stress and contact wear", "VFD brand/model, carrier frequency, continuous vs. intermittent duty"],
+          ["Installation envelope", "Decides solid vs. arc-shaped vs. custom structure", "Drive-end / non-drive-end space, whether coupling is removable"],
+          ["Environment", "Affects material choice and contact stability", "Dry / dusty / oily mist / oil-cooled / washdown / temperature range"],
+          ["Grounding architecture", "Determines whether the discharge path is complete", "Frame grounding method, existing insulated bearings or grounding devices"],
+          ["Bearing condition", "Indicates possible electrical damage", "Fluting/pitting present? Damage photos available?"],
+          ["Service & inspection", "Influences structure choice and replacement cycle", "Desired inspection interval, need for quick retrofit"],
+          ["Certification, compliance & documentation", "Required for industrial QA and procurement", "CE/RoHS/ATEX as applicable, datasheet/test-report availability, lot traceability"],
+        ],
+      },
     },
     zh: {
       seoTitle: "工业电机轴接地 | 变频轴承电气防护",
@@ -399,6 +431,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         "PWM 边沿与电缆—电机寄生电容会把高频能量耦合到转子部件，包括你在驱动端能接触到的轴表面。",
         "当轴对机座电压超过油膜耐受阈值，会出现微小重复放电并在滚道形成凹坑——往往早于宽带振动报警明显抬升。",
         "轴接地为机座提供更低电感的优先泄放通道；它补充而非替代良好的接地、布线及变频器参数设置。",
+        "驱动器厂商应用笔记（例如 Yaskawa AN.G7.02《Motor Bearing Current Phenomenon and 3-Level Inverter Technology》）也论述了该 PWM/共模电压机理，将其视为变频电机轴电压与轴承电流的来源。",
       ],
       signsTitle: "电气性轴承损伤的常见迹象",
       signsLead: "轴承电蚀（EDM）表现有时与其他故障相似；以下模式建议在变频设备上结合电气根因排查。",
@@ -435,6 +468,29 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         "可先阅读「症状优先」的轴承 fluting 专题建立共同语言，再回到本页做缓解与选型。",
       relatedFlutingCtaLabel: "查看轴承 fluting 专题",
       relatedFlutingHref: BEARING_FLUTING_RESOURCE_PATH,
+      mechanismReferenceTitle: "技术参考",
+      mechanismReferenceItems: [
+        {
+          title: "Motor Bearing Current Phenomenon and 3-Level Inverter Technology",
+          meta: "Yaskawa Electric America，应用笔记 AN.G7.02（Rev 05-06，© 2005）",
+          url: "https://www.yaskawa.com/downloads/search-index/details?docnum=AN.G7.02&showType=details",
+        },
+      ],
+      mechanismReferenceDisclaimer: "仅就轴电压/轴承电流机理引用；该引用不构成出版方对任何产品的推荐。",
+      selectionTableTitle: "工业电机 8 项买方核对清单",
+      selectionTable: {
+        headers: ["维度", "为何重要", "需明确"],
+        rows: [
+          ["轴径与公差", "决定环尺寸、配合与纤维接触几何", "标称直径、公差（如有）、接触位置"],
+          ["工况与变频器", "影响放电应力与接触磨损", "变频器品牌/型号、载波频率、连续/间歇工况"],
+          ["安装包络", "决定实心/弧形/定制结构", "驱动端/非驱动端可用空间、联轴器是否可拆"],
+          ["环境", "影响材料选择与接触稳定性", "干式/粉尘/油雾/油冷/冲洗/温度范围"],
+          ["接地架构", "决定放电路径是否完整", "机座接地方式、是否已有绝缘轴承或接地器件"],
+          ["轴承现状", "提示可能的电气性损伤", "是否有搓板纹/点蚀、是否有损伤照片"],
+          ["维护预期", "影响结构选型与更换周期", "期望检查间隔、是否需要快速改造"],
+          ["认证、合规与文档", "工业质检与采购所需", "CE/RoHS/ATEX（按适用）、是否提供资料书/测试报告、批次可追溯"],
+        ],
+      },
     },
   },
 };

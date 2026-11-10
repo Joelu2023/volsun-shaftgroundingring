@@ -176,7 +176,8 @@ export function IndustrialShaftGroundingSeoClient({ locale, data }: Props) {
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-xs text-slate-500">{t.mechanismReferenceDisclaimer}</p>
+        <p className="mt-3 text-sm text-slate-600">{t.mechanismReferenceScope}</p>
+        <p className="mt-2 text-xs text-slate-500">{t.mechanismReferenceDisclaimer}</p>
       </section>
 
       <section>
@@ -214,6 +215,9 @@ export function IndustrialShaftGroundingSeoClient({ locale, data }: Props) {
                 </tbody>
               </table>
             </div>
+            {t.selectionTableComplianceNote ? (
+              <p className="mt-3 text-xs text-slate-500">{t.selectionTableComplianceNote}</p>
+            ) : null}
           </div>
         ) : null}
       </section>

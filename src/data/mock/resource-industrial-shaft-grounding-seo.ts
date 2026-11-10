@@ -81,10 +81,14 @@ export type IndustrialShaftGroundingSeoLocaleBlock = {
   /** E1: third-party OEM mechanism reference (drive-manufacturer literature, cited for the electrical mechanism only). */
   mechanismReferenceTitle: string;
   mechanismReferenceItems: { title: string; meta: string; url: string }[];
+  /** Plain-language distinction of the three electrical phenomena, paraphrased (no verbatim OEM text). */
+  mechanismReferenceScope: string;
   mechanismReferenceDisclaimer: string;
   /** E2: Industrial Motor 8-Point Buyer Checklist (structured table). */
   selectionTableTitle: string;
   selectionTable: { headers: string[]; rows: string[][] };
+  /** E2 commercial-compliance note rendered directly below the checklist table. */
+  selectionTableComplianceNote: string;
 };
 
 export type IndustrialShaftGroundingSeoPageData = {
@@ -345,7 +349,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         "PWM edges and cable–motor capacitances couple high-frequency energy onto the rotor assembly, including the shaft surface you can access at the drive end.",
         "When shaft-to-frame voltage exceeds the lubricant film withstand threshold, micro-discharges pit the raceway—often long before broadband vibration alarms trend upward.",
         "Shaft grounding adds a preferred, low-inductance route to frame ground; it complements—but does not replace—sound bonding, cable practices, and drive settings.",
-        "Drive-manufacturer application literature documents this PWM/common-mode mechanism as the origin of shaft voltage and bearing currents in inverter-fed motors—for example Yaskawa AN.G7.02, 'Motor Bearing Current Phenomenon and 3-Level Inverter Technology.'",
+        "Drive-manufacturer application literature describes the same chain—common-mode voltage from PWM switching, shaft voltage coupled through motor parasitic capacitances, and bearing currents returning through the bearings—for example Yaskawa AN.G7.02, 'Motor Bearing Current Phenomenon and 3-Level Inverter Technology.'",
       ],
       signsTitle: "Common signs of electrical bearing damage",
       signsLead:
@@ -388,12 +392,14 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
       mechanismReferenceItems: [
         {
           title: "Motor Bearing Current Phenomenon and 3-Level Inverter Technology",
-          meta: "Yaskawa Electric America, Application Note AN.G7.02 (Rev 05-06, © 2005)",
+          meta: "Yaskawa Electric America · Application Note AN.G7.02 · Rev 05-06 · 06/22/2005",
           url: "https://www.yaskawa.com/downloads/search-index/details?docnum=AN.G7.02&showType=details",
         },
       ],
+      mechanismReferenceScope:
+        "Cited for the mechanism chain only, restated in plain language: (1) common-mode voltage is the voltage between the motor neutral point and ground produced by PWM inverter switching; (2) shaft voltage is the potential induced on the rotor and shaft through parasitic capacitances inside the motor; (3) bearing currents are the discharge or circulating currents that return through the bearings once that voltage exceeds the lubricant film's withstand. These describe the drive–motor system, not the performance of any product.",
       mechanismReferenceDisclaimer:
-        "Cited for the shaft-voltage / bearing-current mechanism only; this reference is not an endorsement of any product by its publisher.",
+        "Cited for the electrical mechanism only. The shaft-voltage and bearing-current test results in AN.G7.02 compare Yaskawa G7 three-level drives with conventional two-level inverters; they are Yaskawa measurements of its own drives, not tests of VOLSUN shaft grounding rings, and must not be presented as product test evidence, validation, or a performance claim for any VOLSUN SGR product. This reference is not an endorsement or recommendation of any product by its publisher.",
       selectionTableTitle: "Industrial Motor 8-Point Buyer Checklist",
       selectionTable: {
         headers: ["Dimension", "Why it matters", "What to specify"],
@@ -405,9 +411,11 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
           ["Grounding architecture", "Determines whether the discharge path is complete", "Frame grounding method, existing insulated bearings or grounding devices"],
           ["Bearing condition", "Indicates possible electrical damage", "Fluting/pitting present? Damage photos available?"],
           ["Service & inspection", "Influences structure choice and replacement cycle", "Desired inspection interval, need for quick retrofit"],
-          ["Certification, compliance & documentation", "Required for industrial QA and procurement", "CE/RoHS/ATEX as applicable, datasheet/test-report availability, lot traceability"],
+          ["Certification, compliance & documentation", "Required for industrial QA and procurement", "Approvals applicable to the exact model, datasheet/test-report availability, lot traceability"],
         ],
       },
+      selectionTableComplianceNote:
+        "Certification, test reports and lot-traceability documents must be verified against the specific product model and application. CE, RoHS, ATEX and other approvals are not implied for every model; request the applicable documents for the exact part number before specifying.",
     },
     zh: {
       seoTitle: "工业电机轴接地 | 变频轴承电气防护",
@@ -431,7 +439,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         "PWM 边沿与电缆—电机寄生电容会把高频能量耦合到转子部件，包括你在驱动端能接触到的轴表面。",
         "当轴对机座电压超过油膜耐受阈值，会出现微小重复放电并在滚道形成凹坑——往往早于宽带振动报警明显抬升。",
         "轴接地为机座提供更低电感的优先泄放通道；它补充而非替代良好的接地、布线及变频器参数设置。",
-        "驱动器厂商应用笔记（例如 Yaskawa AN.G7.02《Motor Bearing Current Phenomenon and 3-Level Inverter Technology》）也论述了该 PWM/共模电压机理，将其视为变频电机轴电压与轴承电流的来源。",
+        "驱动器厂商应用笔记（例如 Yaskawa AN.G7.02《Motor Bearing Current Phenomenon and 3-Level Inverter Technology》）同样描述该链条：PWM 开关产生共模电压、经电机寄生电容耦合形成轴电压、再由轴承回流形成轴承电流。",
       ],
       signsTitle: "电气性轴承损伤的常见迹象",
       signsLead: "轴承电蚀（EDM）表现有时与其他故障相似；以下模式建议在变频设备上结合电气根因排查。",
@@ -472,11 +480,14 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
       mechanismReferenceItems: [
         {
           title: "Motor Bearing Current Phenomenon and 3-Level Inverter Technology",
-          meta: "Yaskawa Electric America，应用笔记 AN.G7.02（Rev 05-06，© 2005）",
+          meta: "Yaskawa Electric America · 应用笔记 AN.G7.02 · Rev 05-06 · 2005/06/22",
           url: "https://www.yaskawa.com/downloads/search-index/details?docnum=AN.G7.02&showType=details",
         },
       ],
-      mechanismReferenceDisclaimer: "仅就轴电压/轴承电流机理引用；该引用不构成出版方对任何产品的推荐。",
+      mechanismReferenceScope:
+        "仅就机理链条引用，以下为通俗转述而非原文摘录：(1) 共模电压——PWM 逆变器开关在电机中性点与地之间产生的电压；(2) 轴电压——经电机内部寄生电容耦合到转子与轴上的电位；(3) 轴承电流——该电压超过润滑油膜耐受后，经轴承回流的放电电流或循环电流。以上描述的是驱动—电机系统，不代表任何产品的性能。",
+      mechanismReferenceDisclaimer:
+        "仅就电气机理引用。AN.G7.02 中的轴电压与轴承电流测试结果比较的是 Yaskawa G7 三电平驱动器与传统两电平逆变器，属 Yaskawa 对自身驱动器的测量，并非对 VOLSUN 轴接地环的测试；不得将其作为任何 VOLSUN SGR 产品的测试证据、验证结论或性能宣称。该引用亦不构成出版方对任何产品的推荐或背书。",
       selectionTableTitle: "工业电机 8 项买方核对清单",
       selectionTable: {
         headers: ["维度", "为何重要", "需明确"],
@@ -488,9 +499,11 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
           ["接地架构", "决定放电路径是否完整", "机座接地方式、是否已有绝缘轴承或接地器件"],
           ["轴承现状", "提示可能的电气性损伤", "是否有搓板纹/点蚀、是否有损伤照片"],
           ["维护预期", "影响结构选型与更换周期", "期望检查间隔、是否需要快速改造"],
-          ["认证、合规与文档", "工业质检与采购所需", "CE/RoHS/ATEX（按适用）、是否提供资料书/测试报告、批次可追溯"],
+          ["认证、合规与文档", "工业质检与采购所需", "该具体型号适用的认证、是否提供资料书/测试报告、批次可追溯"],
         ],
       },
+      selectionTableComplianceNote:
+        "认证、测试报告与批次追溯资料须根据具体产品型号及应用核实；不得理解为所有型号均具备 CE、RoHS、ATEX 等认证。指定前请按具体型号索取适用文件。",
     },
   },
 };

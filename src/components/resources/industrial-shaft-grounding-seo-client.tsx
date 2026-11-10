@@ -177,7 +177,71 @@ export function IndustrialShaftGroundingSeoClient({ locale, data }: Props) {
           ))}
         </ul>
         <p className="mt-3 text-sm text-slate-600">{t.mechanismReferenceScope}</p>
-        <p className="mt-2 text-xs text-slate-500">{t.mechanismReferenceDisclaimer}</p>
+
+        <h3 className="mt-6 text-lg font-semibold text-brand-blue">{t.mechanismCategoriesTitle}</h3>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          {t.mechanismCategories.map((category) => (
+            <article key={category.id} className="rounded-lg border border-slate-200 bg-white p-4">
+              <div className="flex items-baseline justify-between gap-3">
+                <h4 className="font-semibold text-slate-900">
+                  <span className="mr-2 rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-brand-blue">
+                    {category.symbol}
+                  </span>
+                  {category.name}
+                </h4>
+                <span className="shrink-0 text-xs text-slate-500">{category.pages}</span>
+              </div>
+              <p className="mt-2 text-sm text-slate-600">{category.summary}</p>
+              <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-600">
+                {category.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-brand-blue">{t.mechanismComparisonTitle}</h3>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[44rem] border-collapse text-left text-sm text-slate-700">
+              <thead>
+                <tr className="border-b border-slate-300 bg-slate-50">
+                  {t.mechanismComparison.headers.map((h) => (
+                    <th key={h} scope="col" className="px-3 py-2 font-semibold text-brand-blue">
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {t.mechanismComparison.rows.map((row, ri) => (
+                  <tr key={ri} className="border-b border-slate-200 align-top">
+                    {row.map((cell, ci) => (
+                      <td key={ci} className="px-3 py-2">
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-brand-blue">{t.mechanismPageIndexTitle}</h3>
+          <ul className="mt-3 space-y-1.5 text-sm text-slate-600">
+            {t.mechanismPageIndex.map((entry) => (
+              <li key={entry.pages}>
+                <span className="font-mono text-xs text-brand-blue">{entry.pages}</span>
+                <span className="ml-2">{entry.topic}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="mt-5 text-xs text-slate-500">{t.mechanismReferenceDisclaimer}</p>
       </section>
 
       <section>

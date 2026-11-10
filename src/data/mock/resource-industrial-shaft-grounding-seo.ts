@@ -81,7 +81,7 @@ export type IndustrialShaftGroundingSeoLocaleBlock = {
   /** E1: third-party OEM mechanism reference (drive-manufacturer literature, cited for the electrical mechanism only). */
   mechanismReferenceTitle: string;
   mechanismReferenceItems: { title: string; meta: string; url: string }[];
-  /** Plain-language distinction of the three electrical phenomena, paraphrased (no verbatim OEM text). */
+  /** EDM (discharge-type) chain plus the separate circulating-current category; paraphrased (no verbatim OEM text). */
   mechanismReferenceScope: string;
   mechanismReferenceDisclaimer: string;
   /** E2: Industrial Motor 8-Point Buyer Checklist (structured table). */
@@ -349,7 +349,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         "PWM edges and cable–motor capacitances couple high-frequency energy onto the rotor assembly, including the shaft surface you can access at the drive end.",
         "When shaft-to-frame voltage exceeds the lubricant film withstand threshold, micro-discharges pit the raceway—often long before broadband vibration alarms trend upward.",
         "Shaft grounding adds a preferred, low-inductance route to frame ground; it complements—but does not replace—sound bonding, cable practices, and drive settings.",
-        "Drive-manufacturer application literature describes the same chain—common-mode voltage from PWM switching, shaft voltage coupled through motor parasitic capacitances, and bearing currents returning through the bearings—for example Yaskawa AN.G7.02, 'Motor Bearing Current Phenomenon and 3-Level Inverter Technology.'",
+        "Drive-manufacturer application literature describes the EDM (discharge-type) bearing-current chain specifically—common-mode voltage from PWM switching, shaft voltage coupled through motor parasitic capacitances, then micro-discharges through the bearings once the lubricant film breaks down—for example Yaskawa AN.G7.02, 'Motor Bearing Current Phenomenon and 3-Level Inverter Technology.' Circulating-type bearing currents are a separate category; this page does not describe how they form because no independent technical source is cited for that mechanism.",
       ],
       signsTitle: "Common signs of electrical bearing damage",
       signsLead:
@@ -397,9 +397,9 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         },
       ],
       mechanismReferenceScope:
-        "Cited for the mechanism chain only, restated in plain language: (1) common-mode voltage is the voltage between the motor neutral point and ground produced by PWM inverter switching; (2) shaft voltage is the potential induced on the rotor and shaft through parasitic capacitances inside the motor; (3) bearing currents are the discharge or circulating currents that return through the bearings once that voltage exceeds the lubricant film's withstand. These describe the drive–motor system, not the performance of any product.",
+        "Cited for the EDM (discharge-type) mechanism chain only, restated in plain language: (1) common-mode voltage is the voltage between the motor neutral point and ground produced by PWM inverter switching; (2) shaft voltage is the potential induced on the rotor and shaft through parasitic capacitances inside the motor; (3) when that voltage exceeds the lubricant film's withstand, EDM (discharge-type) bearing currents cross the bearings as micro-discharges. Circulating-type bearing currents are a separate, distinct category: this page cites no independent technical source for their formation mechanism and therefore gives no description of how they form. These statements describe the drive–motor system, not the performance of any product.",
       mechanismReferenceDisclaimer:
-        "Cited for the electrical mechanism only. The shaft-voltage and bearing-current test results in AN.G7.02 compare Yaskawa G7 three-level drives with conventional two-level inverters; they are Yaskawa measurements of its own drives, not tests of VOLSUN shaft grounding rings, and must not be presented as product test evidence, validation, or a performance claim for any VOLSUN SGR product. This reference is not an endorsement or recommendation of any product by its publisher.",
+        "Cited for the electrical mechanism only. The shaft-voltage and bearing-current test results in AN.G7.02 compare Yaskawa G7 three-level drives with conventional two-level inverters; they are Yaskawa measurements of its own drives, not tests of VOLSUN shaft grounding rings, and must not be presented as product test evidence, validation, or a performance claim for any VOLSUN SGR product. This reference is not an endorsement or recommendation of any product by its publisher. Citation is based on the publisher's official catalogue record (title, document number, revision and date) only; the PDF body was not directly read for this page, so no page numbers, figures, or verbatim passages are reproduced.",
       selectionTableTitle: "Industrial Motor 8-Point Buyer Checklist",
       selectionTable: {
         headers: ["Dimension", "Why it matters", "What to specify"],
@@ -439,7 +439,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         "PWM 边沿与电缆—电机寄生电容会把高频能量耦合到转子部件，包括你在驱动端能接触到的轴表面。",
         "当轴对机座电压超过油膜耐受阈值，会出现微小重复放电并在滚道形成凹坑——往往早于宽带振动报警明显抬升。",
         "轴接地为机座提供更低电感的优先泄放通道；它补充而非替代良好的接地、布线及变频器参数设置。",
-        "驱动器厂商应用笔记（例如 Yaskawa AN.G7.02《Motor Bearing Current Phenomenon and 3-Level Inverter Technology》）同样描述该链条：PWM 开关产生共模电压、经电机寄生电容耦合形成轴电压、再由轴承回流形成轴承电流。",
+        "驱动器厂商应用笔记（Yaskawa AN.G7.02《Motor Bearing Current Phenomenon and 3-Level Inverter Technology》）描述的是 EDM 放电型轴承电流的链条：PWM 开关产生共模电压、经电机寄生电容耦合形成轴电压，电压超过润滑油膜耐受后以微小放电形式经轴承通过。循环型轴承电流是另一独立类别；本页未引用独立技术来源说明其形成机理，故不描述其具体形成过程。",
       ],
       signsTitle: "电气性轴承损伤的常见迹象",
       signsLead: "轴承电蚀（EDM）表现有时与其他故障相似；以下模式建议在变频设备上结合电气根因排查。",
@@ -485,9 +485,9 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         },
       ],
       mechanismReferenceScope:
-        "仅就机理链条引用，以下为通俗转述而非原文摘录：(1) 共模电压——PWM 逆变器开关在电机中性点与地之间产生的电压；(2) 轴电压——经电机内部寄生电容耦合到转子与轴上的电位；(3) 轴承电流——该电压超过润滑油膜耐受后，经轴承回流的放电电流或循环电流。以上描述的是驱动—电机系统，不代表任何产品的性能。",
+        "仅就 EDM 放电型机理链条引用，以下为通俗转述而非原文摘录：(1) 共模电压——PWM 逆变器开关在电机中性点与地之间产生的电压；(2) 轴电压——经电机内部寄生电容耦合到转子与轴上的电位；(3) 当该电压超过润滑油膜耐受，EDM 放电型轴承电流以微小放电形式经轴承通过。循环型轴承电流属于另一独立类别；本页未引用独立技术来源说明其形成机理，因此不描述其具体形成过程。以上描述的是驱动—电机系统，不代表任何产品的性能。",
       mechanismReferenceDisclaimer:
-        "仅就电气机理引用。AN.G7.02 中的轴电压与轴承电流测试结果比较的是 Yaskawa G7 三电平驱动器与传统两电平逆变器，属 Yaskawa 对自身驱动器的测量，并非对 VOLSUN 轴接地环的测试；不得将其作为任何 VOLSUN SGR 产品的测试证据、验证结论或性能宣称。该引用亦不构成出版方对任何产品的推荐或背书。",
+        "仅就电气机理引用。AN.G7.02 中的轴电压与轴承电流测试结果比较的是 Yaskawa G7 三电平驱动器与传统两电平逆变器，属 Yaskawa 对自身驱动器的测量，并非对 VOLSUN 轴接地环的测试；不得将其作为任何 VOLSUN SGR 产品的测试证据、验证结论或性能宣称。该引用亦不构成出版方对任何产品的推荐或背书。引用依据仅为出版方官方目录记录（标题、文件编号、版本与日期）；本页未直接读取 PDF 正文，故不标注页码、不复制图表、不摘录原文。",
       selectionTableTitle: "工业电机 8 项买方核对清单",
       selectionTable: {
         headers: ["维度", "为何重要", "需明确"],

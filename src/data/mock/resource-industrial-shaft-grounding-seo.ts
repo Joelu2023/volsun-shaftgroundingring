@@ -415,8 +415,8 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         },
       ],
       mechanismReferenceScope:
-        "Yaskawa AN.G7.02 is an OEM application note for the G7 Drive. It groups bearing currents in inverter-fed motors into four mechanisms (i1–i4) according to how each is generated. The summaries below are original plain-language paraphrases of pp. 7–9 — no figures, waveforms or verbatim passages are reproduced — and they describe the drive–motor system, not the behaviour of any product. Page numbers refer to the 13-page PDF file.",
-      mechanismCategoriesTitle: "Four bearing-current mechanisms (AN.G7.02, pp. 7–9)",
+        "Yaskawa AN.G7.02 is an OEM application note for the G7 Drive. It groups shaft and bearing current phenomena in inverter-fed motors into four mechanisms (i1–i4) according to how each is generated; i3 flows along the shaft to an external ground and bypasses the bearings rather than passing through them. The summaries below are original plain-language paraphrases of pp. 7–9 — no figures, waveforms or verbatim passages are reproduced — and they describe the drive–motor system, not the behaviour of any product. Page numbers refer to the 13-page PDF file.",
+      mechanismCategoriesTitle: "Four Shaft and Bearing Current Phenomena (AN.G7.02, pp. 7–9)",
       mechanismCategories: [
         {
           id: "i1",
@@ -577,8 +577,8 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
         },
       ],
       mechanismReferenceScope:
-        "Yaskawa AN.G7.02 是针对 G7 Drive 的 OEM 应用说明，按形成机理把变频电机轴承电流分为四类（i1–i4）。以下四类说明为第 7–9 页内容的原创通俗转述，不复制图表、波形或原文段落，描述对象是驱动—电机系统，不代表任何产品的表现。页码按 13 页 PDF 文件页序标注。",
-      mechanismCategoriesTitle: "四类轴承电流机理（AN.G7.02，第 7–9 页）",
+        "Yaskawa AN.G7.02 是针对 G7 Drive 的 OEM 应用说明，按形成机理把变频电机的轴电流与轴承电流现象分为四类（i1–i4）；其中 i3 沿轴流向外部接地、绕过轴承，不属于经过轴承的电流。以下四类说明为第 7–9 页内容的原创通俗转述，不复制图表、波形或原文段落，描述对象是驱动—电机系统，不代表任何产品的表现。页码按 13 页 PDF 文件页序标注。",
+      mechanismCategoriesTitle: "AN.G7.02 所述四类轴电流与轴承电流现象（第 7–9 页）",
       mechanismCategories: [
         {
           id: "i1",
@@ -587,7 +587,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
           pages: "第 7–8 页",
           summary: "共模电压的高 dv/dt 通过定子—转子寄生电容 CSR 产生脉冲电流。",
           points: [
-            "脉冲电流经 CSR 耦合到转子后，分流至转子—机架电容 CRF 与轴承电容 CB。（第 7 页）",
+            "脉冲电流经 CSR 耦合到转子后，分流至转子—机座电容 CRF 与轴承电容 CB。（第 7 页）",
             "经 CB 持续流动的分量可能使润滑介质发热；其幅值相对总共模电流较小，并随轴转速与机械负载变化。（第 7–8 页）",
             "资料明确指出该机理对轴承失效的确切影响仍在研究中，不能解读为必然导致轴承损坏。（第 7 页）",
           ],
@@ -597,7 +597,7 @@ export const industrialShaftGroundingSeoPage: IndustrialShaftGroundingSeoPageDat
           symbol: "i2",
           name: "EDM 放电型轴承电流",
           pages: "第 8 页",
-          summary: "电荷在转子—机架电容 CRF 上积累，电压升高至润滑油膜击穿后，经轴承放电。",
+          summary: "电荷在转子—机座电容 CRF 上积累，电压升高至润滑油膜击穿后，经轴承放电。",
           points: [
             "共模电压使转子与接地机座之间的 CRF 储存电荷，电压逐步积累形成轴电压。（第 8 页）",
             "油膜绝缘被击穿时，CRF 上储存的电荷经轴承润滑膜释放，形成 EDM 放电型轴承电流；资料指出其能量可能足以造成轴承损伤。（第 8 页）",

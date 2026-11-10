@@ -17,7 +17,7 @@ const LOCALIZED_ROUTE_PREFIXES = [
   /^\/case-studies(\/|$)/,
   /^\/about-us$/,
   /^\/faq$/,
-  /^\/resources$/,
+  /^\/resources(\/|$)/,
   /^\/knowledge-center(\/|$)/,
   /^\/privacy-policy$/,
   /^\/thank-you$/,

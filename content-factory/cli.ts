@@ -20,7 +20,16 @@ import { buildArticle } from "./builder";
 import { countZhTodos, publishArticle, summarize, DirtyWorktreeError } from "./publisher";
 import { QualityGateBlockedError } from "./governance";
 import { autoPublishInbox, startWatcher } from "./watcher";
-import { loadGscConfig } from "./gsc-client";
+import { loadGscConfig, missingGscConfigKeys } from "./gsc-client";
+import { assertAllowedProperty } from "./gsc-sites";
+import {
+  createDiagnosticsCollector,
+  createReportProvenance,
+  MOCK_NOTICE_TEXT,
+  printMockBanner,
+  resolveReportMode,
+  writeGrowthReport,
+} from "./report-source";
 import { fetchSitemapUrls, mockIndexStatus, trackIndexStatus, type IndexCheck } from "./index-tracker";
 import {
   defaultWindow,
@@ -236,41 +245,63 @@ function fmtPct(v: number): string {
 }
 
 async function cmdReport(args: string[]): Promise<void> {
-  const cfg = loadGscConfig();
-  const useMock = !cfg || hasFlag(args, "mock");
-  if (!cfg && !useMock) {
-    throw new Error(
-      "GSC not configured. Set GSC_CLIENT_EMAIL / GSC_PRIVATE_KEY / GSC_SITE_URL " +
-        "(service account added as user in the Search Console property). See .env.example.",
-    );
+  // P1.2 P0 fix: FAIL_CLOSED. Previously `useMock = !cfg || --mock` made the
+  // "GSC not configured" guard unreachable and silently produced mock numbers.
+  const mode = resolveReportMode(args, loadGscConfig(), missingGscConfigKeys());
+  const useMock = mode.source === "mock";
+  if (mode.source === "gsc" && mode.cfg) {
+    assertAllowedProperty(mode.cfg.siteUrl);
   }
+  if (useMock) printMockBanner();
+
+  const diagnostics = createDiagnosticsCollector();
+  const integrityWarnings: string[] = [];
 
   const { urls, source } = await fetchSitemapUrls();
+  if (source === "local") {
+    integrityWarnings.push("Sitemap URL 列表来自本地重建，非生产 sitemap.xml 实时读取。");
+  }
   console.log(`Sitemap URLs: ${urls.length} (source: ${source})`);
 
   const window = defaultWindow();
   const prevWindow = previousWindow(window);
   console.log(`Performance window: ${window.startDate} → ${window.endDate}`);
-  console.log(`Feedback source: ${useMock ? "mock" : "gsc"}`);
+  console.log(`Feedback source: ${mode.source}`);
 
   let checks: IndexCheck[];
   if (useMock) {
     checks = mockIndexStatus(urls);
-    console.log("Using mock index statuses");
+    console.log("  ⚠ MOCK index statuses — not real GSC URL Inspection data");
   } else if (hasFlag(args, "skip-inspection")) {
     checks = urls.map((url) => ({ url, indexStatus: "unknown" as const }));
+    integrityWarnings.push("已使用 --skip-inspection：索引状态为 unknown 占位，非 GSC 实测值。");
     console.log("URL inspection skipped (--skip-inspection)");
   } else {
     console.log("Inspecting index status (throttled, ~0.4s/URL) ...");
-    checks = await trackIndexStatus(cfg!, urls, (done, total) => {
+    checks = await trackIndexStatus(mode.cfg!, urls, (done, total) => {
       if (done % 10 === 0 || done === total) console.log(`  inspected ${done}/${total}`);
     });
   }
 
   console.log("Fetching search analytics ...");
-  const perfByUrl = useMock ? mockPagePerformance(urls) : await trackPagePerformance(cfg!, urls, window);
-  const topQueries = useMock ? mockTopQueries(50) : await trackQueriesForWindow(cfg!, window, 50);
-  const previousQueries = useMock ? mockPreviousTopQueries(50) : await trackQueriesForWindow(cfg!, prevWindow, 50);
+  const perfByUrl = useMock
+    ? mockPagePerformance(urls)
+    : await trackPagePerformance(mode.cfg!, urls, window, diagnostics.sink);
+  const topQueries = useMock
+    ? mockTopQueries(50)
+    : await trackQueriesForWindow(mode.cfg!, window, 50, diagnostics.sink);
+  const previousQueries = useMock
+    ? mockPreviousTopQueries(50)
+    : await trackQueriesForWindow(mode.cfg!, prevWindow, 50, diagnostics.sink);
+
+  integrityWarnings.push(...diagnostics.warnings());
+  if (diagnostics.hasTruncation()) {
+    console.error("");
+    console.error("!! DATA TRUNCATION ALERT / 数据截断告警 !!");
+    for (const w of diagnostics.warnings()) console.error(`  ${w}`);
+    console.error("  本次真实数据采集不完整，请勿作为最终经营口径。");
+    console.error("");
+  }
   const keywordIntelligence = buildKeywordIntelligence(topQueries, previousQueries);
 
   const articleBySlug = new Map(articles.map((a) => [a.slug, a]));
@@ -304,9 +335,10 @@ async function cmdReport(args: string[]): Promise<void> {
     .map((g) => `搜索缺口补题：「${g.query}」— ${g.reason}`);
   const contentIdeas = [...new Set([...buildContentIdeasFromReports(pages), ...gapIdeas])];
 
+  const provenance = createReportProvenance(mode, window);
   const report: GrowthReport = {
     generatedAt: new Date().toISOString(),
-    siteUrl: cfg?.siteUrl ?? "mock",
+    siteUrl: provenance.property,
     window,
     pages,
     topQueries,
@@ -317,11 +349,24 @@ async function cmdReport(args: string[]): Promise<void> {
     actionQueue,
     contentPlanner,
     contentIdeas,
+    data_source: provenance.data_source,
+    property: provenance.property,
+    date_range: provenance.date_range,
+    fetched_at: provenance.fetched_at,
+    ...(provenance.mock_notice ? { mock_notice: provenance.mock_notice } : {}),
+    ...(mode.source === "gsc" ? { integrity_warnings: integrityWarnings } : {}),
   };
 
-  fs.mkdirSync(REPORTS, { recursive: true });
-  const reportPath = path.join(REPORTS, `report-${window.endDate}.json`);
-  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2), "utf8");
+  // Hard gate: mock reports can never land on the official report path.
+  const reportPath = writeGrowthReport(report, REPORTS);
+  console.log(
+    `Report source=${mode.source} property=${provenance.property} ` +
+      `range=${provenance.date_range.startDate}→${provenance.date_range.endDate} fetched_at=${provenance.fetched_at}`,
+  );
+  if (mode.source === "gsc") {
+    console.log("GSC collection diagnostics:");
+    console.log(diagnostics.summary() || "  (no search analytics queries issued)");
+  }
 
   // Console summary
   const counts = new Map<string, number>();
@@ -395,7 +440,10 @@ async function cmdReport(args: string[]): Promise<void> {
   console.log(`  later: ${contentPlanner.later.length}`);
 
   console.log("");
-  console.log(`Report saved: content-factory/reports/report-${window.endDate}.json`);
+  console.log(`Report saved: ${path.relative(ROOT, reportPath).replace(/\\/g, "/")}`);
+  if (useMock) {
+    console.error(`  ⚠ MOCK REPORT — ${MOCK_NOTICE_TEXT}`);
+  }
 }
 
 function cmdStatus(): void {
@@ -411,7 +459,8 @@ function cmdStatus(): void {
   console.log(`  inbox docx:   ${docx.join(", ") || "(empty)"}`);
   console.log(`  inbox images: ${images.length} file(s)`);
   console.log(`  drafts:       ${drafts.join(", ") || "(none)"}`);
-  console.log(`  GSC:          ${loadGscConfig() ? "configured" : "not configured (set GSC_* env vars for factory:report)"}`);
+  console.log(`  GSC:          ${loadGscConfig() ? "configured" : "not configured"}`);
+  console.log("  report mode:  FAIL_CLOSED (无凭据且未显式 --mock 时拒绝生成报告)");
 }
 
 async function main(): Promise<void> {

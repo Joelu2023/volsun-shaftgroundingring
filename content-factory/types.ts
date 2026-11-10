@@ -90,7 +90,13 @@ export type QueryPerformance = {
   position: number;
 };
 
-/** Full report file written to content-factory/reports/report-{date}.json */
+export type ReportDataSource = "gsc" | "mock";
+
+/**
+ * Full report file. Official (real) reports go to report-{date}.json;
+ * P1.2 mock reports go to MOCK-report-{date}.json and can never be loaded as
+ * official reports (assertOfficialReportSource enforces this).
+ */
 export type GrowthReport = {
   generatedAt: string;
   siteUrl: string;
@@ -104,6 +110,13 @@ export type GrowthReport = {
   actionQueue: ActionQueue;
   contentPlanner: ContentPlanner;
   contentIdeas: string[];
+  /** P1.2 provenance — written by cmdReport on every run, no exceptions. */
+  data_source: ReportDataSource;
+  property: string;
+  date_range: { startDate: string; endDate: string };
+  fetched_at: string;
+  mock_notice?: string;
+  integrity_warnings?: string[];
 };
 
 // ---------------------------------------------------------------------------

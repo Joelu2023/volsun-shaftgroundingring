@@ -4,7 +4,7 @@
  * topic ideas back into the content factory.
  */
 import type { GscConfig } from "./gsc-client";
-import { querySearchAnalytics } from "./gsc-client";
+import { querySearchAnalytics, type DiagnosticsSink } from "./gsc-client";
 import type { PagePerformance, PerformanceMetrics, QueryPerformance } from "./types";
 
 export type PerformanceWindow = { startDate: string; endDate: string };
@@ -51,12 +51,16 @@ export async function trackPagePerformance(
   cfg: GscConfig,
   urls: string[],
   window: PerformanceWindow,
+  onDiagnostics?: DiagnosticsSink,
 ): Promise<Map<string, PagePerformance>> {
-  const rows = await querySearchAnalytics(cfg, {
+  // P1.2: rowLimit is now the caller's max-row cap; the client pages with
+  // startRow internally and reports truncation through diagnostics.
+  const { rows, diagnostics } = await querySearchAnalytics(cfg, {
     ...window,
     dimensions: ["page"],
     rowLimit: 1000,
   });
+  onDiagnostics?.(diagnostics);
 
   const byPage = new Map<string, PagePerformance>();
   for (const row of rows) {
@@ -79,12 +83,14 @@ export async function trackTopQueries(
   cfg: GscConfig,
   window: PerformanceWindow,
   limit = 25,
+  onDiagnostics?: DiagnosticsSink,
 ): Promise<QueryPerformance[]> {
-  const rows = await querySearchAnalytics(cfg, {
+  const { rows, diagnostics } = await querySearchAnalytics(cfg, {
     ...window,
     dimensions: ["query"],
     rowLimit: limit,
   });
+  onDiagnostics?.(diagnostics);
   return rows.map((r) => ({
     query: r.keys[0],
     impressions: r.impressions,
@@ -98,8 +104,9 @@ export async function trackQueriesForWindow(
   cfg: GscConfig,
   window: PerformanceWindow,
   limit = 100,
+  onDiagnostics?: DiagnosticsSink,
 ): Promise<QueryPerformance[]> {
-  return trackTopQueries(cfg, window, limit);
+  return trackTopQueries(cfg, window, limit, onDiagnostics);
 }
 
 /** Deterministic mock metrics when GSC is unavailable. */

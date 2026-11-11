@@ -104,6 +104,13 @@ export type GrowthReport = {
   actionQueue: ActionQueue;
   contentPlanner: ContentPlanner;
   contentIdeas: string[];
+  // --- P0 provenance（数据真实性边界，来自 report-integrity）---
+  data_source: "gsc" | "mock";
+  property: string;
+  date_range: { startDate: string; endDate: string };
+  fetched_at: string;
+  mock_notice?: string;
+  integrity_warnings?: string[];
 };
 
 // ---------------------------------------------------------------------------

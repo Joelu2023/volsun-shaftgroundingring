@@ -8,6 +8,7 @@ import {
   getGtagLoaderId,
   getGoogleAdsConversionSendTo,
   isAdminAnalyticsPath,
+  isGtagLoaderMissing,
   parseGaMeasurementId,
   parseGoogleAdsConversionLabel,
   parseGoogleAdsId,
@@ -54,8 +55,40 @@ test("gtag init configures GA4 and Ads together and disables automatic page_view
   assert.match(script, /gtag\('config', 'G-PBMKH6BWN0', \{ send_page_view: false \}\);/);
   assert.match(script, /gtag\('config', 'AW-18164748319'\);/);
   assert.doesNotMatch(script, /gtag\('config', 'AW-18164748319', \{ send_page_view/);
-  assert.equal(getGtagLoaderId(CONFIRMED_CONFIG), "G-PBMKH6BWN0");
+  assert.equal(getGtagLoaderId(CONFIRMED_CONFIG), "AW-18164748319");
   assert.equal(getGoogleAdsConversionSendTo(CONFIRMED_CONFIG), "AW-18164748319/LrUlCMnb-68cEJ-g0NVD");
+});
+
+test("gtag loader uses the Ads tag ID and never falls back to the GA4 destination ID", () => {
+  const gaOnly: AnalyticsPublicConfig = { gaMeasurementId: "G-PBMKH6BWN0", googleAdsId: null, googleAdsConversionLabel: null };
+  const none: AnalyticsPublicConfig = { gaMeasurementId: null, googleAdsId: null, googleAdsConversionLabel: null };
+  assert.equal(getGtagLoaderId(CONFIRMED_CONFIG), "AW-18164748319");
+  assert.equal(getGtagLoaderId(gaOnly), null);
+  assert.equal(getGtagLoaderId(none), null);
+  assert.equal(getGtagLoaderId({ ...CONFIRMED_CONFIG, googleAdsId: parseGoogleAdsId("G-PBMKH6BWN0") }), null);
+  for (const config of [CONFIRMED_CONFIG, gaOnly, none, { ...CONFIRMED_CONFIG, googleAdsConversionLabel: null }]) {
+    assert.doesNotMatch(String(getGtagLoaderId(config)), /^G-/);
+  }
+  assert.equal(isGtagLoaderMissing(gaOnly), true);
+  assert.equal(isGtagLoaderMissing(CONFIRMED_CONFIG), false);
+  assert.equal(isGtagLoaderMissing(none), false);
+});
+
+test("gtag init sends no conversion or other event on page load", () => {
+  const script = buildGtagInitScript(CONFIRMED_CONFIG);
+  assert.ok(script);
+  assert.equal(script.match(/gtag\('config'/g)?.length, 2);
+  assert.doesNotMatch(script, /'event'|conversion|send_to/);
+});
+
+test("root layout loads gtag.js once from the loader ID and skips it without a loader", () => {
+  const source = fs.readFileSync(path.resolve(process.cwd(), "src/app/layout.tsx"), "utf8");
+  assert.equal(source.match(/googletagmanager\.com\/gtag\/js/g)?.length, 1);
+  assert.match(source, /src=\{`https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=\$\{gtagLoaderId\}`\}/);
+  assert.match(source, /const gtagLoaderId = getGtagLoaderId\(analyticsConfig\);/);
+  assert.match(source, /loadAnalytics && gtagLoaderId && gtagInitScript \?/);
+  assert.equal(source.match(/id="gtag-init"/g)?.length, 1);
+  assert.match(source, /isGtagLoaderMissing\(analyticsConfig\)/);
 });
 
 test("gtag queue stub is available without initializing js or config", () => {

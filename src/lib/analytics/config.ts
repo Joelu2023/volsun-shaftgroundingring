@@ -42,8 +42,16 @@ export function getGoogleAdsConversionSendTo(config: AnalyticsPublicConfig = get
   return `${config.googleAdsId}/${config.googleAdsConversionLabel}`;
 }
 
+/**
+ * The GA4 ID is a destination inside the Ads Google tag, not a tag ID: gtag/js?id=G-… returns 404.
+ * Never fall back to it as the loader; without a valid Ads ID gtag.js is not loaded.
+ */
 export function getGtagLoaderId(config: AnalyticsPublicConfig = getAnalyticsPublicConfig()): string | null {
-  return config.gaMeasurementId ?? config.googleAdsId;
+  return config.googleAdsId;
+}
+
+export function isGtagLoaderMissing(config: AnalyticsPublicConfig): boolean {
+  return Boolean(config.gaMeasurementId) && !getGtagLoaderId(config);
 }
 
 export function isAdminAnalyticsPath(pathname: string | null | undefined): boolean {

@@ -15,6 +15,7 @@ import {
   buildGtagInitScript,
   getAnalyticsPublicConfig,
   getGtagLoaderId,
+  isGtagLoaderMissing,
   shouldLoadAnalytics,
 } from "@/lib/analytics/config";
 import "./globals.css";
@@ -46,6 +47,9 @@ export default async function RootLayout({
   const loadAnalytics = shouldLoadAnalytics(pathname, analyticsConfig);
   const gtagLoaderId = getGtagLoaderId(analyticsConfig);
   const gtagInitScript = buildGtagInitScript(analyticsConfig);
+  if (loadAnalytics && isGtagLoaderMissing(analyticsConfig)) {
+    console.warn("[analytics:gtag_loader_missing] NEXT_PUBLIC_GOOGLE_ADS_ID missing or invalid; gtag.js not loaded");
+  }
 
   return (
     <html lang={lang} suppressHydrationWarning>

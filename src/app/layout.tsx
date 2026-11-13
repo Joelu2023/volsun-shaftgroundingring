@@ -13,10 +13,15 @@ import type { AppLocale } from "@/lib/i18n/locales";
 import {
   GTAG_QUEUE_STUB_SCRIPT,
   buildGtagInitScript,
-  getAnalyticsPublicConfig,
   getGtagLoaderId,
   shouldLoadAnalytics,
 } from "@/lib/analytics/config";
+import { getAnalyticsPublicConfig } from "@/lib/analytics/server-config";
+import {
+  ANALYTICS_RUNTIME_CONFIG_ELEMENT_ID,
+  buildAnalyticsRuntimeConfig,
+  serializeAnalyticsRuntimeConfig,
+} from "@/lib/analytics/runtime-config";
 import "./globals.css";
 
 /** Root reads `x-pathname` from middleware; must be dynamic so this coexists with App Router static pages. */
@@ -46,6 +51,7 @@ export default async function RootLayout({
   const loadAnalytics = shouldLoadAnalytics(pathname, analyticsConfig);
   const gtagLoaderId = getGtagLoaderId(analyticsConfig);
   const gtagInitScript = buildGtagInitScript(analyticsConfig);
+  const analyticsRuntimeConfigJson = serializeAnalyticsRuntimeConfig(buildAnalyticsRuntimeConfig(analyticsConfig));
 
   return (
     <html lang={lang} suppressHydrationWarning>
@@ -55,6 +61,11 @@ export default async function RootLayout({
       <body>
         {loadAnalytics && gtagLoaderId && gtagInitScript ? (
           <>
+            <script
+              id={ANALYTICS_RUNTIME_CONFIG_ELEMENT_ID}
+              type="application/json"
+              dangerouslySetInnerHTML={{ __html: analyticsRuntimeConfigJson }}
+            />
             <Script id="gtag-queue" strategy="beforeInteractive">
               {GTAG_QUEUE_STUB_SCRIPT}
             </Script>

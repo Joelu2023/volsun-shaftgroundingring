@@ -4,15 +4,15 @@ const GOOGLE_ADS_CONVERSION_LABEL_RE = /^[A-Za-z0-9_-]+$/;
 
 export { GTAG_QUEUE_STUB_SCRIPT } from "@/lib/analytics/gtag-queue";
 
+/** Parsed on the server only (see server-config.ts); never read env from client code. */
 export type AnalyticsPublicConfig = {
   gaMeasurementId: string | null;
   googleAdsId: string | null;
+  /** Inquiry form conversion label (NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL). */
   googleAdsConversionLabel: string | null;
+  /** Email click conversion label (NEXT_PUBLIC_GOOGLE_ADS_EMAIL_CLICK_LABEL). */
+  googleAdsEmailClickLabel: string | null;
 };
-
-function readEnv(name: string): string {
-  return (process.env[name] ?? "").trim();
-}
 
 export function parseGaMeasurementId(raw: string | undefined | null): string | null {
   const value = raw?.trim() ?? "";
@@ -29,20 +29,20 @@ export function parseGoogleAdsConversionLabel(raw: string | undefined | null): s
   return GOOGLE_ADS_CONVERSION_LABEL_RE.test(value) ? value : null;
 }
 
-export function getAnalyticsPublicConfig(): AnalyticsPublicConfig {
-  return {
-    gaMeasurementId: parseGaMeasurementId(readEnv("NEXT_PUBLIC_GA_MEASUREMENT_ID")),
-    googleAdsId: parseGoogleAdsId(readEnv("NEXT_PUBLIC_GOOGLE_ADS_ID")),
-    googleAdsConversionLabel: parseGoogleAdsConversionLabel(readEnv("NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL")),
-  };
+function buildSendTo(googleAdsId: string | null, label: string | null): string | null {
+  if (!googleAdsId || !label) return null;
+  return `${googleAdsId}/${label}`;
 }
 
-export function getGoogleAdsConversionSendTo(config: AnalyticsPublicConfig = getAnalyticsPublicConfig()): string | null {
-  if (!config.googleAdsId || !config.googleAdsConversionLabel) return null;
-  return `${config.googleAdsId}/${config.googleAdsConversionLabel}`;
+export function getGoogleAdsConversionSendTo(config: AnalyticsPublicConfig): string | null {
+  return buildSendTo(config.googleAdsId, config.googleAdsConversionLabel);
 }
 
-export function getGtagLoaderId(config: AnalyticsPublicConfig = getAnalyticsPublicConfig()): string | null {
+export function getGoogleAdsEmailClickSendTo(config: AnalyticsPublicConfig): string | null {
+  return buildSendTo(config.googleAdsId, config.googleAdsEmailClickLabel);
+}
+
+export function getGtagLoaderId(config: AnalyticsPublicConfig): string | null {
   return config.gaMeasurementId ?? config.googleAdsId;
 }
 
@@ -51,7 +51,7 @@ export function isAdminAnalyticsPath(pathname: string | null | undefined): boole
   return path === "/admin" || path.startsWith("/admin/");
 }
 
-export function shouldLoadAnalytics(pathname: string | null | undefined, config: AnalyticsPublicConfig = getAnalyticsPublicConfig()): boolean {
+export function shouldLoadAnalytics(pathname: string | null | undefined, config: AnalyticsPublicConfig): boolean {
   if (isAdminAnalyticsPath(pathname)) return false;
   return Boolean(config.gaMeasurementId || config.googleAdsId);
 }

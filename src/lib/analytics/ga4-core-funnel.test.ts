@@ -26,6 +26,7 @@ const CONFIRMED_CONFIG: AnalyticsPublicConfig = {
   gaMeasurementId: "G-PBMKH6BWN0",
   googleAdsId: "AW-18164748319",
   googleAdsConversionLabel: "LrUlCMnb-68cEJ-g0NVD",
+  googleAdsEmailClickLabel: "PBsXCI6p97AcEJ-g0NVD",
 };
 
 test("phase-1 funnel exposes only the six core events", () => {
@@ -71,7 +72,15 @@ test("admin routes do not load analytics", () => {
   assert.equal(isAdminAnalyticsPath("/en/contact"), false);
   assert.equal(shouldLoadAnalytics("/admin", CONFIRMED_CONFIG), false);
   assert.equal(shouldLoadAnalytics("/en/contact", CONFIRMED_CONFIG), true);
-  assert.equal(shouldLoadAnalytics("/en/contact", { gaMeasurementId: null, googleAdsId: null, googleAdsConversionLabel: null }), false);
+  assert.equal(
+    shouldLoadAnalytics("/en/contact", {
+      gaMeasurementId: null,
+      googleAdsId: null,
+      googleAdsConversionLabel: null,
+      googleAdsEmailClickLabel: null,
+    }),
+    false,
+  );
 });
 
 test("root layout no longer hardcodes the Google Ads ID", () => {

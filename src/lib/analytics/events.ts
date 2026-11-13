@@ -1,7 +1,7 @@
 "use client";
 
-import { getAnalyticsPublicConfig, getGoogleAdsConversionSendTo } from "@/lib/analytics/config";
 import { ensureGtagQueue } from "@/lib/analytics/gtag-queue";
+import { readAnalyticsRuntimeConfig } from "@/lib/analytics/runtime-config";
 import { sanitizeAnalyticsPayload, type AnalyticsPayload } from "@/lib/analytics/pii";
 import { resolveInquiryEventId, shouldTrackGenerateLead } from "@/lib/analytics/submit-lock";
 
@@ -63,6 +63,17 @@ export function trackContactClick(payload: { channel: ContactChannel; location?:
   emitGtagEvent("contact_click", payload);
 }
 
+/**
+ * Contact link click: GA4 contact_click for every channel, plus the Google Ads email click
+ * conversion for email only. Fire-and-forget so the native mailto/tel navigation never waits on gtag.
+ */
+export function trackContactChannelClick(payload: { channel: ContactChannel; location?: string; locale?: string }) {
+  trackContactClick(payload);
+  if (payload.channel === "email") {
+    trackGoogleAdsEmailClickConversion();
+  }
+}
+
 export function trackFormStart(payload: { form_id: string; page_source?: string; locale?: string }) {
   emitGtagEvent("form_start", payload);
 }
@@ -104,32 +115,43 @@ export function trackGenerateLead(payload: {
   emitGtagEvent("generate_lead", payload);
 }
 
+type GoogleAdsConversionKey = "inquiryForm" | "emailClick";
+
+function sendGoogleAdsConversion(key: GoogleAdsConversionKey, params: Record<string, string | number> = {}) {
+  if (typeof window === "undefined") return;
+  if (!ensureGtagQueue() || typeof window.gtag !== "function") return;
+
+  const sendTo = readAnalyticsRuntimeConfig()?.conversions[key] ?? null;
+  if (!sendTo) {
+    console.debug("[analytics:gads_conversion:missing_config]", key);
+    return;
+  }
+
+  try {
+    window.gtag("event", "conversion", { ...params, send_to: sendTo });
+  } catch (error) {
+    console.debug("[analytics:gads_conversion:error]", key, error);
+  }
+}
+
 /**
  * Google Ads 转化事件：询盘表单「提交潜在客户表单」
  *
  * 仅可在 /api/inquiries 返回成功（res.ok && data.ok && data.delivered）后调用一次。
  * 严禁在 layout / head / 页面初始化 / 页面加载 / 点击 Submit / 前端校验通过 / 接口失败 等位置触发。
- * send_to 由环境变量拼接，保持既有 AW- / 转化标签，不改用 G- ID。
+ * send_to 来自服务端注入的运行时配置（询盘标签），不改用 G- ID，也不与 Email Click 标签混用。
  */
 export function trackGoogleAdsInquiryFormConversion() {
-  if (typeof window === "undefined") return;
-  if (!ensureGtagQueue() || typeof window.gtag !== "function") return;
+  sendGoogleAdsConversion("inquiryForm", { value: 1.0, currency: "CNY" });
+}
 
-  const sendTo = getGoogleAdsConversionSendTo(getAnalyticsPublicConfig());
-  if (!sendTo) {
-    console.debug("[analytics:gads_conversion:missing_env]", "NEXT_PUBLIC_GOOGLE_ADS_ID or NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL is not set");
-    return;
-  }
-
-  try {
-    window.gtag("event", "conversion", {
-      send_to: sendTo,
-      value: 1.0,
-      currency: "CNY",
-    });
-  } catch (error) {
-    console.debug("[analytics:gads_conversion:error]", error);
-  }
+/**
+ * Google Ads 转化事件：Email Click（mailto 链接点击）
+ *
+ * 仅由真实的邮箱链接点击触发；不传 value / currency，不携带邮箱地址或其他个人信息。
+ */
+export function trackGoogleAdsEmailClickConversion() {
+  sendGoogleAdsConversion("emailClick");
 }
 
 export function mapInquiryApiErrorType(error: string | undefined): FormErrorType {

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { trackContactClick, type ContactChannel } from "@/lib/analytics/events";
+import { trackContactChannelClick, type ContactChannel } from "@/lib/analytics/events";
 
 type Props = {
   href: string;
@@ -17,7 +17,7 @@ export function ContactChannelLink({ href, channel, location, locale, className,
     <a
       href={href}
       className={className}
-      onClick={() => trackContactClick({ channel, location, locale })}
+      onClick={() => trackContactChannelClick({ channel, location, locale })}
     >
       {children}
     </a>

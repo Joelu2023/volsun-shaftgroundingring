@@ -8,7 +8,11 @@ import type { AppLocale } from "@/lib/i18n/locales";
 import { trackCtaClick, trackEvent } from "@/lib/tracking/events";
 import { cn } from "@/lib/utils/cn";
 import { getArticleRecordBySlug, isArticleLocalePublished } from "@/data/mock/articles";
-import type { IndustrialApplicationPageData, IndustrialCtaItem } from "@/data/mock/application-industrial";
+import type {
+  IndustrialApplicationPageData,
+  IndustrialCtaItem,
+  IndustrialResourceLink,
+} from "@/data/mock/application-industrial";
 
 type Props = {
   locale: AppLocale;
@@ -25,6 +29,16 @@ function localizedInternalHref(locale: AppLocale, href: string, articleSlug?: st
   return href.startsWith("/") ? `/${locale}${href}` : `/${locale}/${href}`;
 }
 
+function resourceHref(locale: AppLocale, resource: IndustrialResourceLink): string | null {
+  if (resource.articleSlug) {
+    const record = getArticleRecordBySlug(resource.articleSlug);
+    if (!record || !isArticleLocalePublished(record, locale)) return null;
+    return `/${locale}/knowledge-center/${resource.articleSlug}`;
+  }
+  if (locale !== "en") return null;
+  return localizedInternalHref(locale, resource.href);
+}
+
 export function IndustrialApplicationPageClient({ locale, data }: Props) {
   const t = data.locales[locale];
   const values = data.values[locale];
@@ -37,8 +51,8 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
   const ctas = data.ctas[locale];
   const showEnLinkEnhancements = locale === "en";
   const howItWorksLinks = showEnLinkEnhancements ? data.howItWorksLinks : [];
-  const relatedResources = showEnLinkEnhancements ? data.relatedResources : [];
-  const engineeringDataItems = showEnLinkEnhancements ? data.engineeringDataItems : [];
+  const relatedResources = locale === "zh" ? data.relatedResourcesZh : data.relatedResources;
+  const engineeringDataItems = locale === "zh" ? data.engineeringDataItemsZh : data.engineeringDataItems;
 
   const [openFaqId, setOpenFaqId] = useState<string | null>(faqItems[0]?.id ?? null);
   const scrollReachedRef = useRef<Record<number, boolean>>({ 25: false, 50: false, 75: false, 100: false });
@@ -136,6 +150,18 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
         </ul>
       </section>
 
+      {t.diagnosisTitle && t.diagnosisParagraphs?.length ? (
+        <section>
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.diagnosisTitle}</h2>
+          {t.diagnosisReviewMark ? <p className="mt-2 text-sm text-slate-500">{t.diagnosisReviewMark}</p> : null}
+          <div className="mt-3 space-y-3 text-slate-600">
+            {t.diagnosisParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.gainTitle}</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
@@ -222,6 +248,7 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
 
       <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.selectionTitle}</h2>
+        {t.selectionNote ? <p className="mt-3 max-w-3xl text-sm text-slate-600">{t.selectionNote}</p> : null}
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {selection.map((item) => (
             <article key={item.id} className="rounded-lg border border-slate-200 bg-white p-4">
@@ -304,16 +331,17 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
         <section>
           <h2 className="text-2xl font-semibold text-brand-blue">{t.relatedResourcesTitle}</h2>
           <ul className="mt-4 space-y-2">
-            {relatedResources.map((resource) => (
-              <li key={resource.id}>
-                <Link
-                  href={localizedInternalHref(locale, resource.href, resource.articleSlug)}
-                  className="text-sm font-medium text-brand-orange hover:underline"
-                >
-                  {resource.label}
-                </Link>
-              </li>
-            ))}
+            {relatedResources.map((resource) => {
+              const href = resourceHref(locale, resource);
+              if (!href) return null;
+              return (
+                <li key={resource.id}>
+                  <Link href={href} className="text-sm font-medium text-brand-orange hover:underline">
+                    {resource.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </section>
       ) : null}

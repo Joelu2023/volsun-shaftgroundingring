@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState, type RefObject } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { siteConfig, enHeaderLogoSrc, publicContact } from "@/data";
@@ -102,6 +103,81 @@ function EnMobileNav({ locale }: { locale: "en" }) {
   );
 }
 
+const ZH_MOBILE_NAV_ID = "zh-mobile-primary-nav";
+
+function ZhMobileMenuButton({
+  open,
+  buttonRef,
+  onToggle,
+}: {
+  open: boolean;
+  buttonRef: RefObject<HTMLButtonElement | null>;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      ref={buttonRef}
+      type="button"
+      className="inline-flex min-h-11 items-center rounded border border-slate-300 px-3 text-sm font-medium text-slate-800 hover:border-brand-orange hover:text-brand-orange md:hidden"
+      aria-label={open ? "关闭菜单" : "打开菜单"}
+      aria-expanded={open}
+      aria-controls={ZH_MOBILE_NAV_ID}
+      onClick={onToggle}
+    >
+      菜单
+    </button>
+  );
+}
+
+function ZhMobileNav({ locale, open, onNavigate }: { locale: "zh"; open: boolean; onNavigate: () => void }) {
+  return (
+    <nav
+      id={ZH_MOBILE_NAV_ID}
+      aria-label="移动端主导航"
+      hidden={!open}
+      className={cn(
+        "relative z-40 mt-3 border-t border-slate-100 bg-white pt-3 md:hidden",
+        !open && "hidden",
+      )}
+    >
+      <ul className="flex flex-col gap-3">
+        {siteConfig.navigationZh.map((item) => {
+          const href = localizeNavHref(item.href, locale);
+          return (
+            <li key={item.href}>
+              <Link
+                href={href}
+                onClick={onNavigate}
+                className={cn(
+                  "text-sm font-medium text-slate-800 hover:text-brand-orange",
+                  item.highlight && "text-brand-orange",
+                )}
+              >
+                {navLabel(item.href, locale)}
+              </Link>
+              {item.type === "dropdown" && item.children?.length ? (
+                <ul className="mt-2 space-y-2 border-l-2 border-slate-100 pl-3">
+                  {item.children.map((child) => (
+                    <li key={child.label + child.href}>
+                      <Link
+                        href={localizeNavHref(child.href, locale)}
+                        onClick={onNavigate}
+                        className="text-sm text-slate-600 hover:text-brand-orange"
+                      >
+                        {child.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
+
 function ZhDesktopNav({ locale, pathname }: { locale: "zh"; pathname: string }) {
   return (
     <nav className="hidden gap-8 md:flex lg:flex-wrap lg:items-center" aria-label="Primary">
@@ -158,9 +234,30 @@ export function Header({ localeSwitchBasePath }: HeaderProps) {
   const otherLocale: AppLocale = locale === "en" ? "zh" : "en";
   const switchHref = `${localeSwitchBasePath ?? switchLocalePath(pathname, "", otherLocale)}${search}`;
   const t = ui(locale);
+  const [zhMenuOpen, setZhMenuOpen] = useState(false);
+  const zhMenuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setZhMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!zhMenuOpen) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      setZhMenuOpen(false);
+      zhMenuButtonRef.current?.focus();
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [zhMenuOpen]);
+
+  function closeZhMenu() {
+    setZhMenuOpen(false);
+  }
 
   return (
-    <header className="border-b border-slate-200 bg-white">
+    <header className="relative z-40 border-b border-slate-200 bg-white">
       {locale === "en" && (
         <div className="border-b border-slate-100 bg-slate-50">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-x-5 gap-y-1 px-4 py-1 text-[11px] text-slate-500">
@@ -208,6 +305,13 @@ export function Header({ localeSwitchBasePath }: HeaderProps) {
           {locale === "zh" ? <ZhDesktopNav locale="zh" pathname={pathname} /> : null}
 
           <div className="flex items-center gap-3">
+            {locale === "zh" ? (
+              <ZhMobileMenuButton
+                open={zhMenuOpen}
+                buttonRef={zhMenuButtonRef}
+                onToggle={() => setZhMenuOpen((open) => !open)}
+              />
+            ) : null}
             <Link
               href={switchHref}
               className="text-sm text-slate-500 hover:text-brand-orange"
@@ -218,6 +322,7 @@ export function Header({ localeSwitchBasePath }: HeaderProps) {
             </Link>
           </div>
         </div>
+        {locale === "zh" ? <ZhMobileNav locale="zh" open={zhMenuOpen} onNavigate={closeZhMenu} /> : null}
         {locale === "en" ? <EnMobileNav locale="en" /> : null}
       </div>
     </header>

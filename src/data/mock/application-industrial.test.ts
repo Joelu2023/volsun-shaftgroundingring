@@ -138,6 +138,7 @@ test("ZH industrial page keeps frozen SEO and adds reviewed Chinese copy only", 
     selection: page.productSelection.zh,
     comparison: page.comparisonRows.zh,
     faq: page.faq.zh,
+    topics: zh.evaluationTopics,
     ctas: page.ctas.zh,
     resources: page.relatedResourcesZh,
     checklist: page.engineeringDataItemsZh,
@@ -161,10 +162,33 @@ test("ZH industrial page keeps frozen SEO and adds reviewed Chinese copy only", 
   ]) {
     assert.equal(zhText.includes(phrase), false, phrase);
   }
-  assert.match(zhText, /受控的旁路泄放路径/);
+  for (const phrase of [
+    "待研发复核",
+    "本页不写成",
+    "此处不写成",
+    "本页不把",
+    "本段不把",
+    "本页只",
+    "本清单只",
+    "可复现的集成方式",
+    "文档化协同",
+    "流程化支持",
+    "多为事后排查",
+    "重复排故循环",
+    "对混合设备适配有限",
+  ]) {
+    assert.equal(zhText.includes(phrase), false, phrase);
+  }
   assert.match(zhText, /不能解决所有轴承故障/);
-  assert.match(zhText, /具体型号结构差异、适用条件及安装方式需要根据产品资料和工程评审确认/);
-  assert.match(zhText, /待研发复核/);
+  assert.equal(zh.comparisonTitle, "工业电机轴接地工程评估重点");
+  assert.deepEqual(
+    zh.evaluationTopics?.map((topic) => topic.title),
+    ["轴电流路径", "故障诊断", "产品结构确认", "安装空间", "应用工况"],
+  );
+  assert.equal(page.comparisonRows.zh.length, 0);
+  assert.equal(page.comparisonRows.en[0]?.conventional, "Often reactive and inconsistent");
+  assert.equal(en.comparisonTitle, "Comparison");
+  assert.equal(en.evaluationTopics, undefined);
 
   for (const item of page.relatedResourcesZh) {
     assert.ok(item.articleSlug);

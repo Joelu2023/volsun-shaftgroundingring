@@ -15,6 +15,7 @@ export type IndustrialApplicationCard = {
 export type IndustrialHowStep = { id: string; title: string; body: string };
 export type IndustrialSelectionItem = { id: string; title: string; body: string; productSlug: string };
 export type IndustrialComparisonRow = { id: string; metric: string; conventional: string; volsun: string };
+export type IndustrialEvaluationTopic = { id: string; title: string; body: string };
 export type IndustrialFaqItem = { id: string; question: string; answer: string };
 export type IndustrialResourceLink = { id: string; label: string; href: string; articleSlug?: string };
 
@@ -57,12 +58,11 @@ export type IndustrialLocaleContent = {
   relatedResourcesTitle?: string;
   engineeringDataTitle?: string;
   engineeringDataLead?: string;
-  /** Pending R&D review. Present on zh only. */
   diagnosisTitle?: string;
-  diagnosisReviewMark?: string;
   diagnosisParagraphs?: string[];
-  /** Pending R&D review. Present on zh only. */
   selectionNote?: string;
+  /** Chinese page uses this neutral list instead of the EN comparison table. */
+  evaluationTopics?: IndustrialEvaluationTopic[];
 };
 
 const INDUSTRIAL_APP_IMG = "/images/applications/industrial";
@@ -117,18 +117,18 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
     zh: [
       {
         id: "gain-1",
-        title: "轴电流相关停机风险",
-        body: "若独立诊断表明轴承损伤与轴电流有关，应用目标是为电机轴与接地机架建立受控泄放路径，便于把这一因素纳入排查。此处不写成已经发生的停机变化。待研发复核。",
+        title: "轴电流路径",
+        body: "先确认电机轴与接地机架之间是否已有泄放路径，再判断轴承是否处于需要排查的电流路径中。",
       },
       {
         id: "gain-2",
-        title: "重复维护相关的工程讨论",
-        body: "重复更换轴承会带来备件、人工和产出方面的关注。本页只把它列为沟通背景，不写成已经发生的费用变化。待研发复核。",
+        title: "故障现象",
+        body: "记录振动、温升、噪声和已经观察到的轴承情况，并与润滑、磨损、污染、对中分开排查。",
       },
       {
         id: "gain-3",
-        title: "变频工况下的轴承电流路径",
-        body: "应用目标是为轴电流提供受控旁路，减少它反复经过轴承滚道的机会。运行周期是否变化，需要测试报告或真实案例，本页不写成确定结果。待研发复核。",
+        title: "应用条件",
+        body: "整理电机类型、功率、转速、安装空间和环境条件，供工程评审使用。",
       },
     ],
   },
@@ -169,28 +169,28 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       {
         id: "app-pump",
         title: "当泵组需要 24/7 变频连续运行",
-        body: "给排水与工艺泵在调速连续运行时，一次轴承问题可能影响整段泵组。是否与轴电流有关，需要独立诊断。待研发复核。",
+        body: "给排水与工艺泵在变频连续运行时，轴承状态会影响到整段泵组。评估时把轴电流和机械、润滑因素分开排查。",
         imagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-pump-v1.png`,
         imageAlt: "工业现场工艺泵组与电机设备",
       },
       {
         id: "app-fans",
         title: "当风机负载频繁升降、全天反复调速",
-        body: "暖通与工艺送排风在频繁加减速工况下，逆变器相关电气应力需要纳入排查，不能单独据此认定磨损原因。待研发复核。",
+        body: "暖通与工艺送排风在频繁调速时，逆变器相关的电气因素需要纳入排查，并同时检查机械与润滑条件。",
         imagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-fans-v1.png`,
         imageAlt: "工业风机与电机及风管系统",
       },
       {
         id: "app-compressor",
         title: "当压缩机停机就是产线停机",
-        body: "空气或气体压缩场景的连续运行，依赖轴承状态。轴电流是否参与其中，需要独立诊断。待研发复核。",
+        body: "空气或气体压缩设备的连续运行与轴承状态有关。轴电流是否参与其中，需要现场诊断。",
         imagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-compressor-v1.png`,
         imageAlt: "工业压缩机机组与电机",
       },
       {
         id: "app-machinery",
         title: "当通用机械变频运行、且没有第二次试错成本",
-        body: "输送、搅拌等场景拆装空间有限。应先区分电气因素与机械因素，再决定是否评审轴接地环。待研发复核。",
+        body: "输送、搅拌等设备的安装空间往往有限。评估时先区分电气因素和机械因素。",
         imagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-machinery-v1.png`,
         imageAlt: "产线输送与电机驱动的通用机械场景",
       },
@@ -204,8 +204,8 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
     ],
     zh: [
       { id: "how-1", title: "变频开关引入轴电压", body: "PWM 变化与寄生电容耦合在旋转轴上形成电位差。"},
-      { id: "how-2", title: "接地环提供可控泄放通道", body: "轴接地环用于为电机轴与接地机架之间建立受控泄放路径。待研发复核。"},
-      { id: "how-3", title: "泄放路径建立后仍需独立观察", body: "安装后仍应结合机械磨损、润滑、污染、对中及其他电流路径做独立诊断。本页不把轴承表面变化写成确定结果。待研发复核。"},
+      { id: "how-2", title: "接地环提供泄放路径", body: "轴接地环用于在电机轴与接地机架之间提供泄放路径。"},
+      { id: "how-3", title: "安装后继续排查", body: "安装之后，仍需要单独检查机械磨损、润滑、污染、对中以及其他电流路径。"},
     ],
   },
   howItWorksLinks: [
@@ -335,9 +335,9 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       "Process-oriented implementation from sample fit review to repeatable rollout.",
     ],
     zh: [
-      "RD、RDW、ST、STW 保留各自名称。具体型号结构差异、适用条件及安装方式需要根据产品资料和工程评审确认。",
-      "轴径、安装空间和设备条件用于准备评审，不在本页直接对应某一具体型号。",
-      "从样品适配评审到批量导入具备流程化支持。",
+      "RD、RDW、ST、STW 保留各自名称。结构、适用条件和安装方式以产品资料和工程评审为准。",
+      "轴径、安装空间和设备条件用于工程评审，不直接指定具体型号。",
+      "样品和后续供货安排按具体项目确认。",
     ],
   },
   productSelection: {
@@ -360,19 +360,19 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       {
         id: "sel-1",
         title: "ST 与 STW",
-        body: "保留 ST 与 STW 各自的名称。二者的结构差异、适用条件及安装方式需要根据产品资料和工程评审确认。",
+        body: "查看 ST 与 STW 的产品资料。具体选用以工程评审为准。",
         productSlug: "split-shaft-grounding-ring",
       },
       {
         id: "sel-2",
         title: "RD 与 RDW",
-        body: "保留 RD 与 RDW 各自的名称。二者的结构差异、适用条件及安装方式需要根据产品资料和工程评审确认。",
+        body: "查看 RD 与 RDW 的产品资料。具体选用以工程评审为准。",
         productSlug: "solid-shaft-grounding-ring",
       },
       {
         id: "sel-3",
         title: "特殊包络或轴几何",
-        body: "非标尺寸与验证要求建议提交工程评审。本页不按轴径指定具体型号。",
+        body: "非标尺寸和安装条件可以提交工程评审。",
         productSlug: "custom-shaft-grounding-ring",
       },
     ],
@@ -384,12 +384,7 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       { id: "cmp-3", metric: "Integration flexibility", conventional: "Limited adaptation for mixed fleets", volsun: "Solid, arc-shaped, and custom structure review" },
       { id: "cmp-4", metric: "Lifecycle cost confidence", conventional: "Hidden electrical failure costs", volsun: "Risk-aware protection strategy with program visibility" },
     ],
-    zh: [
-      { id: "cmp-1", metric: "变频轴承电流路径", conventional: "多为事后排查", volsun: "讨论受控泄放路径。待研发复核。" },
-      { id: "cmp-2", metric: "维护讨论", conventional: "重复排故循环", volsun: "把轴电流路径纳入维护讨论。待研发复核。" },
-      { id: "cmp-3", metric: "结构确认", conventional: "对混合设备适配有限", volsun: "按产品资料与工程评审确认结构差异" },
-      { id: "cmp-4", metric: "工程讨论重点", conventional: "电气因素常在事后才被单独排查", volsun: "按工程评审讨论泄放路径。待研发复核。" },
-    ],
+    zh: [],
   },
   faq: {
     en: [
@@ -399,10 +394,10 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       { id: "ind-faq-4", question: "What data should we provide for engineering review?", answer: "Provide motor nameplate, shaft size, VFD details, environment notes, and access constraints for faster recommendations." },
     ],
     zh: [
-      { id: "ind-faq-1", question: "所有工业变频电机都需要轴接地吗？", answer: "不是所有变频电机都自动需要轴接地环，也不是所有轴承故障都靠它解决。是否适用，取决于结构、工况、现有接地路径，以及独立诊断结果。待研发复核。" },
-      { id: "ind-faq-2", question: "混合设备场景如何推进？", answer: "建议先从需要排查的资产开始，提交轴径、安装条件和故障现象做工程评审。本页不按轴径指定 RD、RDW、ST 或 STW。待研发复核。" },
-      { id: "ind-faq-3", question: "能否帮助降低难以解释的振动问题？", answer: "电气性损伤可能是振动或噪声的原因之一，不能把它当成唯一原因。外观、噪声、振动和温升都需要独立诊断。待研发复核。" },
-      { id: "ind-faq-4", question: "工程评审需要提供哪些信息？", answer: "建议准备电机类型、功率、转速、适配轴径、安装空间、使用环境、环境条件、安装约束、现有轴承故障现象，以及电机照片或图纸（如有）。这些信息用于沟通，本页表单字段保持不变。" },
+      { id: "ind-faq-1", question: "所有工业变频电机都需要轴接地吗？", answer: "不是所有变频电机都自动需要轴接地环，也不是所有轴承故障都靠它解决。是否适用，需要结合结构、工况、现有接地路径和现场诊断。" },
+      { id: "ind-faq-2", question: "混合设备场景如何推进？", answer: "可以先从需要排查的设备开始，提交轴径、安装条件和故障现象。RD、RDW、ST、STW 按产品资料和工程评审分别确认。" },
+      { id: "ind-faq-3", question: "振动或噪声是否都能说明存在轴电流？", answer: "振动或噪声可能有多种原因。电气因素只是需要排查的一项，不能代替对润滑、机械磨损、污染和对中的检查。" },
+      { id: "ind-faq-4", question: "工程评审需要提供哪些信息？", answer: "建议准备电机类型、功率、转速、适配轴径、安装空间、使用环境、环境条件、安装约束、现有轴承故障现象，以及电机照片或图纸（如有）。" },
     ],
   },
   ctas: {
@@ -478,55 +473,81 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
         "保护逆变驱动工业电机，降低轴电流相关轴承损伤风险，并按结构与适配条件评审接地方案。",
       heroKicker: "工业电机与机械",
       heroTitle: "用于变频轴承防护的工业电机轴接地环方案",
-      heroSubtitle: "面向风机、水泵、压缩机、输送线与自动化设备的轴电压与轴承电流风险治理。",
-      heroImageAlt: "工业电机与变频驱动设备场景，用于说明变频工况下的轴承与轴电流风险语境",
-      whyTitle: "变频工况下，工业电机轴承为何更容易失效",
-      whyBody: "变频运行改变了电机电气应力模式。若无可控泄放路径，轴承可能提前出现电蚀损伤。",
+      heroSubtitle: "面向风机、水泵、压缩机、输送线与自动化设备，说明轴电压与轴承电流的评估背景。",
+      heroImageAlt: "工业电机与变频驱动设备",
+      whyTitle: "变频运行下的轴电压与轴承电流",
+      whyBody: "变频器开关可能在电机轴上形成电位差。这些电流是否经过轴承，需要结合现有接地路径和现场诊断判断。",
       whyBullets: [
-        "高频脉冲使轴电位抬升。",
-        "电流沿低阻抗路径泄放，常穿过轴承。",
-        "损伤会在症状明显前逐步累积。",
+        "高频脉冲可能抬升轴电位。",
+        "电流沿已有路径流动，轴承是需要排查的路径之一。",
+        "出现振动、温升或噪声时，需要同时检查机械、润滑和电气因素。",
       ],
-      gainTitle: "应用上希望讨论的方向",
+      gainTitle: "评估前先区分的问题",
       typicalTitle: "典型工业应用场景",
       howTitle: "工作原理",
-      whyVolsunTitle: "工业客户为何选择沃尔兴",
+      whyVolsunTitle: "工程沟通",
       whyVolsunBody:
-        "工业采购与工程团队需要把现场条件与证据链快速对齐。沃尔兴强调可复现的集成方式、文档化协同，以及从试点资产到批量推广的务实路径。",
-      provenTitle: "工业应用中的评审重点",
-      provenBody: "评审时对齐轴几何、安装包络与工况，讨论是否需要建立受控泄放路径。本段不把停机、费用或运行周期变化写成确定结果。待研发复核。",
+        "可以把现场条件、产品资料和需要确认的事项放在同一次沟通里。样品评审以及后续安排按具体项目确认。",
+      provenTitle: "评审时对齐的条件",
+      provenBody: "评审时对照轴的几何尺寸、可用安装空间和运行工况，确认需要讨论的泄放路径。",
       provenBullets: [
-        "讨论常见工业电机族中与轴电流相关的防护目标。",
-        "按产品资料和工程评审确认 RD、RDW、ST、STW 及定制需求，不按轴径指定型号。",
-        "工程沟通用于对齐样品、评审和现场观察需要的信息。",
+        "应用范围包括风机、水泵、压缩机、输送线和自动化设备。",
+        "RD、RDW、ST、STW 及定制需求分别按产品资料和工程评审确认。",
+        "沟通时对齐样品、现场照片和需要补充的信息。",
       ],
       oemRetrofitTitle: "结构化产品适配评审",
       oemRetrofitBody: "围绕轴几何、安装包络和接触位置进行同一套评审。",
-      selectionTitle: "产品选型建议",
-      comparisonTitle: "方案对比",
-      comparisonLead: "对比不同做法时，可控泄放路径只针对轴与接地机架之间的电流路径。它不是费用或运行周期的确定结果。待研发复核。",
-      comparisonSubtitle: "传统方案与可控接地策略对比。",
+      selectionTitle: "产品资料",
+      comparisonTitle: "工业电机轴接地工程评估重点",
+      comparisonLead: "评估时需要同时查看轴电流路径、故障诊断、产品结构、安装空间和应用工况。",
+      comparisonSubtitle: "以下内容用于整理工程沟通需要的信息。",
       comparisonHeadMetric: "对比项",
       comparisonHeadConventional: "传统方案",
       comparisonHeadVolsun: "Volsun 方案",
       faqTitle: "常见问题",
       midCtaTitle: "需要工业电机项目支持？",
-      midCtaBody: "可以提供电机铭牌和一次故障现象描述，便于工程沟通。本页不把沟通结果写成已验证的改善。",
+      midCtaBody: "可以提供电机铭牌和故障现象，便于工程沟通。",
       bottomCtaTitle: "选择下一步行动",
       bottomCtaBody: "可先申请样品验证，或直接与工程师沟通对齐方案。",
-      bottomCtaGuide: "更偏好书面询盘？请使用下方表单，并补充变频器型号、负载工况与轴径，便于首轮更快回复。",
+      bottomCtaGuide: "如需书面沟通，请使用下方表单，并补充变频器型号、负载工况与轴径。",
       viewProductLabel: "查看产品建议",
       diagnosisTitle: "轴承故障诊断边界",
-      diagnosisReviewMark: "待研发复核",
       diagnosisParagraphs: [
-        "轴接地环主要用于为电机轴与接地机架之间建立受控的旁路泄放路径。",
-        "它不能解决所有轴承故障，不能替代对机械磨损、润滑、污染、对中及其他电流路径问题的独立诊断。",
-        "振动、温升、噪声或滚道外观本身，不能单独证明故障来自轴电流。是否适用，需要结合产品资料和工程评审确认。",
+        "轴接地环用于在电机轴与接地机架之间提供泄放路径。",
+        "它不能解决所有轴承故障，也不能替代对机械磨损、润滑、污染、对中及其他电流路径的单独诊断。",
+        "振动、温升、噪声或滚道外观，需要和其他故障原因一起判断。",
       ],
-      selectionNote: "具体型号结构差异、适用条件及安装方式需要根据产品资料和工程评审确认。待研发复核。",
+      selectionNote: "RD、RDW、ST、STW 的结构、适用条件和安装方式，以产品资料和工程评审为准。轴径用于评审，不直接指定具体型号。",
+      evaluationTopics: [
+        {
+          id: "eval-path",
+          title: "轴电流路径",
+          body: "查看电机轴与接地机架之间现有的接地和泄放安排，并确认轴承是否处于需要排查的电流路径中。",
+        },
+        {
+          id: "eval-diagnosis",
+          title: "故障诊断",
+          body: "把振动、温升、噪声和滚道外观，与机械磨损、润滑、污染、对中及其他电流路径一起排查。",
+        },
+        {
+          id: "eval-structure",
+          title: "产品结构确认",
+          body: "RD、RDW、ST、STW 保留各自名称。结构、适用条件和安装方式以产品资料和工程评审为准。",
+        },
+        {
+          id: "eval-space",
+          title: "安装空间",
+          body: "确认可用的轴向空间、接触位置和现场是否能够安装。",
+        },
+        {
+          id: "eval-duty",
+          title: "应用工况",
+          body: "结合电机类型、功率、转速、环境条件和现有故障现象进行沟通。",
+        },
+      ],
       relatedResourcesTitle: "相关技术文章",
       engineeringDataTitle: "咨询前建议准备的信息",
-      engineeringDataLead: "申请咨询前，建议准备下列信息。本清单只出现在页面上，不改变现有表单字段。待研发复核。",
+      engineeringDataLead: "咨询前建议准备下列信息，便于工程沟通。",
     },
   },
 };

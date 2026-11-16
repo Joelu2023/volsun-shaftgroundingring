@@ -153,7 +153,6 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
       {t.diagnosisTitle && t.diagnosisParagraphs?.length ? (
         <section>
           <h2 className="text-2xl font-semibold text-brand-blue">{t.diagnosisTitle}</h2>
-          {t.diagnosisReviewMark ? <p className="mt-2 text-sm text-slate-500">{t.diagnosisReviewMark}</p> : null}
           <div className="mt-3 space-y-3 text-slate-600">
             {t.diagnosisParagraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
@@ -265,27 +264,38 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
       <section ref={comparisonSectionRef}>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.comparisonTitle}</h2>
         <p className="mt-3 font-medium text-slate-800">{t.comparisonLead}</p>
-        <p className="mt-2 text-slate-600">{t.comparisonSubtitle}</p>
-        <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200">
-          <table className="min-w-full border-collapse text-sm">
-            <thead className="bg-slate-50 text-slate-700">
-              <tr>
-                <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadMetric}</th>
-                <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadConventional}</th>
-                <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadVolsun}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={row.id} className="align-top">
-                  <td className="border-b border-slate-100 px-4 py-3 font-medium text-slate-900">{row.metric}</td>
-                  <td className="border-b border-slate-100 px-4 py-3 text-slate-600">{row.conventional}</td>
-                  <td className="border-b border-slate-100 px-4 py-3 text-slate-600">{row.volsun}</td>
+        {t.comparisonSubtitle ? <p className="mt-2 text-slate-600">{t.comparisonSubtitle}</p> : null}
+        {t.evaluationTopics?.length ? (
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            {t.evaluationTopics.map((topic) => (
+              <article key={topic.id} className="rounded-lg border border-slate-200 bg-white p-4">
+                <h3 className="font-semibold text-slate-900">{topic.title}</h3>
+                <p className="mt-2 text-sm text-slate-600">{topic.body}</p>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200">
+            <table className="min-w-full border-collapse text-sm">
+              <thead className="bg-slate-50 text-slate-700">
+                <tr>
+                  <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadMetric}</th>
+                  <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadConventional}</th>
+                  <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold">{t.comparisonHeadVolsun}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr key={row.id} className="align-top">
+                    <td className="border-b border-slate-100 px-4 py-3 font-medium text-slate-900">{row.metric}</td>
+                    <td className="border-b border-slate-100 px-4 py-3 text-slate-600">{row.conventional}</td>
+                    <td className="border-b border-slate-100 px-4 py-3 text-slate-600">{row.volsun}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-5">

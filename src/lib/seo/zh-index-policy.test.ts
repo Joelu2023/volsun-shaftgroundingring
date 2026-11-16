@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
-import { applications } from "@/data";
+import { applications, getPageMeta } from "@/data";
 import { getArticleForLocale } from "@/data/mock/articles";
 import { buildPageMetadata, localeRobots } from "@/lib/seo/metadata";
 import { getCanonicalSiteOrigin } from "@/config/site";
@@ -32,6 +32,20 @@ function withZhIndexStrategy(strategy: string | undefined, fn: () => void): void
     }
   }
 }
+
+test("Chinese static page brand name is 沃尔兴", () => {
+  const about = getPageMeta("aboutUs", "zh");
+  const resources = getPageMeta("resources", "zh");
+  const privacy = getPageMeta("privacyPolicy", "zh");
+  assert.equal(about.title, "关于沃尔兴");
+  assert.match(about.description, /沃尔兴/);
+  assert.match(resources.description, /沃尔兴轴接地环/);
+  assert.match(privacy.description, /沃尔兴通过本站/);
+  assert.equal(`${about.title}\n${about.description}\n${resources.description}\n${privacy.description}`.includes("沃尔森"), false);
+  assert.equal(getPageMeta("aboutUs", "en").title, "About Volsun");
+  assert.match(getPageMeta("aboutUs", "en").description, /Volsun Group brand/);
+  assert.match(getPageMeta("resources", "en").description, /Volsun shaft grounding rings/);
+});
 
 test("robots.txt allows crawl of /zh (no Disallow /zh)", () => {
   const doc = robots();

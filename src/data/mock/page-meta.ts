@@ -115,18 +115,18 @@ export const staticPageMeta = {
     },
     description: {
       en: "Catalog, datasheet, and installation guide downloads for Volsun shaft grounding rings, with paths to applications, FAQ, and RFQ.",
-      zh: "包含产品目录、数据手册、安装指南与选型模板，用于沃尔森轴接地环规格确认与采购沟通。",
+      zh: "包含产品目录、数据手册、安装指南与选型模板，用于沃尔兴轴接地环规格确认与采购沟通。",
     },
   },
   aboutUs: {
     path: "/about-us",
     title: {
       en: "About Volsun",
-      zh: "关于沃尔森",
+      zh: "关于沃尔兴",
     },
     description: {
       en: "Manufacturing capability, quality control, and export experience behind Volsun shaft grounding rings - a Volsun Group brand.",
-      zh: "介绍沃尔森轴接地环背后的制造能力、质量控制与出口经验（沃尔森集团旗下品牌）。",
+      zh: "介绍沃尔兴轴接地环背后的制造能力、质量控制与出口经验（沃尔兴集团旗下品牌）。",
     },
   },
   contact: {
@@ -148,7 +148,7 @@ export const staticPageMeta = {
     },
     description: {
       en: "How Volsun collects, uses, and retains personal data submitted through this website, including inquiry forms and email delivery.",
-      zh: "说明沃尔森通过本站（含询盘表单与邮件）收集、使用与留存个人信息的方式。",
+      zh: "说明沃尔兴通过本站（含询盘表单与邮件）收集、使用与留存个人信息的方式。",
     },
   },
 } as const;

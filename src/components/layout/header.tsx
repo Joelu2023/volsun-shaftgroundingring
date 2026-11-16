@@ -257,7 +257,7 @@ export function Header({ localeSwitchBasePath }: HeaderProps) {
   }
 
   return (
-    <header className="relative z-40 border-b border-slate-200 bg-white">
+    <header className="border-b border-slate-200 bg-white">
       {locale === "en" && (
         <div className="border-b border-slate-100 bg-slate-50">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-x-5 gap-y-1 px-4 py-1 text-[11px] text-slate-500">

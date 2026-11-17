@@ -161,17 +161,19 @@ export function IndustrialApplicationPageClient({ locale, data }: Props) {
         </section>
       ) : null}
 
-      <section>
-        <h2 className="text-2xl font-semibold text-brand-blue">{t.gainTitle}</h2>
-        <div className="mt-5 grid gap-4 md:grid-cols-3">
-          {values.map((item) => (
-            <article key={item.id} className="rounded-lg border border-slate-200 bg-white p-4">
-              <h3 className="font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-2 text-sm text-slate-600">{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      {locale === "en" ? (
+        <section>
+          <h2 className="text-2xl font-semibold text-brand-blue">{t.gainTitle}</h2>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {values.map((item) => (
+              <article key={item.id} className="rounded-lg border border-slate-200 bg-white p-4">
+                <h3 className="font-semibold text-slate-900">{item.title}</h3>
+                <p className="mt-2 text-sm text-slate-600">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.typicalTitle}</h2>

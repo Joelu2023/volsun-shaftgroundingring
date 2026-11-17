@@ -189,6 +189,26 @@ test("ZH industrial page keeps frozen SEO and adds reviewed Chinese copy only", 
   assert.equal(page.comparisonRows.en[0]?.conventional, "Often reactive and inconsistent");
   assert.equal(en.comparisonTitle, "Comparison");
   assert.equal(en.evaluationTopics, undefined);
+  assert.equal(en.gainTitle, "What You Gain");
+  assert.equal(en.viewProductLabel, "View product option");
+  assert.match(zh.whyBody, /由此产生的轴电流是否经由轴承流动，需要结合现有接地路径和现场诊断判断。/);
+  assert.equal(
+    page.typicalApplications.zh.find((card) => card.id === "app-compressor")?.title,
+    "压缩机及连续运行设备",
+  );
+  assert.equal(
+    page.typicalApplications.zh.find((card) => card.id === "app-machinery")?.title,
+    "输送、搅拌与通用机械",
+  );
+  assert.match(
+    page.typicalApplications.zh.find((card) => card.id === "app-compressor")?.body ?? "",
+    /需要现场诊断/,
+  );
+  assert.equal(zh.oemRetrofitTitle, "产品适配沟通");
+  assert.match(zh.oemRetrofitBody, /讨论需要进一步确认的适配条件/);
+  assert.equal(zh.viewProductLabel, "查看相关产品详情");
+  assert.equal(zh.evaluationTopics?.length, 5);
+  assert.equal(new Set(zh.evaluationTopics?.map((topic) => topic.title)).size, 5);
 
   for (const item of page.relatedResourcesZh) {
     assert.ok(item.articleSlug);

@@ -182,14 +182,14 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       },
       {
         id: "app-compressor",
-        title: "当压缩机停机就是产线停机",
+        title: "压缩机及连续运行设备",
         body: "空气或气体压缩设备的连续运行与轴承状态有关。轴电流是否参与其中，需要现场诊断。",
         imagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-compressor-v1.png`,
         imageAlt: "工业压缩机机组与电机",
       },
       {
         id: "app-machinery",
-        title: "当通用机械变频运行、且没有第二次试错成本",
+        title: "输送、搅拌与通用机械",
         body: "输送、搅拌等设备的安装空间往往有限。评估时先区分电气因素和机械因素。",
         imagePath: `${INDUSTRIAL_APP_IMG}/industrial-app-machinery-v1.png`,
         imageAlt: "产线输送与电机驱动的通用机械场景",
@@ -476,7 +476,7 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       heroSubtitle: "面向风机、水泵、压缩机、输送线与自动化设备，说明轴电压与轴承电流的评估背景。",
       heroImageAlt: "工业电机与变频驱动设备",
       whyTitle: "变频运行下的轴电压与轴承电流",
-      whyBody: "变频器开关可能在电机轴上形成电位差。这些电流是否经过轴承，需要结合现有接地路径和现场诊断判断。",
+      whyBody: "变频器开关可能在电机轴上形成电位差。由此产生的轴电流是否经由轴承流动，需要结合现有接地路径和现场诊断判断。",
       whyBullets: [
         "高频脉冲可能抬升轴电位。",
         "电流沿已有路径流动，轴承是需要排查的路径之一。",
@@ -495,8 +495,8 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
         "RD、RDW、ST、STW 及定制需求分别按产品资料和工程评审确认。",
         "沟通时对齐样品、现场照片和需要补充的信息。",
       ],
-      oemRetrofitTitle: "结构化产品适配评审",
-      oemRetrofitBody: "围绕轴几何、安装包络和接触位置进行同一套评审。",
+      oemRetrofitTitle: "产品适配沟通",
+      oemRetrofitBody: "可结合轴的几何尺寸、可用安装空间和接触位置，讨论需要进一步确认的适配条件。",
       selectionTitle: "产品资料",
       comparisonTitle: "工业电机轴接地工程评估重点",
       comparisonLead: "评估时需要同时查看轴电流路径、故障诊断、产品结构、安装空间和应用工况。",
@@ -510,7 +510,7 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
       bottomCtaTitle: "选择下一步行动",
       bottomCtaBody: "可先申请样品验证，或直接与工程师沟通对齐方案。",
       bottomCtaGuide: "如需书面沟通，请使用下方表单，并补充变频器型号、负载工况与轴径。",
-      viewProductLabel: "查看产品建议",
+      viewProductLabel: "查看相关产品详情",
       diagnosisTitle: "轴承故障诊断边界",
       diagnosisParagraphs: [
         "轴接地环用于在电机轴与接地机架之间提供泄放路径。",
@@ -522,12 +522,12 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
         {
           id: "eval-path",
           title: "轴电流路径",
-          body: "查看电机轴与接地机架之间现有的接地和泄放安排，并确认轴承是否处于需要排查的电流路径中。",
+          body: "先确认电机轴与接地机架之间是否已有泄放路径，并查看现有接地安排，以及轴承是否处于需要排查的电流路径中。",
         },
         {
           id: "eval-diagnosis",
           title: "故障诊断",
-          body: "把振动、温升、噪声和滚道外观，与机械磨损、润滑、污染、对中及其他电流路径一起排查。",
+          body: "记录振动、温升、噪声、滚道外观和已经观察到的轴承情况，并与机械磨损、润滑、污染、对中及其他电流路径一起排查。",
         },
         {
           id: "eval-structure",
@@ -542,7 +542,7 @@ export const industrialMotorsApplicationPage: IndustrialApplicationPageData = {
         {
           id: "eval-duty",
           title: "应用工况",
-          body: "结合电机类型、功率、转速、环境条件和现有故障现象进行沟通。",
+          body: "整理电机类型、功率、转速、环境条件和现有故障现象，供工程评审沟通。",
         },
       ],
       relatedResourcesTitle: "相关技术文章",

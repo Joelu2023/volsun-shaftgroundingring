@@ -39,7 +39,14 @@ export function EvApplicationPageClient({ locale, data }: Props) {
   const chartItems = data.proofCharts[locale];
   const ctas = data.ctas[locale];
   const trustedStats = data.trustedStats[locale];
-  const hasLogoAssets = data.trustedBrands.some((brand) => Boolean(brand.logoPath));
+  const proofCards = data.proofCards[locale];
+  const efficiencyBenefits = data.efficiencyBenefits[locale];
+  const durabilityMetrics = data.durabilityMetrics[locale];
+  const productionPoints = data.scalableProductionPoints[locale];
+  const recommendedSolutions = data.recommendedSolutions[locale];
+  const trustedBrands = data.trustedBrands[locale];
+  const heroImagePath = data.heroImagePath[locale];
+  const hasLogoAssets = trustedBrands.some((brand) => Boolean(brand.logoPath));
   const showLogoWall = data.trustedDisplayMode === "logo_wall" || (data.trustedDisplayMode === "auto" && hasLogoAssets);
 
   useEffect(() => {
@@ -152,9 +159,9 @@ export function EvApplicationPageClient({ locale, data }: Props) {
           </div>
         </div>
         <MediaSlot
-          imagePath={data.heroImagePath}
+          imagePath={heroImagePath}
           alt={data.heroImageAlt[locale]}
-          fallbackLabel={t.heroTitle}
+          fallbackLabel={heroImagePath ? t.heroTitle : t.heroNeutralLabel}
           className="aspect-[16/10]"
           sizes={EV_IMG_SIZES.hero}
           priority
@@ -218,14 +225,16 @@ export function EvApplicationPageClient({ locale, data }: Props) {
             />
           </div>
         ) : null}
+        {proofCards.length > 0 ? (
         <div className="mt-5 grid gap-4 md:grid-cols-3">
-          {data.proofCards.map((card) => (
+          {proofCards.map((card) => (
             <article key={card.id} className="rounded-lg border border-slate-200 bg-white p-4">
               <h3 className="font-semibold text-slate-900">{card.title}</h3>
               <p className="mt-2 text-sm text-slate-600">{card.body}</p>
             </article>
           ))}
         </div>
+        ) : null}
       </section>
 
       {chartItems.length > 0 ? (
@@ -256,21 +265,24 @@ export function EvApplicationPageClient({ locale, data }: Props) {
       <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.protectTitle}</h2>
         <p className="mt-3 text-slate-600">{t.protectBody}</p>
+        {efficiencyBenefits.length > 0 ? (
         <div className="mt-5 grid gap-4 md:grid-cols-3">
-          {data.efficiencyBenefits.map((item) => (
+          {efficiencyBenefits.map((item) => (
             <article key={item.id} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
               <h3 className="font-semibold text-slate-900">{item.title}</h3>
               <p className="mt-2 text-sm text-slate-600">{item.body}</p>
             </article>
           ))}
         </div>
+        ) : null}
       </section>
 
       <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.durabilityTitle}</h2>
         <p className="mt-3 text-slate-600">{t.durabilityBody}</p>
+        {durabilityMetrics.length > 0 ? (
         <div className="mt-5 grid gap-4 md:grid-cols-3">
-          {data.durabilityMetrics.map((metric) => (
+          {durabilityMetrics.map((metric) => (
             <article key={metric.id} className="rounded-lg border border-slate-200 bg-white p-4">
               <p className="text-xs uppercase tracking-wide text-slate-500">{metric.label}</p>
               <p className="mt-1 text-xl font-semibold text-brand-blue">{metric.value}</p>
@@ -278,6 +290,7 @@ export function EvApplicationPageClient({ locale, data }: Props) {
             </article>
           ))}
         </div>
+        ) : null}
       </section>
 
       <section>
@@ -297,7 +310,7 @@ export function EvApplicationPageClient({ locale, data }: Props) {
         ) : null}
         {showLogoWall ? (
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {data.trustedBrands.map((brand) => (
+            {trustedBrands.map((brand) => (
               <MediaSlot
                 key={brand.id}
                 imagePath={brand.logoPath}
@@ -327,7 +340,7 @@ export function EvApplicationPageClient({ locale, data }: Props) {
         <h2 className="text-2xl font-semibold text-brand-blue">{t.scaleTitle}</h2>
         <p className="mt-3 text-slate-600">{t.scaleBody}</p>
         <ul className="mt-4 list-disc space-y-2 pl-5 text-slate-600">
-          {data.scalableProductionPoints.map((item) => (
+          {productionPoints.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
@@ -347,7 +360,7 @@ export function EvApplicationPageClient({ locale, data }: Props) {
       <section>
         <h2 className="text-2xl font-semibold text-brand-blue">{t.recommendedTitle}</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
-          {data.recommendedSolutions.map((solution) => (
+          {recommendedSolutions.map((solution) => (
             <article key={solution.id} className="rounded-lg border border-slate-200 bg-white p-4">
               {solution.imagePath ? (
                 <MediaSlot

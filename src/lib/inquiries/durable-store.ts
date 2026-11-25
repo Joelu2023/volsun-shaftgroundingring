@@ -336,7 +336,7 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
 
     async purgeExpired(now) {
       const result = await pool.query<{ deleted_count: number }>(
-        `with doomed as (
+        `with doomed as materialized (
            select id, public_number, retain_until, status, smtp_outcome
            from inquiry_records
            where retain_until is not null
@@ -345,6 +345,19 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
              -- failed / uncertain / pending / received / null / unknown states are retained.
              and status = 'notified'
              and smtp_outcome = 'accepted'
+           -- Lock candidates so a concurrent status update cannot be overwritten by
+           -- a stale snapshot between selection and deletion.
+           for update
+         ),
+         deleted as (
+           delete from inquiry_records d
+           using doomed
+           where d.id = doomed.id
+             and d.status = 'notified'
+             and d.smtp_outcome = 'accepted'
+             and d.retain_until is not null
+             and d.retain_until <= $1
+           returning d.id, d.public_number, d.retain_until, d.status, d.smtp_outcome
          ),
          audited as (
            insert into inquiry_audit_events (
@@ -358,13 +371,8 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
                     'smtpOutcome', smtp_outcome
                   ),
                   $1
-           from doomed
+           from deleted
            returning inquiry_id
-         ),
-         deleted as (
-           delete from inquiry_records
-           where id in (select inquiry_id from audited)
-           returning id
          )
          select count(*)::int as deleted_count from deleted`,
         [now],

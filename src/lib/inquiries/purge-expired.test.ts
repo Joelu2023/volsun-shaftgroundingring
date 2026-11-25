@@ -126,6 +126,8 @@ test("purgeExpired SQL whitelist guards deletion and audits every deleted row", 
   assert.match(doomedBlock, /retain_until <= \$1/);
   assert.match(doomedBlock, /status = 'notified'/);
   assert.match(doomedBlock, /smtp_outcome = 'accepted'/);
+  assert.match(doomedBlock, /for update/);
+  assert.ok(sql.indexOf("deleted as") < sql.indexOf("audited as"), "audit must be derived from actually deleted rows");
 
   const second = await store.purgeExpired(NOW);
   assert.equal(second, 0);

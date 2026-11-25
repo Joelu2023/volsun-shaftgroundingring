@@ -443,18 +443,25 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
       const staleMs = 20 * 60 * 1000;
       try {
         await client.query("begin");
+        // Claim atomically: concurrent callers must not both insert the same day.
+        const inserted = await client.query(
+          `insert into inquiry_retention_runs (run_date, status, started_at)
+           values ($1::date, 'running', $2)
+           on conflict (run_date) do nothing`,
+          [dateKey, now],
+        );
+        if (inserted.rowCount === 1) {
+          await client.query("commit");
+          return "claimed" as const;
+        }
         const existing = await client.query<{ status: string; started_at: Date }>(
           "select status, started_at from inquiry_retention_runs where run_date = $1::date for update",
           [dateKey],
         );
         const row = existing.rows[0];
         if (!row) {
-          await client.query(
-            "insert into inquiry_retention_runs (run_date, status, started_at) values ($1::date, 'running', $2)",
-            [dateKey, now],
-          );
           await client.query("commit");
-          return "claimed" as const;
+          return "in_progress" as const;
         }
         if (row.status === "succeeded") {
           await client.query("commit");

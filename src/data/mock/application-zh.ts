@@ -55,6 +55,7 @@ export const applicationZhBySlug: Record<string, ApplicationZhBody> = {
   },
   "hvac-motors": {
     name: "暖通（HVAC）电机",
+    seoTitle: "暖通电机轴接地环方案 | 变频轴承电流防护",
     summary: "面向风机、压缩机与空调箱等变频负载的轴电压抑制与轴承保护。",
     metaDescription:
       "暖通电机轴承保护：说明变频风机轴电压成因，以及轴接地环如何降低电蚀与停机风险。",

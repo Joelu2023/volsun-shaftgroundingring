@@ -21,6 +21,14 @@ import { countZhTodos, publishArticle, summarize, DirtyWorktreeError } from "./p
 import { QualityGateBlockedError } from "./governance";
 import { autoPublishInbox, startWatcher } from "./watcher";
 import { loadGscConfig } from "./gsc-client";
+import {
+  createReportProvenance,
+  MOCK_NOTICE_TEXT,
+  printMockBanner,
+  readOfficialReport,
+  resolveReportMode,
+  writeGrowthReport,
+} from "./report-integrity";
 import { fetchSitemapUrls, mockIndexStatus, trackIndexStatus, type IndexCheck } from "./index-tracker";
 import {
   defaultWindow,
@@ -59,7 +67,10 @@ function loadEnvFiles(): void {
     }
   }
 }
-loadEnvFiles();
+// 仅在作为 CLI 直接运行时加载 .env；被测试导入时不触发副作用。
+if (require.main === module) {
+  loadEnvFiles();
+}
 
 const INBOX = resolveInboxDir(ROOT);
 const INBOX_IMAGES = path.join(INBOX, "images");
@@ -236,14 +247,17 @@ function fmtPct(v: number): string {
 }
 
 async function cmdReport(args: string[]): Promise<void> {
+  // P0 fix: FAIL_CLOSED。原先 `useMock = !cfg || --mock` 使「GSC not configured」
+  // 守卫永远不可达，缺失凭据时会静默生成 mock 数字并写入正式 report-*.json 路径。
+  // 现在：无真实凭据且未显式 --mock => 拒绝生成报告（抛错，不写文件）。
   const cfg = loadGscConfig();
-  const useMock = !cfg || hasFlag(args, "mock");
-  if (!cfg && !useMock) {
-    throw new Error(
-      "GSC not configured. Set GSC_CLIENT_EMAIL / GSC_PRIVATE_KEY / GSC_SITE_URL " +
-        "(service account added as user in the Search Console property). See .env.example.",
-    );
+  const mode = resolveReportMode(args, cfg);
+  if (mode.source === "fail_closed") {
+    throw new Error(mode.failClosedReason);
   }
+
+  const useMock = mode.source === "mock";
+  if (useMock) printMockBanner();
 
   const { urls, source } = await fetchSitemapUrls();
   console.log(`Sitemap URLs: ${urls.length} (source: ${source})`);
@@ -304,9 +318,13 @@ async function cmdReport(args: string[]): Promise<void> {
     .map((g) => `搜索缺口补题：「${g.query}」— ${g.reason}`);
   const contentIdeas = [...new Set([...buildContentIdeasFromReports(pages), ...gapIdeas])];
 
+  const provenance = createReportProvenance(mode, window, {
+    property: useMock ? "mock" : cfg!.siteUrl,
+  });
+
   const report: GrowthReport = {
     generatedAt: new Date().toISOString(),
-    siteUrl: cfg?.siteUrl ?? "mock",
+    siteUrl: useMock ? "mock" : cfg!.siteUrl,
     window,
     pages,
     topQueries,
@@ -317,11 +335,16 @@ async function cmdReport(args: string[]): Promise<void> {
     actionQueue,
     contentPlanner,
     contentIdeas,
+    data_source: provenance.data_source,
+    property: provenance.property,
+    date_range: provenance.date_range,
+    fetched_at: provenance.fetched_at,
+    ...(provenance.mock_notice ? { mock_notice: provenance.mock_notice } : {}),
   };
 
-  fs.mkdirSync(REPORTS, { recursive: true });
-  const reportPath = path.join(REPORTS, `report-${window.endDate}.json`);
-  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2), "utf8");
+  // 关键不变量：Mock 报告只落 MOCK-report-*.json，正式报告只落 report-*.json。
+  const result = writeGrowthReport(report, REPORTS, window);
+  const reportPath = result.path;
 
   // Console summary
   const counts = new Map<string, number>();
@@ -395,7 +418,10 @@ async function cmdReport(args: string[]): Promise<void> {
   console.log(`  later: ${contentPlanner.later.length}`);
 
   console.log("");
-  console.log(`Report saved: content-factory/reports/report-${window.endDate}.json`);
+  console.log(`Report saved (${result.isMock ? "MOCK" : "OFFICIAL"}): ${reportPath}`);
+  if (result.isMock) {
+    console.error(`  ⚠ MOCK REPORT — ${MOCK_NOTICE_TEXT}`);
+  }
 }
 
 function cmdStatus(): void {
@@ -411,7 +437,23 @@ function cmdStatus(): void {
   console.log(`  inbox docx:   ${docx.join(", ") || "(empty)"}`);
   console.log(`  inbox images: ${images.length} file(s)`);
   console.log(`  drafts:       ${drafts.join(", ") || "(none)"}`);
-  console.log(`  GSC:          ${loadGscConfig() ? "configured" : "not configured (set GSC_* env vars for factory:report)"}`);
+  console.log(`  GSC:          ${loadGscConfig() ? "configured" : "not configured"}`);
+  console.log(`  report mode:  FAIL_CLOSED（无凭据且未显式 --mock 时 factory:report 拒绝生成报告）`);
+}
+
+function cmdReadReport(args: string[]): void {
+  const target = args.find((a) => !a.startsWith("--"));
+  if (!target) {
+    throw new Error("Usage: npm run factory:read -- <path-to-report.json>");
+  }
+  const abs = path.isAbsolute(target) ? target : path.resolve(ROOT, target);
+  const report = readOfficialReport(abs);
+  console.log(`OFFICIAL report OK: ${abs}`);
+  console.log(`  data_source: ${report.data_source}`);
+  console.log(`  property:    ${report.property}`);
+  console.log(`  range:       ${report.date_range.startDate} → ${report.date_range.endDate}`);
+  console.log(`  fetched_at:  ${report.fetched_at}`);
+  console.log(`  pages:       ${report.pages.length}`);
 }
 
 async function main(): Promise<void> {
@@ -432,16 +474,21 @@ async function main(): Promise<void> {
     case "report":
       await cmdReport(args);
       break;
+    case "read":
+      cmdReadReport(args);
+      break;
     case "status":
       cmdStatus();
       break;
     default:
-      console.log("Usage: factory <auto|watch|draft|publish|report|status>");
+      console.log("Usage: factory <auto|watch|draft|publish|report|read|status>");
       process.exitCode = 1;
   }
 }
 
-main().catch((err: unknown) => {
-  console.error(err instanceof Error ? err.message : err);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err: unknown) => {
+    console.error(err instanceof Error ? err.message : err);
+    process.exit(1);
+  });
+}

@@ -171,7 +171,11 @@ test("ZH pump stays out of Phase1-A and production sitemap zh set is unchanged",
   assert.notEqual(listed.isIndexable, false);
   assert.equal(PHASE1A_APPLICATION_PATHS.includes("/applications/pump-systems"), false);
   const phase1a = getPhase1aIndexableLogicalPaths();
-  assert.equal(phase1a.length, 11);
+  assert.equal(phase1a.length, 12);
+  assert.equal(
+    phase1a.includes("/knowledge-center/volsun-named-to-kpmg-china-automotive-tech-50-2026"),
+    true,
+  );
   assert.equal(phase1a.includes("/applications/pump-systems"), false);
 
   const originalEnv = process.env.ZH_INDEX_STRATEGY;

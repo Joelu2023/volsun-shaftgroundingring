@@ -16,7 +16,7 @@ import {
 } from "@/data/mock/application-hvac-motors";
 import { getArticleRecordBySlug } from "@/data/mock/articles";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { PHASE1A_APPLICATION_PATHS } from "@/lib/seo/zh-index-policy";
+import { isZhPhase1aIndexableLogicalPath, PHASE1A_APPLICATION_PATHS } from "@/lib/seo/zh-index-policy";
 import sitemap from "@/app/sitemap";
 
 const BASE_ZH_HVAC_NAME = "暖通（HVAC）电机";
@@ -72,6 +72,46 @@ test("ZH HVAC stays on the p1 stub content path", () => {
   assert.equal(zhPage.name, BASE_ZH_HVAC_NAME);
   assert.equal(shouldRenderHvacSolutionPage("zh", "hvac-motors"), false);
   assert.ok(!PHASE1A_APPLICATION_PATHS.includes("/applications/hvac-motors"));
+});
+
+test("ZH HVAC uses its own Chinese SEO title and stays noindex", () => {
+  const zhSeoTitle = "暖通电机轴接地环方案 | 变频轴承电流防护";
+  const zhDescription =
+    "暖通电机轴承保护：说明变频风机轴电压成因，以及轴接地环如何降低电蚀与停机风险。";
+  const en = getApplicationBySlug("hvac-motors")!;
+  const zhPage = getApplicationForLocale("hvac-motors", "zh")!;
+  assert.equal(applicationZhBySlug["hvac-motors"].seoTitle, zhSeoTitle);
+  assert.equal(zhPage.seoTitle, zhSeoTitle);
+  assert.equal(zhPage.metaDescription, zhDescription);
+  assert.equal(zhPage.name, BASE_ZH_HVAC_NAME);
+  assert.equal(en.seoTitle, "HVAC Motor Bearing Protection for VFD Fans | Shaft Grounding");
+  assert.equal(getHvacMotorsContent().seoTitle, en.seoTitle);
+  const meta = buildPageMetadata({
+    title: zhPage.seoTitle ?? zhPage.name,
+    description: zhPage.metaDescription,
+    path: "/applications/hvac-motors",
+    locale: "zh",
+    indexable: en.isIndexable ?? true,
+  });
+  assert.equal(meta.title, zhSeoTitle);
+  assert.equal(meta.description, zhDescription);
+  assert.equal(isZhPhase1aIndexableLogicalPath("/applications/hvac-motors"), false);
+  const originalEnv = process.env.ZH_INDEX_STRATEGY;
+  process.env.ZH_INDEX_STRATEGY = "phase1a";
+  try {
+    const indexedStrategyMeta = buildPageMetadata({
+      title: zhPage.seoTitle ?? zhPage.name,
+      description: zhPage.metaDescription,
+      path: "/applications/hvac-motors",
+      locale: "zh",
+      indexable: en.isIndexable ?? true,
+    });
+    assert.deepEqual(indexedStrategyMeta.robots, { index: false, follow: true });
+    assert.deepEqual(meta.robots, { index: false, follow: true });
+  } finally {
+    if (originalEnv === undefined) delete process.env.ZH_INDEX_STRATEGY;
+    else process.env.ZH_INDEX_STRATEGY = originalEnv;
+  }
 });
 
 test("HVAC related resources are unique and valid", () => {

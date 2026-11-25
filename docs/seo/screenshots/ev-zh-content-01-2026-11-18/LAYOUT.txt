@@ -1,0 +1,12 @@
+Local build http://127.0.0.1:3010/zh/applications/electric-vehicles
+CSS viewport measurements on 2026-11-18. No horizontal overflow.
+
+320: clientWidth 320, scrollWidth 320
+375: clientWidth 375, scrollWidth 375
+390: clientWidth 390, scrollWidth 390
+768: clientWidth 753, scrollWidth 753
+1024: clientWidth 1009, scrollWidth 1009
+1440: clientWidth 1425, scrollWidth 1425
+
+The PNG files are browser-tool captures scaled to 680px wide. The numbers above are the layout measurements.
+Production before this branch still shows the synthetic car hero and English cards at https://www.volsunsgr.com/zh/applications/electric-vehicles

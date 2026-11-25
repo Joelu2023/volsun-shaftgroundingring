@@ -18,6 +18,8 @@ type MatrixRow = {
   shouldPurge: boolean;
 };
 
+let matrixSequence = 0;
+
 function matrixRow(
   label: string,
   status: InquiryNotificationStatus | string | null,
@@ -25,9 +27,11 @@ function matrixRow(
   retainUntil: Date | null,
   shouldPurge: boolean,
 ): MatrixRow {
+  matrixSequence += 1;
+  const token = `${String(matrixSequence).padStart(3, "0")}-${label.replace(/[^a-z0-9]/gi, "").slice(0, 8).toUpperCase()}`;
   return {
     id: `row-${label}`,
-    publicNumber: `INQ-${label}`,
+    publicNumber: `INQ-${token}`,
     status,
     smtpOutcome,
     retainUntil,

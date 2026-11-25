@@ -93,7 +93,7 @@ test("ZH HVAC uses its own Chinese SEO title and stays noindex", () => {
     locale: "zh",
     indexable: en.isIndexable ?? true,
   });
-  assert.equal(meta.title, zhSeoTitle);
+  assert.deepEqual(meta.title, { absolute: `${zhSeoTitle} | 沃尔兴（VOLSUN）` });
   assert.equal(meta.description, zhDescription);
   assert.equal(isZhPhase1aIndexableLogicalPath("/applications/hvac-motors"), false);
   const originalEnv = process.env.ZH_INDEX_STRATEGY;

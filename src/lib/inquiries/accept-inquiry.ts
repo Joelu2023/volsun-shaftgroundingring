@@ -67,12 +67,40 @@ export function isIdempotencyKey(value: unknown): value is string {
   return typeof value === "string" && IDEMPOTENCY_KEY_RE.test(value);
 }
 
+/** 明确未投递的网络错误：允许进入自动重试评估。 */
+const DEFINITE_SMTP_NETWORK_CODES = new Set(["ECONNREFUSED", "ENOTFOUND", "EAI_AGAIN"]);
+
+/** 结果未知的错误：永不自动重发。 */
+const UNCERTAIN_SMTP_NETWORK_CODES = new Set(["ETIMEDOUT", "ECONNRESET", "EPIPE"]);
+
 export function classifySmtpFailure(error: unknown): "definite" | "uncertain" {
   const message = error instanceof Error ? `${error.name} ${error.message}` : String(error ?? "");
-  if (/timeout|timed out|etimedout|econnreset|socket hang up|epipe|eai_again/i.test(message)) {
+  const code = error && typeof error === "object" && "code" in error ? String(error.code).trim().toUpperCase() : "";
+  if (DEFINITE_SMTP_NETWORK_CODES.has(code) || /ECONNREFUSED|ENOTFOUND|EAI_AGAIN/i.test(message)) {
+    return "definite";
+  }
+  if (UNCERTAIN_SMTP_NETWORK_CODES.has(code) || /timeout|timed out|etimedout|econnreset|socket hang up|epipe/i.test(message)) {
     return "uncertain";
   }
   return "definite";
+}
+
+/** 可安全落库的网络错误码白名单。其余一律落 smtp_rejected，不暴露原始 message。 */
+const SAFE_SMTP_NETWORK_CODES = new Set([
+  "ECONNREFUSED",
+  "ENOTFOUND",
+  "EAI_AGAIN",
+  "ECONNRESET",
+  "ESOCKET",
+  "ECONNECTION",
+  "ETIMEDOUT",
+  "EPIPE",
+]);
+
+/** 把底层错误压缩成 retry-policy 可识别的码；未知错误不携带任何自由文本。 */
+export function sanitizeSmtpErrorCode(error: unknown): string {
+  const raw = error && typeof error === "object" && "code" in error ? String(error.code).trim().toUpperCase() : "";
+  return SAFE_SMTP_NETWORK_CODES.has(raw) ? raw : "smtp_rejected";
 }
 
 function viewOf(row: InquiryRecordRow, idempotentReplay: boolean): AcceptInquirySuccess {
@@ -216,7 +244,7 @@ async function attemptSend(
     await (deps.sendInquiryEmail ?? sendInquiryEmail)(submission);
   } catch (error) {
     const kind = classifySmtpFailure(error);
-    const code = kind === "uncertain" ? "smtp_uncertain" : "smtp_rejected";
+    const code = kind === "uncertain" ? "smtp_uncertain" : sanitizeSmtpErrorCode(error);
     log("smtp_failed", {
       inquiryId: pending.id,
       publicNumber: pending.publicNumber,

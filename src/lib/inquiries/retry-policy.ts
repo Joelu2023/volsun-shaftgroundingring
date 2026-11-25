@@ -18,33 +18,61 @@ export type RetryableClass =
   | "uncertain"
   | "unknown";
 
-export const RETRYABLE_CODES: ReadonlySet<string> = new Set([
-  "ETIMEDOUT",
-  "ECONNRESET",
-  "ECONNECTION",
-  "ESOCKET",
-  "429",
-  "500",
-  "502",
-  "503",
-  "504",
-  "SMTP_4XX",
-]);
+/**
+ * 真实系统可见码表（来自 durable-store.smtp_error_sanitized / accept-inquiry.ts）：
+ * - smtp_uncertain / status_update_failed：投递结果未知，永不自动重发
+ * - smtp_rejected / smtp_not_configured：明确失败或配置缺失，不重发
+ * - ECONNREFUSED / ENOTFOUND / EAI_AGAIN：明确未投递的网络瞬时错误，可重试
+ * - EPIPE：连接中途断开，可能已部分写入，按 uncertain 处理（人工确认）
+ */
+export const SMTP_ERROR_CODE_MAP: Readonly<Record<string, RetryableClass>> = Object.freeze({
+  SMTP_UNCERTAIN: "uncertain",
+  TIMEOUT_UNKNOWN: "uncertain",
+  CONNECTION_DROPPED: "uncertain",
+  STATUS_UPDATE_FAILED: "uncertain",
+  UNCERTAIN: "uncertain",
+  EPIPE: "uncertain",
 
-export const PERMANENT_CODES: ReadonlySet<string> = new Set([
-  "550",
-  "INVALID_RECIPIENT",
-  "AUTH_FAILED",
-  "530",
-  "SMTP_5XX",
-]);
+  SMTP_REJECTED: "permanent",
+  SMTP_NOT_CONFIGURED: "permanent",
+  INVALID_RECIPIENT: "permanent",
+  AUTH_FAILED: "permanent",
+  SMTP_5XX: "permanent",
 
-export const UNCERTAIN_CODES: ReadonlySet<string> = new Set([
-  "TIMEOUT_UNKNOWN",
-  "CONNECTION_DROPPED",
-  "STATUS_UPDATE_FAILED",
-  "UNCERTAIN",
-]);
+  ECONNREFUSED: "retryable_transient",
+  ENOTFOUND: "retryable_transient",
+  EAI_AGAIN: "retryable_transient",
+  ETIMEDOUT: "retryable_transient",
+  ECONNRESET: "retryable_transient",
+  ECONNECTION: "retryable_transient",
+  ESOCKET: "retryable_transient",
+  SMTP_4XX: "retryable_transient",
+  "429": "retryable_transient",
+  "500": "retryable_transient",
+  "502": "retryable_transient",
+  "503": "retryable_transient",
+  "504": "retryable_transient",
+  "550": "permanent",
+  "530": "permanent",
+});
+
+export const RETRYABLE_CODES: ReadonlySet<string> = new Set(
+  Object.entries(SMTP_ERROR_CODE_MAP)
+    .filter(([, value]) => value === "retryable_transient")
+    .map(([key]) => key),
+);
+
+export const PERMANENT_CODES: ReadonlySet<string> = new Set(
+  Object.entries(SMTP_ERROR_CODE_MAP)
+    .filter(([, value]) => value === "permanent")
+    .map(([key]) => key),
+);
+
+export const UNCERTAIN_CODES: ReadonlySet<string> = new Set(
+  Object.entries(SMTP_ERROR_CODE_MAP)
+    .filter(([, value]) => value === "uncertain")
+    .map(([key]) => key),
+);
 
 /** 归一化错误码：大写、去空格；无码返回 null。 */
 export function normalizeErrorCode(raw: string | null | undefined): string | null {
@@ -68,12 +96,13 @@ export function classifySmtpError(raw: string | null | undefined): RetryableClas
 
 /** 是否允许自动重试：仅"明确失败 + 瞬时可重试 + 未超上限"。 */
 export function isAutoRetryAllowed(input: {
-  smtpOutcome: "failed" | "uncertain" | "accepted" | null;
+  smtpOutcome: string | null | undefined;
   errorClass: RetryableClass;
   autoRetryCount: number;
 }): boolean {
-  if (input.smtpOutcome === "uncertain") return false; // 红线：禁止自动重发
-  if (input.smtpOutcome !== "failed") return false;
+  const outcome = normalizeErrorCode(input.smtpOutcome);
+  if (outcome === "UNCERTAIN") return false; // 红线：禁止自动重发
+  if (outcome !== "FAILED") return false;
   if (input.errorClass !== "retryable_transient") return false;
   return input.autoRetryCount < MAX_AUTO_RETRIES;
 }
@@ -95,7 +124,7 @@ export function computeNextRetryAt(
   return new Date(failedAt.getTime() + delay * 60 * 1000);
 }
 
-/** UNCERTAIN 判定：smtpOutcome=uncertain 即进入人工确认，永不被调度器选中。 */
-export function requiresHumanConfirmation(smtpOutcome: string | null): boolean {
-  return smtpOutcome === "uncertain";
+/** UNCERTAIN 判定：大小写归一化后比较，防止外部数据源大小写漂移绕过红线。 */
+export function requiresHumanConfirmation(smtpOutcome: string | null | undefined): boolean {
+  return normalizeErrorCode(smtpOutcome) === "UNCERTAIN";
 }

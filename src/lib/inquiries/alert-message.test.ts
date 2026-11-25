@@ -69,3 +69,86 @@ test("detail 长度截断", () => {
   const long = "x".repeat(500);
   assert.ok(sanitizeDetail(long).length <= 200);
 });
+
+test("occurredAt 运行时校验：恶意时间字符串整体替换为安全占位符", () => {
+  const attacks = [
+    "2026-11-25T18:30:00.000Z<script>alert(1)</script>",
+    "buyer@example.com 2026-11-25T18:30:00Z",
+    "+44 7700 900123",
+    "",
+    "not-a-date",
+  ];
+  for (const occurredAt of attacks) {
+    const alert = buildSanitizedAlert({
+      publicNumber: "INQ-20261125-0003",
+      occurredAt,
+      type: "db_unavailable",
+    });
+    assert.equal(alert.occurredAt, "[invalid-time]");
+    const text = renderAlertText(alert);
+    assert.equal(text.includes("buyer@example.com"), false);
+    assert.equal(text.includes("+44 7700 900123"), false);
+    assert.equal(text.includes("<script>"), false);
+  }
+  const valid = buildSanitizedAlert({
+    publicNumber: "INQ-20261125-0004",
+    occurredAt: "2026-11-25T18:30:00.000Z",
+    type: "db_unavailable",
+  });
+  assert.equal(valid.occurredAt, "2026-11-25T18:30:00.000Z");
+});
+
+test("type 严格白名单：任意外部字符串回退 config_missing，不泄漏原文", () => {
+  const malicious = "<script>buyer@example.com</script>" as unknown as Parameters<typeof buildSanitizedAlert>[0]["type"];
+  const alert = buildSanitizedAlert({
+    publicNumber: "INQ-20261125-0005",
+    occurredAt: "2026-11-25T18:30:00.000Z",
+    type: malicious,
+  });
+  assert.equal(alert.type, "config_missing");
+  assert.equal(alert.level, "P3");
+  assert.equal(alert.typeLabel, "配置异常");
+  assert.equal(alert.ownerRole, "IT负责人");
+  const text = renderAlertText(alert);
+  assert.equal(text.includes("buyer@example.com"), false);
+  assert.equal(text.includes("<script>"), false);
+  assert.equal(text.includes("undefined"), false);
+
+  const forged = renderAlertText({ ...alert, type: malicious });
+  assert.equal(forged.includes("<script>"), false);
+  assert.equal(forged.includes("buyer@example.com"), false);
+});
+
+test("detail 防全大写公司名/邮箱泄漏，仍保留错误码样式", () => {
+  const a = buildSanitizedAlert({
+    publicNumber: "INQ-20261125-0006",
+    occurredAt: "2026-11-25T18:30:00.000Z",
+    type: "email_failed_once",
+    detail: "ACME CORP",
+  });
+  assert.equal(a.detail, "[redacted-detail]");
+  assert.equal(renderAlertText(a).includes("ACME"), false);
+
+  const b = buildSanitizedAlert({
+    publicNumber: "INQ-20261125-0007",
+    occurredAt: "2026-11-25T18:30:00.000Z",
+    type: "email_failed_once",
+    detail: "SMTP_REJECTED 550",
+  });
+  assert.equal(b.detail, "SMTP_REJECTED 550");
+});
+
+test("恶意 baseUrl 不进入消息体", () => {
+  const a = buildSanitizedAlert(
+    {
+      publicNumber: "INQ-20261125-0008",
+      occurredAt: "2026-11-25T18:30:00.000Z",
+      type: "retry_exhausted",
+    },
+    "https://evil.test/collect?email=buyer@example.com",
+  );
+  assert.equal(a.handoffUrl.startsWith("https://www.volsunsgr.com/admin/inquiries?"), true);
+  const text = renderAlertText(a);
+  assert.equal(text.includes("evil.test"), false);
+  assert.equal(text.includes("buyer@example.com"), false);
+});

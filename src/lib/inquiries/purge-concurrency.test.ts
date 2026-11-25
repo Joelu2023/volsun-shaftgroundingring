@@ -38,7 +38,7 @@ async function waitForBlockedPurge(pool: Pool): Promise<boolean> {
   for (let attempt = 0; attempt < 100; attempt += 1) {
     const result = await pool.query<{ count: string }>(
       `select count(*)::text as count from pg_stat_activity
-       where wait_event_type = 'Lock' and query like '%delete from inquiry_records%'`,
+       where wait_event_type = 'Lock' and query like '%inquiry_records%'`,
     );
     if (Number(result.rows[0]?.count ?? 0) > 0) return true;
     await new Promise((resolve) => setTimeout(resolve, 20));
@@ -110,13 +110,14 @@ test("并发：清理期间把状态改为 notified+accepted，允许删除且�
       "update inquiry_records set status = 'notified', smtp_outcome = 'accepted' where id = $1",
       [id],
     );
-    const purge = store.purgeExpired(NOW);
-    assert.equal(await waitForBlockedPurge(pool), true);
+    // 快照中仍是 pending，本次清理不会选中它，因此不会阻塞。
+    assert.equal(await store.purgeExpired(NOW), 0);
     await client.query("commit");
     await client.release();
     client = undefined;
 
-    assert.equal(await purge, 1);
+    // 提交后的下一次清理才能看到 notified+accepted 并删除。
+    assert.equal(await store.purgeExpired(NOW), 1);
     assert.equal((await pool.query("select id from inquiry_records where id = $1", [id])).rows.length, 0);
     assert.equal(await auditCount(pool, id), 1);
   } finally {
@@ -135,8 +136,9 @@ test("并发：两个清理任务同时执行，不重复删除、不重复审�
   const storeB = createPgInquiryStore(new Pool({ connectionString: url, max: 2 }));
   const eligible = [randomUUID(), randomUUID()];
   const retained = randomUUID();
-  const dateKey = `2026-11-25-${randomUUID().slice(0, 8)}`;
+  const dateKey = "2026-11-26";
   try {
+    await pool.query("delete from inquiry_retention_runs where run_date = $1::date", [dateKey]);
     for (const id of eligible) await insertRow(pool, { id, status: "notified", smtpOutcome: "accepted", retainUntil: PAST });
     await insertRow(pool, { id: retained, status: "notification_failed", smtpOutcome: "failed", retainUntil: PAST });
 
@@ -179,13 +181,12 @@ test("并发：人工重试失败询盘与清理任务同时执行，pending 状
        where id = $1 and status = 'notification_failed'`,
       [id],
     );
-    const purge = store.purgeExpired(NOW);
-    assert.equal(await waitForBlockedPurge(pool), true);
+    // 快照中仍是 notification_failed，不属于可清理集合，本次清理返回 0。
+    assert.equal(await store.purgeExpired(NOW), 0);
     await client.query("commit");
     await client.release();
     client = undefined;
 
-    assert.equal(await purge, 0);
     const row = await pool.query<{ status: string }>("select status from inquiry_records where id = $1", [id]);
     assert.equal(row.rows[0]?.status, "notification_pending");
     assert.equal(await auditCount(pool, id), 0);

@@ -23,6 +23,8 @@ const AUDIT_DETAIL_KEYS = new Set([
   "retainUntil",
   "deletedCount",
   "errorCode",
+  "status",
+  "smtpOutcome",
 ]);
 
 const PUBLIC_NUMBER_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -335,16 +337,26 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
     async purgeExpired(now) {
       const result = await pool.query<{ deleted_count: number }>(
         `with doomed as (
-           select id, public_number, retain_until
+           select id, public_number, retain_until, status, smtp_outcome
            from inquiry_records
-           where retain_until is not null and retain_until <= $1
+           where retain_until is not null
+             and retain_until <= $1
+             -- P0 guard: only inquiries with confirmed delivery may be purged.
+             -- failed / uncertain / pending / received / null / unknown states are retained.
+             and status = 'notified'
+             and smtp_outcome = 'accepted'
          ),
          audited as (
            insert into inquiry_audit_events (
              id, inquiry_id, action, actor_username, actor_role, detail, created_at
            )
            select gen_random_uuid(), id, 'retention_purge', 'retention-task', 'system',
-                  jsonb_build_object('publicNumber', public_number, 'retainUntil', retain_until),
+                  jsonb_build_object(
+                    'publicNumber', public_number,
+                    'retainUntil', retain_until,
+                    'status', status,
+                    'smtpOutcome', smtp_outcome
+                  ),
                   $1
            from doomed
            returning inquiry_id

@@ -23,6 +23,8 @@ const AUDIT_DETAIL_KEYS = new Set([
   "retainUntil",
   "deletedCount",
   "errorCode",
+  "status",
+  "smtpOutcome",
 ]);
 
 const PUBLIC_NUMBER_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -334,25 +336,43 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
 
     async purgeExpired(now) {
       const result = await pool.query<{ deleted_count: number }>(
-        `with doomed as (
-           select id, public_number, retain_until
+        `with doomed as materialized (
+           select id, public_number, retain_until, status, smtp_outcome
            from inquiry_records
-           where retain_until is not null and retain_until <= $1
+           where retain_until is not null
+             and retain_until <= $1
+             -- P0 guard: only inquiries with confirmed delivery may be purged.
+             -- failed / uncertain / pending / received / null / unknown states are retained.
+             and status = 'notified'
+             and smtp_outcome = 'accepted'
+           -- Lock candidates so a concurrent status update cannot be overwritten by
+           -- a stale snapshot between selection and deletion.
+           for update
+         ),
+         deleted as (
+           delete from inquiry_records d
+           using doomed
+           where d.id = doomed.id
+             and d.status = 'notified'
+             and d.smtp_outcome = 'accepted'
+             and d.retain_until is not null
+             and d.retain_until <= $1
+           returning d.id, d.public_number, d.retain_until, d.status, d.smtp_outcome
          ),
          audited as (
            insert into inquiry_audit_events (
              id, inquiry_id, action, actor_username, actor_role, detail, created_at
            )
            select gen_random_uuid(), id, 'retention_purge', 'retention-task', 'system',
-                  jsonb_build_object('publicNumber', public_number, 'retainUntil', retain_until),
+                  jsonb_build_object(
+                    'publicNumber', public_number,
+                    'retainUntil', retain_until,
+                    'status', status,
+                    'smtpOutcome', smtp_outcome
+                  ),
                   $1
-           from doomed
+           from deleted
            returning inquiry_id
-         ),
-         deleted as (
-           delete from inquiry_records
-           where id in (select inquiry_id from audited)
-           returning id
          )
          select count(*)::int as deleted_count from deleted`,
         [now],
@@ -423,18 +443,25 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
       const staleMs = 20 * 60 * 1000;
       try {
         await client.query("begin");
+        // Claim atomically: concurrent callers must not both insert the same day.
+        const inserted = await client.query(
+          `insert into inquiry_retention_runs (run_date, status, started_at)
+           values ($1::date, 'running', $2)
+           on conflict (run_date) do nothing`,
+          [dateKey, now],
+        );
+        if (inserted.rowCount === 1) {
+          await client.query("commit");
+          return "claimed" as const;
+        }
         const existing = await client.query<{ status: string; started_at: Date }>(
           "select status, started_at from inquiry_retention_runs where run_date = $1::date for update",
           [dateKey],
         );
         const row = existing.rows[0];
         if (!row) {
-          await client.query(
-            "insert into inquiry_retention_runs (run_date, status, started_at) values ($1::date, 'running', $2)",
-            [dateKey, now],
-          );
           await client.query("commit");
-          return "claimed" as const;
+          return "in_progress" as const;
         }
         if (row.status === "succeeded") {
           await client.query("commit");

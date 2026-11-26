@@ -1,4 +1,4 @@
-export type InquirySubmitStatus = "idle" | "loading" | "success" | "dev-success" | "error";
+export type InquirySubmitStatus = "idle" | "loading" | "success" | "saved" | "dev-success" | "error";
 
 export function getInquirySubmitButtonState(status: InquirySubmitStatus): {
   disabled: boolean;

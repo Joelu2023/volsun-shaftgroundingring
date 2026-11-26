@@ -9,6 +9,7 @@ import {
   nextRetryDelayMinutes,
   normalizeErrorCode,
   requiresHumanConfirmation,
+  SMTP_ERROR_CODE_MAP,
 } from "./retry-policy";
 
 test("退避序列为 5/15/60 分钟，最多 3 次", () => {
@@ -88,4 +89,39 @@ test("下次重试时间按退避计算", () => {
   assert.equal(computeNextRetryAt(1, at)?.toISOString(), "2026-11-25T10:15:00.000Z");
   assert.equal(computeNextRetryAt(2, at)?.toISOString(), "2026-11-25T11:00:00.000Z");
   assert.equal(computeNextRetryAt(3, at), null);
+});
+
+test("真实数据库错误码映射表（smtp_* 与 Node 网络码）", () => {
+  const expected: Record<string, ReturnType<typeof classifySmtpError>> = {
+    smtp_uncertain: "uncertain",
+    status_update_failed: "uncertain",
+    smtp_rejected: "permanent",
+    smtp_not_configured: "permanent",
+    ECONNREFUSED: "retryable_transient",
+    ENOTFOUND: "retryable_transient",
+    EAI_AGAIN: "retryable_transient",
+    EPIPE: "uncertain",
+    ECONNRESET: "retryable_transient",
+    ETIMEDOUT: "retryable_transient",
+  };
+  for (const [code, classification] of Object.entries(expected)) {
+    assert.equal(Object.prototype.hasOwnProperty.call(SMTP_ERROR_CODE_MAP, code.toUpperCase()), true, `missing ${code}`);
+    assert.equal(classifySmtpError(code), classification, code);
+  }
+});
+
+test("UNCERTAIN 在任意错误码与大小写组合下均禁止自动重发", () => {
+  for (const code of Object.keys(SMTP_ERROR_CODE_MAP)) {
+    assert.equal(
+      isAutoRetryAllowed({ smtpOutcome: "uncertain", errorClass: classifySmtpError(code), autoRetryCount: 0 }),
+      false,
+      `uncertain must block ${code}`,
+    );
+  }
+  assert.equal(requiresHumanConfirmation("UNCERTAIN"), true);
+  assert.equal(requiresHumanConfirmation(" Uncertain "), true);
+  assert.equal(
+    isAutoRetryAllowed({ smtpOutcome: "FAILED", errorClass: "retryable_transient", autoRetryCount: 0 }),
+    true,
+  );
 });

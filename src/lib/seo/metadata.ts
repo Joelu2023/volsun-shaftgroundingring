@@ -32,6 +32,20 @@ function alternateLanguageUrls(base: string, logicalPath: string): { en: string;
   };
 }
 
+/** Chinese document titles end with the Chinese brand; English keeps the English template. */
+export const ZH_BRAND_SUFFIX = "| 沃尔兴（VOLSUN）";
+
+const BRAND_TAIL_RE =
+  /\s*\|\s*(?:Volsun Shaft Grounding Rings|Volsun|VOLSUN|沃尔兴（VOLSUN）|沃尔兴)\s*$/i;
+
+/**
+ * Normalize any existing brand tail (English or Chinese) to the single Chinese suffix.
+ * Applied only to Chinese pages, so English titles keep their existing brand wording.
+ */
+export function withChineseBrandSuffix(title: string): string {
+  return `${title.trim().replace(BRAND_TAIL_RE, "").trim()} ${ZH_BRAND_SUFFIX}`;
+}
+
 /** Crawl allowed for all locales; only Chinese pages opt out of indexing. */
 export function localeRobots(locale: AppLocale | undefined): Metadata["robots"] {
   if (locale === "zh") {
@@ -80,16 +94,25 @@ export function buildPageMetadata({
     };
   }
 
+  // Chinese pages bypass the root English title template and own their brand suffix.
+  const resolvedTitle = locale === "zh" ? withChineseBrandSuffix(title) : title;
+  const titleMetadata =
+    locale === "zh"
+      ? { title: { absolute: resolvedTitle } as Metadata["title"] }
+      : absoluteTitle
+        ? { title: { absolute: title } as Metadata["title"] }
+        : { title };
+
   return {
-    ...(absoluteTitle ? { title: { absolute: title } } : { title }),
+    ...titleMetadata,
     description,
     alternates,
     robots: resolvePageRobots(locale, indexable, path),
     openGraph: {
-      title: absoluteTitle ? title : undefined,
+      title: locale === "zh" || absoluteTitle ? resolvedTitle : undefined,
       description,
       url: canonicalUrl,
-      siteName: "Volsun Shaft Grounding Rings",
+      siteName: locale === "zh" ? "沃尔兴（VOLSUN）" : "Volsun Shaft Grounding Rings",
       locale: ogLocale,
       type: "website",
     },

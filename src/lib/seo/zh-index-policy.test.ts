@@ -4,7 +4,7 @@ import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
 import { applications, getPageMeta } from "@/data";
 import { getArticleForLocale } from "@/data/mock/articles";
-import { buildPageMetadata, localeRobots } from "@/lib/seo/metadata";
+import { buildPageMetadata, localeRobots, withChineseBrandSuffix, ZH_BRAND_SUFFIX } from "@/lib/seo/metadata";
 import { getCanonicalSiteOrigin } from "@/config/site";
 import {
   getZhIndexStrategy,
@@ -363,4 +363,70 @@ test("sitemap still omits gated download URLs when phase1a is enabled", () => {
       assert.ok(!url.includes("/resources/download/"), url);
     }
   });
+});
+
+test("Chinese brand suffix is 沃尔兴（VOLSUN） and never duplicates an English tail", () => {
+  assert.equal(ZH_BRAND_SUFFIX, "| 沃尔兴（VOLSUN）");
+  assert.equal(withChineseBrandSuffix("轴接地环产品"), `轴接地环产品 ${ZH_BRAND_SUFFIX}`);
+  assert.equal(withChineseBrandSuffix("变频电机轴接地环 | Volsun"), `变频电机轴接地环 ${ZH_BRAND_SUFFIX}`);
+  assert.equal(withChineseBrandSuffix("变频电机中的轴电压是如何产生的？ | VOLSUN"), `变频电机中的轴电压是如何产生的？ ${ZH_BRAND_SUFFIX}`);
+  assert.equal(withChineseBrandSuffix("标题 | Volsun Shaft Grounding Rings"), `标题 ${ZH_BRAND_SUFFIX}`);
+  assert.equal(withChineseBrandSuffix(`标题 ${ZH_BRAND_SUFFIX}`), `标题 ${ZH_BRAND_SUFFIX}`);
+});
+
+test("buildPageMetadata: zh titles use Chinese brand, en titles keep English brand", () => {
+  const base = getCanonicalSiteOrigin();
+
+  const zhPlain = buildPageMetadata({
+    title: "轴接地环产品",
+    description: "desc",
+    path: "/products",
+    locale: "zh",
+  });
+  assert.deepEqual(zhPlain.title, { absolute: `轴接地环产品 ${ZH_BRAND_SUFFIX}` });
+  assert.equal((zhPlain.openGraph as Record<string, unknown>).siteName, "沃尔兴（VOLSUN）");
+  assert.equal((zhPlain.openGraph as Record<string, unknown>).title, `轴接地环产品 ${ZH_BRAND_SUFFIX}`);
+  assert.equal(zhPlain.alternates?.canonical, `${base}/zh/products`);
+
+  const zhAbsolute = buildPageMetadata({
+    title: "变频电机轴接地环 | Volsun",
+    description: "desc",
+    path: "/",
+    locale: "zh",
+    absoluteTitle: true,
+  });
+  assert.deepEqual(zhAbsolute.title, { absolute: `变频电机轴接地环 ${ZH_BRAND_SUFFIX}` });
+
+  const enPlain = buildPageMetadata({
+    title: "Shaft Grounding Ring Products",
+    description: "desc",
+    path: "/products",
+    locale: "en",
+  });
+  assert.equal(enPlain.title, "Shaft Grounding Ring Products");
+  assert.equal((enPlain.openGraph as Record<string, unknown>).siteName, "Volsun Shaft Grounding Rings");
+
+  const enAbsolute = buildPageMetadata({
+    title: "How to Install a Shaft Grounding Ring | VOLSUN",
+    description: "desc",
+    path: "/knowledge-center/how-to-install-shaft-grounding-ring",
+    locale: "en",
+    absoluteTitle: true,
+  });
+  assert.deepEqual(enAbsolute.title, { absolute: "How to Install a Shaft Grounding Ring | VOLSUN" });
+});
+
+test("published zh article seoTitles normalize to a single Chinese brand suffix", () => {
+  const records = [
+    "变频电机中的轴电压是如何产生的？ | VOLSUN",
+    "变频电机轴接地环方案导航 | 指南与对比 | VOLSUN",
+    "轴接地环 vs dV/dt 滤波器：变频电机防护对比 | VOLSUN",
+  ];
+  for (const title of records) {
+    const normalized = withChineseBrandSuffix(title);
+    assert.equal(normalized.endsWith(ZH_BRAND_SUFFIX), true, normalized);
+    assert.equal(normalized.includes("VOLSUN"), true, normalized);
+    assert.equal(normalized.split(ZH_BRAND_SUFFIX).length, 2, normalized);
+    assert.equal(/\|\s*(?:VOLSUN|Volsun|Volsun Shaft Grounding Rings)\s*$/.test(normalized), false, normalized);
+  }
 });

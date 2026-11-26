@@ -44,7 +44,7 @@
     "eslint-config-next": "^15.1.0",
     "mammoth": "^1.12.0",
     "pg": "^8.20.0",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.33",
     "prisma": "^7.7.0",
     "tailwindcss": "^3.4.16",
     "tsx": "^4.21.0",

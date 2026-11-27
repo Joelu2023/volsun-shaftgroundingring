@@ -48,9 +48,30 @@ export type InquiryRecordRow = {
   assignedUserId: string | null;
   assignedAt: string | null;
   followUpStatus: InquiryFollowUpStatus;
+  /** B1: next scheduled automatic notification retry (null/undefined = none scheduled). */
+  nextRetryAt?: string | null;
+  /** B1: true when the bounded retry sequence is exhausted; manual retry still available. */
+  autoRetryExhausted?: boolean;
   createdAt: string;
   updatedAt: string;
 };
+
+/**
+ * B1 additions are intentionally a separate interface so existing in-memory test
+ * stores typed as InquiryStore remain valid. The production pg store implements
+ * the full superset.
+ */
+export type AutoRetryStoreMethods = {
+  scheduleAutoRetry(id: string, nextRetryAt: Date, errorCode: string, at: Date): Promise<InquiryRecordRow | null>;
+  clearAutoRetry(id: string, at: Date): Promise<InquiryRecordRow | null>;
+  markAutoRetryExhausted(id: string, at: Date): Promise<InquiryRecordRow | null>;
+  claimAutoRetry(id: string, attemptNo: number, at: Date): Promise<InquiryRecordRow | null>;
+  claimAutoRetryAttempt(id: string, attemptNo: number): Promise<boolean>;
+  finishAutoRetryAttempt(id: string, attemptNo: number, status: "sent" | "failed" | "skipped"): Promise<void>;
+  listAutoRetryDue(now: Date, limit: number): Promise<InquiryRecordRow[]>;
+};
+
+export type InquiryStoreWithAutoRetry = InquiryStore & AutoRetryStoreMethods;
 
 export type InquiryStore = {
   insertReceived(input: {
@@ -109,6 +130,8 @@ type DbRow = {
   assigned_user_id: string | null;
   assigned_at: Date | null;
   follow_up_status: InquiryFollowUpStatus;
+  next_retry_at: Date | null;
+  auto_retry_exhausted: boolean;
   created_at: Date;
   updated_at: Date;
 };
@@ -127,7 +150,7 @@ const RETURNING = `
   id, public_number, idempotency_key, status, smtp_outcome, payload, latest_request_id,
   smtp_error_sanitized, attempt_count, attempt_started_at, notified_at, retain_until,
   handled_by, handled_at, assigned_username, assigned_user_id, assigned_at, follow_up_status,
-  created_at, updated_at
+  next_retry_at, auto_retry_exhausted, created_at, updated_at
 `;
 
 export function isInquiryDurableStorageEnabled(): boolean {
@@ -177,6 +200,8 @@ function mapRow(row: DbRow): InquiryRecordRow {
     assignedUserId: row.assigned_user_id,
     assignedAt: iso(row.assigned_at),
     followUpStatus: row.follow_up_status,
+    nextRetryAt: iso(row.next_retry_at),
+    autoRetryExhausted: row.auto_retry_exhausted === true,
     createdAt: row.created_at.toISOString(),
     updatedAt: row.updated_at.toISOString(),
   };
@@ -192,7 +217,7 @@ function sanitizeAuditDetail(
   return safe;
 }
 
-export function createPgInquiryStore(pool: Pool): InquiryStore {
+export function createPgInquiryStore(pool: Pool): InquiryStoreWithAutoRetry {
   async function one(query: string, values: unknown[]): Promise<InquiryRecordRow | null> {
     const result = await pool.query<DbRow>(query, values);
     return result.rows[0] ? mapRow(result.rows[0]) : null;
@@ -266,7 +291,8 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
     markNotified(id, at) {
       return one(
         `update inquiry_records
-         set status = 'notified', smtp_outcome = 'accepted', notified_at = $2, smtp_error_sanitized = null, updated_at = $2
+         set status = 'notified', smtp_outcome = 'accepted', notified_at = $2, smtp_error_sanitized = null,
+             next_retry_at = null, auto_retry_exhausted = false, updated_at = $2
          where id = $1 and status = 'notification_pending'
          returning ${RETURNING}`,
         [id, at],
@@ -506,6 +532,113 @@ export function createPgInquiryStore(pool: Pool): InquiryStore {
          returning ${RETURNING}`,
         [id, safeName, at],
       );
+    },
+
+    // ---- B1: bounded automatic retry -------------------------------------
+
+    scheduleAutoRetry(id, nextRetryAt, errorCode, at) {
+      // Red line: never schedule an UNCERTAIN outcome. The SQL guard is the
+      // second line of defence after the pure retry-policy check.
+      return one(
+        `update inquiry_records
+         set next_retry_at = $2,
+             auto_retry_exhausted = false,
+             smtp_error_sanitized = $3,
+             updated_at = $4
+         where id = $1
+           and status = 'notification_failed'
+           and smtp_outcome = 'failed'
+           and coalesce(smtp_error_sanitized, '') <> 'smtp_uncertain'
+           and coalesce(smtp_error_sanitized, '') <> 'status_update_failed'
+           and auto_retry_exhausted = false
+         returning ${RETURNING}`,
+        [id, nextRetryAt, errorCode.slice(0, 500), at],
+      );
+    },
+
+    clearAutoRetry(id, at) {
+      // Human takeover also resets the bounded sequence: a person has explicitly
+      // chosen to retry, so auto-retry accounting starts over if they fail again.
+      return one(
+        `update inquiry_records
+         set next_retry_at = null, auto_retry_exhausted = false, updated_at = $2
+         where id = $1
+         returning ${RETURNING}`,
+        [id, at],
+      );
+    },
+
+    markAutoRetryExhausted(id, at) {
+      return one(
+        `update inquiry_records
+         set next_retry_at = null, auto_retry_exhausted = true, updated_at = $2
+         where id = $1
+         returning ${RETURNING}`,
+        [id, at],
+      );
+    },
+
+    /**
+     * Atomically move a due, definitely-failed row back to pending.
+     * The WHERE clause repeats every red line so a stale scheduler cannot
+     * retry UNCERTAIN / received / notified rows.
+     */
+    claimAutoRetry(id, attemptNo, at) {
+      return one(
+        `update inquiry_records
+         set status = 'notification_pending',
+             smtp_outcome = null,
+             smtp_error_sanitized = null,
+             attempt_count = attempt_count + 1,
+             attempt_started_at = $2,
+             next_retry_at = null,
+             updated_at = $2
+         where id = $1
+           and status = 'notification_failed'
+           and smtp_outcome = 'failed'
+           and next_retry_at is not null
+           and next_retry_at <= $2
+           and auto_retry_exhausted = false
+           and attempt_count < $3
+         returning ${RETURNING}`,
+        [id, at, attemptNo],
+      );
+    },
+
+    /** Idempotency guard: only the caller that inserts the attempt row may send. */
+    async claimAutoRetryAttempt(id, attemptNo) {
+      const result = await pool.query(
+        `insert into inquiry_auto_retry_attempts (id, inquiry_id, attempt_no, status)
+         values ($1, $2, $3, 'claimed')
+         on conflict (inquiry_id, attempt_no) do nothing
+         returning id`,
+        [randomUUID(), id, attemptNo],
+      );
+      return (result.rowCount ?? 0) === 1;
+    },
+
+    async finishAutoRetryAttempt(id, attemptNo, status) {
+      await pool.query(
+        `update inquiry_auto_retry_attempts
+         set status = $3
+         where inquiry_id = $1 and attempt_no = $2`,
+        [id, attemptNo, status],
+      );
+    },
+
+    async listAutoRetryDue(now, limit) {
+      const result = await pool.query<DbRow>(
+        `select ${RETURNING} from inquiry_records
+         where status = 'notification_failed'
+           and smtp_outcome = 'failed'
+           and next_retry_at is not null
+           and next_retry_at <= $1
+           and auto_retry_exhausted = false
+         order by next_retry_at asc
+         limit $2`,
+        [now, limit],
+      );
+      return result.rows.map(mapRow);
     },
   };
 }

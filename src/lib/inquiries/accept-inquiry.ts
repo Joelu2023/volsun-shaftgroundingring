@@ -1,4 +1,5 @@
-import type { InquiryRecordRow, InquiryStore } from "@/lib/inquiries/durable-store";
+import type { InquiryRecordRow, InquiryStore, InquiryStoreWithAutoRetry } from "@/lib/inquiries/durable-store";
+import { classifySmtpError, isAutoRetryAllowed } from "@/lib/inquiries/retry-policy";
 import { InquiryRetentionError } from "@/lib/inquiries/retention-policy";
 import { getMissingSmtpEnv, sendInquiryEmail } from "@/lib/inquiries/send-email";
 import type { InquiryNotificationStatus, InquirySubmission } from "@/types/inquiry";
@@ -343,6 +344,17 @@ export async function retryDurableInquiryNotification(
     return { ...viewOf(row, true), resent: false };
   }
 
+  // Human takeover: any admin-initiated retry cancels a pending automatic
+  // retry and resets the exhausted flag. Failure here never blocks the manual
+  // retry itself (fail-open only for the scheduling side effect).
+  if ("clearAutoRetry" in deps.store && typeof deps.store.clearAutoRetry === "function") {
+    try {
+      await deps.store.clearAutoRetry(row.id, at);
+    } catch {
+      // ignore: the manual retry remains authoritative
+    }
+  }
+
   const uncertain =
     row.smtpOutcome === "uncertain" || (row.status === "notification_pending" && row.attemptCount > 0);
   try {
@@ -373,4 +385,79 @@ export async function retryDurableInquiryNotification(
     return { ok: false, error: "inquiry_storage_failed", httpStatus: 503 };
   }
   return { ok: false, error: "retry_not_allowed", httpStatus: 409 };
+}
+
+export type AutoRetryDeps = AcceptInquiryDeps & {
+  store: InquiryStoreWithAutoRetry;
+};
+
+export type OneAutoRetryOutcome =
+  | "sent"
+  | "retryable_failure"
+  | "terminal"
+  | "not_due"
+  | "storage_error";
+
+/**
+ * Execute exactly one automatic retry attempt.
+ *
+ * Red lines enforced here and again in SQL:
+ * - only status=notification_failed + smtp_outcome=failed is claimable;
+ * - UNCERTAIN / unknown outcomes are terminal (never auto-resent);
+ * - a unique (inquiry_id, attempt_no) row prevents duplicate sends.
+ */
+export async function runOneAutoRetry(
+  id: string,
+  deps: AutoRetryDeps,
+): Promise<{ outcome: OneAutoRetryOutcome; smtpErrorCode: string | null }> {
+  const now = deps.now ?? (() => new Date());
+  const log = deps.log ?? logInquiryEvent;
+  const at = now();
+  let row: InquiryRecordRow | null;
+  try {
+    row = await deps.store.findById(id);
+  } catch {
+    return { outcome: "storage_error", smtpErrorCode: null };
+  }
+  if (!row) return { outcome: "not_due", smtpErrorCode: null };
+
+  const allowed = isAutoRetryAllowed({
+    smtpOutcome: row.smtpOutcome,
+    errorClass: classifySmtpError(row.smtpErrorCode),
+    autoRetryCount: Math.max(0, row.attemptCount - 1),
+  });
+  if (!allowed || row.status !== "notification_failed" || row.smtpOutcome !== "failed") {
+    return { outcome: "terminal", smtpErrorCode: row.smtpErrorCode };
+  }
+
+  // attempt_count already includes the initial send, so the next auto retry is N+1.
+  const attemptNo = row.attemptCount + 1;
+  let claimed: boolean;
+  try {
+    claimed = await deps.store.claimAutoRetryAttempt(row.id, attemptNo);
+  } catch {
+    return { outcome: "storage_error", smtpErrorCode: row.smtpErrorCode };
+  }
+  if (!claimed) return { outcome: "not_due", smtpErrorCode: row.smtpErrorCode };
+
+  let pending: InquiryRecordRow | null;
+  try {
+    pending = await deps.store.claimAutoRetry(row.id, attemptNo, at);
+  } catch {
+    return { outcome: "storage_error", smtpErrorCode: row.smtpErrorCode };
+  }
+  if (!pending) {
+    await deps.store.finishAutoRetryAttempt(row.id, attemptNo, "skipped").catch(() => undefined);
+    return { outcome: "not_due", smtpErrorCode: row.smtpErrorCode };
+  }
+
+  const result = await attemptSend(pending, pending.payload, pending.latestRequestId, deps, at, log, false);
+  if (result.ok && result.delivered) {
+    await deps.store.finishAutoRetryAttempt(row.id, attemptNo, "sent").catch(() => undefined);
+    log("auto_retry_sent", { inquiryId: pending.id, publicNumber: pending.publicNumber, status: "notified" });
+    return { outcome: "sent", smtpErrorCode: null };
+  }
+  await deps.store.finishAutoRetryAttempt(row.id, attemptNo, "failed").catch(() => undefined);
+  const current = await deps.store.findById(row.id).catch(() => null);
+  return { outcome: "retryable_failure", smtpErrorCode: current?.smtpErrorCode ?? row.smtpErrorCode };
 }

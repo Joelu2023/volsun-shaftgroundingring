@@ -69,6 +69,8 @@ export type AutoRetryStoreMethods = {
   claimAutoRetryAttempt(id: string, attemptNo: number): Promise<boolean>;
   finishAutoRetryAttempt(id: string, attemptNo: number, status: "sent" | "failed" | "skipped"): Promise<void>;
   listAutoRetryDue(now: Date, limit: number): Promise<InquiryRecordRow[]>;
+  /** P0-2: release expired claims and move stranded inquiries to human takeover. */
+  recoverStaleAutoRetryAttempts(now: Date, leaseMs?: number): Promise<{ attempts: number; inquiries: number }>;
 };
 
 export type InquiryStoreWithAutoRetry = InquiryStore & AutoRetryStoreMethods;
@@ -335,7 +337,8 @@ export function createPgInquiryStore(pool: Pool): InquiryStoreWithAutoRetry {
         `update inquiry_records
          set status = 'notification_pending', attempt_count = attempt_count + 1, attempt_started_at = $2,
              smtp_outcome = null, smtp_error_sanitized = null, updated_at = $2
-         where id = $1 and status = 'notification_pending' and smtp_outcome = 'uncertain'
+         where id = $1 and smtp_outcome = 'uncertain'
+           and status in ('notification_pending', 'notification_failed')
          returning ${RETURNING}`,
         [id, at],
       );
@@ -569,11 +572,32 @@ export function createPgInquiryStore(pool: Pool): InquiryStoreWithAutoRetry {
     },
 
     markAutoRetryExhausted(id, at) {
+      // P0-2: exhaustion must produce a persistent exception event. The audit row
+      // is inserted in the same statement as the state transition, so a retry
+      // storm cannot create duplicate events after the flag is already true.
       return one(
-        `update inquiry_records
-         set next_retry_at = null, auto_retry_exhausted = true, updated_at = $2
-         where id = $1
-         returning ${RETURNING}`,
+        `with updated as (
+           update inquiry_records
+           set next_retry_at = null, auto_retry_exhausted = true, updated_at = $2
+           where id = $1 and auto_retry_exhausted = false
+           returning id, public_number, smtp_outcome, smtp_error_sanitized
+         ),
+         audited as (
+           insert into inquiry_audit_events (
+             id, inquiry_id, action, actor_username, actor_role, detail, created_at
+           )
+           select gen_random_uuid(), id, 'auto_retry_exhausted', 'auto-retry', 'system',
+                  jsonb_build_object(
+                    'publicNumber', public_number,
+                    'status', 'notification_failed',
+                    'smtpOutcome', coalesce(smtp_outcome, 'failed'),
+                    'errorCode', coalesce(smtp_error_sanitized, 'auto_retry_exhausted')
+                  ),
+                  $2
+           from updated
+           returning inquiry_id
+         )
+         select ${RETURNING} from inquiry_records where id = $1`,
         [id, at],
       );
     },
@@ -639,6 +663,78 @@ export function createPgInquiryStore(pool: Pool): InquiryStoreWithAutoRetry {
         [now, limit],
       );
       return result.rows.map(mapRow);
+    },
+
+    /**
+     * P0-2 lease recovery: a worker that dies after claiming an attempt leaves
+     * inquiry_records stuck in notification_pending. The delivery result is
+     * genuinely unknown, so the row becomes UNCERTAIN (never auto-resent) and
+     * the exhausted flag forces human takeover. Reusing the same attempt number
+     * is prevented by the unique (inquiry_id, attempt_no) row, now 'recovered'.
+     */
+    async recoverStaleAutoRetryAttempts(now, leaseMs = 15 * 60 * 1000) {
+      const cutoff = new Date(now.getTime() - leaseMs);
+      const client = await pool.connect();
+      try {
+        await client.query("begin");
+        const stale = await client.query<{ id: string; inquiry_id: string; attempt_no: number }>(
+          `select id, inquiry_id, attempt_no from inquiry_auto_retry_attempts
+           where status = 'claimed' and created_at <= $1
+           for update skip locked`,
+          [cutoff],
+        );
+        if ((stale.rowCount ?? 0) === 0) {
+          await client.query("commit");
+          return { attempts: 0, inquiries: 0 };
+        }
+        const ids = stale.rows.map((row) => row.inquiry_id);
+        await client.query(
+          `update inquiry_auto_retry_attempts set status = 'recovered'
+           where status = 'claimed' and created_at <= $1`,
+          [cutoff],
+        );
+        const restored = await client.query<{ id: string; public_number: string }>(
+          `update inquiry_records
+           set status = 'notification_failed',
+               smtp_outcome = 'uncertain',
+               smtp_error_sanitized = 'smtp_uncertain',
+               next_retry_at = null,
+               auto_retry_exhausted = true,
+               updated_at = $2
+           where id = any($1::uuid[])
+             and status = 'notification_pending'
+             and smtp_outcome is null
+             and attempt_started_at is not null
+             and attempt_started_at <= $3
+           returning id, public_number`,
+          [ids, now, cutoff],
+        );
+        for (const row of restored.rows) {
+          await client.query(
+            `insert into inquiry_audit_events (
+               id, inquiry_id, action, actor_username, actor_role, detail, created_at
+             ) values ($1, $2, 'auto_retry_recovered', 'auto-retry', 'system', $3::jsonb, $4)`,
+            [
+              randomUUID(),
+              row.id,
+              JSON.stringify({
+                publicNumber: row.public_number,
+                status: "notification_failed",
+                smtpOutcome: "uncertain",
+                errorCode: "smtp_uncertain",
+              }),
+              now,
+            ],
+          );
+        }
+        await client.query("commit");
+        return { attempts: stale.rowCount ?? 0, inquiries: restored.rowCount ?? 0 };
+      } catch (error) {
+        await client.query("rollback");
+        throw error;
+      } finally {
+        client.release();
+      }
     },
   };
 }

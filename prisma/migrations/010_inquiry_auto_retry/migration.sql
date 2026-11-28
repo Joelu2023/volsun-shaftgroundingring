@@ -24,3 +24,8 @@ CREATE TABLE "inquiry_auto_retry_attempts" (
 
 CREATE INDEX "inquiry_auto_retry_attempts_inquiry_idx"
   ON "inquiry_auto_retry_attempts" ("inquiry_id");
+
+-- P0-2: recover attempts whose worker died while holding the claim.
+CREATE INDEX "inquiry_auto_retry_attempts_stale_idx"
+  ON "inquiry_auto_retry_attempts" ("created_at")
+  WHERE "status" = 'claimed';

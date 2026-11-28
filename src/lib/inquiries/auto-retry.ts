@@ -26,7 +26,22 @@ export type AutoRetrySweepStats = {
   terminal: number;
   skipped: number;
   errors: number;
+  /** P0-2: stranded inquiries moved to human takeover after a worker crash. */
+  recovered: number;
 };
+
+/** P0-2: release expired worker leases before looking for due retries. */
+export async function recoverAutoRetryLeases(input: {
+  store: InquiryStoreWithAutoRetry;
+  now?: () => Date;
+  leaseMs?: number;
+}): Promise<{ attempts: number; inquiries: number }> {
+  try {
+    return await input.store.recoverStaleAutoRetryAttempts(input.now?.() ?? new Date(), input.leaseMs);
+  } catch {
+    return { attempts: 0, inquiries: 0 };
+  }
+}
 
 export async function runAutoRetrySweep(input: {
   store: InquiryStoreWithAutoRetry;
@@ -37,7 +52,9 @@ export async function runAutoRetrySweep(input: {
   getMissingSmtpEnv?: AcceptInquiryDeps["getMissingSmtpEnv"];
   log?: AcceptInquiryDeps["log"];
 }): Promise<{ disabled: boolean; stats: AutoRetrySweepStats }> {
-  const empty: AutoRetrySweepStats = { scanned: 0, sent: 0, scheduled: 0, terminal: 0, skipped: 0, errors: 0 };
+  const empty: AutoRetrySweepStats = {
+    scanned: 0, sent: 0, scheduled: 0, terminal: 0, skipped: 0, errors: 0, recovered: 0,
+  };
   const enabled = input.enabled ?? isAutoRetryFeatureEnabled(process.env.INQUIRY_AUTO_RETRY_ENABLED);
   if (!enabled) return { disabled: true, stats: empty };
 
@@ -45,6 +62,7 @@ export async function runAutoRetrySweep(input: {
   const at = now();
   const limit = input.limit ?? AUTO_RETRY_BATCH_LIMIT;
   const log = input.log ?? (() => undefined);
+  const recovery = await recoverAutoRetryLeases({ store: input.store, now });
 
   let due: Awaited<ReturnType<InquiryStoreWithAutoRetry["listAutoRetryDue"]>>;
   try {
@@ -53,7 +71,7 @@ export async function runAutoRetrySweep(input: {
     return { disabled: false, stats: { ...empty, errors: 1 } };
   }
 
-  const stats: AutoRetrySweepStats = { ...empty, scanned: due.length };
+  const stats: AutoRetrySweepStats = { ...empty, scanned: due.length, recovered: recovery.inquiries };
   for (const row of due) {
     // Re-check the policy before doing any I/O. This is deliberately duplicated
     // from runOneAutoRetry so a future refactor cannot silently weaken the gate.

@@ -58,16 +58,44 @@ function makeRow(overrides: Partial<InquiryRecordRow> = {}): InquiryRecordRow {
 
 function makeStore(rows: InquiryRecordRow[]): InquiryStoreWithAutoRetry & {
   attempts: Map<string, string>;
+  attemptTimes: Map<string, Date>;
+  audits: InquiryAuditEvent[];
   sent: number;
 } {
   const attempts = new Map<string, string>();
+  const attemptTimes = new Map<string, Date>();
   const audits: InquiryAuditEvent[] = [];
   let sent = 0;
   const clone = (row: InquiryRecordRow): InquiryRecordRow => ({ ...row, payload: { ...row.payload } });
   const find = (id: string) => rows.find((r) => r.id === id) ?? null;
+  const audit = (input: {
+    inquiryId: string | null;
+    action: string;
+    actorUsername: string;
+    actorRole: string;
+    detail: Record<string, string | number | boolean | null>;
+    at: Date;
+  }) => {
+    audits.push({
+      id: randomUUID(),
+      inquiryId: input.inquiryId,
+      action: input.action,
+      actorUsername: input.actorUsername,
+      actorRole: input.actorRole,
+      detail: input.detail,
+      createdAt: input.at.toISOString(),
+    });
+  };
 
-  const store: InquiryStoreWithAutoRetry & { attempts: Map<string, string>; sent: number } = {
+  const store: InquiryStoreWithAutoRetry & {
+    attempts: Map<string, string>;
+    attemptTimes: Map<string, Date>;
+    audits: InquiryAuditEvent[];
+    sent: number;
+  } = {
     attempts,
+    attemptTimes,
+    audits,
     get sent() {
       return sent;
     },
@@ -153,15 +181,7 @@ function makeStore(rows: InquiryRecordRow[]): InquiryStoreWithAutoRetry & {
       return null;
     },
     async appendAudit(input) {
-      audits.push({
-        id: randomUUID(),
-        inquiryId: input.inquiryId,
-        action: input.action,
-        actorUsername: input.actorUsername,
-        actorRole: input.actorRole,
-        detail: input.detail,
-        createdAt: input.at.toISOString(),
-      });
+      audit(input);
     },
     async listAudit() {
       return audits;
@@ -181,11 +201,26 @@ function makeStore(rows: InquiryRecordRow[]): InquiryStoreWithAutoRetry & {
       row.autoRetryExhausted = false;
       return clone(row);
     },
-    async markAutoRetryExhausted(id) {
+    async markAutoRetryExhausted(id, at) {
       const row = find(id);
       if (!row) return null;
-      row.nextRetryAt = null;
-      row.autoRetryExhausted = true;
+      if (!row.autoRetryExhausted) {
+        row.nextRetryAt = null;
+        row.autoRetryExhausted = true;
+        audit({
+          inquiryId: row.id,
+          action: "auto_retry_exhausted",
+          actorUsername: "auto-retry",
+          actorRole: "system",
+          detail: {
+            publicNumber: row.publicNumber,
+            status: row.status,
+            smtpOutcome: row.smtpOutcome,
+            errorCode: row.smtpErrorCode,
+          },
+          at,
+        });
+      }
       return clone(row);
     },
     async claimAutoRetry(id, attemptNo, at) {
@@ -205,6 +240,7 @@ function makeStore(rows: InquiryRecordRow[]): InquiryStoreWithAutoRetry & {
       const key = `${id}:${attemptNo}`;
       if (attempts.has(key)) return false;
       attempts.set(key, "claimed");
+      attemptTimes.set(key, new Date());
       return true;
     },
     async finishAutoRetryAttempt(id, attemptNo, status) {
@@ -222,6 +258,48 @@ function makeStore(rows: InquiryRecordRow[]): InquiryStoreWithAutoRetry & {
         )
         .slice(0, limit)
         .map(clone);
+    },
+    async recoverStaleAutoRetryAttempts(now, leaseMs = 15 * 60 * 1000) {
+      const cutoff = now.getTime() - leaseMs;
+      let recoveredAttempts = 0;
+      let recoveredInquiries = 0;
+      for (const [key, status] of attempts) {
+        const started = attemptTimes.get(key)?.getTime() ?? Number.POSITIVE_INFINITY;
+        if (status !== "claimed" || started > cutoff) continue;
+        attempts.set(key, "recovered");
+        recoveredAttempts += 1;
+        const id = key.split(":")[0];
+        const row = find(id);
+        if (
+          !row ||
+          row.status !== "notification_pending" ||
+          row.smtpOutcome !== null ||
+          !row.attemptStartedAt ||
+          new Date(row.attemptStartedAt).getTime() > cutoff
+        ) {
+          continue;
+        }
+        row.status = "notification_failed";
+        row.smtpOutcome = "uncertain";
+        row.smtpErrorCode = "smtp_uncertain";
+        row.nextRetryAt = null;
+        row.autoRetryExhausted = true;
+        recoveredInquiries += 1;
+        audit({
+          inquiryId: row.id,
+          action: "auto_retry_recovered",
+          actorUsername: "auto-retry",
+          actorRole: "system",
+          detail: {
+            publicNumber: row.publicNumber,
+            status: row.status,
+            smtpOutcome: row.smtpOutcome,
+            errorCode: row.smtpErrorCode,
+          },
+          at: now,
+        });
+      }
+      return { attempts: recoveredAttempts, inquiries: recoveredInquiries };
     },
   };
   return store;
@@ -322,6 +400,9 @@ test("repeated transient failures stop after MAX_AUTO_RETRIES", async () => {
   assert.equal(row.attemptCount, 4); // initial + three auto retries
   assert.equal(row.autoRetryExhausted, true);
   assert.equal(row.nextRetryAt, null);
+  const event = store.audits.find((item) => item.action === "auto_retry_exhausted");
+  assert.ok(event, "exhaustion must produce a persistent exception event");
+  assert.equal(event?.inquiryId, row.id);
 });
 
 test("admin retry cancels the pending automatic retry (human takeover)", async () => {
@@ -336,4 +417,89 @@ test("admin retry cancels the pending automatic retry (human takeover)", async (
   assert.equal(row.nextRetryAt, null);
   assert.equal(row.autoRetryExhausted, false);
   assert.equal(store.attempts.size, 0);
+});
+
+test("SMTP accepted but status update fails: UNCERTAIN is terminal and never auto-resent", async () => {
+  const row = makeRow({ nextRetryAt: "2026-11-27T00:05:00.000Z" });
+  const store = makeStore([row]);
+  let sends = 0;
+  const deps = {
+    ...okDeps,
+    sendInquiryEmail: async () => {
+      sends += 1;
+    },
+  };
+  // Simulate a crash window: SMTP accepted, then the DB status update throws.
+  store.markNotified = async () => {
+    throw new Error("status update failed after SMTP accepted");
+  };
+  const one = await runOneAutoRetry(row.id, { store, ...deps });
+  assert.equal(one.outcome, "retryable_failure");
+  assert.equal(row.smtpOutcome, "uncertain");
+  assert.equal(row.smtpErrorCode, "status_update_failed");
+  assert.equal(row.status, "notification_pending");
+  assert.equal(row.nextRetryAt, null);
+  assert.equal(sends, 1);
+
+  const sweep = await runAutoRetrySweep({
+    store,
+    enabled: true,
+    now: () => new Date("2026-11-28T00:00:00.000Z"),
+    ...deps,
+  });
+  assert.equal(sweep.stats.scanned, 0);
+  assert.equal(sends, 1, "status-update uncertainty must never trigger an auto resend");
+});
+
+test("two concurrent sweeps cannot produce two sends", async () => {
+  const row = makeRow({ nextRetryAt: "2026-11-27T00:05:00.000Z" });
+  const store = makeStore([row]);
+  let sends = 0;
+  const deps = {
+    enabled: true,
+    now: () => new Date("2026-11-27T00:06:00.000Z"),
+    sendInquiryEmail: async () => {
+      sends += 1;
+    },
+    getMissingSmtpEnv: () => [],
+  };
+  const [a, b] = await Promise.all([
+    runAutoRetrySweep({ store, ...deps }),
+    runAutoRetrySweep({ store, ...deps }),
+  ]);
+  assert.equal(a.stats.sent + b.stats.sent, 1);
+  assert.equal(sends, 1);
+  assert.equal(row.attemptCount, 2);
+});
+
+test("stale claimed attempt is recovered to UNCERTAIN and added to human queue", async () => {
+  const row = makeRow({
+    status: "notification_pending",
+    smtpOutcome: null,
+    smtpErrorCode: null,
+    attemptCount: 2,
+    attemptStartedAt: "2026-11-27T00:00:00.000Z",
+    nextRetryAt: null,
+  });
+  const store = makeStore([row]);
+  assert.equal(await store.claimAutoRetryAttempt(row.id, 2), true);
+  store.attemptTimes.set(`${row.id}:2`, new Date("2026-11-27T00:00:00.000Z"));
+
+  const result = await runAutoRetrySweep({
+    store,
+    enabled: true,
+    now: () => new Date("2026-11-27T00:20:00.000Z"),
+    ...okDeps,
+  });
+  assert.equal(result.stats.recovered, 1);
+  assert.equal(store.attempts.get(`${row.id}:2`), "recovered");
+  assert.equal(row.status, "notification_failed");
+  assert.equal(row.smtpOutcome, "uncertain");
+  assert.equal(row.autoRetryExhausted, true);
+  assert.equal(store.audits.some((item) => item.action === "auto_retry_recovered"), true);
+  assert.equal(row.attemptCount, 2, "a crashed attempt must not be silently resent");
+
+  // Human confirmation remains available for UNCERTAIN rows.
+  const human = await retryDurableInquiryNotification(row.id, true, { store, actorUsername: "admin", ...okDeps });
+  assert.equal((human as { ok: boolean }).ok, true);
 });

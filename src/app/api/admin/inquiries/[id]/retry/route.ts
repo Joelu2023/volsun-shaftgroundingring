@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { retryDurableInquiryNotification } from "@/lib/inquiries/accept-inquiry";
+import { createInquiryAlertEmitter } from "@/lib/inquiries/alert-emitter";
 import { getInquiryStore } from "@/lib/inquiries/durable-store";
 import { getVerifiedRequestResourceSession } from "@/lib/resource-center/auth";
 
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
     result = await retryDurableInquiryNotification(id, confirmUncertain, {
       store: getInquiryStore(),
       actorUsername: session.username,
+      onAlert: createInquiryAlertEmitter(),
     });
   } catch {
     console.error("[inquiry] admin retry failed", { inquiryId: id });

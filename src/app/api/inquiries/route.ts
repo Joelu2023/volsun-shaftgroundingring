@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 import { acceptDurableInquiry } from "@/lib/inquiries/accept-inquiry";
+import { createInquiryAlertEmitter } from "@/lib/inquiries/alert-emitter";
 import { deliverInquirySubmission } from "@/lib/inquiries/deliver-inquiry";
 import { getInquiryStore, isInquiryDurableStorageEnabled } from "@/lib/inquiries/durable-store";
 import { parseInquirySubmission } from "@/lib/inquiries/validate";
@@ -70,7 +71,10 @@ export async function POST(req: Request) {
     }
 
     const rawRecord = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
-    const accepted = await acceptDurableInquiry(parsed.data, requestId, rawRecord.idempotency_key, { store });
+    const accepted = await acceptDurableInquiry(parsed.data, requestId, rawRecord.idempotency_key, {
+      store,
+      onAlert: createInquiryAlertEmitter(),
+    });
     if (!accepted.ok) {
       return NextResponse.json(
         {

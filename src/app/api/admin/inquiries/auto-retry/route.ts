@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { emitRetryExhausted } from "@/lib/inquiries/alert-emitter";
 import { runAutoRetrySweep } from "@/lib/inquiries/auto-retry";
 import {
   getInquiryStore,
@@ -29,6 +30,11 @@ export async function POST(request: NextRequest) {
   if (!("listAutoRetryDue" in store) || !("recoverStaleAutoRetryAttempts" in store)) {
     return NextResponse.json({ ok: false, error: "retry_store_unavailable" }, { status: 503 });
   }
-  const result = await runAutoRetrySweep({ store: store as InquiryStoreWithAutoRetry });
+  const result = await runAutoRetrySweep({
+    store: store as InquiryStoreWithAutoRetry,
+    // P0: B1 先持久化 auto_retry_exhausted 审计事件，再由 B2 派发告警；
+    // 告警是旁路，失败不影响已持久化的业务失败事件，去重由 B2 幂等键保证。
+    onRetryExhausted: (event) => emitRetryExhausted(event),
+  });
   return NextResponse.json({ ok: true, disabled: result.disabled, stats: result.stats });
 }

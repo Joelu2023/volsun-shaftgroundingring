@@ -7,6 +7,7 @@
  */
 import { runOneAutoRetry, type AcceptInquiryDeps } from "@/lib/inquiries/accept-inquiry";
 import type { InquiryStoreWithAutoRetry } from "@/lib/inquiries/durable-store";
+import type { RetryExhaustedEvent } from "@/lib/inquiries/retry-exhausted-event";
 import {
   classifySmtpError,
   computeNextRetryAt,
@@ -51,8 +52,8 @@ export async function runAutoRetrySweep(input: {
   sendInquiryEmail?: AcceptInquiryDeps["sendInquiryEmail"];
   getMissingSmtpEnv?: AcceptInquiryDeps["getMissingSmtpEnv"];
   log?: AcceptInquiryDeps["log"];
-  /** B2 集成钩子：重试耗尽时触发 retry_exhausted 告警（默认不注入）。 */
-  onRetryExhausted?: (event: { publicNumber: string; occurredAt: string; detail?: string }) => void;
+  /** B2 集成钩子：仅在耗尽事件持久化成功后触发（默认不注入）。 */
+  onRetryExhausted?: (event: RetryExhaustedEvent) => void;
 }): Promise<{ disabled: boolean; stats: AutoRetrySweepStats }> {
   const empty: AutoRetrySweepStats = {
     scanned: 0, sent: 0, scheduled: 0, terminal: 0, skipped: 0, errors: 0, recovered: 0,
@@ -67,8 +68,10 @@ export async function runAutoRetrySweep(input: {
   const recovery = await recoverAutoRetryLeases({ store: input.store, now });
 
   const exhaust = async (row: { id: string; publicNumber: string; smtpErrorCode?: string | null }, at: Date) => {
-    await input.store.markAutoRetryExhausted(row.id, at).catch(() => undefined);
-    if (!input.onRetryExhausted) return;
+    // P0: 业务失败事件必须先持久化。持久化失败时绝不触发告警，
+    // 避免产生"群里告警了但库里没有异常事件"的审计空洞。
+    const persisted = await input.store.markAutoRetryExhausted(row.id, at).catch(() => null);
+    if (!persisted || !input.onRetryExhausted) return;
     try {
       input.onRetryExhausted({
         publicNumber: row.publicNumber,
@@ -76,7 +79,7 @@ export async function runAutoRetrySweep(input: {
         detail: row.smtpErrorCode ?? undefined,
       });
     } catch {
-      // 告警是旁路，不影响重试统计与状态。
+      // 告警发送失败不能回滚已持久化的业务失败事件；事件仍在库中可人工接管。
     }
   };
 

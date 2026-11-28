@@ -429,6 +429,58 @@ test("exhaustion event hook fires once when the bounded sequence ends", async ()
   assert.equal(events[0].publicNumber, row.publicNumber);
 });
 
+test("P0: exhaustion alert is suppressed when the business event cannot be persisted", async () => {
+  const row = makeRow({ nextRetryAt: "2026-11-27T00:05:00.000Z" });
+  const store = makeStore([row]);
+  store.markAutoRetryExhausted = async () => {
+    throw new Error("database unavailable");
+  };
+  let emitted = 0;
+  let clock = Date.parse("2026-11-27T00:06:00.000Z");
+  for (let i = 0; i < 5; i += 1) {
+    await runAutoRetrySweep({
+      store,
+      enabled: true,
+      now: () => new Date(clock),
+      sendInquiryEmail: async () => {
+        throw Object.assign(new Error("connection refused"), { code: "ECONNREFUSED" });
+      },
+      getMissingSmtpEnv: () => [],
+      onRetryExhausted: () => {
+        emitted += 1;
+      },
+    });
+    clock += 61 * 60_000;
+  }
+  assert.equal(emitted, 0, "no alert may be sent before the exhaustion event is persisted");
+});
+
+test("P0: alert failure cannot lose the persisted business failure event", async () => {
+  const row = makeRow({ nextRetryAt: "2026-11-27T00:05:00.000Z" });
+  const store = makeStore([row]);
+  let clock = Date.parse("2026-11-27T00:06:00.000Z");
+  for (let i = 0; i < 5; i += 1) {
+    await runAutoRetrySweep({
+      store,
+      enabled: true,
+      now: () => new Date(clock),
+      sendInquiryEmail: async () => {
+        throw Object.assign(new Error("connection refused"), { code: "ECONNREFUSED" });
+      },
+      getMissingSmtpEnv: () => [],
+      onRetryExhausted: () => {
+        throw new Error("webhook failed");
+      },
+    });
+    clock += 61 * 60_000;
+  }
+  assert.equal(row.autoRetryExhausted, true);
+  assert.ok(
+    store.audits.some((item) => item.action === "auto_retry_exhausted"),
+    "business failure event must survive an alert delivery failure",
+  );
+});
+
 test("admin retry cancels the pending automatic retry (human takeover)", async () => {
   const row = makeRow({ nextRetryAt: "2026-11-27T00:05:00.000Z" });
   const store = makeStore([row]);

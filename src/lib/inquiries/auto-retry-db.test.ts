@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import test from "node:test";
 import { Pool } from "pg";
-import { retryDurableInquiryNotification } from "./accept-inquiry";
+import { acceptDurableInquiry, retryDurableInquiryNotification } from "./accept-inquiry";
 import { runAutoRetrySweep } from "./auto-retry";
 import { closeInquiryStoreForTests, createPgInquiryStore, setInquiryStoreForTests } from "./durable-store";
 import { parseInquirySubmission } from "./validate";
@@ -95,6 +95,35 @@ test("B1 integration: schema, idempotency, and UNCERTAIN protection on a real Po
   } finally {
     setInquiryStoreForTests(undefined);
     await closeInquiryStoreForTests();
+    await pool.end();
+  }
+});
+
+test("B1 integration: initial definite failure schedules the first automatic retry", options, async () => {
+  assert.ok(url);
+  const pool = new Pool({ connectionString: url, max: 5 });
+  const store = createPgInquiryStore(pool);
+  const idempotencyKey = randomUUID();
+  const now = new Date("2026-11-27T01:00:00.000Z");
+  try {
+    const accepted = await acceptDurableInquiry(payload(), "req-b1-initial", idempotencyKey, {
+      store,
+      autoRetryEnabled: true,
+      now: () => now,
+      sendInquiryEmail: async () => {
+        throw Object.assign(new Error("connection refused"), { code: "ECONNREFUSED" });
+      },
+      getMissingSmtpEnv: () => [],
+    });
+    assert.equal(accepted.ok, true);
+    if (!accepted.ok) throw new Error("accept failed");
+    const row = await store.findById(accepted.inquiryId);
+    assert.equal(row?.status, "notification_failed");
+    assert.equal(row?.smtpOutcome, "failed");
+    assert.ok(row?.nextRetryAt, "first definite failure must schedule a retry");
+    assert.equal(new Date(String(row?.nextRetryAt)).getTime() - now.getTime(), 5 * 60_000);
+  } finally {
+    await pool.query("delete from inquiry_records where idempotency_key = $1", [idempotencyKey]);
     await pool.end();
   }
 });

@@ -1,5 +1,5 @@
 import type { InquiryRecordRow, InquiryStore, InquiryStoreWithAutoRetry } from "@/lib/inquiries/durable-store";
-import { classifySmtpError, isAutoRetryAllowed } from "@/lib/inquiries/retry-policy";
+import { classifySmtpError, computeNextRetryAt, isAutoRetryAllowed } from "@/lib/inquiries/retry-policy";
 import { InquiryRetentionError } from "@/lib/inquiries/retention-policy";
 import { getMissingSmtpEnv, sendInquiryEmail } from "@/lib/inquiries/send-email";
 import type { InquiryNotificationStatus, InquirySubmission } from "@/types/inquiry";
@@ -15,6 +15,8 @@ export type AcceptInquiryDeps = {
   now?: () => Date;
   log?: (event: string, fields: InquiryLogFields) => void;
   actorUsername?: string;
+  /** P0-2: tests may force the feature on; production still requires the env flag. */
+  autoRetryEnabled?: boolean;
 };
 
 export type AcceptInquirySuccess = {
@@ -287,6 +289,7 @@ async function finishFailure(
       return viewOf(updated ?? uncertainFallback(pending), replay);
     }
     const failed = await deps.store.markNotificationFailed(pending.id, at, code);
+    await scheduleInitialAutoRetry(failed, code, deps, at);
     return viewOf(failed ?? uncertainFallback(pending), replay);
   } catch {
     log("inquiry_storage_failed", {
@@ -295,6 +298,33 @@ async function finishFailure(
       status: "notification_pending",
     });
     return viewOf(uncertainFallback(pending), replay);
+  }
+}
+
+/**
+ * P0-2: a definite transient failure must schedule the first automatic retry,
+ * otherwise the sweep would never see the inquiry and the retry chain is dead.
+ */
+async function scheduleInitialAutoRetry(
+  failed: InquiryRecordRow | null,
+  code: string,
+  deps: AcceptInquiryDeps,
+  at: Date,
+): Promise<void> {
+  if (!failed) return;
+  const enabled = deps.autoRetryEnabled ?? process.env.INQUIRY_AUTO_RETRY_ENABLED?.trim().toLowerCase() === "true";
+  if (!enabled) return;
+  const store = deps.store as InquiryStore & {
+    scheduleAutoRetry?: (id: string, nextRetryAt: Date, errorCode: string, now: Date) => Promise<InquiryRecordRow | null>;
+  };
+  if (typeof store.scheduleAutoRetry !== "function") return;
+  if (!isAutoRetryAllowed({ smtpOutcome: failed.smtpOutcome, errorClass: classifySmtpError(code), autoRetryCount: 0 })) return;
+  const next = computeNextRetryAt(0, at);
+  if (!next) return;
+  try {
+    await store.scheduleAutoRetry(failed.id, next, code, at);
+  } catch {
+    // Scheduling is a side effect; the recorded failure remains authoritative.
   }
 }
 

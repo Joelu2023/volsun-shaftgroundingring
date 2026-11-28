@@ -51,6 +51,8 @@ export async function runAutoRetrySweep(input: {
   sendInquiryEmail?: AcceptInquiryDeps["sendInquiryEmail"];
   getMissingSmtpEnv?: AcceptInquiryDeps["getMissingSmtpEnv"];
   log?: AcceptInquiryDeps["log"];
+  /** B2 集成钩子：重试耗尽时触发 retry_exhausted 告警（默认不注入）。 */
+  onRetryExhausted?: (event: { publicNumber: string; occurredAt: string; detail?: string }) => void;
 }): Promise<{ disabled: boolean; stats: AutoRetrySweepStats }> {
   const empty: AutoRetrySweepStats = {
     scanned: 0, sent: 0, scheduled: 0, terminal: 0, skipped: 0, errors: 0, recovered: 0,
@@ -63,6 +65,20 @@ export async function runAutoRetrySweep(input: {
   const limit = input.limit ?? AUTO_RETRY_BATCH_LIMIT;
   const log = input.log ?? (() => undefined);
   const recovery = await recoverAutoRetryLeases({ store: input.store, now });
+
+  const exhaust = async (row: { id: string; publicNumber: string; smtpErrorCode?: string | null }, at: Date) => {
+    await input.store.markAutoRetryExhausted(row.id, at).catch(() => undefined);
+    if (!input.onRetryExhausted) return;
+    try {
+      input.onRetryExhausted({
+        publicNumber: row.publicNumber,
+        occurredAt: at.toISOString(),
+        detail: row.smtpErrorCode ?? undefined,
+      });
+    } catch {
+      // 告警是旁路，不影响重试统计与状态。
+    }
+  };
 
   let due: Awaited<ReturnType<InquiryStoreWithAutoRetry["listAutoRetryDue"]>>;
   try {
@@ -81,7 +97,7 @@ export async function runAutoRetrySweep(input: {
       autoRetryCount: Math.max(0, row.attemptCount - 1),
     });
     if (!allowed || row.status !== "notification_failed" || row.smtpOutcome !== "failed") {
-      await input.store.markAutoRetryExhausted(row.id, at).catch(() => undefined);
+      await exhaust(row, at);
       stats.terminal += 1;
       continue;
     }
@@ -118,12 +134,12 @@ export async function runAutoRetrySweep(input: {
           continue;
         }
       }
-      await input.store.markAutoRetryExhausted(row.id, now()).catch(() => undefined);
+      await exhaust(row, now());
       stats.terminal += 1;
       continue;
     }
     if (result.outcome === "terminal") {
-      await input.store.markAutoRetryExhausted(row.id, now()).catch(() => undefined);
+      await exhaust(row, now());
       stats.terminal += 1;
       continue;
     }

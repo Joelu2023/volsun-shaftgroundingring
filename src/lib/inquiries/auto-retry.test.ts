@@ -405,6 +405,30 @@ test("repeated transient failures stop after MAX_AUTO_RETRIES", async () => {
   assert.equal(event?.inquiryId, row.id);
 });
 
+test("exhaustion event hook fires once when the bounded sequence ends", async () => {
+  const row = makeRow({ nextRetryAt: "2026-11-27T00:05:00.000Z" });
+  const store = makeStore([row]);
+  let clock = Date.parse("2026-11-27T00:06:00.000Z");
+  const events: Array<{ publicNumber: string; occurredAt: string }> = [];
+  const fail = {
+    enabled: true,
+    now: () => new Date(clock),
+    sendInquiryEmail: async () => {
+      throw Object.assign(new Error("connection refused"), { code: "ECONNREFUSED" });
+    },
+    getMissingSmtpEnv: () => [],
+    onRetryExhausted: (event: { publicNumber: string; occurredAt: string }) => {
+      events.push(event);
+    },
+  };
+  for (let i = 0; i < 5; i += 1) {
+    await runAutoRetrySweep({ store, ...fail });
+    clock += 61 * 60_000;
+  }
+  assert.equal(events.length, 1);
+  assert.equal(events[0].publicNumber, row.publicNumber);
+});
+
 test("admin retry cancels the pending automatic retry (human takeover)", async () => {
   const row = makeRow({ nextRetryAt: "2026-11-27T00:05:00.000Z" });
   const store = makeStore([row]);

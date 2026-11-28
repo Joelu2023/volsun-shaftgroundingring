@@ -1,3 +1,4 @@
+import type { AlertType } from "@/lib/inquiries/alert-message";
 import type { InquiryRecordRow, InquiryStore } from "@/lib/inquiries/durable-store";
 import { InquiryRetentionError } from "@/lib/inquiries/retention-policy";
 import { getMissingSmtpEnv, sendInquiryEmail } from "@/lib/inquiries/send-email";
@@ -7,6 +8,14 @@ const IDEMPOTENCY_KEY_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9
 
 export type InquiryLogFields = Record<string, string | number | boolean | null>;
 
+/** B2: 业务事件信号，只含公开编号、时间与错误码样式 detail；由告警层统一脱敏。 */
+export type InquiryAlertSignal = {
+  publicNumber: string;
+  occurredAt: string;
+  type: AlertType;
+  detail?: string;
+};
+
 export type AcceptInquiryDeps = {
   store: InquiryStore;
   sendInquiryEmail?: (submission: InquirySubmission) => Promise<void>;
@@ -14,6 +23,8 @@ export type AcceptInquiryDeps = {
   now?: () => Date;
   log?: (event: string, fields: InquiryLogFields) => void;
   actorUsername?: string;
+  /** 可选：生产路由注入真实告警派发；未注入时业务链不受影响。 */
+  onAlert?: (event: InquiryAlertSignal) => void;
 };
 
 export type AcceptInquirySuccess = {
@@ -65,6 +76,16 @@ export function logInquiryEvent(event: string, fields: InquiryLogFields): void {
 
 export function isIdempotencyKey(value: unknown): value is string {
   return typeof value === "string" && IDEMPOTENCY_KEY_RE.test(value);
+}
+
+/** 告警是旁路：派发失败不影响询盘主流程。 */
+function emitAlert(deps: AcceptInquiryDeps, event: InquiryAlertSignal): void {
+  if (!deps.onAlert) return;
+  try {
+    deps.onAlert(event);
+  } catch {
+    // 告警通道故障不得改变询盘接收/重试结果。
+  }
 }
 
 /** 明确未投递的网络错误：允许进入自动重试评估。 */
@@ -280,6 +301,14 @@ async function finishFailure(
   log: (event: string, fields: InquiryLogFields) => void,
   replay: boolean,
 ): Promise<AcceptInquiryResult> {
+  emitAlert(deps, {
+    publicNumber: pending.publicNumber,
+    occurredAt: at.toISOString(),
+    type: kind === "uncertain"
+      ? "inquiry_submit_failed"
+      : code === "smtp_not_configured" ? "config_missing" : "email_failed_once",
+    detail: code.toUpperCase().slice(0, 64),
+  });
   try {
     if (kind === "uncertain") {
       const updated = await deps.store.markUncertain(pending.id, at, code);
@@ -305,6 +334,12 @@ async function markSendUncertain(
   log: (event: string, fields: InquiryLogFields) => void,
   replay: boolean,
 ): Promise<AcceptInquiryResult> {
+  emitAlert(deps, {
+    publicNumber: pending.publicNumber,
+    occurredAt: at.toISOString(),
+    type: "inquiry_submit_failed",
+    detail: "STATUS_UPDATE_FAILED",
+  });
   log("smtp_status_uncertain", {
     inquiryId: pending.id,
     publicNumber: pending.publicNumber,

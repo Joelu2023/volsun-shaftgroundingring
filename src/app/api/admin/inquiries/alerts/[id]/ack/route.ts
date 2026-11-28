@@ -12,7 +12,7 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
   try {
     const result = await getAlertNoticeStore().acknowledge(id, session.username);
     if (!result.ok) {
-      const status = result.error === "not_found" ? 404 : 409;
+      const status = result.error === "not_found" ? 404 : result.error === "storage_error" ? 503 : 409;
       return NextResponse.json({ ok: false, error: result.error }, { status });
     }
     return NextResponse.json({ ok: true, alert: result.row });

@@ -104,6 +104,11 @@ test("E2E: 明确失败 → 自动重试 → 耗尽告警 → 人工关闭；UNC
     assert.equal(final?.autoRetryExhausted, true);
     assert.equal(final?.nextRetryAt, null);
     assert.equal(sends, 4, "initial send + three automatic retries");
+    const audit = await pool.query<{ action: string }>(
+      "select action from inquiry_audit_events where inquiry_id = $1 and action = 'auto_retry_exhausted'",
+      [accepted.inquiryId],
+    );
+    assert.equal(audit.rowCount, 1, "exhaustion must be persisted before any alert is emitted");
 
     // 3) 重试耗尽 P2 告警必须存在，且重复事件被抑制
     notices = (await alerts.list(100)).filter((row) => row.publicNumber === first?.publicNumber);

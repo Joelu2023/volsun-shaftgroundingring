@@ -31,8 +31,14 @@ export async function runScheduledRetentionCleanup(input: {
   authorization: string | null;
   store: InquiryStore;
   enabled?: boolean;
+  /**
+   * B3: when the route has already passed the project-isolation guard
+   * (project name + dedicated key), the legacy CRON_SECRET check can be skipped.
+   * Default false keeps all existing callers and tests on the legacy check.
+   */
+  preAuthorized?: boolean;
 }): Promise<ScheduledRetentionResult> {
-  if (!isRetentionCronAuthorized(input.authorization)) {
+  if (!input.preAuthorized && !isRetentionCronAuthorized(input.authorization)) {
     return { httpStatus: 401, body: { ok: false, error: "unauthorized" } };
   }
   const enabled = input.enabled ?? isInquiryRetentionCleanupEnabled();

@@ -1,4 +1,5 @@
 import { timingSafeEqual } from "node:crypto";
+import { verifyCronPreAuthorization, type CronPreAuthorization } from "@/lib/inquiries/cron-project-guard";
 import type { InquiryStore } from "@/lib/inquiries/durable-store";
 import { isInquiryRetentionCleanupEnabled } from "@/lib/inquiries/retention-policy";
 
@@ -31,8 +32,18 @@ export async function runScheduledRetentionCleanup(input: {
   authorization: string | null;
   store: InquiryStore;
   enabled?: boolean;
+  /**
+   * B3: only the opaque credential issued by checkCronProjectIsolation may skip
+   * the legacy CRON_SECRET check. A boolean or forged object is rejected.
+   * Omitting it keeps existing callers on the legacy check.
+   */
+  preAuthorization?: CronPreAuthorization;
 }): Promise<ScheduledRetentionResult> {
-  if (!isRetentionCronAuthorized(input.authorization)) {
+  if (input.preAuthorization !== undefined) {
+    if (!verifyCronPreAuthorization(input.preAuthorization, input.authorization)) {
+      return { httpStatus: 401, body: { ok: false, error: "unauthorized" } };
+    }
+  } else if (!isRetentionCronAuthorized(input.authorization)) {
     return { httpStatus: 401, body: { ok: false, error: "unauthorized" } };
   }
   const enabled = input.enabled ?? isInquiryRetentionCleanupEnabled();

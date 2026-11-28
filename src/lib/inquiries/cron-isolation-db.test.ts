@@ -2,12 +2,23 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import test from "node:test";
 import { Pool } from "pg";
+import { APPROVED_CRON_PROJECT, checkCronProjectIsolation } from "./cron-project-guard";
 import { createPgInquiryStore } from "./durable-store";
 import { runScheduledRetentionCleanup } from "./retention-cron";
 import { parseInquirySubmission } from "./validate";
 
 const url = process.env.INQUIRY_TEST_DATABASE_URL?.trim();
 const NOW = new Date("2026-11-28T12:00:00.000Z");
+const DB_SECRET = "b3_db_dedicated_cron_secret_2026";
+const DB_AUTH = `Bearer ${DB_SECRET}`;
+const guard = checkCronProjectIsolation(DB_AUTH, {
+  INQUIRY_CRON_PROJECT: APPROVED_CRON_PROJECT,
+  INQUIRY_CRON_ENABLED: "true",
+  INQUIRY_CRON_SECRET: DB_SECRET,
+  CRON_SECRET: "b3_db_legacy_cron_secret_2026",
+});
+if (!guard.allowed) throw new Error("B3 integration guard must pass");
+const PRE_AUTHORIZATION = guard.preAuthorization;
 
 function submission() {
   const parsed = parseInquirySubmission({
@@ -38,9 +49,9 @@ test("真实数据库：preAuthorized 仍受清理开关保护，重复执行只
   try {
     await pool.query("delete from inquiry_retention_runs where run_date = $1::date", [dateKey]);
 
-    // preAuthorized=true 但 INQUIRY_RETENTION_CLEANUP_ENABLED 未开启 → 不删除。
+    // 合法预授权凭据 但 INQUIRY_RETENTION_CLEANUP_ENABLED 未开启 → 不删除。
     const disabled = await runScheduledRetentionCleanup({
-      now: NOW, authorization: "Bearer anything", store, preAuthorized: true,
+      now: NOW, authorization: DB_AUTH, store, preAuthorization: PRE_AUTHORIZATION,
     });
     assert.equal(disabled.httpStatus, 409);
     if (disabled.httpStatus === 409) assert.equal(disabled.body.error, "cleanup_disabled");
@@ -63,13 +74,13 @@ test("真实数据库：preAuthorized 仍受清理开关保护，重复执行只
     );
 
     const first = await runScheduledRetentionCleanup({
-      now: NOW, authorization: "Bearer anything", store, preAuthorized: true,
+      now: NOW, authorization: DB_AUTH, store, preAuthorization: PRE_AUTHORIZATION,
     });
     assert.equal(first.httpStatus, 200);
     assert.equal(first.body.deletedCount, 1, "only the notified+accepted row is purged");
 
     const dup = await runScheduledRetentionCleanup({
-      now: NOW, authorization: "Bearer anything", store, preAuthorized: true,
+      now: NOW, authorization: DB_AUTH, store, preAuthorization: PRE_AUTHORIZATION,
     });
     assert.equal(dup.httpStatus, 200);
     assert.equal(dup.body.duplicate, true, "duplicate same-day run is a no-op");

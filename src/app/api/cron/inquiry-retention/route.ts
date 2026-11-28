@@ -26,7 +26,7 @@ async function handle(request: NextRequest) {
     now: new Date(),
     authorization,
     store,
-    preAuthorized: true,
+    preAuthorization: guard.preAuthorization,
   });
   return NextResponse.json(result.body, { status: result.httpStatus });
 }
